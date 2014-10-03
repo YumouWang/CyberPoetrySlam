@@ -6,10 +6,17 @@ import model.WordType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import controller.Search;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * The main view that tracks all other views
@@ -33,16 +40,41 @@ public class MainView extends JFrame implements MouseListener {
 
         words = new HashSet<AbstractWordView>();
 
-        Word myWordOne = new Word("Monty Python", WordType.INTERJECTION);
-        AbstractWordView wordViewOne = new AbstractWordView(myWordOne, new Position(100, 50));
-        Word myWordTwo = new Word("Flying Circus", WordType.CONJUNCTION);
-        AbstractWordView wordViewTwo = new AbstractWordView(myWordTwo, new Position(50, 100));
-
-        words.add(wordViewOne);
-        words.add(wordViewTwo);
-
-        contentPane.add(wordViewOne.getLabel());
-        contentPane.add(wordViewTwo.getLabel());
+        Hashtable<String,WordType> wordslist = new Hashtable<String,WordType>();
+        wordslist.put("word1", WordType.ADJECTIVE);
+        wordslist.put("word2", WordType.ADVERB);
+        wordslist.put("word3", WordType.NOUN);
+        wordslist.put("word4", WordType.VERB);
+        
+        Word[] wordlist = new Word[wordslist.size()];
+        AbstractWordView[] wordViewList = new AbstractWordView[wordslist.size()]; 
+        
+        
+        Enumeration e = wordslist.keys();
+        int i = 0;
+        for(Iterator it = wordslist.keySet().iterator(); it.hasNext();) {
+        	String key = it.next().toString();
+        	WordType value = wordslist.get(key);
+        	wordlist[i] = new Word(key,value);
+        	Random random = new Random();
+        	int x = random.nextInt(300);
+        	int y = random.nextInt(200);
+        	wordViewList[i] = new AbstractWordView(wordlist[i], new Position(x, y));
+        	words.add(wordViewList[i]);
+        	contentPane.add(wordViewList[i].getLabel());
+        	i ++;
+        }
+        
+//        Word myWordOne = new Word("Monty Python", WordType.INTERJECTION);
+//        AbstractWordView wordViewOne = new AbstractWordView(myWordOne, new Position(100, 50));
+//        Word myWordTwo = new Word("Flying Circus", WordType.CONJUNCTION);
+//        AbstractWordView wordViewTwo = new AbstractWordView(myWordTwo, new Position(50, 100));
+//
+//        words.add(wordViewOne);
+//        words.add(wordViewTwo);
+//
+//        contentPane.add(wordViewOne.getLabel());
+//        contentPane.add(wordViewTwo.getLabel());
         contentPane.addMouseListener(this);
     }
 

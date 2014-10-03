@@ -16,4 +16,12 @@ public abstract class AbstractWord {
      * @return String The value of the AbstractWord
      */
     public abstract String getValue();
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+    
 }

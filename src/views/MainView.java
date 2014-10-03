@@ -1,11 +1,15 @@
 package views;
 
+import model.Position;
+import model.Word;
+import model.WordType;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import model.Position;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The main view that tracks all other views
@@ -13,7 +17,9 @@ import model.Position;
  */
 public class MainView extends JFrame implements MouseListener {
 
-    JLabel label;
+    Collection<AbstractWordView> words;
+
+    AbstractWordView selectedWord;
     JPanel contentPane;
     Position mouseDownPosition;
 
@@ -24,13 +30,20 @@ public class MainView extends JFrame implements MouseListener {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        label = new JLabel("text");
-        label.setBounds(100, 100, 30, 20);
-        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        label.setBackground(Color.LIGHT_GRAY);
-        label.setOpaque(true);
-        contentPane.add(label);
-        label.addMouseListener(this);
+
+        words = new HashSet<AbstractWordView>();
+
+        Word myWordOne = new Word("Monty Python", WordType.INTERJECTION);
+        AbstractWordView wordViewOne = new AbstractWordView(myWordOne, new Position(100, 50));
+        Word myWordTwo = new Word("Flying Circus", WordType.CONJUNCTION);
+        AbstractWordView wordViewTwo = new AbstractWordView(myWordTwo, new Position(50, 100));
+
+        words.add(wordViewOne);
+        words.add(wordViewTwo);
+
+        contentPane.add(wordViewOne.getLabel());
+        contentPane.add(wordViewTwo.getLabel());
+        contentPane.addMouseListener(this);
     }
 
 
@@ -42,13 +55,18 @@ public class MainView extends JFrame implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         mouseDownPosition = new Position(e.getX(), e.getY());
-//        label.setText(mouseDownPosition.getX() + ", " + mouseDownPosition.getY());
+        for(AbstractWordView word: words) {
+            if(word.isClicked(mouseDownPosition)) {
+                selectedWord = word;
+                break;
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         Position positionDiff = new Position(e.getX() - mouseDownPosition.getX(), e.getY() - mouseDownPosition.getY());
-        label.setBounds(label.getX() + positionDiff.getX(), label.getY() + positionDiff.getY(), label.getWidth(), label.getHeight());
+        selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
     }
 
     @Override

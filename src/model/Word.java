@@ -14,9 +14,9 @@ public class Word extends AbstractWord {
     WordType type;
 
     public Word(String value, WordType type) {
+        super();
         this.value = value;
         this.type = type;
-        super.id = 0;
     }
 
     @Override

@@ -12,10 +12,22 @@ public class PoemTest {
 
     @Test
     public void testConstructor() throws Exception {
+        List<Word> words = new ArrayList<Word>();
+        Row row = new Row(words);
         List<Row> rows = new ArrayList<Row>();
+        rows.add(row);
         Poem poem = new Poem(rows);
         assertNotNull(poem);
-        assertEquals(poem.rows, rows);
+        assertNotEquals(0, poem.id);
+        assertEquals(rows.size(), poem.rows.size());
+        assertTrue(poem.rows.contains(row));
+    }
+
+    @Test
+    public void testConstructorNull() throws Exception {
+        Poem poem = new Poem(null);
+        assertNotNull(poem);
+        assertEquals(0, poem.rows.size());
     }
 
     @Test

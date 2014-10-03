@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,11 @@ public class Row extends AbstractWord {
     List<Word> words;
 
     public Row(List<Word> words) {
-        this.words = words;
+        super();
+        this.words = new ArrayList<Word>();
+        if(words != null) {
+            this.words.addAll(words);
+        }
     }
 
     public void connect(Word word) {

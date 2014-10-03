@@ -14,7 +14,11 @@ public class Poem extends AbstractWord {
     List<Row> rows;
 
     public Poem(List<Row> rows) {
-        this.rows = rows;
+        super();
+        this.rows = new ArrayList<Row>();
+        if(rows != null) {
+            this.rows.addAll(rows);
+        }
     }
 
     public void connect(Row row) {

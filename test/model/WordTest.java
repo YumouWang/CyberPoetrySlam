@@ -3,6 +3,7 @@ package model;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 public class WordTest {
 
@@ -10,6 +11,7 @@ public class WordTest {
     public void testConstructor() throws Exception {
         Word word = new Word("Dog", WordType.NOUN);
         assertNotNull(word);
+        assertNotEquals(0, word.id);
         assertEquals("Dog", word.value);
         assertEquals(WordType.NOUN, word.type);
     }

@@ -6,15 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 public class RowTest {
 
     @Test
     public void testConstructor() throws Exception {
+        Word word = new Word("Porch", WordType.PRONOUN);
         List<Word> words = new ArrayList<Word>();
+        words.add(word);
         Row row = new Row(words);
         assertNotNull(row);
-        assertEquals(row.words, words);
+        assertNotEquals(0, row.id);
+        assertEquals(words.size(), row.words.size());
+        assertTrue(row.words.contains(word));
+    }
+
+    @Test
+    public void testConstructorNull() throws Exception {
+        Row row = new Row(null);
+        assertNotNull(row);
+        assertEquals(0, row.words.size());
     }
 
     @Test

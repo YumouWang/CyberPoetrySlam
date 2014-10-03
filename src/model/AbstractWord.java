@@ -1,8 +1,14 @@
 package model;
 
+import java.util.UUID;
+
 public abstract class AbstractWord {
 
     long id;
+
+    public AbstractWord() {
+        this.id = UUID.randomUUID().getMostSignificantBits();
+    }
 
     /**
      * getValue returns the value of the AbstractWord as a String

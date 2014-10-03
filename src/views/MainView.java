@@ -55,6 +55,7 @@ public class MainView extends JFrame implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         mouseDownPosition = new Position(e.getX(), e.getY());
+        selectedWord = null;
         for(AbstractWordView word: words) {
             if(word.isClicked(mouseDownPosition)) {
                 selectedWord = word;

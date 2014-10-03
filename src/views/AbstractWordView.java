@@ -16,7 +16,8 @@ public class AbstractWordView extends AbstractView {
     JLabel label;
 
     public AbstractWordView(AbstractWord word, Position position) {
-        super(position, 30, 20);
+        super(position, 80, 20);
+        this.word = word;
         label = new JLabel(word.getValue());
         updateView();
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -30,8 +31,8 @@ public class AbstractWordView extends AbstractView {
         return true;
     }
 
-    public boolean isOverlapping(AbstractWordView otherWord) {
-        return false;
+    public AdjacencyType isAdjacentTo(AbstractWordView otherWord) {
+        return AdjacencyType.NOT_ADJACENT;
     }
 
     private void updateView() {

@@ -2,21 +2,21 @@ package model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class WordTypeTest {
     @Test
-    public void testWordTypes() throws Exception {
-        assertNotNull(WordType.NOUN);
-        assertNotNull(WordType.VERB);
-        assertNotNull(WordType.PRONOUN);
-        assertNotNull(WordType.ADJECTIVE);
-        assertNotNull(WordType.ADVERB);
-        assertNotNull(WordType.PREPOSITION);
-        assertNotNull(WordType.CONJUNCTION);
-        assertNotNull(WordType.INTERJECTION);
-        assertNotNull(WordType.PREFIX);
-        assertNotNull(WordType.POSTFIX);
-        assertNotNull(WordType.ANY);
+    public void testWordTypeNames() throws Exception {
+        assertEquals("NOUN", WordType.NOUN.name());
+        assertEquals("VERB", WordType.VERB.name());
+        assertEquals("PRONOUN", WordType.PRONOUN.name());
+        assertEquals("ADJECTIVE", WordType.ADJECTIVE.name());
+        assertEquals("ADVERB", WordType.ADVERB.name());
+        assertEquals("PREPOSITION", WordType.PREPOSITION.name());
+        assertEquals("CONJUNCTION", WordType.CONJUNCTION.name());
+        assertEquals("INTERJECTION", WordType.INTERJECTION.name());
+        assertEquals("PREFIX", WordType.PREFIX.name());
+        assertEquals("POSTFIX", WordType.POSTFIX.name());
+        assertEquals("ANY", WordType.ANY.name());
     }
 }

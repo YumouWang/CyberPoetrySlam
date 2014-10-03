@@ -2,14 +2,12 @@ package views;
 
 import model.Position;
 
-import javax.swing.*;
-
 /**
  * The base class for each view component of CyberPoetrySlam
  *
  * Created by Nathan on 10/3/2014.
  */
-public abstract class AbstractView extends JComponent {
+public abstract class AbstractView {
     Position position;
     int width;
     int height;
@@ -27,6 +25,10 @@ public abstract class AbstractView extends JComponent {
             isClicked = true;
         }
         return isClicked;
+    }
+
+    public boolean isOverlapping(AbstractView otherView) {
+        return false;
     }
 
     public Position getPosition() {

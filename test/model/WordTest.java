@@ -12,6 +12,7 @@ public class WordTest {
         Word word = new Word("Dog", WordType.NOUN);
         assertNotNull(word);
         assertNotEquals(0, word.id);
+        assertNotEquals(0, word.getId());
         assertEquals("Dog", word.value);
         assertEquals(WordType.NOUN, word.type);
     }

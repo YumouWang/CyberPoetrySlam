@@ -23,6 +23,16 @@ public class Row extends AbstractWord {
         words.add(0, word);
     }
 
+    public void disconnect(Word word) throws Exception {
+        int index = words.indexOf(word);
+        // If the word is first or last, remove it and we're done
+        if(index == 0 || index == words.size() - 1) {
+            words.remove(word);
+        } else {
+            throw new Exception("Invalid disconnect");
+        }
+    }
+
     @Override
     public String getValue() {
         String rowContents = "";
@@ -30,5 +40,9 @@ public class Row extends AbstractWord {
             rowContents += " " + word.getValue();
         }
         return rowContents.substring(1);
+    }
+
+    public List<Word> getWords() {
+        return words;
     }
 }

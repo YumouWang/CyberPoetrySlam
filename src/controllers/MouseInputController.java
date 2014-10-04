@@ -1,5 +1,6 @@
 package controllers;
 
+import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
@@ -20,25 +21,21 @@ import java.util.Collection;
  */
 public class MouseInputController implements MouseListener, MouseMotionListener {
 
-    static MouseInputController instance;
-
     AbstractWordView selectedWord;
     Position mouseDownPosition;
+    MainView mainView;
+    GameState gameState;
 
-    public static MouseInputController getInstance() {
-        if(instance == null) {
-            instance = new MouseInputController();
-        }
-        return instance;
+    public MouseInputController(MainView mainView, GameState gameState) {
+        this.mainView = mainView;
+        this.gameState = gameState;
     }
-
-    private MouseInputController() {}
 
     @Override
     public void mousePressed(MouseEvent e) {
         mouseDownPosition = new Position(e.getX(), e.getY());
         selectedWord = null;
-        Collection<AbstractWordView> words = MainView.getInstance().getWords();
+        Collection<AbstractWordView> words = mainView.getWords();
         for(AbstractWordView word: words) {
             if(word.isClicked(mouseDownPosition)) {
                 selectedWord = word;
@@ -54,7 +51,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
             selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
             boolean isOverlapping = false;
             boolean isAdjacent = false;
-            Collection<AbstractWordView> words = MainView.getInstance().getWords();
+            Collection<AbstractWordView> words = mainView.getWords();
             for (AbstractWordView word : words) {
                 if(!word.equals(selectedWord)) {
                     if (word.isOverlapping(selectedWord)) {
@@ -83,7 +80,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     @Override
     public void mouseReleased(MouseEvent e) {
         if(selectedWord != null) {
-            Collection<AbstractWordView> words = MainView.getInstance().getWords();
+            Collection<AbstractWordView> words = mainView.getWords();
             AbstractWordView connectTarget = null;
             for (AbstractWordView word : words) {
                 if (!word.equals(selectedWord)) {
@@ -95,14 +92,14 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
                 }
             }
             if (connectTarget != null) {
-                ConnectionController controller = new ConnectionController();
+                ConnectionController controller = new ConnectionController(mainView, gameState);
                 try {
                     controller.connect(selectedWord, connectTarget);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                     System.exit(1);
                 }
-                MainView.getInstance().refresh();
+                mainView.refresh();
             }
         }
     }

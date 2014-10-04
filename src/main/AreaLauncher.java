@@ -1,11 +1,10 @@
 package main;
 
-import views.Area;
-import views.UnprotectedArea;
+import views.AreaView;
 
 public class AreaLauncher {
 	public static void main(String[] args) {
-		Area frame = new Area();
+		AreaView frame = new AreaView();
 		frame.setVisible(true);
 	}
 }

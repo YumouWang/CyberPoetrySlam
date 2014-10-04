@@ -17,19 +17,10 @@ import java.util.Random;
  */
 public class MainView extends JFrame {
 
-    static MainView instance;
-
     Collection<AbstractWordView> words;
     JPanel contentPane;
 
-    public static MainView getInstance() {
-        if(instance == null) {
-            instance = new MainView();
-        }
-        return instance;
-    }
-
-    private MainView() {
+    public MainView(GameState gameState) {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 408);
         contentPane = new JPanel();
@@ -39,31 +30,8 @@ public class MainView extends JFrame {
 
         words = new HashSet<AbstractWordView>();
 
-//        Hashtable<String,WordType> wordsList = new Hashtable<String,WordType>();
-//        wordsList.put("word1", WordType.ADJECTIVE);
-//        wordsList.put("word2", WordType.ADVERB);
-//        wordsList.put("word3", WordType.NOUN);
-//        wordsList.put("word4", WordType.VERB);
-//
-//        Word[] wordList = new Word[wordsList.size()];
-//        AbstractWordView[] wordViewList = new AbstractWordView[wordsList.size()];
-//
-//        int i = 0;
-//        for(Iterator it = wordsList.keySet().iterator(); it.hasNext();) {
-//        	String key = it.next().toString();
-//        	WordType value = wordsList.get(key);
-//        	wordList[i] = new Word(key,value);
-//        	Random random = new Random();
-//        	int x = random.nextInt(300);
-//        	int y = random.nextInt(200);
-//        	wordViewList[i] = new AbstractWordView(wordList[i], new Position(x, y));
-//        	words.add(wordViewList[i]);
-//        	contentPane.add(wordViewList[i].label);
-//        	i ++;
-//        }
-
         Random random = new Random();
-        Collection<AbstractWord> words = GameState.getInstance().getProtectedArea().getAbstractWordCollection();
+        Collection<AbstractWord> words = gameState.getProtectedArea().getAbstractWordCollection();
         for(AbstractWord word: words) {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
@@ -71,7 +39,7 @@ public class MainView extends JFrame {
             addAbstractWordView(view);
         }
 
-        MouseInputController mouseInputController = MouseInputController.getInstance();
+        MouseInputController mouseInputController = new MouseInputController(this, gameState);
         contentPane.addMouseListener(mouseInputController);
         contentPane.addMouseMotionListener(mouseInputController);
     }

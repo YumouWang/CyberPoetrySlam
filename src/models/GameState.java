@@ -9,19 +9,11 @@ import java.util.HashSet;
  * Created by Nathan on 10/3/2014.
  */
 public class GameState {
-    static GameState instance;
 
     Area protectedArea;
     Area unprotectedArea;
 
-    public static GameState getInstance() {
-        if(instance == null) {
-            instance = new GameState();
-        }
-        return instance;
-    }
-
-    private GameState() {
+    public GameState() {
         Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
         protectedWords.add(new Word("Cat", WordType.NOUN));
         protectedWords.add(new Word("Dog", WordType.NOUN));

@@ -1,14 +1,21 @@
 package models;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class GameStateTest {
 
+    GameState gameState;
+
+    @Before
+    public void initialize() {
+        gameState = new GameState();
+    }
+
     @Test
     public void testConstructor() throws Exception {
-        GameState gameState = GameState.getInstance();
         assertNotNull(gameState);
         assertNotNull(gameState.protectedArea);
         assertNotNull(gameState.unprotectedArea);
@@ -18,7 +25,6 @@ public class GameStateTest {
 
     @Test
     public void testProtect() throws Exception {
-        GameState gameState = GameState.getInstance();
         AbstractWord word = new Word("Bed", WordType.INTERJECTION);
         gameState.getUnprotectedArea().addAbstractWord(word);
         gameState.protect(word);
@@ -28,7 +34,6 @@ public class GameStateTest {
 
     @Test
     public void testProtectUnhappy() throws Exception {
-        GameState gameState = GameState.getInstance();
         AbstractWord wordOne = new Word("Bed", WordType.INTERJECTION);
         AbstractWord wordTwo = new Word("Desk", WordType.NOUN);
         gameState.getUnprotectedArea().addAbstractWord(wordOne);
@@ -42,7 +47,6 @@ public class GameStateTest {
 
     @Test
     public void testUnprotect() throws Exception {
-        GameState gameState = GameState.getInstance();
         AbstractWord word = new Word("Bed", WordType.INTERJECTION);
         gameState.getProtectedArea().addAbstractWord(word);
         gameState.unprotect(word);
@@ -52,7 +56,6 @@ public class GameStateTest {
 
     @Test
     public void testUnprotectUnhappy() throws Exception {
-        GameState gameState = GameState.getInstance();
         AbstractWord wordOne = new Word("Bed", WordType.INTERJECTION);
         AbstractWord wordTwo = new Word("Desk", WordType.NOUN);
         gameState.getUnprotectedArea().addAbstractWord(wordOne);

@@ -12,9 +12,15 @@ import views.MainView;
  */
 public class ConnectionController {
 
-    public void connect(AbstractWordView wordOne, AbstractWordView wordTwo) throws Exception {
-        MainView display = MainView.getInstance();
+    MainView display;
+    GameState gameState;
 
+    public ConnectionController(MainView display, GameState gameState) {
+        this.display = display;
+        this.gameState = gameState;
+    }
+
+    public void connect(AbstractWordView wordOne, AbstractWordView wordTwo) throws Exception {
         AdjacencyType adjacencyType = wordOne.isAdjacentTo(wordTwo);
         AbstractWordView newWord = null;
         switch(adjacencyType) {
@@ -44,7 +50,7 @@ public class ConnectionController {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
-        AbstractWord result = GameState.getInstance().getProtectedArea().connectHorizontal(wordOne, wordTwo);
+        AbstractWord result = gameState.getProtectedArea().connectHorizontal(wordOne, wordTwo);
         AbstractWordView resultView = null;
 
         if(result != null)
@@ -57,7 +63,7 @@ public class ConnectionController {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
-        AbstractWord result = GameState.getInstance().getProtectedArea().connectVertical(wordOne, wordTwo);
+        AbstractWord result = gameState.getProtectedArea().connectVertical(wordOne, wordTwo);
         AbstractWordView resultView = null;
 
         if(result != null)

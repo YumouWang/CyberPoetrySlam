@@ -28,7 +28,19 @@ public abstract class AbstractView {
     }
 
     public boolean isOverlapping(AbstractView otherView) {
-        return false;
+        boolean isOverlapping = false;
+        Position otherPosition = otherView.getPosition();
+        Position otherBottomRightPosition = new Position(otherPosition.getX() + otherView.width, otherPosition.getY() + otherView.height);
+        Position bottomRightPosition = new Position(position.getX() + width, position.getY() + height);
+
+        // Check if the bottom right corner of OtherView is to the bottom right of our top left corner
+        if(position.getX() <= otherBottomRightPosition.getX() && position.getY() <= otherBottomRightPosition.getY()) {
+            // Check if OtherView's top left corner is to the top left of our bottom right corner
+            if(otherPosition.getX() <= bottomRightPosition.getX() && otherPosition.getY() <= bottomRightPosition.getY()) {
+                isOverlapping = true;
+            }
+        }
+        return isOverlapping;
     }
 
     public Position getPosition() {

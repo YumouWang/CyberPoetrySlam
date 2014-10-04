@@ -1,5 +1,6 @@
 package views;
 
+import common.Constants;
 import model.AbstractWord;
 import model.Position;
 
@@ -8,6 +9,7 @@ import java.awt.*;
 
 /**
  * The view class for each word in CyberPoetrySlam
+ *
  * Created by Nathan on 10/3/2014.
  */
 public class AbstractWordView extends AbstractView {
@@ -32,7 +34,26 @@ public class AbstractWordView extends AbstractView {
     }
 
     public AdjacencyType isAdjacentTo(AbstractWordView otherWord) {
-        return AdjacencyType.NOT_ADJACENT;
+        Position aboveBoxPosition = new Position(position.getX(), position.getY() - Constants.CONNECT_DISTANCE);
+        ConnectionBox above = new ConnectionBox(aboveBoxPosition, width, Constants.CONNECT_DISTANCE);
+        Position belowBoxPosition = new Position(position.getX(), position.getY() + height);
+        ConnectionBox below = new ConnectionBox(belowBoxPosition, width, Constants.CONNECT_DISTANCE);
+        Position leftBoxPosition = new Position(position.getX() - Constants.CONNECT_DISTANCE, position.getY());
+        ConnectionBox left = new ConnectionBox(leftBoxPosition, Constants.CONNECT_DISTANCE, height);
+        Position rightBoxPosition = new Position(position.getX() + width, position.getY());
+        ConnectionBox right = new ConnectionBox(rightBoxPosition, Constants.CONNECT_DISTANCE, height);
+
+        AdjacencyType returnType = AdjacencyType.NOT_ADJACENT;
+        if(left.isOverlapping(otherWord)) {
+            returnType = AdjacencyType.RIGHT;
+        } else if(right.isOverlapping(otherWord)) {
+            returnType = AdjacencyType.LEFT;
+        } else if(above.isOverlapping(otherWord)) {
+            returnType = AdjacencyType.BELOW;
+        } else if(below.isOverlapping(otherWord)) {
+            returnType = AdjacencyType.ABOVE;
+        }
+        return returnType;
     }
 
     private void updateView() {

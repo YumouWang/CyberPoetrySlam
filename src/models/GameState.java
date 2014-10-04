@@ -1,4 +1,4 @@
-package model;
+package models;
 
 /**
  * The main model class that tracks all other models

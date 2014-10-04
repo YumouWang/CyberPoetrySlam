@@ -1,11 +1,13 @@
 package views;
 
 import common.Constants;
-import model.AbstractWord;
-import model.Position;
-import model.Word;
-import model.WordType;
+import models.AbstractWord;
+import models.Position;
+import models.Word;
+import models.WordType;
 import org.junit.Test;
+
+import java.awt.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -17,13 +19,13 @@ public class AbstractWordViewTest {
         AbstractWord word = new Word("View", WordType.VERB);
         Position position = new Position(0,0);
         AbstractWordView view = new AbstractWordView(word, position);
+        view.setBackground(Color.BLACK);
         assertNotNull(view);
         assertEquals(position, view.position);
         assertEquals(position, view.getPosition());
         assertEquals(word, view.word);
         assertEquals(word, view.getWord());
         assertEquals(word.getValue(), view.label.getText());
-        assertEquals(word.getValue(), view.getLabel().getText());
         assertEquals(position.getX(), view.label.getX());
         assertEquals(position.getY(), view.label.getY());
     }

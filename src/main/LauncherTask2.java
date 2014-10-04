@@ -12,7 +12,7 @@ import javax.swing.*;
 public class LauncherTask2 {
 
     public static void main(String[] args) {
-        JFrame frame = new MainView();
+        JFrame frame = MainView.getInstance();
         frame.setVisible(true);
     }
 }

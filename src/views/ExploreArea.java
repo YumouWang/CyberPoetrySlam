@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controller.Search;
+import controllers.Search;
 
 public class ExploreArea extends JFrame {
 

@@ -1,18 +1,14 @@
 package views;
 
-import model.Position;
-import model.Word;
-import model.WordType;
+import controllers.MouseInputController;
+import models.Position;
+import models.Word;
+import models.WordType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -23,17 +19,23 @@ import java.util.Random;
  *
  * Created by Nathan on 10/3/2014.
  */
-public class MainView extends JFrame implements MouseListener, MouseMotionListener {
+public class MainView extends JFrame {
+
+    static MainView instance;
 
     Collection<AbstractWordView> words;
 
-    AbstractWordView selectedWord;
-    JPanel contentPane;
-    Position mouseDownPosition;
+    public static MainView getInstance() {
+        if(instance == null) {
+            instance = new MainView();
+        }
+        return instance;
+    }
 
-    public MainView() {
+    private MainView() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 408);
+        JPanel contentPane;
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -60,69 +62,15 @@ public class MainView extends JFrame implements MouseListener, MouseMotionListen
         	int y = random.nextInt(200);
         	wordViewList[i] = new AbstractWordView(wordList[i], new Position(x, y));
         	words.add(wordViewList[i]);
-        	contentPane.add(wordViewList[i].getLabel());
+        	contentPane.add(wordViewList[i].label);
         	i ++;
         }
-        contentPane.addMouseListener(this);
-        contentPane.addMouseMotionListener(this);
+        MouseInputController mouseInputController = MouseInputController.getInstance();
+        contentPane.addMouseListener(mouseInputController);
+        contentPane.addMouseMotionListener(mouseInputController);
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        mouseDownPosition = new Position(e.getX(), e.getY());
-        selectedWord = null;
-        for(AbstractWordView word: words) {
-            if(word.isClicked(mouseDownPosition)) {
-                selectedWord = word;
-                break;
-            }
-        }
+    public Collection<AbstractWordView> getWords() {
+        return words;
     }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        if(selectedWord != null) {
-            Position positionDiff = new Position(e.getX() - mouseDownPosition.getX(), e.getY() - mouseDownPosition.getY());
-            selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
-            boolean isOverlapping = false;
-            boolean isAdjacent = false;
-            for (AbstractWordView word : words) {
-                if(!word.equals(selectedWord)) {
-                    if (word.isOverlapping(selectedWord)) {
-                        isOverlapping = true;
-                    }
-                    AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
-                    if(adjacencyType != AdjacencyType.NOT_ADJACENT) {
-                        isAdjacent = true;
-                        word.label.setBackground(Color.GREEN);
-                    } else {
-                        word.label.setBackground(Color.LIGHT_GRAY);
-                    }
-                }
-            }
-            if(isOverlapping) {
-                selectedWord.label.setBackground(Color.RED);
-            } else if (isAdjacent) {
-                selectedWord.label.setBackground(Color.GREEN);
-            } else {
-                selectedWord.label.setBackground(Color.LIGHT_GRAY);
-            }
-        }
-        mouseDownPosition = new Position(e.getX(), e.getY());
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {}
-
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }

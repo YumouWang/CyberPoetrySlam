@@ -1,4 +1,4 @@
-package model;
+package models;
 
 /**
  * The Position model class

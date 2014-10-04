@@ -1,6 +1,6 @@
 package views;
 
-import model.Position;
+import models.Position;
 
 /**
  * Class for detecting if two words are close enough to be connected.

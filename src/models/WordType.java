@@ -1,4 +1,4 @@
-package model;
+package models;
 
 /**
  * Enum for each possible type of word

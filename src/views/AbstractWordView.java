@@ -1,8 +1,8 @@
 package views;
 
 import common.Constants;
-import model.AbstractWord;
-import model.Position;
+import models.AbstractWord;
+import models.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,12 +56,12 @@ public class AbstractWordView extends AbstractView {
         return returnType;
     }
 
-    private void updateView() {
-        label.setBounds(position.getX(), position.getY(), width, height);
+    public void setBackground(Color color) {
+        label.setBackground(color);
     }
 
-    public JLabel getLabel() {
-        return label;
+    private void updateView() {
+        label.setBounds(position.getX(), position.getY(), width, height);
     }
 
     public AbstractWord getWord() {

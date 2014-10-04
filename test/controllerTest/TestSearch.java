@@ -3,7 +3,7 @@ package controllerTest;
 import java.util.Hashtable;
 import java.util.Set;
 
-import controller.Search;
+import controllers.Search;
 
 public class TestSearch {
 	public static void main(String[] args) {

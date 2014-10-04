@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.util.Hashtable;
 import java.util.Set;

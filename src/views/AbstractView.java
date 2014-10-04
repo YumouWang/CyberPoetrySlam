@@ -1,6 +1,6 @@
 package views;
 
-import model.Position;
+import models.Position;
 
 /**
  * The base class for each view component of CyberPoetrySlam

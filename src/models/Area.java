@@ -44,25 +44,12 @@ public class Area extends Observable {
             }
         }
         // Result should only be null if either wordOne or wordTwo was a poem
-        // This if block is just checking that the state is consistent. It should
-        // never actually throw an exception
         if(result != null) {
-            // Update the model to reflect the new connection
-            // Adding and removing words from the areas should always work. If it doesn't,
-            // That means that the model does not match what is being displayed on the screen
-            // So they system is in an invalid state.
-            boolean isInvalidState = false;
             // Remove the old words from the area
-            if (!removeAbstractWord(wordOne))
-                isInvalidState = true;
-            if (!removeAbstractWord(wordTwo))
-                isInvalidState = true;
+            removeAbstractWord(wordOne);
+            removeAbstractWord(wordTwo);
             // Add the new word to the area, so the area views the row as one entity
-            if (!addAbstractWord(result))
-                isInvalidState = true;
-
-            if (isInvalidState)
-                throw new Exception("Invalid state detected! Model and view are inconsistent.");
+            addAbstractWord(result);
         }
         return result;
     }
@@ -102,26 +89,13 @@ public class Area extends Observable {
             }
             result = topPoem;
         }
-        // Result should only be null if either wordOne or wordTwo was a poem
-        // This if block is just checking that the state is consistent. It should
-        // never actually throw an exception
+        // Result should only be null if the words don't exist in this area
         if(result != null) {
             // Update the model to reflect the new connection
-            // Adding and removing words from the areas should always work. If it doesn't,
-            // That means that the model does not match what is being displayed on the screen
-            // So they system is in an invalid state.
-            boolean isInvalidState = false;
-            // Remove the old words from the area
-            if (!removeAbstractWord(wordOne))
-                isInvalidState = true;
-            if (!removeAbstractWord(wordTwo))
-                isInvalidState = true;
-            // Add the new word to the area, so the area views the row as one entity
-            if (!addAbstractWord(result))
-                isInvalidState = true;
-
-            if (isInvalidState)
-                throw new Exception("Invalid state detected! Model and view are inconsistent.");
+            removeAbstractWord(wordOne);
+            removeAbstractWord(wordTwo);
+            // Add the new word to the area, so the area views the poem as one entity
+            addAbstractWord(result);
         }
         return result;
     }

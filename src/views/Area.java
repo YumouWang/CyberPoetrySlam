@@ -28,15 +28,14 @@ public class Area extends JFrame {
 		upa.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		ProtectedArea pa = new ProtectedArea();
-		
-	
-		upa.setBounds(0, 141, 433, 121);
+
 		contentPane.setLayout(null);
+		
+		upa.setBounds(0, 141, 433, 121);
 		contentPane.add(upa);
 		upa.setLayout(null);
 		
 		pa.setBounds(0, 0, 433, 141);
-		contentPane.setLayout(null);
 		contentPane.add(pa);
 		pa.setLayout(null);
 		

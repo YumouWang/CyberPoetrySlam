@@ -80,9 +80,13 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
         public void mouseDragged(MouseEvent e) {
             if(selectedWord != null) {
                 Position positionDiff = new Position(e.getX() - mouseDownPosition.getX(), e.getY() - mouseDownPosition.getY());
-                Position originalPosition = new Position(selectedWord.getPosition().getX(),selectedWord.getPosition().getY());
+                Position originalPosition = new Position(selectedWord.getPosition().getX(), selectedWord.getPosition().getY());
                 selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
+                if(selectedWord.getPosition().getX() < 0 || selectedWord.getPosition().getX() > 370 || selectedWord.getPosition().getY() < 0 || selectedWord.getPosition().getY() > 110) {
+                	selectedWord.moveTo(originalPosition);
+                }
             }
+            
             mouseDownPosition = new Position(e.getX(), e.getY());
         }
 

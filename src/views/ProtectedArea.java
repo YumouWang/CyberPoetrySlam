@@ -84,6 +84,9 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
             selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
             boolean isOverlapping = false;
             boolean isAdjacent = false;
+            if(selectedWord.getPosition().getX() < 0 || selectedWord.getPosition().getX() > 370 || selectedWord.getPosition().getY() < 0 || selectedWord.getPosition().getY() > 110) {
+            	selectedWord.moveTo(originalPosition);
+            }
             for (AbstractWordView word : words) {
                 if(!word.equals(selectedWord)) {
                     if (word.isOverlapping(selectedWord)) {

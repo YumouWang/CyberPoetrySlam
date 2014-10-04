@@ -60,6 +60,26 @@ public class RowTest {
     }
 
     @Test
+    public void testConnectRow() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        Word wordFour = new Word("City", WordType.ANY);
+        List<Word> wordsOne = new ArrayList<Word>();
+        wordsOne.add(wordOne);
+        wordsOne.add(wordTwo);
+        List<Word> wordsTwo = new ArrayList<Word>();
+        wordsTwo.add(wordThree);
+        wordsTwo.add(wordFour);
+
+        Row rowOne = new Row(wordsOne);
+        Row rowTwo = new Row(wordsTwo);
+        assertEquals("Chair Table", rowOne.getValue());
+        rowOne.connect(rowTwo);
+        assertEquals("Chair Table House City", rowOne.getValue());
+    }
+
+    @Test
     public void testConnectToFront() throws Exception {
         Word wordOne = new Word("Chair", WordType.NOUN);
         Word wordTwo = new Word("Table", WordType.ADVERB);

@@ -49,9 +49,9 @@ public class AbstractWordView extends AbstractView {
         } else if(right.isOverlapping(otherWord)) {
             returnType = AdjacencyType.LEFT;
         } else if(above.isOverlapping(otherWord)) {
-//            returnType = AdjacencyType.BELOW;
+            returnType = AdjacencyType.BELOW;
         } else if(below.isOverlapping(otherWord)) {
-//            returnType = AdjacencyType.ABOVE;
+            returnType = AdjacencyType.ABOVE;
         }
         return returnType;
     }

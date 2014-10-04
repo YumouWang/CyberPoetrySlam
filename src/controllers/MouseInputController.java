@@ -82,26 +82,28 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Collection<AbstractWordView> words = MainView.getInstance().getWords();
-        AbstractWordView connectTarget = null;
-        for (AbstractWordView word : words) {
-            if(!word.equals(selectedWord)) {
-                AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
-                if(adjacencyType != AdjacencyType.NOT_ADJACENT) {
-                    connectTarget = word;
-                    break;
+        if(selectedWord != null) {
+            Collection<AbstractWordView> words = MainView.getInstance().getWords();
+            AbstractWordView connectTarget = null;
+            for (AbstractWordView word : words) {
+                if (!word.equals(selectedWord)) {
+                    AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
+                    if (adjacencyType != AdjacencyType.NOT_ADJACENT) {
+                        connectTarget = word;
+                        break;
+                    }
                 }
             }
-        }
-        if(connectTarget != null) {
-            ConnectionController controller = new ConnectionController();
-            try {
-                controller.connect(selectedWord, connectTarget);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-                System.exit(1);
+            if (connectTarget != null) {
+                ConnectionController controller = new ConnectionController();
+                try {
+                    controller.connect(selectedWord, connectTarget);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    System.exit(1);
+                }
+                MainView.getInstance().refresh();
             }
-            MainView.getInstance().refresh();
         }
     }
 

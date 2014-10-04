@@ -24,6 +24,7 @@ public class MainView extends JFrame {
     static MainView instance;
 
     Collection<AbstractWordView> words;
+    JPanel contentPane;
 
     public static MainView getInstance() {
         if(instance == null) {
@@ -35,7 +36,6 @@ public class MainView extends JFrame {
     private MainView() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 408);
-        JPanel contentPane;
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -48,9 +48,9 @@ public class MainView extends JFrame {
         wordsList.put("word2", WordType.ADVERB);
         wordsList.put("word3", WordType.NOUN);
         wordsList.put("word4", WordType.VERB);
-        
+
         Word[] wordList = new Word[wordsList.size()];
-        AbstractWordView[] wordViewList = new AbstractWordView[wordsList.size()]; 
+        AbstractWordView[] wordViewList = new AbstractWordView[wordsList.size()];
 
         int i = 0;
         for(Iterator it = wordsList.keySet().iterator(); it.hasNext();) {
@@ -68,6 +68,21 @@ public class MainView extends JFrame {
         MouseInputController mouseInputController = MouseInputController.getInstance();
         contentPane.addMouseListener(mouseInputController);
         contentPane.addMouseMotionListener(mouseInputController);
+    }
+
+    public void addAbstractWordView(AbstractWordView newWord) {
+        words.add(newWord);
+        contentPane.add(newWord.label);
+    }
+
+    public boolean removeAbstractWordView(AbstractWordView oldWord) {
+        contentPane.remove(oldWord.label);
+        return words.remove(oldWord);
+    }
+
+    public void refresh() {
+        contentPane.revalidate();
+        contentPane.repaint();
     }
 
     public Collection<AbstractWordView> getWords() {

@@ -24,6 +24,10 @@ public class Row extends AbstractWord {
         words.add(word);
     }
 
+    public void connect(Row row) {
+        words.addAll(row.getWords());
+    }
+
     public void connectToFront(Word word) {
         words.add(0, word);
     }

@@ -18,7 +18,7 @@ public class AbstractWordView extends AbstractView {
     JLabel label;
 
     public AbstractWordView(AbstractWord word, Position position) {
-        super(position, 80, 20);
+        super(position, 100, 20);
         this.word = word;
         label = new JLabel(word.getValue());
         updateView();
@@ -49,9 +49,9 @@ public class AbstractWordView extends AbstractView {
         } else if(right.isOverlapping(otherWord)) {
             returnType = AdjacencyType.LEFT;
         } else if(above.isOverlapping(otherWord)) {
-            returnType = AdjacencyType.BELOW;
+//            returnType = AdjacencyType.BELOW;
         } else if(below.isOverlapping(otherWord)) {
-            returnType = AdjacencyType.ABOVE;
+//            returnType = AdjacencyType.ABOVE;
         }
         return returnType;
     }

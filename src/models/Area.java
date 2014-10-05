@@ -11,6 +11,10 @@ public class Area extends Observable {
 
     Collection<AbstractWord> abstractWordCollection;
 
+    /**
+     * Constructor
+     * @param words The collection of words to start in this area
+     */
     public Area(Collection<AbstractWord> words) {
         this.abstractWordCollection = new HashSet<AbstractWord>();
         if(words != null) {
@@ -18,7 +22,13 @@ public class Area extends Observable {
         }
     }
 
-    public AbstractWord connectHorizontal(AbstractWord wordOne, AbstractWord wordTwo) throws Exception {
+    /**
+     * Connects a word in this area with another word in this area horizontally
+     * @param wordOne The word on the left
+     * @param wordTwo The word on the right
+     * @return Returns the connected word
+     */
+    public AbstractWord connectHorizontal(AbstractWord wordOne, AbstractWord wordTwo) {
         AbstractWord result = null;
 
         // Check that the move is valid before we do it
@@ -54,7 +64,13 @@ public class Area extends Observable {
         return result;
     }
 
-    public AbstractWord connectVertical(AbstractWord wordOne, AbstractWord wordTwo) throws Exception {
+    /**
+     * Connects a word in this area with another word in this area vertically
+     * @param wordOne The word on the top
+     * @param wordTwo The word on the bottom
+     * @return Returns the connected word
+     */
+    public AbstractWord connectVertical(AbstractWord wordOne, AbstractWord wordTwo) {
         AbstractWord result = null;
 
         // Check that the move is valid before we do it
@@ -100,14 +116,28 @@ public class Area extends Observable {
         return result;
     }
 
+    /**
+     * Adds a word to this area
+     * @param word The word to add to the area
+     * @return Returns whether the word was added successfully
+     */
     public boolean addAbstractWord(AbstractWord word) {
         return abstractWordCollection.add(word);
     }
 
+    /**
+     * Removes a word from this area
+     * @param word The word to remove from the area
+     * @return Returns whether the word was removed successfully
+     */
     public boolean removeAbstractWord(AbstractWord word) {
         return abstractWordCollection.remove(word);
     }
 
+    /**
+     * Gets the collection of words in this area
+     * @return Returns the collection of words
+     */
     public Collection<AbstractWord> getAbstractWordCollection() {
         return abstractWordCollection;
     }

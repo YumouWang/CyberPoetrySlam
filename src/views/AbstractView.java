@@ -12,12 +12,23 @@ public abstract class AbstractView {
     int width;
     int height;
 
+    /**
+     * Constructor
+     * @param position The position of the view object
+     * @param width The width of the view object
+     * @param height The height of the view object
+     */
     public AbstractView(Position position, int width, int height) {
         this.position = position;
         this.width = width;
         this.height = height;
     }
 
+    /**
+     * Determines whether a position is inside of this view object
+     * @param click The position of the click
+     * @return Returns whether this view object was clicked
+     */
     public boolean isClicked(Position click) {
         boolean isClicked = false;
         if(position.getX() < click.getX() && click.getX() < position.getX() + width
@@ -27,6 +38,11 @@ public abstract class AbstractView {
         return isClicked;
     }
 
+    /**
+     * Determines whether this view object is overlapping a given view
+     * @param otherView The other view
+     * @return Returns whether this view overlaps with the other view
+     */
     public boolean isOverlapping(AbstractView otherView) {
         boolean isOverlapping = false;
         Position otherPosition = otherView.getPosition();
@@ -43,6 +59,10 @@ public abstract class AbstractView {
         return isOverlapping;
     }
 
+    /**
+     * Gets the position of this view
+     * @return Returns the position of this view
+     */
     public Position getPosition() {
         return position;
     }

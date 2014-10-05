@@ -26,6 +26,11 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     MainView mainView;
     GameState gameState;
 
+    /**
+     * Constructor
+     * @param mainView The view to update when handling mouse events
+     * @param gameState The gameState to enact changes on
+     */
     public MouseInputController(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.gameState = gameState;
@@ -93,12 +98,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
             }
             if (connectTarget != null) {
                 ConnectionController controller = new ConnectionController(mainView, gameState);
-                try {
-                    controller.connect(selectedWord, connectTarget);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.exit(1);
-                }
+                controller.connect(selectedWord, connectTarget);
                 mainView.refresh();
             }
         }

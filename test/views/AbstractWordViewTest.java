@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.awt.*;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class AbstractWordViewTest {
 
@@ -299,5 +298,15 @@ public class AbstractWordViewTest {
         AbstractWordView view = new AbstractWordView(word, position);
         boolean result = view.isClicked(new Position(-1, -1));
         assertFalse(result);
+    }
+
+    @Test
+    public void testSetSize() throws Exception {
+        AbstractWord word = new Word("View", WordType.PREFIX);
+        Position position = new Position(0, 0);
+        AbstractWordView view = new AbstractWordView(word, position);
+        view.setSize(9, 11);
+        assertEquals(9, view.width);
+        assertEquals(11, view.height);
     }
 }

@@ -1,6 +1,7 @@
 package controllers;
 
-import models.*;
+import models.AbstractWord;
+import models.GameState;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
@@ -15,12 +16,22 @@ public class ConnectionController {
     MainView display;
     GameState gameState;
 
+    /**
+     * Constructor
+     * @param display The MainView to update once a connection has been made
+     * @param gameState The GameState to perform connections on
+     */
     public ConnectionController(MainView display, GameState gameState) {
         this.display = display;
         this.gameState = gameState;
     }
 
-    public void connect(AbstractWordView wordOne, AbstractWordView wordTwo) throws Exception {
+    /**
+     * Connects two words. Handles deciding how they should be connected based on their positions.
+     * @param wordOne The first word to connect
+     * @param wordTwo The second word to connect
+     */
+    public void connect(AbstractWordView wordOne, AbstractWordView wordTwo) {
         AdjacencyType adjacencyType = wordOne.isAdjacentTo(wordTwo);
         AbstractWordView newWord = null;
         switch(adjacencyType) {
@@ -46,7 +57,13 @@ public class ConnectionController {
         }
     }
 
-    private AbstractWordView connectHorizontal(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) throws Exception {
+    /**
+     * Private helper for ConnectionController. Connects wordViewOne to wordViewTwo horizontally
+     * @param wordViewOne The word to connect to the left
+     * @param wordViewTwo The word to connect to the right
+     * @return Returns the AbstractWordView of the connected word
+     */
+    private AbstractWordView connectHorizontal(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
@@ -59,7 +76,13 @@ public class ConnectionController {
         return resultView;
     }
 
-    private AbstractWordView connectVertical(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) throws Exception {
+    /**
+     * Private helper for ConnectionController. Connects wordViewOne to wordViewTwo vertically
+     * @param wordViewOne The word to connect to the top
+     * @param wordViewTwo The word to connect to the bottom
+     * @return Returns the AbstractWordView of the connected word
+     */
+    private AbstractWordView connectVertical(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 

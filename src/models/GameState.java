@@ -13,6 +13,9 @@ public class GameState {
     Area protectedArea;
     Area unprotectedArea;
 
+    /**
+     * Constructor
+     */
     public GameState() {
         Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
         protectedWords.add(new Word("Cat", WordType.NOUN));
@@ -26,6 +29,11 @@ public class GameState {
         unprotectedArea = new Area(null);
     }
 
+    /**
+     * Protects a word
+     * @param word The word to protect
+     * @return Returns whether the word was successfully protected (false if already protected)
+     */
     public boolean protect(AbstractWord word) {
         boolean success = false;
         if(unprotectedArea.removeAbstractWord(word)) {
@@ -34,6 +42,11 @@ public class GameState {
         return success;
     }
 
+    /**
+     * Unprotects a word
+     * @param word The word to unprotect
+     * @return Returns whether the word was successfully unprotected (false if already unprotected)
+     */
     public boolean unprotect(AbstractWord word) {
         boolean success = false;
         if(protectedArea.removeAbstractWord(word)) {
@@ -42,10 +55,18 @@ public class GameState {
         return success;
     }
 
+    /**
+     * Gets the protected area
+     * @return The protected area
+     */
     public Area getProtectedArea() {
         return protectedArea;
     }
 
+    /**
+     * Gets the unprotected area
+     * @return The unprotected area
+     */
     public Area getUnprotectedArea() {
         return unprotectedArea;
     }

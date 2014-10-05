@@ -15,7 +15,7 @@ public class LauncherTask2 {
         // Initialize the GameState object
         GameState gameState = new GameState();
         // Initialize the MainView pointing at the GameState
-        MainView mainView = new MainView(new GameState());
+        MainView mainView = new MainView(gameState);
         // Add a controller to handle user input
         mainView.addMouseInputController(new MouseInputController(mainView, gameState));
         // Display the views

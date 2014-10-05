@@ -35,7 +35,7 @@ public class MouseInputControllerTest {
     }
 
     @Test
-    public void testMousePressed() throws Exception {
+    public void testMousePressedNothingSelected() throws Exception {
         MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 9, 9, 1, false);
         assertNull(controller.selectedWord);
         assertNull(controller.mouseDownPosition);
@@ -47,24 +47,65 @@ public class MouseInputControllerTest {
     }
 
     @Test
-    public void testMousePressed2() throws Exception {
+    public void testMousePressedSelectSomething() throws Exception {
         MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 12, 12, 1, false);
         assertNull(controller.selectedWord);
         assertNull(controller.mouseDownPosition);
 
         controller.mousePressed(event);
-        assertEquals(controller.selectedWord, wordViewOne);
+        assertEquals(wordViewOne, controller.selectedWord);
         assertEquals(12, controller.mouseDownPosition.getX());
         assertEquals(12, controller.mouseDownPosition.getY());
     }
 
     @Test
-    public void testMouseDragged() throws Exception {
+    public void testMouseDraggedNothingSelected() throws Exception {
+        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 9, 9, 1, false);
+        assertNull(controller.selectedWord);
+        assertNull(controller.mouseDownPosition);
 
+        controller.mouseDragged(event);
+        assertNull(controller.selectedWord);
+        assertEquals(9, controller.mouseDownPosition.getX());
+        assertEquals(9, controller.mouseDownPosition.getY());
     }
 
     @Test
-    public void testMouseReleased() throws Exception {
+    public void testMouseDraggedSomethingSelected() throws Exception {
+        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 15, 15, 1, false);
+        controller.selectedWord = wordViewOne;
+        controller.mouseDownPosition = new Position(11, 11);
 
+        controller.mouseDragged(event);
+        assertEquals(wordViewOne, controller.selectedWord);
+        assertEquals(15, controller.mouseDownPosition.getX());
+        assertEquals(15, controller.mouseDownPosition.getY());
+        assertEquals(14, wordViewOne.getPosition().getX());
+        assertEquals(14, wordViewOne.getPosition().getY());
+    }
+
+    @Test
+    public void testMouseReleasedNothingSelected() throws Exception {
+        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 9, 9, 1, false);
+        assertNull(controller.selectedWord);
+        assertNull(controller.mouseDownPosition);
+
+        controller.mouseReleased(event);
+        assertNull(controller.selectedWord);
+        assertNull(controller.mouseDownPosition);
+    }
+
+    @Test
+    public void testMouseReleasedSomethingSelected() throws Exception {
+        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 13, 13, 1, false);
+        controller.selectedWord = wordViewOne;
+        controller.mouseDownPosition = new Position(11, 11);
+
+        controller.mouseReleased(event);
+        assertEquals(wordViewOne, controller.selectedWord);
+        assertEquals(11, controller.mouseDownPosition.getX());
+        assertEquals(11, controller.mouseDownPosition.getY());
+        assertEquals(10, wordViewOne.getPosition().getX());
+        assertEquals(10, wordViewOne.getPosition().getY());
     }
 }

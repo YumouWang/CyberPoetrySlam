@@ -98,12 +98,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
             }
             if (connectTarget != null) {
                 ConnectionController controller = new ConnectionController(mainView, gameState);
-                try {
-                    controller.connect(selectedWord, connectTarget);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.exit(1);
-                }
+                controller.connect(selectedWord, connectTarget);
                 mainView.refresh();
             }
         }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class PoemTest {
 
@@ -344,11 +343,7 @@ public class PoemTest {
 
         Poem poem = new Poem(rows);
         assertEquals("Dog Cat\nMouse Tiger\nHawk Seagull Fish", poem.getValue());
-        try {
-            assertTrue(poem.disconnectEdgeWord(wordSix));
-        } catch(Exception e) {
-            assertEquals(e.getMessage(), "Invalid disconnect");
-        }
+        assertFalse(poem.disconnectEdgeWord(wordSix));
         assertEquals("Dog Cat\nMouse Tiger\nHawk Seagull Fish", poem.getValue());
     }
 }

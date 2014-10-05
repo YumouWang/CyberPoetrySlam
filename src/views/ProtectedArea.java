@@ -39,7 +39,7 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
 		words = new HashSet<AbstractWordView>();
 
         Hashtable<String,WordType> wordsList = new Hashtable<String,WordType>();
-        wordsList.put("word1", WordType.ADJECTIVE);
+        wordsList.put("word1word", WordType.ADJECTIVE);
         wordsList.put("word2", WordType.ADVERB);
         wordsList.put("word3", WordType.NOUN);
         wordsList.put("word4", WordType.VERB);
@@ -60,9 +60,16 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
         	panel.add(wordViewList[i].label);
         	i ++;
         }
+        
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
     }
+	
+//	public void addWordLabel() {
+//		System.out.println("adddd");
+//		this.panel.add(new AbstractWordView(new Word("hehe",WordType.ANY),new Position(0,0)).label);
+//		this.panel.updateUI();
+//	}
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -97,7 +104,9 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
                         isAdjacent = true;
                         word.label.setBackground(Color.GREEN);
                     } else {
-                        word.label.setBackground(Color.LIGHT_GRAY);
+                    	if(!word.label.getBackground().equals(Color.GREEN)) {
+                    		word.label.setBackground(Color.LIGHT_GRAY);
+                    	}                    		
                     }
                 }
             }
@@ -107,7 +116,7 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
             } else if (isAdjacent) {
                 selectedWord.label.setBackground(Color.GREEN);
             } else {
-                selectedWord.label.setBackground(Color.LIGHT_GRAY);
+            	selectedWord.label.setBackground(Color.LIGHT_GRAY);
             }
         }
         mouseDownPosition = new Position(e.getX(), e.getY());

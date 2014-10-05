@@ -18,7 +18,7 @@ public class AbstractWordView extends AbstractView {
     JLabel label;
 
     public AbstractWordView(AbstractWord word, Position position) {
-        super(position, 100, 20);
+        super(position, word.getValue().length() * 8, 20);
         this.word = word;
         label = new JLabel(word.getValue());
         updateView();

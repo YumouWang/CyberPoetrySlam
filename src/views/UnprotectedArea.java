@@ -1,6 +1,8 @@
 package views;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -10,12 +12,14 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Random;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
-import controllers.MouseInputController;
 import models.Position;
 import models.Word;
 import models.WordType;
+
 import javax.swing.border.LineBorder;
 
 public class UnprotectedArea extends JPanel implements MouseListener, MouseMotionListener {
@@ -24,20 +28,28 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	 * Create the panel.
 	 */
 	Collection<AbstractWordView> words;
-	AbstractWordView selectedWord;
+	public AbstractWordView selectedWord;
 	Position mouseDownPosition;
+	JPopupMenu popupMenu;
+	JPanel panel;
+	MenuItemMonitor menuItemMonitor;
+	
+	public AbstractWordView clickedWord;
+	public AbstractWordView currentWord;
+	public Word[] wordList;
+	public AbstractWordView[] wordViewList;
 	
 	public UnprotectedArea() {
 		words = new HashSet<AbstractWordView>();
-
         Hashtable<String,WordType> wordsList = new Hashtable<String,WordType>();
         wordsList.put("word1", WordType.ADJECTIVE);
         wordsList.put("word2", WordType.ADVERB);
         wordsList.put("word3", WordType.NOUN);
         wordsList.put("word4", WordType.VERB);
 
-        Word[] wordList = new Word[wordsList.size()];
-        AbstractWordView[] wordViewList = new AbstractWordView[wordsList.size()];
+        wordList = new Word[wordsList.size()];
+        wordViewList = new AbstractWordView[wordsList.size()];
+        selectedWord = null;
 
         int i = 0;
         for(Iterator it = wordsList.keySet().iterator(); it.hasNext();) {
@@ -49,13 +61,15 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
         	int y = random.nextInt(100);
         	wordViewList[i] = new AbstractWordView(wordList[i], new Position(x, y));
         	words.add(wordViewList[i]);
+        	
         	add(wordViewList[i].label);
+        	
         	i ++;
         }
         
         setLayout(null);
         
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
         panel.setBounds(0, 0, 450, 300);
         add(panel);
@@ -67,10 +81,10 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
         @Override
         public void mousePressed(MouseEvent e) {
             mouseDownPosition = new Position(e.getX(), e.getY());
-            selectedWord = null;
+            //selectedWord = null;
             for(AbstractWordView word: words) {
                 if(word.isClicked(mouseDownPosition)) {
-                    selectedWord = word;
+                    selectedWord = word;       
                     break;
                 }
             }
@@ -97,7 +111,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -113,16 +127,28 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 			// TODO Auto-generated method stub
 			
 		}
-
+		
 		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
+		public void mouseReleased(MouseEvent e) {			
+			if(selectedWord != null) {
+				menuItemMonitor = new MenuItemMonitor();
+				popupMenu = new JPopupMenu();
+				String command = "protect"; 
+				JMenuItem item = new JMenuItem(command);
+				popupMenu.add(item);
+				item.setActionCommand(command); 
+				item.addActionListener(menuItemMonitor); 
+				if (e.isPopupTrigger()) {
+					popupMenu.show(e.getComponent(), e.getX(), e.getY());  
+				}
+			}
 		}
-        
-        
-        
-
-	
-
+		
+		private class MenuItemMonitor implements ActionListener {
+	        @Override 
+	        public void actionPerformed(ActionEvent event) { 
+	            System.out.println(selectedWord.getWord().getValue());
+	            selectedWord.label.setVisible(false);
+	        } 
+	    } 
 }

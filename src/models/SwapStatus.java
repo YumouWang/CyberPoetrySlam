@@ -1,7 +1,7 @@
 package models;
 
 /**
- * Enum for each possible type of word
+ * Enum for each possible swap status
  *
  * Created by Yumou on 10/3/2014.
  */

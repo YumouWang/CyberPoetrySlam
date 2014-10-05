@@ -13,6 +13,11 @@ public class Word extends AbstractWord {
     String value;
     WordType type;
 
+    /**
+     * Constructor
+     * @param value The value of the word
+     * @param type The type of the word
+     */
     public Word(String value, WordType type) {
         super();
         this.value = value;
@@ -24,6 +29,11 @@ public class Word extends AbstractWord {
         return value;
     }
 
+    /**
+     * Connects a word to the right of this word
+     * @param word The word to connect
+     * @return Returns a row containing both words
+     */
     public Row connect(Word word) {
         List<Word> words = new ArrayList<Word>();
         words.add(this);
@@ -31,6 +41,11 @@ public class Word extends AbstractWord {
         return new Row(words);
     }
 
+    /**
+     * Connects a row to the right of this word
+     * @param row The row to connect
+     * @return Returns the row with this word connected to the beginning
+     */
     public Row connect(Row row) {
         row.connectToFront(this);
         return row;

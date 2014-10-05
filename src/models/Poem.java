@@ -13,6 +13,10 @@ public class Poem extends AbstractWord {
 
     List<Row> rows;
 
+    /**
+     * Constructor
+     * @param rows The rows in this poem
+     */
     public Poem(List<Row> rows) {
         super();
         this.rows = new ArrayList<Row>();
@@ -21,20 +25,33 @@ public class Poem extends AbstractWord {
         }
     }
 
+    /**
+     * Connects a row to the bottom of this poem
+     * @param row The row to connect
+     */
     public void connect(Row row) {
         rows.add(row);
     }
 
+    /**
+     * Connects a poem to the bottom of this poem
+     * @param poem The poem to connect
+     */
     public void connect(Poem poem) {
         rows.addAll(poem.getRows());
     }
 
+    /**
+     * Disconnects a row from this poem
+     * @param row The row to disconnect
+     * @return If the poem was split, returns the second poem. Otherwise, returns null
+     */
     public Poem disconnect(Row row) {
         int index = rows.indexOf(row);
+        Poem newPoem = null;
         // If the row is first or last, remove it and we're done
         if(index == 0 || index == rows.size() - 1) {
             rows.remove(row);
-            return null;
         } else {
             // Otherwise, we need to split the poem
             // Remove the row
@@ -46,17 +63,22 @@ public class Poem extends AbstractWord {
                 newPoemRows.add(removedRow);
             }
             // Return those rows as a new poem
-            return new Poem(newPoemRows);
+            newPoem = new Poem(newPoemRows);
         }
+        return newPoem;
     }
 
-    public boolean disconnectEdgeWord(Word word) throws Exception {
+    /**
+     * Disconnects a word from one of the rows in this poem if the word is an edge word and is in the poem
+     * @param word The word to disconnect
+     * @return Returns whether the disconnect was successful. Returns false if the word is not an edge word or is not in the poem
+     */
+    public boolean disconnectEdgeWord(Word word) {
         boolean successful = false;
         for(Row row: rows) {
             for(Word rowWord: row.getWords()) {
                 if(word.equals(rowWord)) {
-                    row.disconnect(rowWord);
-                    successful = true;
+                    successful = row.disconnect(rowWord);
                     break;
                 }
             }
@@ -76,6 +98,10 @@ public class Poem extends AbstractWord {
         return poemContents.substring(1);
     }
 
+    /**
+     * Gets all the rows in the poem
+     * @return Returns a list of rows in the poem
+     */
     public List<Row> getRows() {
         return rows;
     }

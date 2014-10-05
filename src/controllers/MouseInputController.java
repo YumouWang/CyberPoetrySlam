@@ -26,6 +26,11 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     MainView mainView;
     GameState gameState;
 
+    /**
+     * Constructor
+     * @param mainView The view to update when handling mouse events
+     * @param gameState The gameState to enact changes on
+     */
     public MouseInputController(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.gameState = gameState;

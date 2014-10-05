@@ -146,7 +146,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 		
 		private class MenuItemMonitor implements ActionListener {
 	        @Override 
-	        public void actionPerformed(ActionEvent event) { 
+	        public void actionPerformed(ActionEvent event) {
 	            System.out.println(selectedWord.getWord().getValue());
 	            selectedWord.label.setVisible(false);
 	        } 

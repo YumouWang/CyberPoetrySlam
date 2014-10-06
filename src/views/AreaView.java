@@ -13,6 +13,8 @@ import java.awt.Color;
 public class AreaView extends JFrame {
 
 	private JPanel contentPane;
+	UnprotectedArea upa;
+	ProtectedArea pa;
 
 	/**
 	 * Create the frame.
@@ -26,10 +28,12 @@ public class AreaView extends JFrame {
 		setContentPane(contentPane);
 		
 		
-		UnprotectedArea upa = new UnprotectedArea(gameState);
+		upa = new UnprotectedArea(this, gameState);
+		upa.Unprotect(gameState);
 		upa.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
-		ProtectedArea pa = new ProtectedArea(gameState);
+		pa = new ProtectedArea(gameState);
+		pa.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		contentPane.setLayout(null);
 		
@@ -42,5 +46,23 @@ public class AreaView extends JFrame {
 		pa.setLayout(null);
 		
 	}
+	public void addAbstractWordView(AbstractWordView newWord) {
+        //words.add(newWord);
+        contentPane.add(newWord.label);
+        
+    }
+	
+    public void removeAbstractWordView(AbstractWordView oldWord) {
+        //contentPane.remove(oldWord.label);
+    	System.out.println(oldWord.getWord().getValue() + "---");
+    	contentPane.remove(upa.panel);
+    	contentPane.updateUI();
+    	upa.panel.remove(oldWord.label);
+    	oldWord.label.setVisible(false);
+    	//contentPane
+    	pa.updateUI();
+    	contentPane.add(upa);
+    	contentPane.updateUI();
+    }
 
 }

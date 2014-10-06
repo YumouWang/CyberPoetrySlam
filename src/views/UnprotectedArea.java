@@ -29,6 +29,8 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	/**
 	 * Create the panel.
 	 */
+	AreaView areaView;
+	GameState gameState;
 	Collection<AbstractWordView> words;
 	public AbstractWordView selectedWord;
 	Position mouseDownPosition;
@@ -41,7 +43,12 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	public Word[] wordList;
 	public AbstractWordView[] wordViewList;
 	
-	public UnprotectedArea(GameState gameState) {
+	public UnprotectedArea(AreaView areaView, GameState gameState) {
+        this.areaView = areaView;
+        this.gameState = gameState;
+    }
+	
+	public void Unprotect(GameState gameState) {
 		words = new HashSet<AbstractWordView>();
 		
 		Collection<AbstractWord> wordsList = new HashSet<AbstractWord>();
@@ -143,7 +150,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	        public void actionPerformed(ActionEvent event) {
 	            System.out.println(selectedWord.getWord().getValue());
 	            //selectedWord.label.setVisible(false);
-	            panel.remove(selectedWord.label);
+	            areaView.removeAbstractWordView(selectedWord);
 	        } 
 	    } 
 }

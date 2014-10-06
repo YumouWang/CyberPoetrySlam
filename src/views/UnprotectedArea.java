@@ -82,7 +82,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
         @Override
         public void mousePressed(MouseEvent e) {
             mouseDownPosition = new Position(e.getX(), e.getY());
-            //selectedWord = null;
+            selectedWord = null;
             for(AbstractWordView word: words) {
                 if(word.isClicked(mouseDownPosition)) {
                     selectedWord = word;       
@@ -146,7 +146,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 		}
 		
 		private class MenuItemMonitor implements ActionListener {
-	        @Override 
+	        @Override
 	        public void actionPerformed(ActionEvent event) {
 	            System.out.println(selectedWord.getWord().getValue());
 	            //selectedWord.label.setVisible(false);

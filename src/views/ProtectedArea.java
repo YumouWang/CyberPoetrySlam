@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import controllers.MouseInputController;
+import models.AbstractWord;
+import models.GameState;
 import models.Position;
 import models.Word;
 import models.WordType;
@@ -24,42 +26,41 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
 	 * Create the panel.
 	 */
 	Collection<AbstractWordView> words;
-	AbstractWordView selectedWord;
+	public AbstractWordView selectedWord;
 	Position mouseDownPosition;
-	JPanel panel = new JPanel();
+	JPanel panel;
 	
-	public ProtectedArea() {
-		setBorder(new LineBorder(new Color(0, 0, 0)));
-		setLayout(null);
-
-		panel.setBounds(0, 0, 450, 300);
-		add(panel);
-		panel.setLayout(null);
-		
+	public AbstractWordView clickedWord;
+	public AbstractWordView currentWord;
+	public Word[] wordList;
+	public AbstractWordView[] wordViewList;
+	
+	public ProtectedArea(GameState gameState) {
 		words = new HashSet<AbstractWordView>();
-
-        Hashtable<String,WordType> wordsList = new Hashtable<String,WordType>();
-        wordsList.put("word1word", WordType.ADJECTIVE);
-        wordsList.put("word2", WordType.ADVERB);
-        wordsList.put("word3", WordType.NOUN);
-        wordsList.put("word4", WordType.VERB);
-
-        Word[] wordList = new Word[wordsList.size()];
-        AbstractWordView[] wordViewList = new AbstractWordView[wordsList.size()];
-
-        int i = 0;
-        for(Iterator it = wordsList.keySet().iterator(); it.hasNext();) {
-        	String key = it.next().toString();
-        	WordType value = wordsList.get(key);
-        	wordList[i] = new Word(key,value);
+		
+		Collection<AbstractWord> wordsList = new HashSet<AbstractWord>();
+		
+		wordsList = gameState.getProtectedArea().getAbstractWordCollection();
+		
+        wordList = new Word[wordsList.size()];
+        wordViewList = new AbstractWordView[wordsList.size()];
+        selectedWord = null;
+        
+        for(AbstractWord word: wordsList) {
+        	
         	Random random = new Random();
         	int x = random.nextInt(300);
         	int y = random.nextInt(100);
-        	wordViewList[i] = new AbstractWordView(wordList[i], new Position(x, y));
-        	words.add(wordViewList[i]);
-        	panel.add(wordViewList[i].label);
-        	i ++;
+        	AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+        	words.add(view);
+        	add(view.label);
         }
+        setLayout(null);
+        
+        panel = new JPanel();
+        panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+        panel.setBounds(0, 0, 450, 300);
+        add(panel);
         
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);

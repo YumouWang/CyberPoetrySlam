@@ -29,7 +29,7 @@ public class AreaView extends JFrame {
 		UnprotectedArea upa = new UnprotectedArea(gameState);
 		upa.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
-		ProtectedArea pa = new ProtectedArea();
+		ProtectedArea pa = new ProtectedArea(gameState);
 
 		contentPane.setLayout(null);
 		

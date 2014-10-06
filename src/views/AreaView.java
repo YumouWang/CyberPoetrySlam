@@ -5,6 +5,9 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import models.GameState;
+
 import java.awt.Color;
 
 public class AreaView extends JFrame {
@@ -14,7 +17,7 @@ public class AreaView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AreaView() {
+	public AreaView(GameState gameState) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -22,7 +25,8 @@ public class AreaView extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		UnprotectedArea upa = new UnprotectedArea();
+		
+		UnprotectedArea upa = new UnprotectedArea(gameState);
 		upa.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		ProtectedArea pa = new ProtectedArea();

@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import models.AbstractWord;
+import models.GameState;
 import models.Position;
 import models.Word;
 import models.WordType;
@@ -39,34 +41,26 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	public Word[] wordList;
 	public AbstractWordView[] wordViewList;
 	
-	public UnprotectedArea() {
+	public UnprotectedArea(GameState gameState) {
 		words = new HashSet<AbstractWordView>();
-        Hashtable<String,WordType> wordsList = new Hashtable<String,WordType>();
-        wordsList.put("word1", WordType.ADJECTIVE);
-        wordsList.put("word2", WordType.ADVERB);
-        wordsList.put("word3", WordType.NOUN);
-        wordsList.put("word4", WordType.VERB);
-
+		
+		Collection<AbstractWord> wordsList = new HashSet<AbstractWord>();
+		
+		wordsList = gameState.getProtectedArea().getAbstractWordCollection();
+		
         wordList = new Word[wordsList.size()];
         wordViewList = new AbstractWordView[wordsList.size()];
         selectedWord = null;
-
-        int i = 0;
-        for(Iterator it = wordsList.keySet().iterator(); it.hasNext();) {
-        	String key = it.next().toString();
-        	WordType value = wordsList.get(key);
-        	wordList[i] = new Word(key,value);
+        
+        for(AbstractWord word: wordsList) {
+        	
         	Random random = new Random();
         	int x = random.nextInt(300);
         	int y = random.nextInt(100);
-        	wordViewList[i] = new AbstractWordView(wordList[i], new Position(x, y));
-        	words.add(wordViewList[i]);
-        	
-        	add(wordViewList[i].label);
-        	
-        	i ++;
+        	AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+        	words.add(view);
+        	add(view.label);
         }
-        
         setLayout(null);
         
         panel = new JPanel();
@@ -148,7 +142,8 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	        @Override 
 	        public void actionPerformed(ActionEvent event) {
 	            System.out.println(selectedWord.getWord().getValue());
-	            selectedWord.label.setVisible(false);
+	            //selectedWord.label.setVisible(false);
+	            panel.remove(selectedWord.label);
 	        } 
 	    } 
 }

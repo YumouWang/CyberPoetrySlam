@@ -58,6 +58,7 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
         setLayout(null);
         
         panel = new JPanel();
+        panel.setLayout(null);
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
         panel.setBounds(0, 0, 450, 300);
         add(panel);

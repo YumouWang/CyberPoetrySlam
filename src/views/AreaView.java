@@ -64,13 +64,13 @@ public class AreaView extends JFrame {
 		AbstractWordView view = new AbstractWordView(newWord.getWord(),
 				new Position(x, y));
 		// words.add(view);
-		//this.p1.remove(pa.panel);
-		this.pa.panel.add(view.label);
+		this.p1.remove(pa.panel);
+		this.p1.add(view.label);
 		this.pa.words.add(view);
 //		view.label.addMouseListener(pa);
 //		view.label.addMouseMotionListener(pa);
 		// pa.add(pa.panel);
-		//this.p1.add(pa.panel);
+		this.p1.add(pa.panel);
 		addMouseListener(this.pa);
 		addMouseMotionListener(this.pa);
 		//pa.updateUI();

@@ -51,6 +51,7 @@ public class AreaView extends JFrame {
 		// contentPane.remove(oldWord.label);
 		System.out.println(oldWord.getWord().getValue() + "---");
 		upa.remove(oldWord.label);
+		upa.words.remove(oldWord);
 		addAbstractWordView(oldWord);
 		// oldWord.label.setVisible(false);
 		// contentPane

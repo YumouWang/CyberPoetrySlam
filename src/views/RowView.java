@@ -1,5 +1,6 @@
 package views;
 
+import models.AbstractWord;
 import models.Position;
 import models.Row;
 import models.Word;
@@ -26,26 +27,15 @@ public class RowView extends AbstractWordView {
         super(row, position);
         List<Word> words = row.getWords();
         wordViews = new ArrayList<WordView>();
-        // Find all wordViews, and calculate total Width and height
-        int totalWidth = 0;
-        int tallestHeight = 0;
+
+        // Find all wordViews
         for(Word word: words) {
             WordView view = (WordView) mainView.getAbstractWordById(word.getId());
-
-            totalWidth += view.width;
-            if(view.height > tallestHeight) {
-                tallestHeight = view.height;
-            }
             wordViews.add(view);
         }
-        setSize(totalWidth, tallestHeight);
 
-        // Move all words to the appropriate locations
-        int currentWidthOffset = 0;
-        for(WordView view: wordViews) {
-            view.moveTo(new Position(position.getX() + currentWidthOffset, position.getY()));
-            currentWidthOffset += view.width;
-        }
+        calculateDimensions();
+        moveTo(position);
     }
 
     /**
@@ -73,5 +63,32 @@ public class RowView extends AbstractWordView {
         for(WordView view : wordViews) {
             view.setBackground(color);
         }
+    }
+
+    public void addWord(WordView wordView) {
+        wordViews.add(wordView);
+        calculateDimensions();
+    }
+
+    public void addWordToFront(WordView wordView) {
+        wordViews.add(0, wordView);
+        calculateDimensions();
+    }
+
+    public List<WordView> getWordViews() {
+        return wordViews;
+    }
+
+    private void calculateDimensions() {
+        // Find all wordViews, and calculate total Width and height
+        int totalWidth = 0;
+        int tallestHeight = 0;
+        for(WordView word: wordViews) {
+            totalWidth += word.width;
+            if(word.height > tallestHeight) {
+                tallestHeight = word.height;
+            }
+        }
+        setSize(totalWidth, tallestHeight);
     }
 }

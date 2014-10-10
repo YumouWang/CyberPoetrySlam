@@ -1,9 +1,6 @@
 package controllers;
 
-import models.AbstractWord;
-import models.GameState;
-import models.Poem;
-import models.Row;
+import models.*;
 import views.*;
 
 /**
@@ -67,13 +64,50 @@ public class ConnectionController {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
-        Row result = gameState.getProtectedArea().connectHorizontal(wordOne, wordTwo);
-        AbstractWordView resultView = null;
+        Row resultRow = gameState.getProtectedArea().connectHorizontal(wordOne, wordTwo);
+        RowView resultRowView = null;
 
-        if(result != null)
-            resultView = new RowView(result, wordViewOne.getPosition(), mainView);
+        if(resultRow != null) {
+            resultRowView = (RowView)mainView.getAbstractWordById(resultRow.getId());
+            // If a view for the row does not already exist, create it
+            if(resultRowView == null) {
+                resultRowView = new RowView(resultRow, wordViewOne.getPosition(), mainView);
+            } else {
+                // Otherwise, add the appropriate wordView to the row
+                //Cases: Word- Row, Row-word, Row-row
+                // Case: wordViewOne is the view for the resulting row
+                if(wordOne.getId() == resultRow.getId()) {
+                    // The first element was a row
+                    if(wordTwo instanceof Word) {
+                        // The first element was a row and the second element was a word
+                        WordView word = (WordView)wordViewTwo;
+                        resultRowView.addWord(word);
+                    } else if(wordTwo instanceof Row) {
+                        RowView secondRow = (RowView) wordViewTwo;
+                        for(WordView wordView : secondRow.getWordViews()) {
+                            resultRowView.addWord(wordView);
+                        }
+                    } else {
+                        System.out.println("In connectHorizontal the second word was not a row or word!");
+                        System.exit(1);
+                    }
+                    // Move all the words to the appropriate location
+                    resultRowView.moveTo(resultRowView.getPosition());
+                } else if(wordTwo.getId() == resultRow.getId()) {
+                    // The first element was a word and the second element was a row
+                    WordView word = (WordView)wordViewOne;
+                    resultRowView.addWordToFront(word);
+                    // Move all the words to the appropriate location
+                    resultRowView.moveTo(word.getPosition());
+                } else {
+                    // Should never hit this
+                    System.out.println("Something went wrong in connectHorizontal");
+                    System.exit(1);
+                }
+            }
+        }
 
-        return resultView;
+        return resultRowView;
     }
 
     /**

@@ -22,7 +22,7 @@ public class WordView extends AbstractWordView {
      */
     public WordView(AbstractWord word, Position position) {
         super(word, position);
-        setSize(word.getValue().length() * 7 + 6, 20);
+        setSize(word.getValue().length() * 8, 20);
         label = new JLabel(word.getValue());
         updateView();
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));

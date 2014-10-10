@@ -5,8 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,11 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import models.AbstractWord;
+import models.GameState;
 import controllers.Search;
 
 public class ExploreArea extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	private JTextField textField;
 	private JTextArea textArea;
 	private JComboBox<String> comboBox;
@@ -31,28 +32,30 @@ public class ExploreArea extends JFrame {
 	private JTable table;
 	private JScrollPane jScrollPane;
 	private JButton btnNewButton;
-	
-	Object[][] cellData;
+	private Object[][] cellData;
+	GameState gameState;
+	MainGUI mainGUI;
 	/**
 	 * Create the frame.
 	 */
 	public ExploreArea() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 408);
+		setBounds(100, 100, 278, 302);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.setBounds(0, 0, 284, 253);
 		
 		btnNewButton = new JButton("Search");
 		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setBackground(Color.WHITE);
 		
-		btnNewButton.setBounds(288, 10, 102, 23);
+		btnNewButton.setBounds(174, 11, 78, 23);
 		contentPane.add(btnNewButton);
 		
 		textField = new JTextField();
-		textField.setBounds(44, 11, 219, 23);
+		textField.setBounds(20, 11, 144, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -65,22 +68,24 @@ public class ExploreArea extends JFrame {
 //		textArea.setText(s.wordtable.toString());
 		
 		comboBox = new JComboBox<String>();
-		comboBox.setBounds(44, 44, 346, 21);
+		comboBox.setBounds(20, 44, 232, 21);
 		contentPane.add(comboBox);
 		comboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { null, "noun", "adverb", "adjective", "verb" }));
 		
 		
-		Search.getInstance().initTable();
+		//Search.getInstance().initTable();
 		//System.out.println(Search.wordtable);
-		cellData = new String[Search.wordtable.size()][2];
-		int i = 0;
 		String[] columnNames = {"Word", "WordType"};
-		for(Iterator it = Search.wordtable.keySet().iterator(); it.hasNext();) {
-			String key = it.next().toString();
-			String value = Search.wordtable.get(key);
-			//cellData[i] = new String[2]; 
-			cellData [i][0] = key;
-			cellData [i][1] = value;
+		gameState = new GameState();
+		Collection<AbstractWord> unprotectedWords = gameState.getUnprotectedArea()
+				.getAbstractWordCollection();
+		cellData = new String[unprotectedWords.size()][2];
+		int i = 0;
+		for (AbstractWord word : unprotectedWords) {
+			//cellData[i] = new String[2];
+			cellData [i][0] = word.getValue();
+			//System.out.println(word.getValue() + "," + word.getType());
+			cellData [i][1] = word.getType().toString();
 			i++;
 		}
 		
@@ -91,7 +96,7 @@ public class ExploreArea extends JFrame {
 		table.setBounds(44, 172, 346, 67);
 		
 		jScrollPane = new JScrollPane();
-		jScrollPane.setBounds(43, 94, 362, 192);
+		jScrollPane.setBounds(20, 75, 232, 168);
 		contentPane.add(jScrollPane);
 		jScrollPane.setViewportView(table);
 		
@@ -99,8 +104,8 @@ public class ExploreArea extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Search search = new Search();
-				search.initTable();
+				Search search = new Search(mainGUI, gameState);
+				search.updateWordTable();
 				if(textField.getText().equals("")) {
 				}
 				if(comboBox.getSelectedIndex() == -1) {
@@ -109,9 +114,9 @@ public class ExploreArea extends JFrame {
 				else {
 					input =  comboBox.getSelectedItem().toString();
 				}
-				Hashtable<String, String> result = search.search(textField.getText(), input);
-//				if(result.isEmpty()) {
-//					textArea.setText("No result!");
+				Collection<AbstractWord> result = search.search(textField.getText(), input);
+//				if(result == null) {
+//					System.out.println("No result!");
 //				}
 //				else {
 //					textArea.setText(result.toString());
@@ -122,16 +127,12 @@ public class ExploreArea extends JFrame {
 					cellData [rowNum][1] = null;
 				}
 				int i = 0;
-				for(Iterator it = result.keySet().iterator(); it.hasNext();) {
-					String key = it.next().toString();
-					String value = result.get(key);
-					cellData [i][0] = key;
-					cellData [i][1] = value;
+				for (AbstractWord word : result) {
+					cellData [i][0] = word.getValue();
+					cellData [i][1] = word.getType().toString();
 					i++;
-				}
-				
-				table.updateUI();
-						  
+				}			
+				table.updateUI();		  
 			}
 		});
 		
@@ -140,8 +141,8 @@ public class ExploreArea extends JFrame {
 	            public void keyPressed(KeyEvent e) {
 	                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 	                	textArea.setText(textField.getText() + comboBox.getSelectedItem());
-	                	Search search = new Search();
-	    				search.initTable();
+	                	Search search = new Search(mainGUI, gameState);
+	    				search.updateWordTable();
 	    				if(textField.getText().equals("")) {
 	    				}
 	    				if(comboBox.getSelectedIndex() == -1) {
@@ -150,7 +151,7 @@ public class ExploreArea extends JFrame {
 	    				else {
 	    					input =  comboBox.getSelectedItem().toString();
 	    				}
-	    				Hashtable<String, String> result = search.search(textField.getText(), input);
+	    				Collection<AbstractWord> result = search.search(textField.getText(), input);
 //	    				if(result.isEmpty()) {
 //	    					textArea.setText("No result!");
 //	    				}
@@ -160,5 +161,11 @@ public class ExploreArea extends JFrame {
 	                }
 	            }
 	        });     
+	}
+	public void refresh() {
+		contentPane.revalidate();
+		contentPane.repaint();
+		table.updateUI();	
+		
 	}
 }

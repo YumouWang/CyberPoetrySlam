@@ -1,53 +1,55 @@
 package controllers;
 
-import java.util.Hashtable;
-import java.util.Set;
+import java.util.Collection;
+import java.util.HashSet;
+
+import models.AbstractWord;
+import models.GameState;
+import views.MainGUI;
 
 public class Search {
 	private static Search search;
-	public static Hashtable<String,String> wordtable = new Hashtable<String, String>();
+	public static Collection<AbstractWord> wordtable;
+	MainGUI mainGUI;
+	GameState gameState;
+	Collection<AbstractWord> result;
 	
-	public void initTable() {
-		//getTable(){}
-		wordtable.put("day", "noun");
-		wordtable.put("fast", "adjective");
-		wordtable.put("slowly", "adverb");
-		wordtable.put("class", "noun");
-		wordtable.put("sun", "noun");
-		wordtable.put("eye", "noun");
-		wordtable.put("close", "verb");
-		wordtable.put("nice", "adj");
-		wordtable.put("computer", "noun");
-		wordtable.put("book", "noun");
-		wordtable.put("story", "noun");
-		wordtable.put("city", "noun");
+	public Search(MainGUI mainGUI, GameState gameState) {
+		this.mainGUI = mainGUI;
+		this.gameState = gameState;
 	}
 	
-	public static Search getInstance() {
+	public void updateWordTable() {
+		wordtable = gameState.getUnprotectedArea().getAbstractWordCollection();
+	}
+	
+	public static Search getInstance(MainGUI mainGUI, GameState gameState) {
 		if(search == null) {
-			search = new Search();
+			search = new Search(mainGUI, gameState);
 		}
 		return search;
 	}
 	
-	public Hashtable<String,String> search(String word, String wordtype) {
-		
-		Hashtable<String,String> result = new Hashtable<String, String>();
+	public Collection<AbstractWord> search(String word, String wordtype) {
+		updateWordTable();
+		result = new HashSet<AbstractWord>();
 		if(word.equals("") && wordtype.equals("")) {
 			return Search.wordtable;
 		}
-		Set<String> keys = wordtable.keySet();
-        for(String key: keys){  
-            if(word.equals(key) && wordtype.equals(wordtable.get(key))) {
-            	result.put(key, wordtable.get(key));
+		for (AbstractWord word1 : wordtable) {
+			String wordValue = word1.getValue();
+			String wordType = word1.getType().toString();
+			if(word.equalsIgnoreCase(wordValue) && wordtype.equalsIgnoreCase(wordType)) {
+            	result.add(word1);
             }
-            if(word.equals(key) && wordtype.equals("")) {
-            	result.put(key, wordtable.get(key));
+            if(word.equalsIgnoreCase(wordValue) && wordtype.equalsIgnoreCase("")) {
+            	result.add(word1);
             }
-            if(word.equals("") && wordtype.equals(wordtable.get(key))) {
-            	result.put(key, wordtable.get(key));
-            }           
-        }
+            if(word.equalsIgnoreCase("") && wordtype.equalsIgnoreCase(wordType)) {
+            	result.add(word1);
+            }   
+            //System.out.println(word1.getValue().toString());
+		}
 		return result;
 	}
 

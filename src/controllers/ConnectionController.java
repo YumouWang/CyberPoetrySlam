@@ -2,10 +2,9 @@ package controllers;
 
 import models.AbstractWord;
 import models.GameState;
-import views.AbstractWordView;
-import views.AdjacencyType;
-import views.MainView;
-import views.WordView;
+import models.Poem;
+import models.Row;
+import views.*;
 
 /**
  * A controller for handling connecting words
@@ -14,7 +13,7 @@ import views.WordView;
  */
 public class ConnectionController {
 
-    MainView display;
+    MainView mainView;
     GameState gameState;
 
     /**
@@ -23,7 +22,7 @@ public class ConnectionController {
      * @param gameState The GameState to perform connections on
      */
     public ConnectionController(MainView display, GameState gameState) {
-        this.display = display;
+        this.mainView = display;
         this.gameState = gameState;
     }
 
@@ -52,9 +51,9 @@ public class ConnectionController {
         if(newWord == null) {
             System.out.println("Tried to connect two words, something went wrong. No changes made.");
         } else {
-            display.removeWordView((WordView)wordOne);
-            display.removeWordView((WordView)wordTwo);
-            display.addWordView((WordView)newWord);
+            mainView.removeAbstractWordView(wordOne);
+            mainView.removeAbstractWordView(wordTwo);
+            mainView.addAbstractWordView(newWord);
         }
     }
 
@@ -68,11 +67,11 @@ public class ConnectionController {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
-        AbstractWord result = gameState.getProtectedArea().connectHorizontal(wordOne, wordTwo);
+        Row result = gameState.getProtectedArea().connectHorizontal(wordOne, wordTwo);
         AbstractWordView resultView = null;
 
         if(result != null)
-            resultView = new WordView(result, wordViewOne.getPosition());
+            resultView = new RowView(result, wordViewOne.getPosition(), mainView);
 
         return resultView;
     }
@@ -87,7 +86,7 @@ public class ConnectionController {
         AbstractWord wordOne = wordViewOne.getWord();
         AbstractWord wordTwo = wordViewTwo.getWord();
 
-        AbstractWord result = gameState.getProtectedArea().connectVertical(wordOne, wordTwo);
+        Poem result = gameState.getProtectedArea().connectVertical(wordOne, wordTwo);
         AbstractWordView resultView = null;
 
         if(result != null)

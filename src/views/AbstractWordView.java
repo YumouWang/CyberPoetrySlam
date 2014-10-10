@@ -4,7 +4,6 @@ import common.Constants;
 import models.AbstractWord;
 import models.Position;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -22,9 +21,8 @@ public class AbstractWordView extends AbstractView {
      * @param position The position of this word
      */
     public AbstractWordView(AbstractWord word, Position position) {
-        super(position, word.getValue().length() * 8, 20);
+        super(position);
         this.word = word;
-        updateView();
     }
 
     /**
@@ -33,9 +31,8 @@ public class AbstractWordView extends AbstractView {
      * @return Returns whether the move was successful
      */
     public boolean moveTo(Position toPosition) {
-        super.position = toPosition;
-        updateView();
-        return true;
+        //TODO Make abstract
+        return false;
     }
 
     /**
@@ -72,13 +69,6 @@ public class AbstractWordView extends AbstractView {
      * @param color The color to set the background to
      */
     public void setBackground(Color color) {
-        //TODO make abstract
-    }
-
-    /**
-     * Updates the view
-     */
-    private void updateView() {
         //TODO make abstract
     }
 

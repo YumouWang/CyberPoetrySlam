@@ -8,7 +8,7 @@ import models.Position;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Random;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Random;
  */
 public class MainView extends JFrame {
 
-    Collection<AbstractWordView> words;
+    Hashtable<Long, AbstractWordView> words;
     JPanel contentPane;
 
     /**
@@ -33,7 +33,7 @@ public class MainView extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        words = new HashSet<AbstractWordView>();
+        words = new Hashtable<Long, AbstractWordView>();
 
         Random random = new Random();
         Collection<AbstractWord> words = gameState.getProtectedArea().getAbstractWordCollection();
@@ -41,7 +41,8 @@ public class MainView extends JFrame {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
             WordView view = new WordView(word, new Position(x, y));
-            addWordView(view);
+            contentPane.add(view.label);
+            addAbstractWordView(view);
         }
     }
 
@@ -49,19 +50,18 @@ public class MainView extends JFrame {
      * Adds a word view to the view
      * @param newWord The word to add
      */
-    public void addWordView(WordView newWord) {
-        words.add(newWord);
-        contentPane.add(newWord.label);
+    public void addAbstractWordView(AbstractWordView newWord) {
+        words.put(newWord.getWord().getId(), newWord);
     }
 
     /**
      * Removes a word view from the view
      * @param oldWord The word to remove
-     * @return Returns whether the word was succesfully removed
+     * @return Returns whether the word was successfully removed
      */
-    public boolean removeWordView(WordView oldWord) {
-        contentPane.remove(oldWord.label);
-        return words.remove(oldWord);
+    public boolean removeAbstractWordView(AbstractWordView oldWord) {
+        AbstractWordView removed = words.remove(oldWord.getWord().getId());
+        return removed.equals(oldWord);
     }
 
     /**
@@ -86,6 +86,10 @@ public class MainView extends JFrame {
      * @return A collection of word views
      */
     public Collection<AbstractWordView> getWords() {
-        return words;
+        return words.values();
+    }
+
+    public AbstractWordView getAbstractWordById(long id) {
+        return words.get(id);
     }
 }

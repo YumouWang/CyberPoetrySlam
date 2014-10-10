@@ -15,6 +15,16 @@ public abstract class AbstractView {
     /**
      * Constructor
      * @param position The position of the view object
+     */
+    public AbstractView(Position position) {
+        this.position = position;
+        this.width = 0;
+        this.height = 0;
+    }
+
+    /**
+     * Constructor
+     * @param position The position of the view object
      * @param width The width of the view object
      * @param height The height of the view object
      */

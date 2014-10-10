@@ -28,8 +28,8 @@ public class Area extends Observable {
      * @param wordTwo The word on the right
      * @return Returns the connected word
      */
-    public AbstractWord connectHorizontal(AbstractWord wordOne, AbstractWord wordTwo) {
-        AbstractWord result = null;
+    public Row connectHorizontal(AbstractWord wordOne, AbstractWord wordTwo) {
+        Row result = null;
 
         // Check that the move is valid before we do it
         if(abstractWordCollection.contains(wordOne) && abstractWordCollection.contains(wordTwo)) {
@@ -70,8 +70,8 @@ public class Area extends Observable {
      * @param wordTwo The word on the bottom
      * @return Returns the connected word
      */
-    public AbstractWord connectVertical(AbstractWord wordOne, AbstractWord wordTwo) {
-        AbstractWord result = null;
+    public Poem connectVertical(AbstractWord wordOne, AbstractWord wordTwo) {
+        Poem result = null;
 
         // Check that the move is valid before we do it
         if(abstractWordCollection.contains(wordOne) && abstractWordCollection.contains(wordTwo)) {

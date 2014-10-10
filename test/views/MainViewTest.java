@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class MainViewTest {
 
@@ -34,7 +33,7 @@ public class MainViewTest {
         // Test that the only word in the mainView is the correct one
         boolean containsWordOne = false;
         boolean containsWordOneLabel = false;
-        for(AbstractWordView wordView : mainView.words) {
+        for(AbstractWordView wordView : mainView.getWords()) {
             if(wordOne.equals(wordView.getWord())) {
                 containsWordOne = true;
                 // Test that we added the component to the contentPane
@@ -51,7 +50,7 @@ public class MainViewTest {
         assertEquals(1, mainView.getWords().size());
         containsWordOne = false;
         containsWordOneLabel = false;
-        for(AbstractWordView wordView : mainView.words) {
+        for(AbstractWordView wordView : mainView.getWords()) {
             if(wordOne.equals(wordView.getWord())) {
                 containsWordOne = true;
                 // Test that we added the component to the contentPane
@@ -70,10 +69,9 @@ public class MainViewTest {
         WordView wordOneView = new WordView(wordOne, new Position(0, 0));
         MainView mainView = new MainView(gameState);
         assertEquals(0, mainView.getWords().size());
-        mainView.addWordView(wordOneView);
+        mainView.addAbstractWordView(wordOneView);
         assertEquals(1, mainView.getWords().size());
         assertTrue(mainView.words.contains(wordOneView));
-        assertTrue(Arrays.asList(mainView.contentPane.getComponents()).contains(wordOneView.label));
     }
 
     @Test
@@ -82,14 +80,12 @@ public class MainViewTest {
         WordView wordOneView = new WordView(wordOne, new Position(0, 0));
         MainView mainView = new MainView(gameState);
         assertEquals(0, mainView.getWords().size());
-        mainView.addWordView(wordOneView);
+        mainView.addAbstractWordView(wordOneView);
         assertEquals(1, mainView.getWords().size());
         assertTrue(mainView.words.contains(wordOneView));
-        assertTrue(Arrays.asList(mainView.contentPane.getComponents()).contains(wordOneView.label));
-        mainView.removeWordView(wordOneView);
+        mainView.removeAbstractWordView(wordOneView);
         assertEquals(0, mainView.getWords().size());
         assertFalse(mainView.words.contains(wordOneView));
-        assertFalse(Arrays.asList(mainView.contentPane.getComponents()).contains(wordOneView.label));
 
     }
 }

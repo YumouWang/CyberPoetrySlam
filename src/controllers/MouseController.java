@@ -135,8 +135,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
 	}
 
 	public void protectWord(AbstractWordView wordView) { // protect word
-		gameState.protect(wordView.getWord());
-		mainGUI.addProtectedWordView(wordView);
+		gameState.protect(wordView.getWord());	//add word to protect word list
+		mainGUI.addProtectedWordView(wordView);	//add word view to protect word view list
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
 		System.out.print("protectWord list: ");
@@ -154,8 +154,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
 	}
 
 	public void unprotectWord(AbstractWordView wordView) { // unprotect word
-		gameState.unprotect(wordView.getWord());
-		mainGUI.addUnprotectedWordView(wordView);
+		gameState.unprotect(wordView.getWord());	//add word to unprotect word list
+		mainGUI.addUnprotectedWordView(wordView);	//add word view to unprotect word view list
 		System.out.print("unprotectWord list: ");
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();

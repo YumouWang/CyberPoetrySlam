@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
@@ -15,18 +16,20 @@ import models.GameState;
 import models.Position;
 import controllers.MouseController;
 
-public class View extends JFrame {
+public class MainGUI extends JFrame {
 	
 	Collection<AbstractWordView> protectedAreaWords;
 	Collection<AbstractWordView> unprotectedAreaWords;
 	private JPanel contentPane;
+	JPanel panel;
+	Graphics g;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		GameState gameState = new GameState();
-		View view = new View(gameState);
+		MainGUI view = new MainGUI(gameState);
 		view.addMouseInputController(new MouseController(view, gameState));
         view.setVisible(true);
 	}
@@ -34,7 +37,7 @@ public class View extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public View(GameState gameState) {
+	public MainGUI(GameState gameState) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 475);
 		contentPane = new JPanel();
@@ -42,21 +45,32 @@ public class View extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(0, 0, 400, 437);
+		panel.setLayout(null);
+		g = panel.getGraphics();
+		//g.drawLine(0, 0, 50, 50);
 		//contentPane.add(panel);
 		
 		protectedAreaWords = new HashSet<AbstractWordView>();
 		unprotectedAreaWords = new HashSet<AbstractWordView>();
 
         Random random = new Random();
-        Collection<AbstractWord> words = gameState.getProtectedArea().getAbstractWordCollection();
-        for(AbstractWord word: words) {
+        Collection<AbstractWord> protectedWords = gameState.getProtectedArea().getAbstractWordCollection();
+        for(AbstractWord word: protectedWords) {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
             AbstractWordView view = new AbstractWordView(word, new Position(x, y));
-            addAbstractWordView(view);
+            addProtectedWordView(view);
+        }
+        
+        Collection<AbstractWord> unprotectedWords = gameState.getUnprotectedArea().getAbstractWordCollection();
+        for(AbstractWord word: unprotectedWords) {
+            int x = random.nextInt(300);
+            int y = random.nextInt(100) + 300;
+            AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+            addUnprotectedWordView(view);
         }
         contentPane.add(panel);
         
@@ -73,9 +87,14 @@ public class View extends JFrame {
         swapPanel.setLayout(null);
 	}
 	
-	public void addAbstractWordView(AbstractWordView newWord) {
+	public void addProtectedWordView(AbstractWordView newWord) {
+        protectedAreaWords.add(newWord);
+        panel.add(newWord.label);
+    }
+	
+	public void addUnprotectedWordView(AbstractWordView newWord) {
         unprotectedAreaWords.add(newWord);
-        contentPane.add(newWord.label);
+        panel.add(newWord.label);
     }
 	
 	public void refresh() {
@@ -84,8 +103,8 @@ public class View extends JFrame {
     }
 	
 	public void addMouseInputController(MouseController controller) {
-        contentPane.addMouseListener(controller);
-        contentPane.addMouseMotionListener(controller);
+        panel.addMouseListener(controller);
+        panel.addMouseMotionListener(controller);
     }
 	
 	public Collection<AbstractWordView> getProtectedAreaWords() {

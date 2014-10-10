@@ -12,18 +12,18 @@ import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
-import views.View;
+import views.MainGUI;
 
 public class MouseController implements MouseListener, MouseMotionListener {
 
     AbstractWordView selectedWord;
     Position mouseDownPosition;
-    View view;
+    MainGUI view;
     GameState gameState;
     Area unprotectedArea;
     Area protectedArea;
 
-    public MouseController(View view, GameState gameState) {
+    public MouseController(MainGUI view, GameState gameState) {
         this.view = view;
         this.gameState = gameState;
     }
@@ -32,7 +32,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         mouseDownPosition = new Position(e.getX(), e.getY());
         selectedWord = null;
-        Collection<AbstractWordView> words = view.getUnprotectedAreaWords();
+        Collection<AbstractWordView> words = view.getProtectedAreaWords();
         for(AbstractWordView word: words) {
             if(word.isClicked(mouseDownPosition)) {
                 selectedWord = word;
@@ -48,7 +48,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
             selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
             boolean isOverlapping = false;
             boolean isAdjacent = false;
-            Collection<AbstractWordView> words = view.getUnprotectedAreaWords();
+            Collection<AbstractWordView> words = view.getProtectedAreaWords();
             for (AbstractWordView word : words) {
                 if(!word.equals(selectedWord)) {
                     if (word.isOverlapping(selectedWord)) {

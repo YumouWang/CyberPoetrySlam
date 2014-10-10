@@ -24,9 +24,17 @@ public class GameState {
         protectedWords.add(new Word("Tiger", WordType.NOUN));
         protectedWords.add(new Word("Bear", WordType.NOUN));
         protectedWords.add(new Word("Lion", WordType.NOUN));
+        
+        Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
+        unprotectedWords.add(new Word("River", WordType.NOUN));
+        unprotectedWords.add(new Word("Sun", WordType.NOUN));
+        unprotectedWords.add(new Word("Moon", WordType.NOUN));
+        unprotectedWords.add(new Word("Tree", WordType.NOUN));
+        unprotectedWords.add(new Word("Sea", WordType.NOUN));
+        unprotectedWords.add(new Word("Lake", WordType.NOUN));
 
         protectedArea = new Area(protectedWords);
-        unprotectedArea = new Area(null);
+        unprotectedArea = new Area(unprotectedWords);
     }
 
     /**

@@ -5,6 +5,9 @@ import views.MainGUI;
 import models.GameState;
 
 public class MainGUILauncher {
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		GameState gameState = new GameState();
 		MainGUI view = new MainGUI(gameState);

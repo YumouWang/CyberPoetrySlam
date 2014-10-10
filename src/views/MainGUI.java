@@ -23,17 +23,7 @@ public class MainGUI extends JFrame {
 	private JPanel contentPane;
 	JPanel panel;
 	Graphics g;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		GameState gameState = new GameState();
-		MainGUI view = new MainGUI(gameState);
-		view.addMouseInputController(new MouseController(view, gameState));
-		view.setVisible(true);
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */

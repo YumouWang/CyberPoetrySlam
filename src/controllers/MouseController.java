@@ -59,6 +59,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 				}
 			}
 		}
+		//mainGUI.refresh();
 	}
 
 	@Override
@@ -106,6 +107,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 		}
 		mouseDownPosition = new Position(e.getX(), e.getY());
 		mainGUI.exploreArea.refresh();
+		mainGUI.refresh();
 	}
 
 	public void protectAreaWordMove() {
@@ -202,7 +204,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 	}
 
 	public boolean isInProtectArea(Position position) {
-		if (position.getY() < 237) {
+		if (position.getY() < 250) {
 			return true;
 		}
 		return false;

@@ -79,4 +79,10 @@ public class Row extends AbstractWord {
     public List<Word> getWords() {
         return words;
     }
+
+	@Override
+	public WordType getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

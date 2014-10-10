@@ -28,6 +28,11 @@ public class Word extends AbstractWord {
     public String getValue() {
         return value;
     }
+    
+    @Override
+    public WordType getType() {
+    	return type;
+    }
 
     /**
      * Connects a word to the right of this word

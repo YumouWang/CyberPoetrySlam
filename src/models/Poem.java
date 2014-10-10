@@ -105,4 +105,10 @@ public class Poem extends AbstractWord {
     public List<Row> getRows() {
         return rows;
     }
+
+	@Override
+	public WordType getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

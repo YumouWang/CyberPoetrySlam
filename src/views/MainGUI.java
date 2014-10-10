@@ -23,7 +23,7 @@ public class MainGUI extends JFrame {
 	private JPanel contentPane;
 	JPanel panel;
 	Graphics g;
-	ExploreArea exploreArea;
+	public ExploreArea exploreArea;
 	/**
 	 * Create the frame.
 	 */

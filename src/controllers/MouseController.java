@@ -105,6 +105,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
 		}
 		mouseDownPosition = new Position(e.getX(), e.getY());
+		mainGUI.exploreArea.refresh();
 	}
 
 	public void protectAreaWordMove() {

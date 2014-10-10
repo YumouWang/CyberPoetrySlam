@@ -31,5 +31,6 @@ public abstract class AbstractWord {
 	public long getId() {
 		return id;
 	}
+	public abstract WordType getType();
     
 }

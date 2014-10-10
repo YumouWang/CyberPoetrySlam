@@ -1,6 +1,5 @@
 package views;
 
-import models.AbstractWord;
 import models.Position;
 import models.Row;
 import models.Word;
@@ -20,8 +19,8 @@ public class RowView extends AbstractWordView {
     /**
      * Constructor
      *
-     * @param row     The word that this view represents
-     * @param position The position of this word
+     * @param row     The row that this view represents
+     * @param position The position of this row
      */
     public RowView(Row row, Position position, MainView mainView) {
         super(row, position);

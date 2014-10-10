@@ -14,6 +14,18 @@ public class Row extends AbstractWord {
 
     /**
      * Constructor
+     * @param word The only word in the row
+     */
+    public Row(Word word) {
+        super();
+        this.words = new ArrayList<Word>();
+        if(word != null) {
+            this.words.add(word);
+        }
+    }
+
+    /**
+     * Constructor
      * @param words A list of words in the row
      */
     public Row(List<Word> words) {

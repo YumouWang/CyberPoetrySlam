@@ -15,6 +15,18 @@ public class Poem extends AbstractWord {
 
     /**
      * Constructor
+     * @param row The only row in this poem
+     */
+    public Poem(Row row) {
+        super();
+        this.rows = new ArrayList<Row>();
+        if(row != null) {
+            this.rows.add(row);
+        }
+    }
+
+    /**
+     * Constructor
      * @param rows The rows in this poem
      */
     public Poem(List<Row> rows) {
@@ -31,6 +43,14 @@ public class Poem extends AbstractWord {
      */
     public void connect(Row row) {
         rows.add(row);
+    }
+
+    /**
+     * Connects a row to the top of this poem
+     * @param row The row to connect
+     */
+    public void connectToTop(Row row) {
+        rows.add(0, row);
     }
 
     /**

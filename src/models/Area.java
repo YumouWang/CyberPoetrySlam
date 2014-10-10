@@ -1,6 +1,8 @@
 package models;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Observable;
 
 /**
  * The Area model class
@@ -77,31 +79,42 @@ public class Area extends Observable {
         if(abstractWordCollection.contains(wordOne) && abstractWordCollection.contains(wordTwo)) {
             // Identify the types of the words so we can call the appropriate connect method
             Poem topPoem;
-            // Convert the first word into a poem
-            if (wordOne instanceof Word) {
-                List<Word> wordList = new ArrayList<Word>();
-                wordList.add((Word) wordOne);
-                Row row = new Row(wordList);
-                List<Row> rowList = new ArrayList<Row>();
-                rowList.add(row);
-                topPoem = new Poem(rowList);
-            } else if (wordOne instanceof Row) {
-                List<Row> rowList = new ArrayList<Row>();
-                rowList.add((Row) wordOne);
-                topPoem = new Poem(rowList);
-            } else {
+            if(wordOne instanceof Poem) {
+                // The first word is a poem, so cast it to a poem and then call the appropriate connect
                 topPoem = (Poem) wordOne;
-            }
-            // Connect the words
-            if(wordTwo instanceof Word) {
-                List<Word> wordList = new ArrayList<Word>();
-                wordList.add((Word) wordTwo);
-                Row row = new Row(wordList);
-                topPoem.connect(row);
-            } else if(wordTwo instanceof Row) {
-                topPoem.connect((Row) wordTwo);
+                // Connect the words
+                if(wordTwo instanceof Word) {
+                    Row row = new Row((Word) wordTwo);
+                    topPoem.connect(row);
+                } else if(wordTwo instanceof Row) {
+                    topPoem.connect((Row) wordTwo);
+                } else {
+                    topPoem.connect((Poem) wordTwo);
+                }
+            } else if(wordTwo instanceof Poem) {
+                topPoem = (Poem) wordTwo;
+                // The second word is a poem, so convert the first word to a row and then call the appropriate connect
+                if (wordOne instanceof Word) {
+                    Row row = new Row((Word) wordOne);
+                    topPoem.connectToTop(row);
+                } else {
+                    topPoem.connectToTop((Row) wordOne);
+                }
             } else {
-                topPoem.connect((Poem) wordTwo);
+                // Neither input is a poem, so convert the first input to a poem and call the appropriate connect
+                if (wordOne instanceof Word) {
+                    Row row = new Row((Word) wordOne);
+                    topPoem = new Poem(row);
+                } else {
+                    topPoem = new Poem((Row) wordOne);
+                }
+                // Connect the words
+                if(wordTwo instanceof Word) {
+                    Row row = new Row((Word) wordTwo);
+                    topPoem.connect(row);
+                } else {
+                    topPoem.connect((Row) wordTwo);
+                }
             }
             result = topPoem;
         }

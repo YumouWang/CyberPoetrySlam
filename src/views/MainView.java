@@ -40,8 +40,8 @@ public class MainView extends JFrame {
         for(AbstractWord word: words) {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
-            AbstractWordView view = new AbstractWordView(word, new Position(x, y));
-            addAbstractWordView(view);
+            WordView view = new WordView(word, new Position(x, y));
+            addWordView(view);
         }
     }
 
@@ -49,7 +49,7 @@ public class MainView extends JFrame {
      * Adds a word view to the view
      * @param newWord The word to add
      */
-    public void addAbstractWordView(AbstractWordView newWord) {
+    public void addWordView(WordView newWord) {
         words.add(newWord);
         contentPane.add(newWord.label);
     }
@@ -59,7 +59,7 @@ public class MainView extends JFrame {
      * @param oldWord The word to remove
      * @return Returns whether the word was succesfully removed
      */
-    public boolean removeAbstractWordView(AbstractWordView oldWord) {
+    public boolean removeWordView(WordView oldWord) {
         contentPane.remove(oldWord.label);
         return words.remove(oldWord);
     }

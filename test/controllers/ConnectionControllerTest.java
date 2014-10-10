@@ -4,6 +4,7 @@ import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.AbstractWordView;
+import views.WordView;
 import views.MainView;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class ConnectionControllerTest {
         Word wordTwo = new Word("Horse", WordType.NOUN);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(wordTwo);
-        AbstractWordView wordViewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView wordViewTwo = new AbstractWordView(wordTwo, new Position(10, 0));
+        WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
+        WordView wordViewTwo = new WordView(wordTwo, new Position(10, 0));
         wordViewOne.setSize(5, 10);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        mainView.addWordView(wordViewOne);
+        mainView.addWordView(wordViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
@@ -69,11 +70,11 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
-        AbstractWordView wordViewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView rowViewTwo = new AbstractWordView(rowOne, new Position(10, 0));
+        WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
+        WordView rowViewTwo = new WordView(rowOne, new Position(10, 0));
         wordViewOne.setSize(5, 10);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(rowViewTwo);
+        mainView.addWordView(wordViewOne);
+        mainView.addWordView(rowViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -111,11 +112,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRows);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        AbstractWordView viewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemOne, new Position(10, 0));
+        WordView viewOne = new WordView(wordOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemOne, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -152,11 +153,11 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(wordThree, new Position(10, 0));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -194,11 +195,11 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(rowTwo, new Position(10, 0));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(rowTwo, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -239,11 +240,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemOne, new Position(10, 0));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemOne, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -281,11 +282,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(wordThree, new Position(10, 0));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -326,11 +327,11 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(rowTwo, new Position(10, 0));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(rowTwo, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -374,11 +375,11 @@ public class ConnectionControllerTest {
         Poem poemTwo = new Poem(poemRowsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(poemTwo);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemTwo, new Position(10, 0));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemTwo, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));
@@ -409,11 +410,11 @@ public class ConnectionControllerTest {
         Word wordTwo = new Word("Horse", WordType.NOUN);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(wordTwo);
-        AbstractWordView wordViewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView wordViewTwo = new AbstractWordView(wordTwo, new Position(0, 10));
+        WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
+        WordView wordViewTwo = new WordView(wordTwo, new Position(0, 10));
         wordViewOne.setSize(10, 5);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        mainView.addWordView(wordViewOne);
+        mainView.addWordView(wordViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
@@ -448,11 +449,11 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
-        AbstractWordView wordViewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView rowViewTwo = new AbstractWordView(rowOne, new Position(0, 10));
+        WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
+        WordView rowViewTwo = new WordView(rowOne, new Position(0, 10));
         wordViewOne.setSize(10, 5);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(rowViewTwo);
+        mainView.addWordView(wordViewOne);
+        mainView.addWordView(rowViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -490,11 +491,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRows);
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        AbstractWordView viewOne = new AbstractWordView(wordOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemOne, new Position(0, 10));
+        WordView viewOne = new WordView(wordOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemOne, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -531,11 +532,11 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(wordThree, new Position(0, 10));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -573,11 +574,11 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(rowTwo, new Position(0, 10));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(rowTwo, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -618,11 +619,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        AbstractWordView viewOne = new AbstractWordView(rowOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemOne, new Position(0, 10));
+        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemOne, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -660,11 +661,11 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(wordThree, new Position(0, 10));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -705,11 +706,11 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(rowTwo, new Position(0, 10));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(rowTwo, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -753,11 +754,11 @@ public class ConnectionControllerTest {
         Poem poemTwo = new Poem(poemRowsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(poemTwo);
-        AbstractWordView viewOne = new AbstractWordView(poemOne, new Position(0, 0));
-        AbstractWordView viewTwo = new AbstractWordView(poemTwo, new Position(0, 10));
+        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        WordView viewTwo = new WordView(poemTwo, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addWordView(viewOne);
+        mainView.addWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));

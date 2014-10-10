@@ -15,7 +15,6 @@ import java.awt.*;
 public class AbstractWordView extends AbstractView {
 
     AbstractWord word;
-    JLabel label;
 
     /**
      * Constructor
@@ -25,11 +24,7 @@ public class AbstractWordView extends AbstractView {
     public AbstractWordView(AbstractWord word, Position position) {
         super(position, word.getValue().length() * 8, 20);
         this.word = word;
-        label = new JLabel(word.getValue());
         updateView();
-        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        label.setBackground(Color.LIGHT_GRAY);
-        label.setOpaque(true);
     }
 
     /**
@@ -77,14 +72,14 @@ public class AbstractWordView extends AbstractView {
      * @param color The color to set the background to
      */
     public void setBackground(Color color) {
-        label.setBackground(color);
+        //TODO make abstract
     }
 
     /**
      * Updates the view
      */
     private void updateView() {
-        label.setBounds(position.getX(), position.getY(), width, height);
+        //TODO make abstract
     }
 
     /**

@@ -51,7 +51,7 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
         	Random random = new Random();
         	int x = random.nextInt(300);
         	int y = random.nextInt(100);
-        	AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+        	WordView view = new WordView(word, new Position(x, y));
         	words.add(view);
         	add(view.label);
         }
@@ -104,21 +104,19 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
                     AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
                     if(adjacencyType != AdjacencyType.NOT_ADJACENT) {
                         isAdjacent = true;
-                        word.label.setBackground(Color.GREEN);
+                        word.setBackground(Color.GREEN);
                     } else {
-                    	if(!word.label.getBackground().equals(Color.GREEN)) {
-                    		word.label.setBackground(Color.LIGHT_GRAY);
-                    	}                    		
+                        word.setBackground(Color.LIGHT_GRAY);
                     }
                 }
             }
             if(isOverlapping) {
-                selectedWord.label.setBackground(Color.RED);
+                selectedWord.setBackground(Color.RED);
                 //selectedWord.moveTo(originalPosition);
             } else if (isAdjacent) {
-                selectedWord.label.setBackground(Color.GREEN);
+                selectedWord.setBackground(Color.GREEN);
             } else {
-            	selectedWord.label.setBackground(Color.LIGHT_GRAY);
+            	selectedWord.setBackground(Color.LIGHT_GRAY);
             }
         }
         mouseDownPosition = new Position(e.getX(), e.getY());

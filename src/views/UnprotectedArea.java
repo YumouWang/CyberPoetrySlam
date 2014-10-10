@@ -64,7 +64,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
         	Random random = new Random();
         	int x = random.nextInt(300);
         	int y = random.nextInt(100);
-        	AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+        	WordView view = new WordView(word, new Position(x, y));
         	words.add(view);
         	add(view.label);
         }
@@ -150,7 +150,7 @@ public class UnprotectedArea extends JPanel implements MouseListener, MouseMotio
 	        public void actionPerformed(ActionEvent event) {
 	            System.out.println(selectedWord.getWord().getValue());
 	            //selectedWord.label.setVisible(false);
-	            areaView.removeAbstractWordView(selectedWord);
+	            areaView.removeAbstractWordView((WordView)selectedWord);
 	        } 
 	    } 
 }

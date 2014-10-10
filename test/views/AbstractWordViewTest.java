@@ -17,7 +17,7 @@ public class AbstractWordViewTest {
     public void testConstructor() throws Exception {
         AbstractWord word = new Word("View", WordType.VERB);
         Position position = new Position(0,0);
-        AbstractWordView view = new AbstractWordView(word, position);
+        WordView view = new WordView(word, position);
         view.setBackground(Color.BLACK);
         assertNotNull(view);
         assertEquals(position, view.position);
@@ -33,7 +33,7 @@ public class AbstractWordViewTest {
     public void testMoveTo() throws Exception {
         AbstractWord word = new Word("ViewTwo", WordType.PREFIX);
         Position position = new Position(0,0);
-        AbstractWordView view = new AbstractWordView(word, position);
+        WordView view = new WordView(word, position);
         assertEquals(position, view.getPosition());
         Position newPosition = new Position(100, 100);
         view.moveTo(newPosition);

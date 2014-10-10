@@ -61,7 +61,7 @@ public class MainGUI extends JFrame {
         for(AbstractWord word: protectedWords) {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
-            AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+            WordView view = new WordView(word, new Position(x, y));
             addProtectedWordView(view);
         }
         
@@ -69,7 +69,7 @@ public class MainGUI extends JFrame {
         for(AbstractWord word: unprotectedWords) {
             int x = random.nextInt(300);
             int y = random.nextInt(100) + 300;
-            AbstractWordView view = new AbstractWordView(word, new Position(x, y));
+            WordView view = new WordView(word, new Position(x, y));
             addUnprotectedWordView(view);
         }
         contentPane.add(panel);
@@ -87,12 +87,12 @@ public class MainGUI extends JFrame {
         swapPanel.setLayout(null);
 	}
 	
-	public void addProtectedWordView(AbstractWordView newWord) {
+	public void addProtectedWordView(WordView newWord) {
         protectedAreaWords.add(newWord);
         panel.add(newWord.label);
     }
 	
-	public void addUnprotectedWordView(AbstractWordView newWord) {
+	public void addUnprotectedWordView(WordView newWord) {
         unprotectedAreaWords.add(newWord);
         panel.add(newWord.label);
     }

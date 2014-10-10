@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import views.AbstractWordView;
 import views.MainView;
+import views.WordView;
 
 import java.awt.event.MouseEvent;
 
@@ -19,18 +20,18 @@ public class MouseInputControllerTest {
     GameState gameState;
     MainView mainView;
     MouseInputController controller;
-    AbstractWordView wordViewOne;
-    AbstractWordView wordViewTwo;
+    WordView wordViewOne;
+    WordView wordViewTwo;
 
     @Before
     public void initialize() {
         gameState = new GameState();
         gameState.getProtectedArea().getAbstractWordCollection().clear();
         mainView = new MainView(gameState);
-        wordViewOne = new AbstractWordView(new Word("Elephant", WordType.ADVERB), new Position(10, 10));
-        wordViewTwo = new AbstractWordView(new Word("Buffalo", WordType.POSTFIX), new Position(50, 50));
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        wordViewOne = new WordView(new Word("Elephant", WordType.ADVERB), new Position(10, 10));
+        wordViewTwo = new WordView(new Word("Buffalo", WordType.POSTFIX), new Position(50, 50));
+        mainView.addWordView(wordViewOne);
+        mainView.addWordView(wordViewTwo);
         controller = new MouseInputController(mainView, gameState);
     }
 

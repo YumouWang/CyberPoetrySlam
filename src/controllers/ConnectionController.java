@@ -5,6 +5,7 @@ import models.GameState;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
+import views.WordView;
 
 /**
  * A controller for handling connecting words
@@ -51,9 +52,9 @@ public class ConnectionController {
         if(newWord == null) {
             System.out.println("Tried to connect two words, something went wrong. No changes made.");
         } else {
-            display.removeAbstractWordView(wordOne);
-            display.removeAbstractWordView(wordTwo);
-            display.addAbstractWordView(newWord);
+            display.removeWordView((WordView)wordOne);
+            display.removeWordView((WordView)wordTwo);
+            display.addWordView((WordView)newWord);
         }
     }
 
@@ -71,7 +72,7 @@ public class ConnectionController {
         AbstractWordView resultView = null;
 
         if(result != null)
-            resultView = new AbstractWordView(result, wordViewOne.getPosition());
+            resultView = new WordView(result, wordViewOne.getPosition());
 
         return resultView;
     }
@@ -90,7 +91,7 @@ public class ConnectionController {
         AbstractWordView resultView = null;
 
         if(result != null)
-            resultView = new AbstractWordView(result, wordViewOne.getPosition());
+            resultView = new WordView(result, wordViewOne.getPosition());
 
         return resultView;
     }

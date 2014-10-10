@@ -47,7 +47,7 @@ public class AreaView extends JFrame {
 		setTitle("CyberPoetrySlam");
 	}
 
-	public void removeAbstractWordView(AbstractWordView oldWord) {
+	public void removeAbstractWordView(WordView oldWord) {
 		// contentPane.remove(oldWord.label);
 		System.out.println(oldWord.getWord().getValue() + "---");
 		upa.remove(oldWord.label);
@@ -59,10 +59,10 @@ public class AreaView extends JFrame {
 
 	}
 
-	public void addAbstractWordView(AbstractWordView newWord) {
+	public void addAbstractWordView(WordView newWord) {
 		int x = 0;
 		int y = 0;
-		AbstractWordView view = new AbstractWordView(newWord.getWord(),
+		WordView view = new WordView(newWord.getWord(),
 				new Position(x, y));
 		// words.add(view);
 		this.p1.remove(pa.panel);

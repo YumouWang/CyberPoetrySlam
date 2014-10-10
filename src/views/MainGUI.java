@@ -23,7 +23,7 @@ public class MainGUI extends JFrame {
 	private JPanel contentPane;
 	JPanel panel;
 	Graphics g;
-	
+	ExploreArea exploreArea;
 	/**
 	 * Create the frame.
 	 */
@@ -68,7 +68,9 @@ public class MainGUI extends JFrame {
 		}
 		contentPane.add(panel);
 
-		JPanel explorePanel = new JPanel();
+		exploreArea = new ExploreArea();
+		//JPanel explorePanel = new JPanel();
+		JPanel explorePanel = exploreArea.contentPane;
 		explorePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		explorePanel.setBounds(400, 184, 284, 253);
 		contentPane.add(explorePanel);

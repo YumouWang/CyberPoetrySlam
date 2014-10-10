@@ -23,7 +23,7 @@ import controllers.Search;
 
 public class ExploreArea extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	private JTextField textField;
 	private JTextArea textArea;
 	private JComboBox<String> comboBox;
@@ -38,21 +38,22 @@ public class ExploreArea extends JFrame {
 	 */
 	public ExploreArea() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 408);
+		setBounds(100, 100, 278, 302);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.setBounds(0, 0, 284, 253);
 		
 		btnNewButton = new JButton("Search");
 		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setBackground(Color.WHITE);
 		
-		btnNewButton.setBounds(288, 10, 102, 23);
+		btnNewButton.setBounds(174, 11, 78, 23);
 		contentPane.add(btnNewButton);
 		
 		textField = new JTextField();
-		textField.setBounds(44, 11, 219, 23);
+		textField.setBounds(20, 11, 144, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -65,7 +66,7 @@ public class ExploreArea extends JFrame {
 //		textArea.setText(s.wordtable.toString());
 		
 		comboBox = new JComboBox<String>();
-		comboBox.setBounds(44, 44, 346, 21);
+		comboBox.setBounds(20, 44, 232, 21);
 		contentPane.add(comboBox);
 		comboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { null, "noun", "adverb", "adjective", "verb" }));
 		
@@ -91,7 +92,7 @@ public class ExploreArea extends JFrame {
 		table.setBounds(44, 172, 346, 67);
 		
 		jScrollPane = new JScrollPane();
-		jScrollPane.setBounds(43, 94, 362, 192);
+		jScrollPane.setBounds(20, 75, 232, 168);
 		contentPane.add(jScrollPane);
 		jScrollPane.setViewportView(table);
 		

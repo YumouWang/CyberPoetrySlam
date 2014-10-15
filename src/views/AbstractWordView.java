@@ -1,6 +1,7 @@
 package views;
 
 import common.Constants;
+import controllers.AbstractWordViewVisitor;
 import models.AbstractWord;
 import models.Position;
 
@@ -31,6 +32,16 @@ public class AbstractWordView extends AbstractView {
      * @return Returns whether the move was successful
      */
     public boolean moveTo(Position toPosition) {
+        //TODO Make abstract
+        return false;
+    }
+
+    public AbstractWordView getSelectedElement(ConnectionBox box) {
+        //TODO Make abstract
+        return null;
+    }
+
+    public boolean contains(AbstractWordView otherWord) {
         //TODO Make abstract
         return false;
     }
@@ -88,5 +99,21 @@ public class AbstractWordView extends AbstractView {
     public void setSize(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        //TODO make abstract
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        //TODO make abstract
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        //TODO make abstract
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        //TODO make abstract
     }
 }

@@ -1,5 +1,6 @@
 package views;
 
+import controllers.AbstractWordViewVisitor;
 import models.Position;
 import models.Row;
 import models.Word;
@@ -89,5 +90,55 @@ public class RowView extends AbstractWordView {
             }
         }
         setSize(totalWidth, tallestHeight);
+    }
+
+    public AbstractWordView getSelectedElement(ConnectionBox box) {
+        AbstractWordView selected = null;
+        for(WordView word : wordViews) {
+            AbstractWordView selectedElement = word.getSelectedElement(box);
+            if(selectedElement != null) {
+                selected = selectedElement;
+            }
+        }
+        return selected;
+    }
+
+    public boolean contains(AbstractWordView otherWord) {
+        boolean containsWord = this.equals(otherWord);
+        if(!containsWord) {
+            for (WordView word : wordViews) {
+                if (word.contains(otherWord)) {
+                    containsWord = true;
+                    break;
+                }
+            }
+        }
+        return containsWord;
+    }
+
+    public boolean removeWordView(WordView otherWord) {
+        int index = wordViews.indexOf(otherWord);
+        boolean successful = false;
+        // If the word is first or last, remove it and we're done
+        if(index == 0 || index == wordViews.size() - 1) {
+            successful = wordViews.remove(word);
+        }
+        return successful;
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        otherView.acceptVisitor(visitor, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        visitor.visit(wordView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        visitor.visit(rowView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        visitor.visit(poemView, this);
     }
 }

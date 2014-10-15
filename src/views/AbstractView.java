@@ -2,12 +2,14 @@ package views;
 
 import models.Position;
 
+import javax.swing.*;
+
 /**
  * The base class for each view component of CyberPoetrySlam
  *
  * Created by Nathan on 10/3/2014.
  */
-public abstract class AbstractView {
+public abstract class AbstractView extends JComponent {
     Position position;
     int width;
     int height;

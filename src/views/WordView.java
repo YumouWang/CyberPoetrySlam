@@ -1,7 +1,8 @@
 package views;
 
-import models.AbstractWord;
+import controllers.AbstractWordViewVisitor;
 import models.Position;
+import models.Word;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class WordView extends AbstractWordView {
      * @param word     The word that this view represents
      * @param position The position of this word
      */
-    public WordView(AbstractWord word, Position position) {
+    public WordView(Word word, Position position) {
         super(word, position);
         setSize(word.getValue().length() * 8, 20);
         label = new JLabel(word.getValue());
@@ -54,5 +55,33 @@ public class WordView extends AbstractWordView {
         super.position = toPosition;
         updateView();
         return true;
+    }
+
+    public AbstractWordView getSelectedElement(ConnectionBox box) {
+        AbstractWordView selected = null;
+        if(isOverlapping(box)) {
+            selected = this;
+        }
+        return selected;
+    }
+
+    public boolean contains(AbstractWordView otherWord) {
+        return this.equals(otherWord);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        otherView.acceptVisitor(visitor, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        visitor.visit(wordView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        visitor.visit(rowView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        visitor.visit(poemView, this);
     }
 }

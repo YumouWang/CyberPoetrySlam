@@ -4,6 +4,7 @@ import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
+import views.ConnectionBox;
 import views.MainView;
 
 import java.awt.*;
@@ -22,6 +23,7 @@ import java.util.Collection;
 public class MouseInputController implements MouseListener, MouseMotionListener {
 
     AbstractWordView selectedWord;
+    Collection<AbstractWordView> selectedWords;
     Position mouseDownPosition;
     MainView mainView;
     GameState gameState;
@@ -39,14 +41,34 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     @Override
     public void mousePressed(MouseEvent e) {
         mouseDownPosition = new Position(e.getX(), e.getY());
+        if(selectedWord != null) {
+            selectedWord.setBackground(Color.LIGHT_GRAY);
+//            selectedWord.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        }
         selectedWord = null;
         Collection<AbstractWordView> words = mainView.getWords();
         for(AbstractWordView word: words) {
             if(word.isClicked(mouseDownPosition)) {
                 selectedWord = word;
+                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+//                selectedWord.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.CYAN), BorderFactory.createLineBorder(Color.BLACK)));
                 break;
             }
         }
+        if(selectedWord == null) {
+            mainView.getSelectionBox().startNewSelection(mouseDownPosition);
+        } else {
+            if(e.isControlDown()) {
+                selectedWord.setBackground(Color.LIGHT_GRAY);
+                DisconnectController controller = new DisconnectController(mainView, gameState);
+                AbstractWordView selectedElement = selectedWord.getSelectedElement(new ConnectionBox(mouseDownPosition, 0, 0));
+                if(controller.disconnect(selectedElement, selectedWord)) {
+                    selectedWord = selectedElement;
+                }
+                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+            }
+        }
+        mainView.refresh();
     }
 
     @Override
@@ -76,10 +98,23 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
             } else if (isAdjacent) {
                 selectedWord.setBackground(Color.GREEN);
             } else {
-                selectedWord.setBackground(Color.LIGHT_GRAY);
+                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
             }
         }
         mouseDownPosition = new Position(e.getX(), e.getY());
+        if(selectedWord == null) {
+            mainView.getSelectionBox().moveSelection(mouseDownPosition);
+            // Highlight selected items, un-highlight unselected items
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getWords());
+            for(AbstractWordView view : mainView.getWords()) {
+                if(selectedWords.contains(view)) {
+                    view.setBackground(Color.LIGHT_GRAY.brighter());
+                } else {
+                    view.setBackground(Color.LIGHT_GRAY);
+                }
+            }
+        }
+        mainView.refresh();
     }
 
     @Override
@@ -97,11 +132,21 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
                 }
             }
             if (connectTarget != null) {
-                ConnectionController controller = new ConnectionController(mainView, gameState);
+                ConnectController controller = new ConnectController(mainView, gameState);
                 controller.connect(selectedWord, connectTarget);
-                mainView.refresh();
             }
+        } else {
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getWords());
+            for(AbstractWordView view : mainView.getWords()) {
+                if(selectedWords.contains(view)) {
+                    view.setBackground(Color.LIGHT_GRAY.brighter());
+                } else {
+                    view.setBackground(Color.LIGHT_GRAY);
+                }
+            }
+            mainView.getSelectionBox().clearBox();
         }
+        mainView.refresh();
     }
 
     @Override

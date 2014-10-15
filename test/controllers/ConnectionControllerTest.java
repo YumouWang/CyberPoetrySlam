@@ -41,7 +41,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewTwo, wordViewOne);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
@@ -80,7 +80,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewOne, rowViewTwo);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
@@ -122,7 +122,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         // Invalid connect, should have no effect on gameState
         controller.connect(viewOne, viewTwo);
 
@@ -163,7 +163,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -205,7 +205,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -250,7 +250,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -292,7 +292,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -337,7 +337,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -385,7 +385,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -420,7 +420,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewTwo, wordViewOne);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
@@ -459,7 +459,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewOne, rowViewTwo);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
@@ -501,7 +501,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         // Invalid connect, should have no effect on gameState
         controller.connect(viewOne, viewTwo);
 
@@ -542,7 +542,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -584,7 +584,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -629,7 +629,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertFalse(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -671,7 +671,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -716,7 +716,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -764,7 +764,7 @@ public class ConnectionControllerTest {
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));
         assertEquals(2, gameState.getProtectedArea().getAbstractWordCollection().size());
 
-        ConnectionController controller = new ConnectionController(mainView, gameState);
+        ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(viewOne, viewTwo);
         // Check that gameState appropriately represents the result
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));

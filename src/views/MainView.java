@@ -4,9 +4,10 @@ import controllers.MouseInputController;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
+import models.Word;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Random;
@@ -19,7 +20,9 @@ import java.util.Random;
 public class MainView extends JFrame {
 
     Hashtable<Long, AbstractWordView> words;
-    JPanel contentPane;
+    Container contentPane;
+
+    SelectionBox selectionBox;
 
     /**
      * Constructor
@@ -28,9 +31,7 @@ public class MainView extends JFrame {
     public MainView(GameState gameState) {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 408);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        contentPane = getContentPane();
         contentPane.setLayout(null);
 
         words = new Hashtable<Long, AbstractWordView>();
@@ -40,10 +41,15 @@ public class MainView extends JFrame {
         for(AbstractWord word: words) {
             int x = random.nextInt(300);
             int y = random.nextInt(200);
-            WordView view = new WordView(word, new Position(x, y));
+            WordView view = new WordView((Word)word, new Position(x, y));
             contentPane.add(view.label);
             addAbstractWordView(view);
         }
+
+        // Puts the selectionBox on the pane in front of the words.
+        // The selectionBox can be set to visible or not from the selectionBox class
+        selectionBox = new SelectionBox();
+        setGlassPane(selectionBox);
     }
 
     /**
@@ -92,4 +98,7 @@ public class MainView extends JFrame {
     public AbstractWordView getAbstractWordById(long id) {
         return words.get(id);
     }
+
+    public SelectionBox getSelectionBox() { return selectionBox; }
+
 }

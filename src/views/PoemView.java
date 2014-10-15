@@ -1,5 +1,6 @@
 package views;
 
+import controllers.AbstractWordViewVisitor;
 import models.Poem;
 import models.Position;
 import models.Row;
@@ -82,6 +83,27 @@ public class PoemView extends AbstractWordView {
         calculateDimensions();
     }
 
+    /**
+     * Disconnects a word from one of the rows in this poem if the word is an edge word and is in the poem
+     * @param wordView The word to disconnect
+     * @return Returns whether the disconnect was successful. Returns false if the word is not an edge word or is not in the poem
+     */
+    public boolean removeEdgeWordView(WordView wordView) {
+        boolean successful = false;
+        for(RowView rowView: rowViews) {
+            for(WordView rowWordView: rowView.getWordViews()) {
+                if(wordView.equals(rowWordView)) {
+                    successful = rowView.removeWordView(rowWordView);
+                    break;
+                }
+            }
+            if(successful) {
+                break;
+            }
+        }
+        return successful;
+    }
+
     public List<RowView> getRowViews() {
         return rowViews;
     }
@@ -97,5 +119,45 @@ public class PoemView extends AbstractWordView {
             }
         }
         setSize(widest, totalHeight);
+    }
+
+    public AbstractWordView getSelectedElement(ConnectionBox box) {
+        AbstractWordView selected = null;
+        for(RowView row : rowViews) {
+            AbstractWordView selectedElement = row.getSelectedElement(box);
+            if(selectedElement != null) {
+                selected = selectedElement;
+            }
+        }
+        return selected;
+    }
+
+    public boolean contains(AbstractWordView otherWord) {
+        boolean containsWord = this.equals(otherWord);
+        if(!containsWord) {
+            for (RowView row : rowViews) {
+                if (row.contains(otherWord)) {
+                    containsWord = true;
+                    break;
+                }
+            }
+        }
+        return containsWord;
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        otherView.acceptVisitor(visitor, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        visitor.visit(wordView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        visitor.visit(rowView, this);
+    }
+
+    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        visitor.visit(poemView, this);
     }
 }

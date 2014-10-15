@@ -6,6 +6,9 @@ import java.util.Set;
 import controllers.Search;
 
 public class TestSearch {
+	
+	String test = "";
+	
 	public static void main(String[] args) {
 		Search.getInstance().initTable();
 		Hashtable<String,String> result = Search.getInstance().search("day", "");
@@ -15,4 +18,6 @@ public class TestSearch {
             System.out.println(key +" : " + result.get(key));
         }
 	}
+	
+	
 }

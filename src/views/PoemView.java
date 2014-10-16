@@ -83,6 +83,11 @@ public class PoemView extends AbstractWordView {
         calculateDimensions();
     }
 
+    public void addPoem(PoemView poemView) {
+        rowViews.addAll(poemView.getRowViews());
+        calculateDimensions();
+    }
+
     /**
      * Disconnects a word from one of the rows in this poem if the word is an edge word and is in the poem
      * @param wordView The word to disconnect
@@ -159,5 +164,9 @@ public class PoemView extends AbstractWordView {
 
     public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
         visitor.visit(poemView, this);
+    }
+
+    public Poem getWord() {
+        return (Poem) word;
     }
 }

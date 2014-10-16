@@ -51,253 +51,253 @@ public class AreaTest {
         assertFalse(area.abstractWordCollection.contains(word));
     }
 
-    @Test
-    public void testConnectHorizontal1() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        words.add(wordTwo);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(wordTwo));
-        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
-        assertFalse(area.abstractWordCollection.contains(wordOne));
-        assertFalse(area.abstractWordCollection.contains(wordTwo));
-        assertTrue(area.abstractWordCollection.contains(result));
-        assertEquals("Mule Horse", result.getValue());
-    }
-
-    @Test
-    public void testConnectHorizontal2() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertFalse(area.abstractWordCollection.contains(wordTwo));
-        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertFalse(area.abstractWordCollection.contains(wordTwo));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal3() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordTwo);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordTwo));
-        assertFalse(area.abstractWordCollection.contains(wordOne));
-        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
-        assertTrue(area.abstractWordCollection.contains(wordTwo));
-        assertFalse(area.abstractWordCollection.contains(wordOne));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal4() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWords = new ArrayList<Word>();
-        rowWords.add(wordTwo);
-        rowWords.add(wordThree);
-        Row rowOne = new Row(rowWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        words.add(rowOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        AbstractWord result = area.connectHorizontal(wordOne, rowOne);
-        assertFalse(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertEquals(rowOne, result);
-        assertEquals("Mule Horse Donkey", result.getValue());
-    }
-
-    @Test
-    public void testConnectHorizontal5() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWords = new ArrayList<Word>();
-        rowWords.add(wordTwo);
-        rowWords.add(wordThree);
-        Row rowOne = new Row(rowWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        words.add(rowOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        AbstractWord result = area.connectHorizontal(rowOne, wordOne);
-        assertFalse(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertEquals(rowOne, result);
-        assertEquals("Horse Donkey Mule", result.getValue());
-    }
-
-    @Test
-    public void testConnectHorizontal6() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWordsOne = new ArrayList<Word>();
-        rowWordsOne.add(wordOne);
-        Row rowOne = new Row(rowWordsOne);
-        List<Word> rowWordsTwo = new ArrayList<Word>();
-        rowWordsTwo.add(wordTwo);
-        rowWordsTwo.add(wordThree);
-        Row rowTwo = new Row(rowWordsTwo);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(rowOne);
-        words.add(rowTwo);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertTrue(area.abstractWordCollection.contains(rowTwo));
-        AbstractWord result = area.connectHorizontal(rowOne, rowTwo);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertFalse(area.abstractWordCollection.contains(rowTwo));
-        assertEquals(rowOne, result);
-        assertEquals("Mule Horse Donkey", result.getValue());
-    }
-
-    @Test
-    public void testConnectHorizontal7() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWords = new ArrayList<Word>();
-        rowWords.add(wordTwo);
-        rowWords.add(wordThree);
-        Row rowOne = new Row(rowWords);
-        List<Row> poemWords = new ArrayList<Row>();
-        poemWords.add(rowOne);
-        Poem poemOne = new Poem(poemWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        words.add(poemOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        AbstractWord result = area.connectHorizontal(poemOne, wordOne);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal8() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWords = new ArrayList<Word>();
-        rowWords.add(wordTwo);
-        rowWords.add(wordThree);
-        Row rowOne = new Row(rowWords);
-        List<Row> poemWords = new ArrayList<Row>();
-        poemWords.add(rowOne);
-        Poem poemOne = new Poem(poemWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(wordOne);
-        words.add(poemOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        AbstractWord result = area.connectHorizontal(wordOne, poemOne);
-        assertTrue(area.abstractWordCollection.contains(wordOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal9() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWordsOne = new ArrayList<Word>();
-        rowWordsOne.add(wordOne);
-        Row rowOne = new Row(rowWordsOne);
-        List<Word> rowWordsTwo = new ArrayList<Word>();
-        rowWordsTwo.add(wordTwo);
-        rowWordsTwo.add(wordThree);
-        Row rowTwo = new Row(rowWordsTwo);
-        List<Row> poemWords = new ArrayList<Row>();
-        poemWords.add(rowTwo);
-        Poem poemOne = new Poem(poemWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(rowOne);
-        words.add(poemOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        AbstractWord result = area.connectHorizontal(rowOne, poemOne);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal10() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWordsOne = new ArrayList<Word>();
-        rowWordsOne.add(wordOne);
-        Row rowOne = new Row(rowWordsOne);
-        List<Word> rowWordsTwo = new ArrayList<Word>();
-        rowWordsTwo.add(wordTwo);
-        rowWordsTwo.add(wordThree);
-        Row rowTwo = new Row(rowWordsTwo);
-        List<Row> poemWords = new ArrayList<Row>();
-        poemWords.add(rowTwo);
-        Poem poemOne = new Poem(poemWords);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(rowOne);
-        words.add(poemOne);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        AbstractWord result = area.connectHorizontal(poemOne, rowOne);
-        assertTrue(area.abstractWordCollection.contains(rowOne));
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertNull(result);
-    }
-
-    @Test
-    public void testConnectHorizontal11() throws Exception {
-        Word wordOne = new Word("Mule", WordType.NOUN);
-        Word wordTwo = new Word("Horse", WordType.NOUN);
-        Word wordThree = new Word("Donkey", WordType.NOUN);
-        List<Word> rowWordsOne = new ArrayList<Word>();
-        rowWordsOne.add(wordOne);
-        Row rowOne = new Row(rowWordsOne);
-        List<Row> poemWordsOne = new ArrayList<Row>();
-        poemWordsOne.add(rowOne);
-        Poem poemOne = new Poem(poemWordsOne);
-        List<Word> rowWordsTwo = new ArrayList<Word>();
-        rowWordsTwo.add(wordTwo);
-        rowWordsTwo.add(wordThree);
-        Row rowTwo = new Row(rowWordsTwo);
-        List<Row> poemWordsTwo = new ArrayList<Row>();
-        poemWordsTwo.add(rowTwo);
-        Poem poemTwo = new Poem(poemWordsTwo);
-        Collection<AbstractWord> words = new HashSet<AbstractWord>();
-        words.add(poemOne);
-        words.add(poemTwo);
-        Area area = new Area(words);
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertTrue(area.abstractWordCollection.contains(poemTwo));
-        AbstractWord result = area.connectHorizontal(poemOne, poemTwo);
-        assertTrue(area.abstractWordCollection.contains(poemOne));
-        assertTrue(area.abstractWordCollection.contains(poemTwo));
-        assertNull(result);
-    }
+//    @Test
+//    public void testConnectHorizontal1() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        words.add(wordTwo);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(wordTwo));
+//        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
+//        assertFalse(area.abstractWordCollection.contains(wordOne));
+//        assertFalse(area.abstractWordCollection.contains(wordTwo));
+//        assertTrue(area.abstractWordCollection.contains(result));
+//        assertEquals("Mule Horse", result.getValue());
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal2() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertFalse(area.abstractWordCollection.contains(wordTwo));
+//        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertFalse(area.abstractWordCollection.contains(wordTwo));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal3() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordTwo);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordTwo));
+//        assertFalse(area.abstractWordCollection.contains(wordOne));
+//        AbstractWord result = area.connectHorizontal(wordOne, wordTwo);
+//        assertTrue(area.abstractWordCollection.contains(wordTwo));
+//        assertFalse(area.abstractWordCollection.contains(wordOne));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal4() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWords = new ArrayList<Word>();
+//        rowWords.add(wordTwo);
+//        rowWords.add(wordThree);
+//        Row rowOne = new Row(rowWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        words.add(rowOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        AbstractWord result = area.connectHorizontal(wordOne, rowOne);
+//        assertFalse(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertEquals(rowOne, result);
+//        assertEquals("Mule Horse Donkey", result.getValue());
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal5() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWords = new ArrayList<Word>();
+//        rowWords.add(wordTwo);
+//        rowWords.add(wordThree);
+//        Row rowOne = new Row(rowWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        words.add(rowOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        AbstractWord result = area.connectHorizontal(rowOne, wordOne);
+//        assertFalse(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertEquals(rowOne, result);
+//        assertEquals("Horse Donkey Mule", result.getValue());
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal6() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWordsOne = new ArrayList<Word>();
+//        rowWordsOne.add(wordOne);
+//        Row rowOne = new Row(rowWordsOne);
+//        List<Word> rowWordsTwo = new ArrayList<Word>();
+//        rowWordsTwo.add(wordTwo);
+//        rowWordsTwo.add(wordThree);
+//        Row rowTwo = new Row(rowWordsTwo);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(rowOne);
+//        words.add(rowTwo);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertTrue(area.abstractWordCollection.contains(rowTwo));
+//        AbstractWord result = area.connectHorizontal(rowOne, rowTwo);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertFalse(area.abstractWordCollection.contains(rowTwo));
+//        assertEquals(rowOne, result);
+//        assertEquals("Mule Horse Donkey", result.getValue());
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal7() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWords = new ArrayList<Word>();
+//        rowWords.add(wordTwo);
+//        rowWords.add(wordThree);
+//        Row rowOne = new Row(rowWords);
+//        List<Row> poemWords = new ArrayList<Row>();
+//        poemWords.add(rowOne);
+//        Poem poemOne = new Poem(poemWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        words.add(poemOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        AbstractWord result = area.connectHorizontal(poemOne, wordOne);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal8() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWords = new ArrayList<Word>();
+//        rowWords.add(wordTwo);
+//        rowWords.add(wordThree);
+//        Row rowOne = new Row(rowWords);
+//        List<Row> poemWords = new ArrayList<Row>();
+//        poemWords.add(rowOne);
+//        Poem poemOne = new Poem(poemWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(wordOne);
+//        words.add(poemOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        AbstractWord result = area.connectHorizontal(wordOne, poemOne);
+//        assertTrue(area.abstractWordCollection.contains(wordOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal9() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWordsOne = new ArrayList<Word>();
+//        rowWordsOne.add(wordOne);
+//        Row rowOne = new Row(rowWordsOne);
+//        List<Word> rowWordsTwo = new ArrayList<Word>();
+//        rowWordsTwo.add(wordTwo);
+//        rowWordsTwo.add(wordThree);
+//        Row rowTwo = new Row(rowWordsTwo);
+//        List<Row> poemWords = new ArrayList<Row>();
+//        poemWords.add(rowTwo);
+//        Poem poemOne = new Poem(poemWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(rowOne);
+//        words.add(poemOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        AbstractWord result = area.connectHorizontal(rowOne, poemOne);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal10() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWordsOne = new ArrayList<Word>();
+//        rowWordsOne.add(wordOne);
+//        Row rowOne = new Row(rowWordsOne);
+//        List<Word> rowWordsTwo = new ArrayList<Word>();
+//        rowWordsTwo.add(wordTwo);
+//        rowWordsTwo.add(wordThree);
+//        Row rowTwo = new Row(rowWordsTwo);
+//        List<Row> poemWords = new ArrayList<Row>();
+//        poemWords.add(rowTwo);
+//        Poem poemOne = new Poem(poemWords);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(rowOne);
+//        words.add(poemOne);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        AbstractWord result = area.connectHorizontal(poemOne, rowOne);
+//        assertTrue(area.abstractWordCollection.contains(rowOne));
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertNull(result);
+//    }
+//
+//    @Test
+//    public void testConnectHorizontal11() throws Exception {
+//        Word wordOne = new Word("Mule", WordType.NOUN);
+//        Word wordTwo = new Word("Horse", WordType.NOUN);
+//        Word wordThree = new Word("Donkey", WordType.NOUN);
+//        List<Word> rowWordsOne = new ArrayList<Word>();
+//        rowWordsOne.add(wordOne);
+//        Row rowOne = new Row(rowWordsOne);
+//        List<Row> poemWordsOne = new ArrayList<Row>();
+//        poemWordsOne.add(rowOne);
+//        Poem poemOne = new Poem(poemWordsOne);
+//        List<Word> rowWordsTwo = new ArrayList<Word>();
+//        rowWordsTwo.add(wordTwo);
+//        rowWordsTwo.add(wordThree);
+//        Row rowTwo = new Row(rowWordsTwo);
+//        List<Row> poemWordsTwo = new ArrayList<Row>();
+//        poemWordsTwo.add(rowTwo);
+//        Poem poemTwo = new Poem(poemWordsTwo);
+//        Collection<AbstractWord> words = new HashSet<AbstractWord>();
+//        words.add(poemOne);
+//        words.add(poemTwo);
+//        Area area = new Area(words);
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertTrue(area.abstractWordCollection.contains(poemTwo));
+//        AbstractWord result = area.connectHorizontal(poemOne, poemTwo);
+//        assertTrue(area.abstractWordCollection.contains(poemOne));
+//        assertTrue(area.abstractWordCollection.contains(poemTwo));
+//        assertNull(result);
+//    }
 
 
     @Test

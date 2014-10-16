@@ -3,9 +3,7 @@ package controllers;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
-import views.AbstractWordView;
-import views.MainView;
-import views.WordView;
+import views.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class ConnectionControllerTest {
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
-        WordView rowViewTwo = new WordView(rowOne, new Position(10, 0));
+        RowView rowViewTwo = new RowView(rowOne, new Position(10, 0), mainView);
         wordViewOne.setSize(5, 10);
         mainView.addAbstractWordView(wordViewOne);
         mainView.addAbstractWordView(rowViewTwo);
@@ -113,7 +111,7 @@ public class ConnectionControllerTest {
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         WordView viewOne = new WordView(wordOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemOne, new Position(10, 0));
+        PoemView viewTwo = new PoemView(poemOne, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -153,7 +151,7 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
@@ -195,8 +193,8 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
-        WordView viewTwo = new WordView(rowTwo, new Position(10, 0));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
+        RowView viewTwo = new RowView(rowTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -240,8 +238,8 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemOne, new Position(10, 0));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
+        PoemView viewTwo = new PoemView(poemOne, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -282,7 +280,7 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
@@ -327,8 +325,8 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
-        WordView viewTwo = new WordView(rowTwo, new Position(10, 0));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
+        RowView viewTwo = new RowView(rowTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -375,8 +373,8 @@ public class ConnectionControllerTest {
         Poem poemTwo = new Poem(poemRowsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(poemTwo);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemTwo, new Position(10, 0));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
+        PoemView viewTwo = new PoemView(poemTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -450,7 +448,7 @@ public class ConnectionControllerTest {
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
-        WordView rowViewTwo = new WordView(rowOne, new Position(0, 10));
+        RowView rowViewTwo = new RowView(rowOne, new Position(0, 10), mainView);
         wordViewOne.setSize(10, 5);
         mainView.addAbstractWordView(wordViewOne);
         mainView.addAbstractWordView(rowViewTwo);
@@ -492,7 +490,7 @@ public class ConnectionControllerTest {
         gameState.getProtectedArea().addAbstractWord(wordOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         WordView viewOne = new WordView(wordOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemOne, new Position(0, 10));
+        PoemView viewTwo = new PoemView(poemOne, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -532,7 +530,7 @@ public class ConnectionControllerTest {
         Row rowOne = new Row(rowWords);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
@@ -574,8 +572,8 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
-        WordView viewTwo = new WordView(rowTwo, new Position(0, 10));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
+        RowView viewTwo = new RowView(rowTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -619,8 +617,8 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(rowOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
-        WordView viewOne = new WordView(rowOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemOne, new Position(0, 10));
+        RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
+        PoemView viewTwo = new PoemView(poemOne, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -661,7 +659,7 @@ public class ConnectionControllerTest {
         Poem poemOne = new Poem(poemRowsOne);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(wordThree);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
@@ -706,8 +704,8 @@ public class ConnectionControllerTest {
         Row rowTwo = new Row(rowWordsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(rowTwo);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
-        WordView viewTwo = new WordView(rowTwo, new Position(0, 10));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
+        RowView viewTwo = new RowView(rowTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);
@@ -754,8 +752,8 @@ public class ConnectionControllerTest {
         Poem poemTwo = new Poem(poemRowsTwo);
         gameState.getProtectedArea().addAbstractWord(poemOne);
         gameState.getProtectedArea().addAbstractWord(poemTwo);
-        WordView viewOne = new WordView(poemOne, new Position(0, 0));
-        WordView viewTwo = new WordView(poemTwo, new Position(0, 10));
+        PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
+        PoemView viewTwo = new PoemView(poemTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
         mainView.addAbstractWordView(viewOne);
         mainView.addAbstractWordView(viewTwo);

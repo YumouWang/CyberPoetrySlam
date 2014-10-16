@@ -84,4 +84,8 @@ public class WordView extends AbstractWordView {
     public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
         visitor.visit(poemView, this);
     }
+
+    public Word getWord() {
+        return (Word) word;
+    }
 }

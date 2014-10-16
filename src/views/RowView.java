@@ -75,6 +75,11 @@ public class RowView extends AbstractWordView {
         calculateDimensions();
     }
 
+    public void addRow(RowView rowView) {
+        wordViews.addAll(rowView.getWordViews());
+        calculateDimensions();
+    }
+
     public List<WordView> getWordViews() {
         return wordViews;
     }
@@ -140,5 +145,9 @@ public class RowView extends AbstractWordView {
 
     public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
         visitor.visit(poemView, this);
+    }
+
+    public Row getWord() {
+        return (Row) word;
     }
 }

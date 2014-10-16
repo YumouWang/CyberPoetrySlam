@@ -1,26 +1,19 @@
 package views;
 
-import java.awt.Color;
+import controllers.Search;
+import models.AbstractWord;
+import models.GameState;
+import models.Word;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
-import models.AbstractWord;
-import models.GameState;
-import controllers.Search;
 
 public class ExploreArea extends JFrame {
 
@@ -39,7 +32,7 @@ public class ExploreArea extends JFrame {
 	 * Create the frame.
 	 */
 	public ExploreArea() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 278, 302);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,7 +78,7 @@ public class ExploreArea extends JFrame {
 			//cellData[i] = new String[2];
 			cellData [i][0] = word.getValue();
 			//System.out.println(word.getValue() + "," + word.getType());
-			cellData [i][1] = word.getType().toString();
+			cellData [i][1] = ((Word)word).getType().toString();
 			i++;
 		}
 		
@@ -106,8 +99,6 @@ public class ExploreArea extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Search search = new Search(mainGUI, gameState);
 				search.updateWordTable();
-				if(textField.getText().equals("")) {
-				}
 				if(comboBox.getSelectedIndex() == -1) {
 					input = "";
 				}
@@ -129,7 +120,7 @@ public class ExploreArea extends JFrame {
 				int i = 0;
 				for (AbstractWord word : result) {
 					cellData [i][0] = word.getValue();
-					cellData [i][1] = word.getType().toString();
+					cellData [i][1] = ((Word)word).getType().toString();
 					i++;
 				}			
 				table.updateUI();		  
@@ -143,15 +134,13 @@ public class ExploreArea extends JFrame {
 	                	textArea.setText(textField.getText() + comboBox.getSelectedItem());
 	                	Search search = new Search(mainGUI, gameState);
 	    				search.updateWordTable();
-	    				if(textField.getText().equals("")) {
-	    				}
 	    				if(comboBox.getSelectedIndex() == -1) {
 	    					input = "";
 	    				}
 	    				else {
 	    					input =  comboBox.getSelectedItem().toString();
 	    				}
-	    				Collection<AbstractWord> result = search.search(textField.getText(), input);
+//	    				Collection<AbstractWord> result = search.search(textField.getText(), input);
 //	    				if(result.isEmpty()) {
 //	    					textArea.setText("No result!");
 //	    				}

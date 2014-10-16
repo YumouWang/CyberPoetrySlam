@@ -1,11 +1,12 @@
 package controllers;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 import models.AbstractWord;
 import models.GameState;
+import models.Word;
 import views.MainGUI;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 public class Search {
 	private static Search search;
@@ -42,7 +43,7 @@ public class Search {
 		}
 		for (AbstractWord word1 : wordtable) {
 			String wordValue = word1.getValue();
-			String wordType = word1.getType().toString();
+			String wordType = ((Word)word1).getType().toString();
 			if(word.equalsIgnoreCase(wordValue) && wordtype.equalsIgnoreCase(wordType)) {
             	result.add(word1);
             }

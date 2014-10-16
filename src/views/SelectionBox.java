@@ -9,6 +9,8 @@ import java.util.HashSet;
 
 /**
  * A class representing the box displayed when dragging to select multiple items
+ * Not used at the moment, but could be used to select rows so we can disconnect them.
+ *
  * Created by Nathan on 10/10/2014.
  */
 public class SelectionBox extends JComponent {

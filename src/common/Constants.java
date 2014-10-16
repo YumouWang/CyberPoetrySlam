@@ -7,4 +7,5 @@ package common;
  */
 public class Constants {
     public static final int CONNECT_DISTANCE = 8;
+    public static final int PROTECTED_AREA_HEIGHT = 250;
 }

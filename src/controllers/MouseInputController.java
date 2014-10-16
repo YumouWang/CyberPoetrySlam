@@ -8,9 +8,8 @@ import views.ConnectionBox;
 import views.MainView;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Collection;
 
 /**
@@ -20,10 +19,9 @@ import java.util.Collection;
  *
  * Created by Nathan on 10/4/2014.
  */
-public class MouseInputController implements MouseListener, MouseMotionListener {
+public class MouseInputController extends MouseAdapter {
 
     AbstractWordView selectedWord;
-    Collection<AbstractWordView> selectedWords;
     Position mouseDownPosition;
     MainView mainView;
     GameState gameState;
@@ -43,30 +41,35 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
         mouseDownPosition = new Position(e.getX(), e.getY());
         if(selectedWord != null) {
             selectedWord.setBackground(Color.LIGHT_GRAY);
-//            selectedWord.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
         selectedWord = null;
-        Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
-        for(AbstractWordView word: words) {
-            if(word.isClicked(mouseDownPosition)) {
+
+        Collection<AbstractWordView> words;
+        // If it's in the protected area, select a word from the protectedArea
+        if(mainView.isInProtectedArea(mouseDownPosition)) {
+            words = mainView.getProtectedAreaWords();
+        } else {
+            // Otherwise, get a word from the unprotectedArea
+            words = mainView.getUnprotectedAreaWords();
+        }
+        // Select the word from the selection
+        for (AbstractWordView word : words) {
+            if (word.isClicked(mouseDownPosition)) {
                 selectedWord = word;
                 selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
-//                selectedWord.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.CYAN), BorderFactory.createLineBorder(Color.BLACK)));
                 break;
             }
         }
-        if(selectedWord == null) {
-            mainView.getSelectionBox().startNewSelection(mouseDownPosition);
-        } else {
-            if(e.isControlDown()) {
-                selectedWord.setBackground(Color.LIGHT_GRAY);
-                DisconnectController controller = new DisconnectController(mainView, gameState);
-                AbstractWordView selectedElement = selectedWord.getSelectedElement(new ConnectionBox(mouseDownPosition, 0, 0));
-                if(controller.disconnect(selectedElement, selectedWord)) {
-                    selectedWord = selectedElement;
-                }
-                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+
+        if(selectedWord != null && e.isControlDown()) {
+            // If control is selected, disconnect the word
+            selectedWord.setBackground(Color.LIGHT_GRAY);
+            DisconnectController controller = new DisconnectController(mainView, gameState);
+            AbstractWordView selectedElement = selectedWord.getSelectedElement(new ConnectionBox(mouseDownPosition, 0, 0));
+            if(controller.disconnect(selectedElement, selectedWord)) {
+                selectedWord = selectedElement;
             }
+            selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
         }
         mainView.refresh();
     }
@@ -74,52 +77,16 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     @Override
     public void mouseDragged(MouseEvent e) {
         if(selectedWord != null) {
-            Position positionDiff = new Position(e.getX() - mouseDownPosition.getX(), e.getY() - mouseDownPosition.getY());
-            selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
-            boolean isOverlapping = false;
-            boolean isAdjacent = false;
-            Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
-            for (AbstractWordView word : words) {
-                if(!word.equals(selectedWord)) {
-                    if (word.isOverlapping(selectedWord)) {
-                        isOverlapping = true;
-                    }
-                    AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
-                    if(adjacencyType != AdjacencyType.NOT_ADJACENT) {
-                        isAdjacent = true;
-                        word.setBackground(Color.GREEN);
-                    } else {
-                        word.setBackground(Color.LIGHT_GRAY);
-                    }
-                }
-            }
-            if(isOverlapping) {
-                selectedWord.setBackground(Color.RED);
-            } else if (isAdjacent) {
-                selectedWord.setBackground(Color.GREEN);
-            } else {
-                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
-            }
+            MoveWordController moveController = new MoveWordController(mainView, gameState);
+            moveController.moveWord(selectedWord, mouseDownPosition, new Position(e.getX(), e.getY()));
         }
         mouseDownPosition = new Position(e.getX(), e.getY());
-        if(selectedWord == null) {
-            mainView.getSelectionBox().moveSelection(mouseDownPosition);
-            // Highlight selected items, un-highlight unselected items
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
-            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
-                if(selectedWords.contains(view)) {
-                    view.setBackground(Color.LIGHT_GRAY.brighter());
-                } else {
-                    view.setBackground(Color.LIGHT_GRAY);
-                }
-            }
-        }
         mainView.refresh();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(selectedWord != null) {
+        if(selectedWord != null && mainView.isInProtectedArea(new Position(e.getX(), e.getY()))) {
             Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
             AbstractWordView connectTarget = null;
             for (AbstractWordView word : words) {
@@ -135,29 +102,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
                 ConnectController controller = new ConnectController(mainView, gameState);
                 controller.connect(selectedWord, connectTarget);
             }
-        } else {
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
-            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
-                if(selectedWords.contains(view)) {
-                    view.setBackground(Color.LIGHT_GRAY.brighter());
-                } else {
-                    view.setBackground(Color.LIGHT_GRAY);
-                }
-            }
-            mainView.getSelectionBox().clearBox();
         }
         mainView.refresh();
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {}
-
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }

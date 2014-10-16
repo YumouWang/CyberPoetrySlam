@@ -1,6 +1,6 @@
 package views;
 
-import controllers.MouseController;
+import common.Constants;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
@@ -9,6 +9,7 @@ import models.Word;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Random;
@@ -25,8 +26,6 @@ public class MainView extends JFrame {
 	Container contentPane;
 	JPanel panel;
 	public ExploreArea exploreArea;
-
-    SelectionBox selectionBox;
 
     /**
      * Constructor
@@ -80,11 +79,6 @@ public class MainView extends JFrame {
 		swapPanel.setBounds(400, 0, 284, 184);
 		contentPane.add(swapPanel);
 		swapPanel.setLayout(null);
-
-        // Puts the selectionBox on the pane in front of the words.
-        // The selectionBox can be set to visible or not from the selectionBox class
-        selectionBox = new SelectionBox();
-        setGlassPane(selectionBox);
 	}
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
@@ -108,8 +102,7 @@ public class MainView extends JFrame {
 	@Override
     public void paint(Graphics g) {
         super.paint(g);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.drawLine(10, 250, 405, 250);
+        g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405, Constants.PROTECTED_AREA_HEIGHT);
     }
 
     /**
@@ -124,7 +117,7 @@ public class MainView extends JFrame {
      * Adds a MouseInputController to the MouseListeners and MouseMotionListeners
      * @param controller The controller to handle user input
      */
-	public void addMouseInputController(MouseController controller) {
+	public void addMouseInputController(MouseAdapter controller) {
 		panel.addMouseListener(controller);
 		panel.addMouseMotionListener(controller);
 	}
@@ -153,5 +146,7 @@ public class MainView extends JFrame {
 		return unprotectedAreaWords.values();
 	}
 
-    public SelectionBox getSelectionBox() { return selectionBox; }
+    public boolean isInProtectedArea(Position position) {
+        return position.getY() < Constants.PROTECTED_AREA_HEIGHT;
+    }
 }

@@ -9,7 +9,7 @@ import views.WordView;
 import java.awt.*;
 
 /**
- * A realization of the AbstractWordViewVisitor interface for handling connections between two words
+ * A realization of the AbstractWordViewVisitor interface for connecting two words
  *
  * Created by Nathan on 10/15/2014.
  */

@@ -126,8 +126,9 @@ public class RowView extends AbstractWordView {
         boolean successful = false;
         // If the word is first or last, remove it and we're done
         if(index == 0 || index == wordViews.size() - 1) {
-            successful = wordViews.remove(word);
+            successful = wordViews.remove(otherWord);
         }
+        calculateDimensions();
         return successful;
     }
 

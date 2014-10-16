@@ -30,7 +30,7 @@ public class RowView extends AbstractWordView {
 
         // Find all wordViews
         for(Word word: words) {
-            WordView view = (WordView) mainView.getAbstractWordById(word.getId());
+            WordView view = (WordView) mainView.getProtectedAbstractWordById(word.getId());
             wordViews.add(view);
         }
 

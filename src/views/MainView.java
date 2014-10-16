@@ -1,12 +1,13 @@
 package views;
 
-import controllers.MouseInputController;
+import controllers.MouseController;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import models.Word;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Hashtable;
@@ -15,12 +16,15 @@ import java.util.Random;
 /**
  * The main view that tracks all other views
  *
- * Created by Nathan on 10/3/2014.
+ * Created by Yumou on 10/4/2014.
  */
 public class MainView extends JFrame {
 
-    Hashtable<Long, AbstractWordView> words;
-    Container contentPane;
+    Hashtable<Long, AbstractWordView> protectedAreaWords;
+    Hashtable<Long, AbstractWordView> unprotectedAreaWords;
+	Container contentPane;
+	JPanel panel;
+	public ExploreArea exploreArea;
 
     SelectionBox selectionBox;
 
@@ -28,77 +32,126 @@ public class MainView extends JFrame {
      * Constructor
      * @param gameState The GameState that this view represents
      */
-    public MainView(GameState gameState) {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 408);
+	public MainView(GameState gameState) {
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setBounds(100, 100, 700, 475);
         contentPane = getContentPane();
         contentPane.setLayout(null);
 
-        words = new Hashtable<Long, AbstractWordView>();
+		panel = new JPanel();
+		panel.setBorder(new LineBorder(Color.BLACK));
+		panel.setBounds(0, 0, 400, 437);
+		panel.setLayout(null);
 
-        Random random = new Random();
-        Collection<AbstractWord> words = gameState.getProtectedArea().getAbstractWordCollection();
-        for(AbstractWord word: words) {
-            int x = random.nextInt(300);
-            int y = random.nextInt(200);
-            WordView view = new WordView((Word)word, new Position(x, y));
-            contentPane.add(view.label);
-            addAbstractWordView(view);
-        }
+		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
+		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
+
+		Random random = new Random();
+		Collection<AbstractWord> protectedWords = gameState.getProtectedArea().getAbstractWordCollection();
+		for (AbstractWord word : protectedWords) {
+			int x = random.nextInt(300);
+			int y = random.nextInt(200);
+			WordView view = new WordView((Word)word, new Position(x, y));
+            panel.add(view.label);
+			addProtectedAbstractWordView(view);
+		}
+
+		Collection<AbstractWord> unprotectedWords = gameState
+				.getUnprotectedArea().getAbstractWordCollection();
+		for (AbstractWord word : unprotectedWords) {
+			int x = random.nextInt(300);
+			int y = random.nextInt(100) + 300;
+			WordView view = new WordView((Word)word, new Position(x, y));
+            panel.add(view.label);
+			addUnprotectedAbstractWordView(view);
+		}
+		contentPane.add(panel);
+
+		exploreArea = new ExploreArea();
+		//JPanel explorePanel = new JPanel();
+		JPanel explorePanel = exploreArea.contentPane;
+		explorePanel.setBorder(new LineBorder(Color.BLACK));
+		explorePanel.setBounds(400, 184, 284, 253);
+		contentPane.add(explorePanel);
+		explorePanel.setLayout(null);
+
+		JPanel swapPanel = new JPanel();
+		swapPanel.setBorder(new LineBorder(Color.BLACK));
+		swapPanel.setBounds(400, 0, 284, 184);
+		contentPane.add(swapPanel);
+		swapPanel.setLayout(null);
 
         // Puts the selectionBox on the pane in front of the words.
         // The selectionBox can be set to visible or not from the selectionBox class
         selectionBox = new SelectionBox();
         setGlassPane(selectionBox);
-    }
+	}
+
+	public void addProtectedAbstractWordView(AbstractWordView newWord) {
+		protectedAreaWords.put(newWord.getWord().getId(), newWord);
+	}
+
+	public void addUnprotectedAbstractWordView(AbstractWordView newWord) {
+		unprotectedAreaWords.put(newWord.getWord().getId(), newWord);
+	}
 
     /**
-     * Adds a word view to the view
-     * @param newWord The word to add
-     */
-    public void addAbstractWordView(AbstractWordView newWord) {
-        words.put(newWord.getWord().getId(), newWord);
-    }
-
-    /**
-     * Removes a word view from the view
+     * Removes a word view from the protected area
      * @param oldWord The word to remove
      * @return Returns whether the word was successfully removed
      */
-    public boolean removeAbstractWordView(AbstractWordView oldWord) {
-        AbstractWordView removed = words.remove(oldWord.getWord().getId());
+    public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
+        AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
         return removed.equals(oldWord);
+    }
+	
+	@Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D)g;
+        g2.drawLine(10, 250, 405, 250);
     }
 
     /**
      * Refreshes the display
      */
-    public void refresh() {
-        contentPane.revalidate();
-        contentPane.repaint();
-    }
+	public void refresh() {
+        revalidate();
+		repaint();
+	}
 
     /**
      * Adds a MouseInputController to the MouseListeners and MouseMotionListeners
      * @param controller The controller to handle user input
      */
-    public void addMouseInputController(MouseInputController controller) {
-        contentPane.addMouseListener(controller);
-        contentPane.addMouseMotionListener(controller);
+	public void addMouseInputController(MouseController controller) {
+		panel.addMouseListener(controller);
+		panel.addMouseMotionListener(controller);
+	}
+
+    public AbstractWordView getProtectedAbstractWordById(long id) {
+        return protectedAreaWords.get(id);
+    }
+
+    public AbstractWordView getUnprotectedAbstractWordById(long id) {
+        return unprotectedAreaWords.get(id);
     }
 
     /**
-     * Gets all the word views in this MainView
+     * Gets all the protected word views in this MainView
      * @return A collection of word views
      */
-    public Collection<AbstractWordView> getWords() {
-        return words.values();
-    }
+	public Collection<AbstractWordView> getProtectedAreaWords() {
+		return protectedAreaWords.values();
+	}
 
-    public AbstractWordView getAbstractWordById(long id) {
-        return words.get(id);
-    }
+    /**
+     * Gets all the unprotected word views in this MainView
+     * @return A collection of word views
+     */
+	public Collection<AbstractWordView> getUnprotectedAreaWords() {
+		return unprotectedAreaWords.values();
+	}
 
     public SelectionBox getSelectionBox() { return selectionBox; }
-
 }

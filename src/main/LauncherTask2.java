@@ -1,6 +1,5 @@
 package main;
 
-import controllers.MouseInputController;
 import models.GameState;
 import views.MainView;
 
@@ -17,7 +16,7 @@ public class LauncherTask2 {
         // Initialize the MainView pointing at the GameState
         MainView mainView = new MainView(gameState);
         // Add a controller to handle user input
-        mainView.addMouseInputController(new MouseInputController(mainView, gameState));
+//        mainView.addMouseInputController(new MouseInputController(mainView, gameState));
         // Display the views
         mainView.setVisible(true);
     }

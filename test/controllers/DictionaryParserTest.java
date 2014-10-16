@@ -1,12 +1,11 @@
-package controllerTest;
-
-import static org.junit.Assert.*;
-
-import java.util.Hashtable;
+package controllers;
 
 import org.junit.Test;
 
-import controllers.DictionaryParser;
+import java.util.Hashtable;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DictionaryParserTest {
 	String FileName = "Dictionary/WordDictionary.csv";

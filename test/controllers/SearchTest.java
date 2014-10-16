@@ -1,23 +1,22 @@
-package controllerTest;
+package controllers;
 
-import controllers.Search;
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
 import org.junit.Test;
-import views.MainGUI;
+import views.MainView;
 
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestSearch {
+public class SearchTest {
 
 	@Test
 	public void testSearch() {
 		GameState gameState = new GameState();
-		MainGUI mainGUI = new MainGUI(gameState);
-		Search search = new Search(mainGUI, gameState);
+		MainView mainView = new MainView(gameState);
+		Search search = new Search(mainView, gameState);
 		search.updateWordTable();
 		Collection<AbstractWord> result = search.search("Moon", "");
 

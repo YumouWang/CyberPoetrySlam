@@ -28,12 +28,12 @@ public class MainViewTest {
         protectedWords.add(wordOne);
         MainView mainView = new MainView(gameState);
         // Test that the mainView has the correct number of words represented
-        assertEquals(1, mainView.words.size());
-        assertEquals(1, mainView.getWords().size());
+        assertEquals(1, mainView.protectedAreaWords.size());
+        assertEquals(1, mainView.getProtectedAreaWords().size());
         // Test that the only word in the mainView is the correct one
         boolean containsWordOne = false;
         boolean containsWordOneLabel = false;
-        for(AbstractWordView wordView : mainView.getWords()) {
+        for(AbstractWordView wordView : mainView.getProtectedAreaWords()) {
             if(wordOne.equals(wordView.getWord())) {
                 containsWordOne = true;
                 // Test that we added the component to the contentPane
@@ -47,10 +47,10 @@ public class MainViewTest {
 
         // Test that refresh doesn't modify the state of the mainView
         mainView.refresh();
-        assertEquals(1, mainView.getWords().size());
+        assertEquals(1, mainView.getProtectedAreaWords().size());
         containsWordOne = false;
         containsWordOneLabel = false;
-        for(AbstractWordView wordView : mainView.getWords()) {
+        for(AbstractWordView wordView : mainView.getProtectedAreaWords()) {
             if(wordOne.equals(wordView.getWord())) {
                 containsWordOne = true;
                 // Test that we added the component to the contentPane
@@ -68,10 +68,10 @@ public class MainViewTest {
         Word wordOne = new Word("TestWord", WordType.ADJECTIVE);
         WordView wordOneView = new WordView(wordOne, new Position(0, 0));
         MainView mainView = new MainView(gameState);
-        assertEquals(0, mainView.getWords().size());
-        mainView.addAbstractWordView(wordOneView);
-        assertEquals(1, mainView.getWords().size());
-        assertTrue(mainView.words.contains(wordOneView));
+        assertEquals(0, mainView.getProtectedAreaWords().size());
+        mainView.addProtectedAbstractWordView(wordOneView);
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        assertTrue(mainView.getProtectedAreaWords().contains(wordOneView));
     }
 
     @Test
@@ -79,13 +79,13 @@ public class MainViewTest {
         Word wordOne = new Word("TestWord", WordType.ADJECTIVE);
         WordView wordOneView = new WordView(wordOne, new Position(0, 0));
         MainView mainView = new MainView(gameState);
-        assertEquals(0, mainView.getWords().size());
-        mainView.addAbstractWordView(wordOneView);
-        assertEquals(1, mainView.getWords().size());
-        assertTrue(mainView.words.contains(wordOneView));
-        mainView.removeAbstractWordView(wordOneView);
-        assertEquals(0, mainView.getWords().size());
-        assertFalse(mainView.words.contains(wordOneView));
+        assertEquals(0, mainView.getProtectedAreaWords().size());
+        mainView.addProtectedAbstractWordView(wordOneView);
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        assertTrue(mainView.getProtectedAreaWords().contains(wordOneView));
+        mainView.removeProtectedAbstractWordView(wordOneView);
+        assertEquals(0, mainView.getProtectedAreaWords().size());
+        assertFalse(mainView.getProtectedAreaWords().contains(wordOneView));
 
     }
 }

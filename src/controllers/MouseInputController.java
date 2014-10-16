@@ -46,7 +46,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
 //            selectedWord.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
         selectedWord = null;
-        Collection<AbstractWordView> words = mainView.getWords();
+        Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
         for(AbstractWordView word: words) {
             if(word.isClicked(mouseDownPosition)) {
                 selectedWord = word;
@@ -78,7 +78,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
             selectedWord.moveTo(new Position(selectedWord.getPosition().getX() + positionDiff.getX(), selectedWord.getPosition().getY() + positionDiff.getY()));
             boolean isOverlapping = false;
             boolean isAdjacent = false;
-            Collection<AbstractWordView> words = mainView.getWords();
+            Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
             for (AbstractWordView word : words) {
                 if(!word.equals(selectedWord)) {
                     if (word.isOverlapping(selectedWord)) {
@@ -105,8 +105,8 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
         if(selectedWord == null) {
             mainView.getSelectionBox().moveSelection(mouseDownPosition);
             // Highlight selected items, un-highlight unselected items
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getWords());
-            for(AbstractWordView view : mainView.getWords()) {
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
+            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
                 if(selectedWords.contains(view)) {
                     view.setBackground(Color.LIGHT_GRAY.brighter());
                 } else {
@@ -120,7 +120,7 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
     @Override
     public void mouseReleased(MouseEvent e) {
         if(selectedWord != null) {
-            Collection<AbstractWordView> words = mainView.getWords();
+            Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
             AbstractWordView connectTarget = null;
             for (AbstractWordView word : words) {
                 if (!word.equals(selectedWord)) {
@@ -136,8 +136,8 @@ public class MouseInputController implements MouseListener, MouseMotionListener 
                 controller.connect(selectedWord, connectTarget);
             }
         } else {
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getWords());
-            for(AbstractWordView view : mainView.getWords()) {
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
+            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
                 if(selectedWords.contains(view)) {
                     view.setBackground(Color.LIGHT_GRAY.brighter());
                 } else {

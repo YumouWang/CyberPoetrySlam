@@ -27,7 +27,7 @@ public class ExploreArea extends JFrame {
 	private JButton btnNewButton;
 	private Object[][] cellData;
 	GameState gameState;
-	MainGUI mainGUI;
+	MainView mainView;
 	/**
 	 * Create the frame.
 	 */
@@ -84,7 +84,7 @@ public class ExploreArea extends JFrame {
 		
 		table = new JTable(cellData,columnNames);
 		
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setBorder(new LineBorder(Color.BLACK));
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setBounds(44, 172, 346, 67);
 		
@@ -97,7 +97,7 @@ public class ExploreArea extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Search search = new Search(mainGUI, gameState);
+				Search search = new Search(mainView, gameState);
 				search.updateWordTable();
 				if(comboBox.getSelectedIndex() == -1) {
 					input = "";
@@ -132,7 +132,7 @@ public class ExploreArea extends JFrame {
 	            public void keyPressed(KeyEvent e) {
 	                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 	                	textArea.setText(textField.getText() + comboBox.getSelectedItem());
-	                	Search search = new Search(mainGUI, gameState);
+	                	Search search = new Search(mainView, gameState);
 	    				search.updateWordTable();
 	    				if(comboBox.getSelectedIndex() == -1) {
 	    					input = "";
@@ -154,7 +154,7 @@ public class ExploreArea extends JFrame {
 	public void refresh() {
 		contentPane.revalidate();
 		contentPane.repaint();
-		table.updateUI();	
+		table.updateUI();
 		
 	}
 }

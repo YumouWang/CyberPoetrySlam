@@ -70,14 +70,14 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         if(rowViewToDisconnectFrom.removeWordView(wordView)) {
 
             // Update the main view object to reflect the change
-            mainView.addAbstractWordView(wordView);
+            mainView.addProtectedAbstractWordView(wordView);
 
             // If the row is now just one word, convert it to a word
             if(rowToDisconnectFrom.getWords().size() == 1) {
                 WordView wordViewFromRow = rowViewToDisconnectFrom.getWordViews().get(0);
                 // And then make the appropriate change in the protected area
-                mainView.removeAbstractWordView(rowViewToDisconnectFrom);
-                mainView.addAbstractWordView(wordViewFromRow);
+                mainView.removeProtectedAbstractWordView(rowViewToDisconnectFrom);
+                mainView.addProtectedAbstractWordView(wordViewFromRow);
             }
         } else {
             System.out.println("Error disconnecting view for " + word + " from view for " + rowToDisconnectFrom.getValue());

@@ -31,12 +31,12 @@ public class PoemView extends AbstractWordView {
         // Find all wordViews
         for(Row row: rows) {
             // Find the rowView representing each row
-            RowView view = (RowView) mainView.getAbstractWordById(row.getId());
+            RowView view = (RowView) mainView.getProtectedAbstractWordById(row.getId());
             if(view == null) {
                 // If a rowView doesn't exist for this row,
                 // then create one at the position of the first word in the row
                 long id = row.getWords().get(0).getId();
-                Position rowPosition = mainView.getAbstractWordById(id).getPosition();
+                Position rowPosition = mainView.getProtectedAbstractWordById(id).getPosition();
                 view = new RowView(row, rowPosition, mainView);
             }
             rowViews.add(view);

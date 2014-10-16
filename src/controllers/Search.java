@@ -3,7 +3,7 @@ package controllers;
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
-import views.MainGUI;
+import views.MainView;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,12 +11,12 @@ import java.util.HashSet;
 public class Search {
 	private static Search search;
 	public Collection<AbstractWord> wordtable;
-	MainGUI mainGUI;
+	MainView mainView;
 	GameState gameState;
 	Collection<AbstractWord> result;
 	
-	public Search(MainGUI mainGUI, GameState gameState) {
-		this.mainGUI = mainGUI;
+	public Search(MainView mainView, GameState gameState) {
+		this.mainView = mainView;
 		this.gameState = gameState;
 	}
 	
@@ -24,9 +24,9 @@ public class Search {
 		wordtable = gameState.getUnprotectedArea().getAbstractWordCollection();
 	}
 	
-	public static Search getInstance(MainGUI mainGUI, GameState gameState) {
+	public static Search getInstance(MainView mainView, GameState gameState) {
 		if(search == null) {
-			search = new Search(mainGUI, gameState);
+			search = new Search(mainView, gameState);
 		}
 		return search;
 	}

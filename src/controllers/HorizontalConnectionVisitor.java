@@ -46,9 +46,9 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Create an appropriate view object
         RowView resultRowView = new RowView(result, wordViewOne.getPosition(), mainView);
         // Update the main view object to reflect the change
-        mainView.removeAbstractWordView(wordViewOne);
-        mainView.removeAbstractWordView(wordViewTwo);
-        mainView.addAbstractWordView(resultRowView);
+        mainView.removeProtectedAbstractWordView(wordViewOne);
+        mainView.removeProtectedAbstractWordView(wordViewTwo);
+        mainView.addProtectedAbstractWordView(resultRowView);
         // Select the resulting row
         resultRowView.setBackground(Color.LIGHT_GRAY);
     }
@@ -67,7 +67,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the rowViewObject
         rowViewTwo.addWordToFront(wordViewOne);
         // Update the main view object to reflect the change
-        mainView.removeAbstractWordView(wordViewOne);
+        mainView.removeProtectedAbstractWordView(wordViewOne);
         // Select the resulting row
         rowViewTwo.setBackground(Color.LIGHT_GRAY);
         // Move the row to the appropriate position
@@ -94,7 +94,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the rowViewObject
         rowViewOne.addWord(wordViewTwo);
         // Update the main view object to reflect the change
-        mainView.removeAbstractWordView(wordViewTwo);
+        mainView.removeProtectedAbstractWordView(wordViewTwo);
         // Select the resulting row
         rowViewOne.setBackground(Color.LIGHT_GRAY);
         // Move the row to the appropriate position
@@ -116,7 +116,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the rowViewObject
         rowViewOne.addRow(rowViewTwo);
         // Update the main view object to reflect the change
-        mainView.removeAbstractWordView(rowViewTwo);
+        mainView.removeProtectedAbstractWordView(rowViewTwo);
         // Select the resulting row
         rowViewOne.setBackground(Color.LIGHT_GRAY);
         // Move the row to the appropriate position

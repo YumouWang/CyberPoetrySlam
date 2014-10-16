@@ -30,8 +30,8 @@ public class MouseInputControllerTest {
         mainView = new MainView(gameState);
         wordViewOne = new WordView(new Word("Elephant", WordType.ADVERB), new Position(10, 10));
         wordViewTwo = new WordView(new Word("Buffalo", WordType.POSTFIX), new Position(50, 50));
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
         controller = new MouseInputController(mainView, gameState);
     }
 

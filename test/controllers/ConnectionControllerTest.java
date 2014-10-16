@@ -24,7 +24,7 @@ public class ConnectionControllerTest {
 
     @Test
     public void testConnectHorizontalWordWord() throws Exception {
-        assertTrue(mainView.getWords().isEmpty());
+        assertTrue(mainView.getProtectedAreaWords().isEmpty());
         Word wordOne = new Word("Mule", WordType.NOUN);
         Word wordTwo = new Word("Horse", WordType.NOUN);
         gameState.getProtectedArea().addAbstractWord(wordOne);
@@ -32,8 +32,8 @@ public class ConnectionControllerTest {
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
         WordView wordViewTwo = new WordView(wordTwo, new Position(10, 0));
         wordViewOne.setSize(5, 10);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
@@ -49,10 +49,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(wordViewOne));
-        assertFalse(mainView.getWords().contains(wordViewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse", word.getWord().getValue());
         }
     }
@@ -71,8 +71,8 @@ public class ConnectionControllerTest {
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
         RowView rowViewTwo = new RowView(rowOne, new Position(10, 0), mainView);
         wordViewOne.setSize(5, 10);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(rowViewTwo);
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(rowViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -88,10 +88,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse Donkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(wordViewOne));
-        assertFalse(mainView.getWords().contains(rowViewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(rowViewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse Donkey", word.getWord().getValue());
         }
     }
@@ -113,8 +113,8 @@ public class ConnectionControllerTest {
         WordView viewOne = new WordView(wordOne, new Position(0, 0));
         PoemView viewTwo = new PoemView(poemOne, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -132,10 +132,10 @@ public class ConnectionControllerTest {
             assertTrue(word.getValue().equals("Mule") || word.getValue().equals("Horse Donkey"));
         }
         // Check that mainView appropriately represents the result
-        assertTrue(mainView.getWords().contains(viewOne));
-        assertTrue(mainView.getWords().contains(viewTwo));
-        assertEquals(2, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertTrue(mainView.getProtectedAreaWords().contains(viewOne));
+        assertTrue(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(2, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertTrue(word.getWord().getValue().equals("Mule") || word.getWord().getValue().equals("Horse Donkey"));
         }
     }
@@ -154,8 +154,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -171,10 +171,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse Donkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse Donkey", word.getWord().getValue());
         }
     }
@@ -196,8 +196,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         RowView viewTwo = new RowView(rowTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -213,10 +213,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse Donkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse Donkey", word.getWord().getValue());
         }
     }
@@ -241,8 +241,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         PoemView viewTwo = new PoemView(poemOne, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -258,10 +258,10 @@ public class ConnectionControllerTest {
             assertTrue(word.getValue().equals("Mule Horse") || word.getValue().equals("Donkey"));
         }
         // Check that mainView appropriately represents the result
-        assertTrue(mainView.getWords().contains(viewOne));
-        assertTrue(mainView.getWords().contains(viewTwo));
-        assertEquals(2, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertTrue(mainView.getProtectedAreaWords().contains(viewOne));
+        assertTrue(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(2, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertTrue(word.getWord().getValue().equals("Mule Horse") || word.getWord().getValue().equals("Donkey"));
         }
     }
@@ -283,8 +283,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(10, 0));
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -300,10 +300,10 @@ public class ConnectionControllerTest {
             assertTrue(word.getValue().equals("Mule Horse") || word.getValue().equals("Donkey"));
         }
         // Check that mainView appropriately represents the result
-        assertTrue(mainView.getWords().contains(viewOne));
-        assertTrue(mainView.getWords().contains(viewTwo));
-        assertEquals(2, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertTrue(mainView.getProtectedAreaWords().contains(viewOne));
+        assertTrue(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(2, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertTrue(word.getWord().getValue().equals("Mule Horse") || word.getWord().getValue().equals("Donkey"));
         }
     }
@@ -328,8 +328,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         RowView viewTwo = new RowView(rowTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -345,10 +345,10 @@ public class ConnectionControllerTest {
             assertTrue(word.getValue().equals("Mule Horse") || word.getValue().equals("Donkey"));
         }
         // Check that mainView appropriately represents the result
-        assertTrue(mainView.getWords().contains(viewOne));
-        assertTrue(mainView.getWords().contains(viewTwo));
-        assertEquals(2, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertTrue(mainView.getProtectedAreaWords().contains(viewOne));
+        assertTrue(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(2, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertTrue(word.getWord().getValue().equals("Mule Horse") || word.getWord().getValue().equals("Donkey"));
         }
     }
@@ -376,8 +376,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         PoemView viewTwo = new PoemView(poemTwo, new Position(10, 0), mainView);
         viewOne.setSize(5, 10);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));
@@ -393,17 +393,17 @@ public class ConnectionControllerTest {
             assertTrue(word.getValue().equals("Mule Horse") || word.getValue().equals("Donkey"));
         }
         // Check that mainView appropriately represents the result
-        assertTrue(mainView.getWords().contains(viewOne));
-        assertTrue(mainView.getWords().contains(viewTwo));
-        assertEquals(2, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertTrue(mainView.getProtectedAreaWords().contains(viewOne));
+        assertTrue(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(2, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertTrue(word.getWord().getValue().equals("Mule Horse") || word.getWord().getValue().equals("Donkey"));
         }
     }
 
     @Test
     public void testConnectVerticalWordWord() throws Exception {
-        assertTrue(mainView.getWords().isEmpty());
+        assertTrue(mainView.getProtectedAreaWords().isEmpty());
         Word wordOne = new Word("Mule", WordType.NOUN);
         Word wordTwo = new Word("Horse", WordType.NOUN);
         gameState.getProtectedArea().addAbstractWord(wordOne);
@@ -411,8 +411,8 @@ public class ConnectionControllerTest {
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
         WordView wordViewTwo = new WordView(wordTwo, new Position(0, 10));
         wordViewOne.setSize(10, 5);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(wordViewTwo);
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordTwo));
@@ -428,10 +428,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule\nHorse", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(wordViewOne));
-        assertFalse(mainView.getWords().contains(wordViewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule\nHorse", word.getWord().getValue());
         }
     }
@@ -450,8 +450,8 @@ public class ConnectionControllerTest {
         WordView wordViewOne = new WordView(wordOne, new Position(0, 0));
         RowView rowViewTwo = new RowView(rowOne, new Position(0, 10), mainView);
         wordViewOne.setSize(10, 5);
-        mainView.addAbstractWordView(wordViewOne);
-        mainView.addAbstractWordView(rowViewTwo);
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(rowViewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
@@ -467,10 +467,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule\nHorse Donkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(wordViewOne));
-        assertFalse(mainView.getWords().contains(rowViewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(rowViewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule\nHorse Donkey", word.getWord().getValue());
         }
     }
@@ -492,8 +492,8 @@ public class ConnectionControllerTest {
         WordView viewOne = new WordView(wordOne, new Position(0, 0));
         PoemView viewTwo = new PoemView(poemOne, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -511,10 +511,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule\nHorse Donkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule\nHorse Donkey", word.getWord().getValue());
         }
     }
@@ -533,8 +533,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -550,10 +550,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }
@@ -575,8 +575,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         RowView viewTwo = new RowView(rowTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -592,10 +592,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }
@@ -620,8 +620,8 @@ public class ConnectionControllerTest {
         RowView viewOne = new RowView(rowOne, new Position(0, 0), mainView);
         PoemView viewTwo = new PoemView(poemOne, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
@@ -637,10 +637,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }
@@ -662,8 +662,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         WordView viewTwo = new WordView(wordThree, new Position(0, 10));
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(wordThree));
@@ -679,10 +679,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }
@@ -707,8 +707,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         RowView viewTwo = new RowView(rowTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(rowTwo));
@@ -724,10 +724,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }
@@ -755,8 +755,8 @@ public class ConnectionControllerTest {
         PoemView viewOne = new PoemView(poemOne, new Position(0, 0), mainView);
         PoemView viewTwo = new PoemView(poemTwo, new Position(0, 10), mainView);
         viewOne.setSize(10, 5);
-        mainView.addAbstractWordView(viewOne);
-        mainView.addAbstractWordView(viewTwo);
+        mainView.addProtectedAbstractWordView(viewOne);
+        mainView.addProtectedAbstractWordView(viewTwo);
         // Check that the current state is properly set up
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemOne));
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection().contains(poemTwo));
@@ -772,10 +772,10 @@ public class ConnectionControllerTest {
             assertEquals("Mule Horse\nDonkey", word.getValue());
         }
         // Check that mainView appropriately represents the result
-        assertFalse(mainView.getWords().contains(viewOne));
-        assertFalse(mainView.getWords().contains(viewTwo));
-        assertEquals(1, mainView.getWords().size());
-        for(AbstractWordView word: mainView.getWords()) {
+        assertFalse(mainView.getProtectedAreaWords().contains(viewOne));
+        assertFalse(mainView.getProtectedAreaWords().contains(viewTwo));
+        assertEquals(1, mainView.getProtectedAreaWords().size());
+        for(AbstractWordView word: mainView.getProtectedAreaWords()) {
             assertEquals("Mule Horse\nDonkey", word.getWord().getValue());
         }
     }

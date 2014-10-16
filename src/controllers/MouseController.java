@@ -1,30 +1,27 @@
 package controllers;
 
-import java.awt.Color;
+import models.AbstractWord;
+import models.GameState;
+import models.Position;
+import views.AbstractWordView;
+import views.AdjacencyType;
+import views.MainView;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Collection;
 
-import models.AbstractWord;
-import models.Area;
-import models.GameState;
-import models.Position;
-import views.AbstractWordView;
-import views.AdjacencyType;
-import views.MainGUI;
-
 public class MouseController implements MouseListener, MouseMotionListener {
 
 	AbstractWordView selectedWord;
 	Position mouseDownPosition;
-	MainGUI mainGUI;
+	MainView mainView;
 	GameState gameState;
-	Area unprotectedArea;
-	Area protectedArea;
 
-	public MouseController(MainGUI view, GameState gameState) {
-		this.mainGUI = view;
+	public MouseController(MainView view, GameState gameState) {
+		this.mainView = view;
 		this.gameState = gameState;
 	}
 
@@ -33,7 +30,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 		mouseDownPosition = new Position(e.getX(), e.getY());
 		selectedWord = null;
 		if (isInProtectArea(mouseDownPosition)) {
-			Collection<AbstractWordView> protectedWords = mainGUI
+			Collection<AbstractWordView> protectedWords = mainView
 					.getProtectedAreaWords();
 			for (AbstractWordView word : protectedWords) {
 				if (word.isClicked(mouseDownPosition)) {
@@ -47,7 +44,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 		}
 
 		else {
-			Collection<AbstractWordView> unprotectedWords = mainGUI
+			Collection<AbstractWordView> unprotectedWords = mainView
 					.getUnprotectedAreaWords();
 			for (AbstractWordView word : unprotectedWords) {
 				if (word.isClicked(mouseDownPosition)) {
@@ -59,7 +56,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 				}
 			}
 		}
-		//mainGUI.refresh();
+		//mainView.refresh();
 	}
 
 	@Override
@@ -106,14 +103,14 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
 		}
 		mouseDownPosition = new Position(e.getX(), e.getY());
-		mainGUI.exploreArea.refresh();
-		mainGUI.refresh();
+		mainView.exploreArea.refresh();
+		mainView.refresh();
 	}
 
 	public void protectAreaWordMove() {
 		boolean isOverlapping = false;
 		boolean isAdjacent = false;
-		Collection<AbstractWordView> words = mainGUI.getProtectedAreaWords();
+		Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
 		for (AbstractWordView word : words) {
 			if (!word.equals(selectedWord)) {
 				if (word.isOverlapping(selectedWord)) {
@@ -139,7 +136,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
 	public void protectWord(AbstractWordView wordView) { // protect word
 		gameState.protect(wordView.getWord());	//add word to protect word list
-		mainGUI.addProtectedWordView(wordView);	//add word view to protect word view list
+		mainView.addProtectedAbstractWordView(wordView);	//add word view to protect word view list
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
 		System.out.print("protectWord list: ");
@@ -158,7 +155,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
 	public void unprotectWord(AbstractWordView wordView) { // unprotect word
 		gameState.unprotect(wordView.getWord());	//add word to unprotect word list
-		mainGUI.addUnprotectedWordView(wordView);	//add word view to unprotect word view list
+		mainView.addUnprotectedAbstractWordView(wordView);	//add word view to unprotect word view list
 		System.out.print("unprotectWord list: ");
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
@@ -196,11 +193,11 @@ public class MouseController implements MouseListener, MouseMotionListener {
 	}
 
 	public void removeProtectedWords(AbstractWordView word) {
-		mainGUI.getProtectedAreaWords().remove(word);
+		mainView.getProtectedAreaWords().remove(word);
 	}
 
 	public void removeUnprotectedWords(AbstractWordView word) {
-		mainGUI.getUnprotectedAreaWords().remove(word);
+		mainView.getUnprotectedAreaWords().remove(word);
 	}
 
 	public boolean isInProtectArea(Position position) {

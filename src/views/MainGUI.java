@@ -1,6 +1,9 @@
 package views;
 
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
@@ -34,14 +37,14 @@ public class MainGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(0, 0, 400, 437);
 		panel.setLayout(null);
 		g = panel.getGraphics();
-		// g.drawLine(0, 0, 50, 50);
-		// contentPane.add(panel);
+		contentPane.paint(g);
+		//g.drawLine(0, 0, 50, 50);
+		//contentPane.add(panel);
 
 		protectedAreaWords = new HashSet<AbstractWordView>();
 		unprotectedAreaWords = new HashSet<AbstractWordView>();
@@ -82,13 +85,6 @@ public class MainGUI extends JFrame {
 
 	}
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.drawLine(10, 10, 100, 100);
-    }
-
 	public void addProtectedWordView(AbstractWordView newWord) {
 		protectedAreaWords.add(newWord);
 		panel.add(((WordView)newWord).label);
@@ -98,11 +94,19 @@ public class MainGUI extends JFrame {
 		unprotectedAreaWords.add(newWord);
 		panel.add(((WordView)newWord).label);
 	}
+	
+	@Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D)g;
+        g2.drawLine(10, 250, 405, 250);
+    }
 
 	public void refresh() {
         repaint();
 		contentPane.revalidate();
 		contentPane.repaint();
+		repaint();
 	}
 
 	public void addMouseInputController(MouseController controller) {
@@ -117,5 +121,4 @@ public class MainGUI extends JFrame {
 	public Collection<AbstractWordView> getUnprotectedAreaWords() {
 		return unprotectedAreaWords;
 	}
-
 }

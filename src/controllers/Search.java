@@ -9,7 +9,7 @@ import views.MainGUI;
 
 public class Search {
 	private static Search search;
-	public static Collection<AbstractWord> wordtable;
+	public Collection<AbstractWord> wordtable;
 	MainGUI mainGUI;
 	GameState gameState;
 	Collection<AbstractWord> result;
@@ -32,9 +32,13 @@ public class Search {
 	
 	public Collection<AbstractWord> search(String word, String wordtype) {
 		updateWordTable();
+		for (AbstractWord word2 : wordtable) {
+			System.out.print(word2.getValue() + ",");
+		}
+		
 		result = new HashSet<AbstractWord>();
 		if(word.equals("") && wordtype.equals("")) {
-			return Search.wordtable;
+			return wordtable;
 		}
 		for (AbstractWord word1 : wordtable) {
 			String wordValue = word1.getValue();

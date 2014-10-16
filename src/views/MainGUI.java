@@ -14,6 +14,7 @@ import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import controllers.MouseController;
+import models.Word;
 
 public class MainGUI extends JFrame {
 
@@ -51,7 +52,7 @@ public class MainGUI extends JFrame {
 		for (AbstractWord word : protectedWords) {
 			int x = random.nextInt(300);
 			int y = random.nextInt(200);
-			WordView view = new WordView(word, new Position(x, y));
+			WordView view = new WordView((Word)word, new Position(x, y));
 			addProtectedWordView(view);
 		}
 
@@ -60,7 +61,7 @@ public class MainGUI extends JFrame {
 		for (AbstractWord word : unprotectedWords) {
 			int x = random.nextInt(300);
 			int y = random.nextInt(100) + 300;
-			WordView view = new WordView(word, new Position(x, y));
+			WordView view = new WordView((Word)word, new Position(x, y));
 			addUnprotectedWordView(view);
 		}
 		contentPane.add(panel);

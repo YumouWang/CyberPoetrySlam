@@ -51,7 +51,7 @@ public class ProtectedArea extends JPanel implements MouseListener, MouseMotionL
         	Random random = new Random();
         	int x = random.nextInt(300);
         	int y = random.nextInt(100);
-        	WordView view = new WordView(word, new Position(x, y));
+        	WordView view = new WordView((Word)word, new Position(x, y));
         	words.add(view);
         	add(view.label);
         }

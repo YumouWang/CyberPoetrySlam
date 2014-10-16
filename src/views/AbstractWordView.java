@@ -12,7 +12,7 @@ import java.awt.*;
  *
  * Created by Nathan on 10/3/2014.
  */
-public class AbstractWordView extends AbstractView {
+public abstract class AbstractWordView extends AbstractView {
 
     AbstractWord word;
 
@@ -31,20 +31,11 @@ public class AbstractWordView extends AbstractView {
      * @param toPosition The position to move to
      * @return Returns whether the move was successful
      */
-    public boolean moveTo(Position toPosition) {
-        //TODO Make abstract
-        return false;
-    }
+    public abstract boolean moveTo(Position toPosition);
 
-    public AbstractWordView getSelectedElement(ConnectionBox box) {
-        //TODO Make abstract
-        return null;
-    }
+    public abstract AbstractWordView getSelectedElement(ConnectionBox box);
 
-    public boolean contains(AbstractWordView otherWord) {
-        //TODO Make abstract
-        return false;
-    }
+    public abstract boolean contains(AbstractWordView otherWord);
 
     /**
      * Checks if this view is adjacent to a given other word.
@@ -79,9 +70,7 @@ public class AbstractWordView extends AbstractView {
      * Sets the background color of this word view
      * @param color The color to set the background to
      */
-    public void setBackground(Color color) {
-        //TODO make abstract
-    }
+    public abstract void setBackground(Color color);
 
     /**
      * Gets the word this view represents
@@ -101,19 +90,11 @@ public class AbstractWordView extends AbstractView {
         this.height = height;
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
-        //TODO make abstract
-    }
+    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView);
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
-        //TODO make abstract
-    }
+    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView);
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
-        //TODO make abstract
-    }
+    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView);
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
-        //TODO make abstract
-    }
+    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView);
 }

@@ -24,9 +24,14 @@ public class RowTest {
 
     @Test
     public void testConstructorNull() throws Exception {
-        Row row = new Row(null);
-        assertNotNull(row);
-        assertEquals(0, row.words.size());
+        Word word = null;
+        Row row1 = new Row(word);
+        List<Word> words = null;
+        Row row2 = new Row(words);
+        assertNotNull(row1);
+        assertNotNull(row2);
+        assertEquals(0, row1.words.size());
+        assertEquals(0, row2.words.size());
     }
 
     @Test

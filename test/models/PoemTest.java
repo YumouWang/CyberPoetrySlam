@@ -3,6 +3,7 @@ package models;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -24,9 +25,14 @@ public class PoemTest {
 
     @Test
     public void testConstructorNull() throws Exception {
-        Poem poem = new Poem(null);
-        assertNotNull(poem);
-        assertEquals(0, poem.rows.size());
+        Row row = null;
+        Poem poem1 = new Poem(row);
+        List<Row> rows = null;
+        Poem poem2 = new Poem(rows);
+        assertNotNull(poem1);
+        assertNotNull(poem2);
+        assertEquals(0, poem1.rows.size());
+        assertEquals(0, poem2.rows.size());
     }
 
     @Test

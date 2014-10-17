@@ -93,20 +93,20 @@ public class Poem extends AbstractWord {
      * @param word The word to disconnect
      * @return Returns whether the disconnect was successful. Returns false if the word is not an edge word or is not in the poem
      */
-    public boolean disconnectEdgeWord(Word word) {
-        boolean successful = false;
+    public Poem disconnectEdgeWord(Word word) {
+        Poem resultPoem = null;
         for(Row row: rows) {
             for(Word rowWord: row.getWords()) {
                 if(word.equals(rowWord)) {
-                    successful = row.disconnect(rowWord);
+                    row.disconnect(rowWord);
+                    if(row.getWords().size() == 0) {
+                        resultPoem = disconnect(row);
+                    }
                     break;
                 }
             }
-            if(successful) {
-                break;
-            }
         }
-        return successful;
+        return resultPoem;
     }
 
     @Override

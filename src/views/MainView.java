@@ -27,6 +27,8 @@ public class MainView extends JFrame {
 	JPanel panel;
 	public ExploreArea exploreArea;
 
+    SelectionBox selectionBox;
+
     /**
      * Constructor
      * @param gameState The GameState that this view represents
@@ -79,6 +81,11 @@ public class MainView extends JFrame {
 		swapPanel.setBounds(400, 0, 284, 184);
 		contentPane.add(swapPanel);
 		swapPanel.setLayout(null);
+
+        // Puts the selectionBox on the pane in front of the words.
+        // The selectionBox can be set to visible or not from the selectionBox class
+        selectionBox = new SelectionBox();
+        setGlassPane(selectionBox);
 	}
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
@@ -145,6 +152,10 @@ public class MainView extends JFrame {
 	public Collection<AbstractWordView> getUnprotectedAreaWords() {
 		return unprotectedAreaWords.values();
 	}
+
+    public SelectionBox getSelectionBox() {
+        return selectionBox;
+    }
 
     public boolean isInProtectedArea(Position position) {
         return position.getY() < Constants.PROTECTED_AREA_HEIGHT;

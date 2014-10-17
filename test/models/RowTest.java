@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotEquals;
 
 public class RowTest {
 
     @Test
-    public void testConstructor() throws Exception {
+    public void testConstructorList() throws Exception {
         Word word = new Word("Porch", WordType.PRONOUN);
         List<Word> words = new ArrayList<Word>();
         words.add(word);
@@ -19,6 +18,16 @@ public class RowTest {
         assertNotNull(row);
         assertNotEquals(0, row.id);
         assertEquals(words.size(), row.words.size());
+        assertTrue(row.words.contains(word));
+    }
+
+    @Test
+    public void testConstructorWord() throws Exception {
+        Word word = new Word("Porch", WordType.PRONOUN);
+        Row row = new Row(word);
+        assertNotNull(row);
+        assertNotEquals(0, row.id);
+        assertEquals(1, row.words.size());
         assertTrue(row.words.contains(word));
     }
 
@@ -100,55 +109,55 @@ public class RowTest {
         assertEquals("House Table Chair", row.getValue());
     }
 
-    @Test
-    public void testDisconnectEnd() throws Exception {
-        Word wordOne = new Word("Chair", WordType.NOUN);
-        Word wordTwo = new Word("Table", WordType.ADVERB);
-        Word wordThree = new Word("House", WordType.ANY);
-        List<Word> words = new ArrayList<Word>();
-        words.add(wordOne);
-        words.add(wordTwo);
-        words.add(wordThree);
-
-        Row row = new Row(words);
-        assertEquals("Chair Table House", row.getValue());
-        row.disconnect(wordThree);
-        assertEquals("Chair Table", row.getValue());
-    }
-
-    @Test
-    public void testDisconnectStart() throws Exception {
-        Word wordOne = new Word("Chair", WordType.NOUN);
-        Word wordTwo = new Word("Table", WordType.ADVERB);
-        Word wordThree = new Word("House", WordType.ANY);
-        List<Word> words = new ArrayList<Word>();
-        words.add(wordOne);
-        words.add(wordTwo);
-        words.add(wordThree);
-
-        Row row = new Row(words);
-        assertEquals("Chair Table House", row.getValue());
-        row.disconnect(wordOne);
-        assertEquals("Table House", row.getValue());
-    }
-
-    @Test
-    public void testDisconnectMiddle() throws Exception {
-        Word wordOne = new Word("Chair", WordType.NOUN);
-        Word wordTwo = new Word("Table", WordType.ADVERB);
-        Word wordThree = new Word("House", WordType.ANY);
-        List<Word> words = new ArrayList<Word>();
-        words.add(wordOne);
-        words.add(wordTwo);
-        words.add(wordThree);
-
-        Row row = new Row(words);
-        assertEquals("Chair Table House", row.getValue());
-        try {
-            row.disconnect(wordTwo);
-        } catch(Exception e) {
-            assertEquals(e.getMessage(), "Invalid disconnect");
-        }
-        assertEquals("Chair Table House", row.getValue());
-    }
+//    @Test
+//    public void testDisconnectEnd() throws Exception {
+//        Word wordOne = new Word("Chair", WordType.NOUN);
+//        Word wordTwo = new Word("Table", WordType.ADVERB);
+//        Word wordThree = new Word("House", WordType.ANY);
+//        List<Word> words = new ArrayList<Word>();
+//        words.add(wordOne);
+//        words.add(wordTwo);
+//        words.add(wordThree);
+//
+//        Row row = new Row(words);
+//        assertEquals("Chair Table House", row.getValue());
+//        row.disconnect(wordThree);
+//        assertEquals("Chair Table", row.getValue());
+//    }
+//
+//    @Test
+//    public void testDisconnectStart() throws Exception {
+//        Word wordOne = new Word("Chair", WordType.NOUN);
+//        Word wordTwo = new Word("Table", WordType.ADVERB);
+//        Word wordThree = new Word("House", WordType.ANY);
+//        List<Word> words = new ArrayList<Word>();
+//        words.add(wordOne);
+//        words.add(wordTwo);
+//        words.add(wordThree);
+//
+//        Row row = new Row(words);
+//        assertEquals("Chair Table House", row.getValue());
+//        row.disconnect(wordOne);
+//        assertEquals("Table House", row.getValue());
+//    }
+//
+//    @Test
+//    public void testDisconnectMiddle() throws Exception {
+//        Word wordOne = new Word("Chair", WordType.NOUN);
+//        Word wordTwo = new Word("Table", WordType.ADVERB);
+//        Word wordThree = new Word("House", WordType.ANY);
+//        List<Word> words = new ArrayList<Word>();
+//        words.add(wordOne);
+//        words.add(wordTwo);
+//        words.add(wordThree);
+//
+//        Row row = new Row(words);
+//        assertEquals("Chair Table House", row.getValue());
+//        try {
+//            row.disconnect(wordTwo);
+//        } catch(Exception e) {
+//            assertEquals(e.getMessage(), "Invalid disconnect");
+//        }
+//        assertEquals("Chair Table House", row.getValue());
+//    }
 }

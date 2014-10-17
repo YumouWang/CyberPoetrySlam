@@ -75,16 +75,19 @@ public class PoemView extends AbstractWordView {
 
     public void addRow(RowView rowView) {
         rowViews.add(rowView);
+        moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
 
     public void addRowToTop(RowView rowView) {
         rowViews.add(0, rowView);
+        moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
 
     public void addPoem(PoemView poemView) {
         rowViews.addAll(poemView.getRowViews());
+        moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
 
@@ -106,6 +109,7 @@ public class PoemView extends AbstractWordView {
                 break;
             }
         }
+        moveTo(rowViews.get(0).getPosition());
         return successful;
     }
 
@@ -131,7 +135,17 @@ public class PoemView extends AbstractWordView {
         for(RowView row : rowViews) {
             AbstractWordView selectedElement = row.getSelectedElement(box);
             if(selectedElement != null) {
-                selected = selectedElement;
+                // If we have not yet selected a word or row in this poem,
+                // The selected item is the currently selected element
+                if(selected == null) {
+                    selected = selectedElement;
+                } else {
+                    // If we have already selected a word or row from this poem,
+                    // Select the entire poem (Cannot select more than one word
+                    // without selecting the whole poem)
+                    selected = this;
+                    break;
+                }
             }
         }
         return selected;

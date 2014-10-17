@@ -73,7 +73,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             mainView.addProtectedAbstractWordView(wordView);
 
             // If the row is now just one word, convert it to a word
-            if(rowToDisconnectFrom.getWords().size() == 1) {
+            if(rowViewToDisconnectFrom.getWordViews().size() == 1) {
                 WordView wordViewFromRow = rowViewToDisconnectFrom.getWordViews().get(0);
                 // And then make the appropriate change in the protected area
                 mainView.removeProtectedAbstractWordView(rowViewToDisconnectFrom);
@@ -82,9 +82,9 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         } else {
             System.out.println("Error disconnecting view for " + word + " from view for " + rowToDisconnectFrom.getValue());
         }
-//        // Move the poem to the appropriate position
-//        // This also updates the positions of all the words in the poem
-//        resultPoemView.moveTo(wordViewOne.getPosition());
+        // Move the row to the appropriate position
+        // This also updates the positions of all the words in the row
+        rowViewToDisconnectFrom.moveTo(rowViewToDisconnectFrom.getWordViews().get(0).getPosition());
     }
 
     @Override

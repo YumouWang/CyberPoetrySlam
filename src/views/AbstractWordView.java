@@ -27,17 +27,6 @@ public abstract class AbstractWordView extends AbstractView {
     }
 
     /**
-     * Moves the word to the specified position
-     * @param toPosition The position to move to
-     * @return Returns whether the move was successful
-     */
-    public abstract boolean moveTo(Position toPosition);
-
-    public abstract AbstractWordView getSelectedElement(ConnectionBox box);
-
-    public abstract boolean contains(AbstractWordView otherWord);
-
-    /**
      * Checks if this view is adjacent to a given other word.
      * Distance that determines whether a word is adjacent is defined in Constants.CONNECT_DISTANCE
      * @param otherWord The word to check adjacency
@@ -67,10 +56,14 @@ public abstract class AbstractWordView extends AbstractView {
     }
 
     /**
-     * Sets the background color of this word view
-     * @param color The color to set the background to
+     * Sets the size of this word view. Used for testing, should not be necessary for the game
+     * @param width The desired width
+     * @param height The desired height
      */
-    public abstract void setBackground(Color color);
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 
     /**
      * Gets the word this view represents
@@ -81,14 +74,21 @@ public abstract class AbstractWordView extends AbstractView {
     }
 
     /**
-     * Sets the size of this word view. Used for testing, should not be necessary for the game
-     * @param width The desired width
-     * @param height The desired height
+     * Moves the word to the specified position
+     * @param toPosition The position to move to
+     * @return Returns whether the move was successful
      */
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
+    public abstract boolean moveTo(Position toPosition);
+
+    public abstract AbstractWordView getSelectedElement(ConnectionBox box);
+
+    public abstract boolean contains(AbstractWordView otherWord);
+
+    /**
+     * Sets the background color of this word view
+     * @param color The color to set the background to
+     */
+    public abstract void setBackground(Color color);
 
     public abstract void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView);
 

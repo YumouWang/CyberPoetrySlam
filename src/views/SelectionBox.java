@@ -48,7 +48,7 @@ public class SelectionBox extends JComponent {
 
             for (AbstractWordView view : words) {
                 if (collision.isOverlapping(view)) {
-                    selectedItems.add(view);
+                    selectedItems.add(view.getSelectedElement(collision));
                 }
             }
         }

@@ -57,7 +57,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         resultPoemView.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        resultPoemView.moveTo(wordViewOne.getPosition());
+//        resultPoemView.moveTo(wordViewOne.getPosition());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         resultPoemView.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        resultPoemView.moveTo(wordViewOne.getPosition());
+//        resultPoemView.moveTo(wordViewOne.getPosition());
     }
 
     @Override
@@ -114,7 +114,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         poemViewTwo.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewTwo.moveTo(wordViewOne.getPosition());
+//        poemViewTwo.moveTo(wordViewOne.getPosition());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         resultPoemView.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        resultPoemView.moveTo(rowViewOne.getPosition());
+//        resultPoemView.moveTo(rowViewOne.getPosition());
     }
 
     @Override
@@ -174,7 +174,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         resultPoemView.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        resultPoemView.moveTo(rowViewOne.getPosition());
+//        resultPoemView.moveTo(rowViewOne.getPosition());
     }
 
     @Override
@@ -196,7 +196,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         poemViewTwo.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewTwo.moveTo(rowViewOne.getPosition());
+//        poemViewTwo.moveTo(rowViewOne.getPosition());
     }
 
     @Override
@@ -223,7 +223,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         poemViewOne.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewOne.moveTo(poemViewOne.getPosition());
+//        poemViewOne.moveTo(poemViewOne.getPosition());
     }
 
     @Override
@@ -245,7 +245,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         poemViewOne.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewOne.moveTo(poemViewOne.getPosition());
+//        poemViewOne.moveTo(poemViewOne.getPosition());
     }
 
     @Override
@@ -267,6 +267,6 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         poemViewOne.setBackground(Color.LIGHT_GRAY);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewOne.moveTo(poemViewOne.getPosition());
+//        poemViewOne.moveTo(poemViewOne.getPosition());
     }
 }

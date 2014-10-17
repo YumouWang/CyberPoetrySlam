@@ -22,6 +22,7 @@ import java.util.Collection;
 public class MouseInputController extends MouseAdapter {
 
     AbstractWordView selectedWord;
+    Collection<AbstractWordView> selectedWords;
     Position mouseDownPosition;
     MainView mainView;
     GameState gameState;
@@ -61,6 +62,9 @@ public class MouseInputController extends MouseAdapter {
             }
         }
 
+        if(selectedWord == null) {
+            mainView.getSelectionBox().startNewSelection(mouseDownPosition);
+        }
         if(selectedWord != null && e.isControlDown()) {
             // If control is selected, disconnect the word
             selectedWord.setBackground(Color.LIGHT_GRAY);
@@ -81,6 +85,21 @@ public class MouseInputController extends MouseAdapter {
             moveController.moveWord(selectedWord, mouseDownPosition, new Position(e.getX(), e.getY()));
         }
         mouseDownPosition = new Position(e.getX(), e.getY());
+
+        if(selectedWord == null) {
+            mainView.getSelectionBox().moveSelection(mouseDownPosition);
+            // Highlight selected items, un-highlight unselected items
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
+            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
+                if(!selectedWords.contains(view)) {
+                    view.setBackground(Color.LIGHT_GRAY);
+                }
+            }
+            for(AbstractWordView view : selectedWords) {
+                view.setBackground(Color.LIGHT_GRAY.brighter());
+            }
+        }
+
         mainView.refresh();
     }
 
@@ -102,6 +121,17 @@ public class MouseInputController extends MouseAdapter {
                 ConnectController controller = new ConnectController(mainView, gameState);
                 controller.connect(selectedWord, connectTarget);
             }
+        }
+        if(selectedWord == null) {
+            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
+            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
+                if(selectedWords.contains(view)) {
+                    view.setBackground(Color.LIGHT_GRAY.brighter());
+                } else {
+                    view.setBackground(Color.LIGHT_GRAY);
+                }
+            }
+            mainView.getSelectionBox().clearBox();
         }
         mainView.refresh();
     }

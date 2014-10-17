@@ -67,16 +67,19 @@ public class RowView extends AbstractWordView {
 
     public void addWord(WordView wordView) {
         wordViews.add(wordView);
+        moveTo(wordViews.get(0).getPosition());
         calculateDimensions();
     }
 
     public void addWordToFront(WordView wordView) {
         wordViews.add(0, wordView);
+        moveTo(wordViews.get(0).getPosition());
         calculateDimensions();
     }
 
     public void addRow(RowView rowView) {
         wordViews.addAll(rowView.getWordViews());
+        moveTo(wordViews.get(0).getPosition());
         calculateDimensions();
     }
 
@@ -84,7 +87,7 @@ public class RowView extends AbstractWordView {
         return wordViews;
     }
 
-    private void calculateDimensions() {
+    void calculateDimensions() {
         // Find all wordViews, and calculate total Width and height
         int totalWidth = 0;
         int tallestHeight = 0;
@@ -101,8 +104,19 @@ public class RowView extends AbstractWordView {
         AbstractWordView selected = null;
         for(WordView word : wordViews) {
             AbstractWordView selectedElement = word.getSelectedElement(box);
+            // If the connectionBox overlaps one of the words in the system
             if(selectedElement != null) {
-                selected = selectedElement;
+                // If we have not yet selected a word in this row,
+                // The selected item is the currently selected element
+                if(selected == null) {
+                    selected = selectedElement;
+                } else {
+                    // If we have already selected a word in this row,
+                    // Select the entire row (Cannot select more than one word
+                    // without selecting the whole row)
+                    selected = this;
+                    break;
+                }
             }
         }
         return selected;
@@ -128,6 +142,7 @@ public class RowView extends AbstractWordView {
         if(index == 0 || index == wordViews.size() - 1) {
             successful = wordViews.remove(otherWord);
         }
+        moveTo(wordViews.get(0).getPosition());
         calculateDimensions();
         return successful;
     }

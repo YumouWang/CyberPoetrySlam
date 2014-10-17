@@ -32,7 +32,6 @@ public class DisconnectController {
      */
     public boolean disconnect(AbstractWordView wordView, AbstractWordView fromView) {
         DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
-        fromView.acceptVisitor(disconnector, wordView);
-        return true;
+        return fromView.acceptVisitor(disconnector, wordView);
     }
 }

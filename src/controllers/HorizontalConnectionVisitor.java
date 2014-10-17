@@ -32,7 +32,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     }
 
     @Override
-    public void visit(WordView wordViewOne, WordView wordViewTwo) {
+    public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
         Word wordOne = wordViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -51,10 +51,11 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.addProtectedAbstractWordView(resultRowView);
         // Select the resulting row
         resultRowView.setBackground(Color.LIGHT_GRAY);
+        return true;
     }
 
     @Override
-    public void visit(WordView wordViewOne, RowView rowViewTwo) {
+    public boolean visit(WordView wordViewOne, RowView rowViewTwo) {
         Word wordOne = wordViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -73,15 +74,17 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Move the row to the appropriate position
         // This also updates the positions of all the words in the row
         rowViewTwo.moveTo(wordViewOne.getPosition());
+        return true;
     }
 
     @Override
-    public void visit(WordView wordViewOne, PoemView poemViewTwo) {
+    public boolean visit(WordView wordViewOne, PoemView poemViewTwo) {
         // Cannot horizontally connect a word and a poem, so do nothing
+        return false;
     }
 
     @Override
-    public void visit(RowView rowViewOne, WordView wordViewTwo) {
+    public boolean visit(RowView rowViewOne, WordView wordViewTwo) {
         Row rowOne = rowViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -100,10 +103,11 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Move the row to the appropriate position
         // This also updates the positions of all the words in the row
         rowViewOne.moveTo(rowViewOne.getPosition());
+        return true;
     }
 
     @Override
-    public void visit(RowView rowViewOne, RowView rowViewTwo) {
+    public boolean visit(RowView rowViewOne, RowView rowViewTwo) {
         Row rowOne = rowViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -122,25 +126,30 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         // Move the row to the appropriate position
         // This also updates the positions of all the words in the row
         rowViewOne.moveTo(rowViewOne.getPosition());
+        return true;
     }
 
     @Override
-    public void visit(RowView rowViewOne, PoemView poemViewTwo) {
+    public boolean visit(RowView rowViewOne, PoemView poemViewTwo) {
         // Cannot horizontally connect a row and a poem, so do nothing
+        return false;
     }
 
     @Override
-    public void visit(PoemView poemViewOne, WordView wordViewTwo) {
+    public boolean visit(PoemView poemViewOne, WordView wordViewTwo) {
         // Cannot horizontally connect a poem and a word, so do nothing
+        return false;
     }
 
     @Override
-    public void visit(PoemView poemViewOne, RowView rowViewTwo) {
+    public boolean visit(PoemView poemViewOne, RowView rowViewTwo) {
         // Cannot horizontally connect a poem and a row, so do nothing
+        return false;
     }
 
     @Override
-    public void visit(PoemView poemViewOne, PoemView poemViewTwo) {
+    public boolean visit(PoemView poemViewOne, PoemView poemViewTwo) {
         // Cannot horizontally connect two poems, so do nothing
+        return false;
     }
 }

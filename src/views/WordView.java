@@ -70,20 +70,20 @@ public class WordView extends AbstractWordView {
         return this.equals(otherWord);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
-        otherView.acceptVisitor(visitor, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        return otherView.acceptVisitor(visitor, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
-        visitor.visit(wordView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        return visitor.visit(wordView, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
-        visitor.visit(rowView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        return visitor.visit(rowView, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
-        visitor.visit(poemView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        return visitor.visit(poemView, this);
     }
 
     public Word getWord() {

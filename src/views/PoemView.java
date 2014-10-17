@@ -91,6 +91,18 @@ public class PoemView extends AbstractWordView {
         calculateDimensions();
     }
 
+    public boolean removeRowView(RowView otherRow) {
+        int index = rowViews.indexOf(otherRow);
+        boolean successful = false;
+        // If the word is first or last, remove it and we're done
+        if(index == 0 || index == rowViews.size() - 1) {
+            successful = rowViews.remove(otherRow);
+        }
+        moveTo(rowViews.get(0).getPosition());
+        calculateDimensions();
+        return successful;
+    }
+
     /**
      * Disconnects a word from one of the rows in this poem if the word is an edge word and is in the poem
      * @param wordView The word to disconnect
@@ -164,20 +176,20 @@ public class PoemView extends AbstractWordView {
         return containsWord;
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
-        otherView.acceptVisitor(visitor, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {
+        return otherView.acceptVisitor(visitor, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
-        visitor.visit(wordView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {
+        return visitor.visit(wordView, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
-        visitor.visit(rowView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {
+        return visitor.visit(rowView, this);
     }
 
-    public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
-        visitor.visit(poemView, this);
+    public boolean acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {
+        return visitor.visit(poemView, this);
     }
 
     public Poem getWord() {

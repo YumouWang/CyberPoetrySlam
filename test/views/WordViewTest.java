@@ -327,13 +327,13 @@ public class WordViewTest {
             @Override
             public void setBackground(Color color) {}
             @Override
-            public void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {}
+            public boolean acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView) {return false;}
             @Override
-            public void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {}
+            public boolean acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView) {return false;}
             @Override
-            public void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {}
+            public boolean acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView) {return false;}
             @Override
-            public void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {}
+            public boolean acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView) {return false;}
         }
 
         Word word = new Word("View", WordType.PREFIX);

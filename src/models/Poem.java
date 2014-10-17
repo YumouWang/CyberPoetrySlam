@@ -109,6 +109,9 @@ public class Poem extends AbstractWord {
                     break;
                 }
             }
+            if(successful) {
+                break;
+            }
         }
         return successful;
     }

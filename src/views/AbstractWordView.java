@@ -90,11 +90,11 @@ public abstract class AbstractWordView extends AbstractView {
      */
     public abstract void setBackground(Color color);
 
-    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView);
+    public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor, AbstractWordView otherView);
 
-    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView);
+    public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor, WordView wordView);
 
-    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView);
+    public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor, RowView rowView);
 
-    public abstract void acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView);
+    public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor, PoemView poemView);
 }

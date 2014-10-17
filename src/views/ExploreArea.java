@@ -87,6 +87,7 @@ public class ExploreArea extends JFrame {
 		table.setBorder(new LineBorder(Color.BLACK));
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setBounds(44, 172, 346, 67);
+		table.setEnabled(false);
 		
 		jScrollPane = new JScrollPane();
 		jScrollPane.setBounds(20, 75, 232, 168);

@@ -72,7 +72,29 @@ public class Row extends AbstractWord {
         if(index == 0 || index == words.size() - 1) {
             successful = words.remove(word);
         }
+        // Otherwise, disconnect failed so return false
         return successful;
+    }
+
+    /**
+     * Splits the row after the desired word and returns the resulting row or word
+     * Intended to be called if disconnect fails, then call disconnect again.
+     * The word to split at will remain part of this row
+     * @param word The word to split after
+     * @return Return the resulting Row or Word
+     */
+    public AbstractWord splitRowAt(Word word) {
+        int index = words.indexOf(word);
+        AbstractWord result;
+
+        List<Word> secondRowWords = new ArrayList<Word>(words.subList(index + 1, words.size()));
+        words.removeAll(secondRowWords);
+        if(secondRowWords.size() <= 1) {
+            result = secondRowWords.get(0);
+        } else {
+            result = new Row(secondRowWords);
+        }
+        return result;
     }
 
     @Override

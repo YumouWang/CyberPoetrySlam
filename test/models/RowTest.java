@@ -109,55 +109,88 @@ public class RowTest {
         assertEquals("House Table Chair", row.getValue());
     }
 
-//    @Test
-//    public void testDisconnectEnd() throws Exception {
-//        Word wordOne = new Word("Chair", WordType.NOUN);
-//        Word wordTwo = new Word("Table", WordType.ADVERB);
-//        Word wordThree = new Word("House", WordType.ANY);
-//        List<Word> words = new ArrayList<Word>();
-//        words.add(wordOne);
-//        words.add(wordTwo);
-//        words.add(wordThree);
-//
-//        Row row = new Row(words);
-//        assertEquals("Chair Table House", row.getValue());
-//        row.disconnect(wordThree);
-//        assertEquals("Chair Table", row.getValue());
-//    }
-//
-//    @Test
-//    public void testDisconnectStart() throws Exception {
-//        Word wordOne = new Word("Chair", WordType.NOUN);
-//        Word wordTwo = new Word("Table", WordType.ADVERB);
-//        Word wordThree = new Word("House", WordType.ANY);
-//        List<Word> words = new ArrayList<Word>();
-//        words.add(wordOne);
-//        words.add(wordTwo);
-//        words.add(wordThree);
-//
-//        Row row = new Row(words);
-//        assertEquals("Chair Table House", row.getValue());
-//        row.disconnect(wordOne);
-//        assertEquals("Table House", row.getValue());
-//    }
-//
-//    @Test
-//    public void testDisconnectMiddle() throws Exception {
-//        Word wordOne = new Word("Chair", WordType.NOUN);
-//        Word wordTwo = new Word("Table", WordType.ADVERB);
-//        Word wordThree = new Word("House", WordType.ANY);
-//        List<Word> words = new ArrayList<Word>();
-//        words.add(wordOne);
-//        words.add(wordTwo);
-//        words.add(wordThree);
-//
-//        Row row = new Row(words);
-//        assertEquals("Chair Table House", row.getValue());
-//        try {
-//            row.disconnect(wordTwo);
-//        } catch(Exception e) {
-//            assertEquals(e.getMessage(), "Invalid disconnect");
-//        }
-//        assertEquals("Chair Table House", row.getValue());
-//    }
+    @Test
+    public void testDisconnectEnd() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        List<Word> words = new ArrayList<Word>();
+        words.add(wordOne);
+        words.add(wordTwo);
+        words.add(wordThree);
+
+        Row row = new Row(words);
+        assertEquals("Chair Table House", row.getValue());
+        row.disconnect(wordThree);
+        assertEquals("Chair Table", row.getValue());
+    }
+
+    @Test
+    public void testDisconnectStart() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        List<Word> words = new ArrayList<Word>();
+        words.add(wordOne);
+        words.add(wordTwo);
+        words.add(wordThree);
+
+        Row row = new Row(words);
+        assertEquals("Chair Table House", row.getValue());
+        row.disconnect(wordOne);
+        assertEquals("Table House", row.getValue());
+    }
+
+    @Test
+    public void testDisconnectMiddle() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        List<Word> words = new ArrayList<Word>();
+        words.add(wordOne);
+        words.add(wordTwo);
+        words.add(wordThree);
+
+        Row row = new Row(words);
+        assertEquals("Chair Table House", row.getValue());
+        assertFalse(row.disconnect(wordTwo));
+        assertEquals("Chair Table House", row.getValue());
+    }
+
+    @Test
+    public void testSplitRowAt() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        List<Word> words = new ArrayList<Word>();
+        words.add(wordOne);
+        words.add(wordTwo);
+        words.add(wordThree);
+
+        Row row = new Row(words);
+        assertEquals("Chair Table House", row.getValue());
+        assertFalse(row.disconnect(wordTwo));
+        AbstractWord result = row.splitRowAt(wordTwo);
+        assertEquals("House", result.getValue());
+        assertEquals("Chair Table", row.getValue());
+        assertTrue(result instanceof Word);
+    }
+
+    @Test
+    public void testSplitRowAtRow() throws Exception {
+        Word wordOne = new Word("Chair", WordType.NOUN);
+        Word wordTwo = new Word("Table", WordType.ADVERB);
+        Word wordThree = new Word("House", WordType.ANY);
+        List<Word> words = new ArrayList<Word>();
+        words.add(wordOne);
+        words.add(wordTwo);
+        words.add(wordThree);
+
+        Row row = new Row(words);
+        assertEquals("Chair Table House", row.getValue());
+        AbstractWord result = row.splitRowAt(wordOne);
+        assertEquals("Chair", row.getValue());
+        assertEquals("Table House", result.getValue());
+        assertTrue(result instanceof Row);
+    }
 }

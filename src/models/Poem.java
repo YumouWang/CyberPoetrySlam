@@ -64,28 +64,35 @@ public class Poem extends AbstractWord {
     /**
      * Disconnects a row from this poem
      * @param row The row to disconnect
-     * @return If the poem was split, returns the second poem. Otherwise, returns null
+     * @return Returns whether disconnect was successful
      */
-    public Poem disconnect(Row row) {
+    public boolean disconnect(Row row) {
         int index = rows.indexOf(row);
-        Poem newPoem = null;
+        boolean successful = false;
         // If the row is first or last, remove it and we're done
         if(index == 0 || index == rows.size() - 1) {
-            rows.remove(row);
-        } else {
-            // Otherwise, we need to split the poem
-            // Remove the row
-            rows.remove(row);
-            // Remove all rows after the specified row
-            List<Row> newPoemRows = new ArrayList<Row>();
-            while(index < rows.size()) {
-                Row removedRow = rows.remove(index);
-                newPoemRows.add(removedRow);
-            }
-            // Return those rows as a new poem
-            newPoem = new Poem(newPoemRows);
+            successful = rows.remove(row);
         }
-        return newPoem;
+        return successful;
+    }
+
+    public AbstractWord splitPoemAt(Row row) {
+        int index = rows.indexOf(row);
+        AbstractWord result;
+
+        List<Row> secondPoemRows = new ArrayList<Row>(rows.subList(index + 1, rows.size()));
+        rows.removeAll(secondPoemRows);
+        if(secondPoemRows.size() <= 1) {
+            Row rowTwo = secondPoemRows.get(0);
+            if(rowTwo.getWords().size() <=1) {
+                result = rowTwo.getWords().get(0);
+            } else {
+                result = rowTwo;
+            }
+        } else {
+            result = new Poem(secondPoemRows);
+        }
+        return result;
     }
 
     /**
@@ -93,20 +100,41 @@ public class Poem extends AbstractWord {
      * @param word The word to disconnect
      * @return Returns whether the disconnect was successful. Returns false if the word is not an edge word or is not in the poem
      */
-    public Poem disconnectEdgeWord(Word word) {
-        Poem resultPoem = null;
+    public boolean disconnectEdgeWord(Word word) {
+        boolean successful = false;
         for(Row row: rows) {
             for(Word rowWord: row.getWords()) {
                 if(word.equals(rowWord)) {
-                    row.disconnect(rowWord);
-                    if(row.getWords().size() == 0) {
-                        resultPoem = disconnect(row);
-                    }
+                    successful = row.disconnect(rowWord);
                     break;
                 }
             }
         }
-        return resultPoem;
+        return successful;
+    }
+
+    /**
+     * Checks the poem for any invalid rows (length 0)
+     * And splits based on the rows if necessary.
+     * Should be called after every call to disconnectEdgeWord
+     * @return The split poem, row, or word, if any. Null otherwise
+     */
+    public AbstractWord revalidate() {
+        AbstractWord result = null;
+        for(Row row: rows) {
+            // Check if this row is invalid
+            if(row.getWords().size() == 0) {
+                int index = rows.indexOf(row);
+                // If the empty row is in the middle of the poem, split it
+                if(index != 0 && index != rows.size() - 1) {
+                    result = splitPoemAt(row);
+                }
+                // Disconnect the invalid row
+                disconnect(row);
+                break;
+            }
+        }
+        return result;
     }
 
     @Override

@@ -23,13 +23,6 @@ public class Search {
 		wordtable = gameState.getUnprotectedArea().getAbstractWordCollection();
 	}
 	
-	public static Search getInstance(MainGUI mainGUI, GameState gameState) {
-		if(search == null) {
-			search = new Search(mainGUI, gameState);
-		}
-		return search;
-	}
-	
 	public Collection<AbstractWord> search(String word, String wordtype) {
 		updateWordTable();
 		for (AbstractWord word2 : wordtable) {

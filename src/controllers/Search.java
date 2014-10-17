@@ -1,12 +1,12 @@
 package controllers;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
 import views.MainView;
-
-import java.util.Collection;
-import java.util.HashSet;
 
 public class Search {
 	private static Search search;
@@ -22,13 +22,6 @@ public class Search {
 	
 	public void updateWordTable() {
 		wordtable = gameState.getUnprotectedArea().getAbstractWordCollection();
-	}
-	
-	public static Search getInstance(MainView mainView, GameState gameState) {
-		if(search == null) {
-			search = new Search(mainView, gameState);
-		}
-		return search;
 	}
 	
 	public Collection<AbstractWord> search(String word, String wordtype) {

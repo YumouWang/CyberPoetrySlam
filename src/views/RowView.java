@@ -25,8 +25,8 @@ public class RowView extends AbstractWordView {
      */
     public RowView(Row row, Position position, MainView mainView) {
         super(row, position);
-        List<Word> words = row.getWords();
         wordViews = new ArrayList<WordView>();
+        List<Word> words = row.getWords();
 
         // Find all wordViews
         for(Word word: words) {

@@ -29,7 +29,6 @@ public class WordView extends AbstractWordView {
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         label.setBackground(Color.LIGHT_GRAY);
         label.setOpaque(true);
-
     }
 
     /**

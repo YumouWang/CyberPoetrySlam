@@ -152,8 +152,8 @@ public class ExploreArea extends JFrame {
 	        });     
 	}
 	public void refresh() {
-		contentPane.revalidate();
-		contentPane.repaint();
+		revalidate();
+		repaint();
 		table.updateUI();
 		
 	}

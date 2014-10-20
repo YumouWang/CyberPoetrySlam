@@ -22,7 +22,7 @@ import java.util.Collection;
 public class MouseInputController extends MouseAdapter {
 
     AbstractWordView selectedWord;
-    Collection<AbstractWordView> selectedWords;
+    AbstractWordView selectedWordToDisconnect;
     Position mouseDownPosition;
     MainView mainView;
     GameState gameState;
@@ -65,16 +65,16 @@ public class MouseInputController extends MouseAdapter {
         if(selectedWord == null) {
             mainView.getSelectionBox().startNewSelection(mouseDownPosition);
         }
-        if(selectedWord != null && e.isControlDown()) {
-            // If control is selected, disconnect the word
-            selectedWord.setBackground(Color.LIGHT_GRAY);
+        if(selectedWord != null && selectedWord.contains(selectedWordToDisconnect)) {
+            // Disconnect the word
             DisconnectController controller = new DisconnectController(mainView, gameState);
-            AbstractWordView selectedElement = selectedWord.getSelectedElement(new ConnectionBox(mouseDownPosition, 0, 0));
-            if(controller.disconnect(selectedElement, selectedWord)) {
-                selectedWord = selectedElement;
+            if(controller.disconnect(selectedWordToDisconnect, selectedWord)) {
+                selectedWord.setBackground(Color.LIGHT_GRAY);
+                selectedWord = selectedWordToDisconnect;
+                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
             }
-            selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
         }
+        selectedWordToDisconnect = null;
         mainView.refresh();
     }
 
@@ -88,15 +88,16 @@ public class MouseInputController extends MouseAdapter {
 
         if(selectedWord == null) {
             mainView.getSelectionBox().moveSelection(mouseDownPosition);
-            // Highlight selected items, un-highlight unselected items
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
-            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
-                if(!selectedWords.contains(view)) {
+            // Highlight selected item, un-highlight unselected items
+            if(selectedWordToDisconnect != null) {
+                for(AbstractWordView view : mainView.getProtectedAreaWords()) {
                     view.setBackground(Color.LIGHT_GRAY);
                 }
             }
-            for(AbstractWordView view : selectedWords) {
-                view.setBackground(Color.LIGHT_GRAY.brighter());
+            selectedWordToDisconnect = mainView.getSelectionBox().getSelectedItem(mainView.getProtectedAreaWords());
+
+            if(selectedWordToDisconnect != null) {
+                selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
             }
         }
 
@@ -123,14 +124,11 @@ public class MouseInputController extends MouseAdapter {
             }
         }
         if(selectedWord == null) {
-            selectedWords = mainView.getSelectionBox().getSelectedItems(mainView.getProtectedAreaWords());
-            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
-                if(selectedWords.contains(view)) {
-                    view.setBackground(Color.LIGHT_GRAY.brighter());
-                } else {
-                    view.setBackground(Color.LIGHT_GRAY);
-                }
+            selectedWordToDisconnect = mainView.getSelectionBox().getSelectedItem(mainView.getProtectedAreaWords());
+            if(selectedWordToDisconnect != null) {
+                selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
             }
+
             mainView.getSelectionBox().clearBox();
         }
         mainView.refresh();

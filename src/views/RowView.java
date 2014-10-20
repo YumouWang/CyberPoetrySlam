@@ -142,7 +142,9 @@ public class RowView extends AbstractWordView {
         if(index == 0 || index == wordViews.size() - 1) {
             successful = wordViews.remove(otherWord);
         }
-        moveTo(wordViews.get(0).getPosition());
+        if(0 < wordViews.size()) {
+            moveTo(wordViews.get(0).getPosition());
+        }
         calculateDimensions();
         return successful;
     }

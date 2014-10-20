@@ -83,17 +83,11 @@ public class Row extends AbstractWord {
      * @param word The word to split after
      * @return Return the resulting Row or Word
      */
-    public AbstractWord splitRowAt(Word word) {
+    public Row splitRowAt(Word word) {
         int index = words.indexOf(word);
-        AbstractWord result;
-
         List<Word> secondRowWords = new ArrayList<Word>(words.subList(index + 1, words.size()));
         words.removeAll(secondRowWords);
-        if(secondRowWords.size() <= 1) {
-            result = secondRowWords.get(0);
-        } else {
-            result = new Row(secondRowWords);
-        }
+        Row result = new Row(secondRowWords);
         return result;
     }
 

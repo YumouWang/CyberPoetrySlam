@@ -191,20 +191,38 @@ public class PoemViewTest {
 
     @Test
     public void testRemoveEdgeWordViewFromEndOfRow() throws Exception {
-        // Cases:
-        // Remove from end of a row
-        // Remove from beginning of a row
-        // Remove only word in row
-        // Doesn't exist in poem
+        Word wordThree = new Word("WordThing", WordType.ADVERB);
+        WordView wordViewThree = new WordView(wordThree, new Position(20, 20));
+        poemView.getRowViews().get(1).addWord(wordViewThree);
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
+
+        assertTrue(poemView.removeEdgeWordView(wordViewThree));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertFalse(poemView.contains(wordViewThree));
     }
+
     @Test
     public void testRemoveEdgeWordViewFromBeginningOfRow() throws Exception {
-        // Cases:
-        // Remove from end of a row
-        // Remove from beginning of a row
-        // Remove only word in row
-        // Doesn't exist in poem
+        Word wordThree = new Word("WordThing", WordType.ADVERB);
+        WordView wordViewThree = new WordView(wordThree, new Position(20, 20));
+        poemView.getRowViews().get(1).addWordToFront(wordViewThree);
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
+
+        assertTrue(poemView.removeEdgeWordView(wordViewThree));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertFalse(poemView.contains(wordViewThree));
     }
+
     @Test
     public void testRemoveEdgeWordViewDoesntExistInPoem() throws Exception {
         Word wordThree = new Word("WordThing", WordType.ADVERB);
@@ -220,12 +238,75 @@ public class PoemViewTest {
         assertTrue(poemView.contains(wordViewTwo));
         assertFalse(poemView.contains(wordViewThree));
     }
+
     @Test
     public void testRemoveEdgeWordViewOnlyWordInRow() throws Exception {
-        // Cases:
-        // Remove from end of a row
-        // Remove from beginning of a row
-        // Remove only word in row
-        // Doesn't exist in poem
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+
+        assertTrue(poemView.removeEdgeWordView(wordViewTwo));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertFalse(poemView.contains(wordViewTwo));
+    }
+
+    @Test
+    public void testRemoveRowViewEnd() throws Exception {
+        Word wordThree = new Word("WordThing", WordType.ADVERB);
+        Row rowThree = new Row(wordThree);
+        WordView wordViewThree = new WordView(wordThree, new Position(20, 20));
+        mainView.addProtectedAbstractWordView(wordViewThree);
+        RowView rowViewThree = new RowView(rowThree, new Position(20, 20), mainView);
+        poemView.addRow(rowViewThree);
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
+
+        assertTrue(poemView.removeRowView(rowViewThree));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertFalse(poemView.contains(wordViewThree));
+    }
+
+    @Test
+    public void testRemoveRowViewStart() throws Exception {
+        Word wordThree = new Word("WordThing", WordType.ADVERB);
+        Row rowThree = new Row(wordThree);
+        WordView wordViewThree = new WordView(wordThree, new Position(20, 20));
+        mainView.addProtectedAbstractWordView(wordViewThree);
+        RowView rowViewThree = new RowView(rowThree, new Position(20, 20), mainView);
+        poemView.addRowToTop(rowViewThree);
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
+
+        assertTrue(poemView.removeRowView(rowViewThree));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertFalse(poemView.contains(wordViewThree));
+    }
+
+    @Test
+    public void testRemoveRowViewMiddle() throws Exception {
+        Word wordThree = new Word("WordThing", WordType.ADVERB);
+        Row rowThree = new Row(wordThree);
+        WordView wordViewThree = new WordView(wordThree, new Position(20, 20));
+        mainView.addProtectedAbstractWordView(wordViewThree);
+        RowView rowViewThree = new RowView(rowThree, new Position(20, 20), mainView);
+        poemView.addRow(rowViewThree);
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
+
+        assertFalse(poemView.removeRowView(poemView.getRowViews().get(1)));
+
+        assertTrue(poemView.contains(wordViewOne));
+        assertTrue(poemView.contains(wordViewTwo));
+        assertTrue(poemView.contains(wordViewThree));
     }
 }

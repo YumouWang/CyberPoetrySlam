@@ -76,22 +76,14 @@ public class Poem extends AbstractWord {
         return successful;
     }
 
-    public AbstractWord splitPoemAt(Row row) {
+    public Poem splitPoemAt(Row row) {
         int index = rows.indexOf(row);
-        AbstractWord result;
+        Poem result;
 
         List<Row> secondPoemRows = new ArrayList<Row>(rows.subList(index + 1, rows.size()));
         rows.removeAll(secondPoemRows);
-        if(secondPoemRows.size() <= 1) {
-            Row rowTwo = secondPoemRows.get(0);
-            if(rowTwo.getWords().size() <=1) {
-                result = rowTwo.getWords().get(0);
-            } else {
-                result = rowTwo;
-            }
-        } else {
-            result = new Poem(secondPoemRows);
-        }
+
+        result = new Poem(secondPoemRows);
         return result;
     }
 

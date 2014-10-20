@@ -55,6 +55,25 @@ public class SelectionBox extends JComponent {
         return selectedItems;
     }
 
+    public AbstractWordView getSelectedItem(Collection<AbstractWordView> words) {
+        // Returns one of the selected words. Not guaranteed to select the same one each time
+        AbstractWordView selectedItem = null;
+        if(startLocation != null && endLocation != null) {
+            int x = (startLocation.getX() < endLocation.getX()) ? startLocation.getX() : endLocation.getX();
+            int y = (startLocation.getY() < endLocation.getY()) ? startLocation.getY() : endLocation.getY();
+            int width = Math.abs(startLocation.getX() - endLocation.getX());
+            int height = Math.abs(startLocation.getY() - endLocation.getY());
+            ConnectionBox collision = new ConnectionBox(new Position(x, y), width, height);
+
+            for (AbstractWordView view : words) {
+                if (collision.isOverlapping(view)) {
+                    selectedItem = view.getSelectedElement(collision);
+                }
+            }
+        }
+        return selectedItem;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

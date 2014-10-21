@@ -64,6 +64,26 @@ public class SelectionBoxTest {
     }
 
     @Test
+    public void testGetSelectedItem() throws Exception {
+        SelectionBox box = new SelectionBox();
+
+        box.startLocation = new Position(5, 5);
+        box.endLocation = new Position(10, 10);
+
+        Word word = new Word("myWord", WordType.ADJECTIVE);
+        Word word2 = new Word("myOtherWord", WordType.ADJECTIVE);
+        Collection<AbstractWordView> words = new HashSet<AbstractWordView>();
+        WordView viewOne = new WordView(word, new Position(0, 0));
+        WordView viewTwo = new WordView(word2, new Position(40, 40));
+        words.add(viewOne);
+        words.add(viewTwo);
+
+        AbstractWordView selectedWord = box.getSelectedItem(words);
+
+        assertEquals(viewOne, selectedWord);
+    }
+
+    @Test
     public void testClearBox() throws Exception {
         SelectionBox box = new SelectionBox();
 

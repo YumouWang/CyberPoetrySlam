@@ -170,10 +170,9 @@ public class RowTest {
         Row row = new Row(words);
         assertEquals("Chair Table House", row.getValue());
         assertFalse(row.disconnect(wordTwo));
-        AbstractWord result = row.splitRowAt(wordTwo);
+        Row result = row.splitRowAt(wordTwo);
         assertEquals("House", result.getValue());
         assertEquals("Chair Table", row.getValue());
-        assertTrue(result instanceof Word);
     }
 
     @Test
@@ -188,9 +187,8 @@ public class RowTest {
 
         Row row = new Row(words);
         assertEquals("Chair Table House", row.getValue());
-        AbstractWord result = row.splitRowAt(wordOne);
+        Row result = row.splitRowAt(wordOne);
         assertEquals("Chair", row.getValue());
         assertEquals("Table House", result.getValue());
-        assertTrue(result instanceof Row);
     }
 }

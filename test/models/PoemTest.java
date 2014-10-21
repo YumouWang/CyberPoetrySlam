@@ -317,10 +317,9 @@ public class PoemTest {
         Poem poem = new Poem(rows);
         assertEquals("Dog Cat\nMouse Tiger\nHawk Fish\nEye\nLeg", poem.getValue());
         assertFalse(poem.disconnect(rowThree));
-        AbstractWord result = poem.splitPoemAt(rowFour);
+        Poem result = poem.splitPoemAt(rowFour);
         assertEquals("Dog Cat\nMouse Tiger\nHawk Fish\nEye", poem.getValue());
         assertEquals("Leg", result.getValue());
-        assertTrue(result instanceof Word);
     }
 
     @Test
@@ -354,10 +353,9 @@ public class PoemTest {
         Poem poem = new Poem(rows);
         assertEquals("Dog Cat\nMouse Tiger\nHawk Fish", poem.getValue());
         assertFalse(poem.disconnect(rowTwo));
-        AbstractWord result = poem.splitPoemAt(rowTwo);
+        Poem result = poem.splitPoemAt(rowTwo);
         assertEquals("Dog Cat\nMouse Tiger", poem.getValue());
         assertEquals("Hawk Fish", result.getValue());
-        assertTrue(result instanceof Row);
     }
 
     @Test
@@ -520,9 +518,8 @@ public class PoemTest {
         Poem poem = new Poem(rows);
         assertEquals("Dog Cat\nMouse\nHawk", poem.getValue());
         assertTrue(poem.disconnectEdgeWord(wordThree));
-        AbstractWord result = poem.revalidate();
+        Poem result = poem.revalidate();
         assertNotNull(result);
-        assertTrue(result instanceof Word);
         assertEquals("Dog Cat", poem.getValue());
         assertEquals("Hawk", result.getValue());
     }

@@ -1,5 +1,6 @@
 package views;
 
+import controllers.DisconnectVisitor;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -236,5 +237,37 @@ public class RowViewTest {
         AbstractWordView selectedElement = rowView.getSelectedElement(box);
 
         assertEquals(rowView, selectedElement);
+    }
+
+    @Test
+    public void testVisitorPatternAbstractRow() throws Exception {
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+
+        AbstractWordView abstractWordViewOne = new RowView(row, new Position(0,0), mainView);
+        assertFalse(rowView.acceptVisitor(disconnector, abstractWordViewOne));
+    }
+
+    @Test
+    public void testVisitorPatternPoem() throws Exception {
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+        Word wordOne = new Word("Happy", WordType.ADJECTIVE);
+        Word wordTwo = new Word("Happy", WordType.ADJECTIVE);
+        Row rowOne = new Row(wordOne);
+        Row rowTwo = new Row(wordTwo);
+        Poem poemOne = new Poem(rowOne);
+        poemOne.connect(rowTwo);
+        WordView wordViewOne = new WordView(wordOne, new Position(0,0));
+        WordView wordViewTwo = new WordView(wordTwo, new Position(0,0));
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
+        PoemView poemView = new PoemView(poemOne, new Position(2, 2), mainView);
+        mainView.addProtectedAbstractWordView(poemView);
+        assertTrue(poemView.getRowViews().get(0).acceptVisitor(disconnector, poemView));
+    }
+
+    @Test
+    public void testVisitorPatternWord() throws Exception {
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+        assertFalse(rowView.acceptVisitor(disconnector, wordViewOne));
     }
 }

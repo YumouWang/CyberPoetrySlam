@@ -2,10 +2,8 @@ package views;
 
 import common.Constants;
 import controllers.AbstractWordViewVisitor;
-import models.AbstractWord;
-import models.Position;
-import models.Word;
-import models.WordType;
+import controllers.DisconnectVisitor;
+import models.*;
 import org.junit.Test;
 
 import java.awt.*;
@@ -366,5 +364,60 @@ public class WordViewTest {
         WordView view = new WordView(word, position);
         ConnectionBox box = new ConnectionBox(new Position(5, 5), 0, 0);
         assertEquals(view, view.getSelectedElement(box));
+    }
+
+    @Test
+     public void testVisitorPatternAbstractWord() throws Exception {
+        GameState gameState = new GameState();
+        MainView mainView = new MainView(gameState);
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+
+        Word word = new Word("View", WordType.PREFIX);
+        Position position = new Position(0, 0);
+        WordView view = new WordView(word, position);
+
+        Word wordTwo = new Word("View", WordType.PREFIX);
+        AbstractWordView abstractWordViewOne = new WordView(wordTwo, new Position(0,0));
+        assertFalse(view.acceptVisitor(disconnector, abstractWordViewOne));
+    }
+
+    @Test
+    public void testVisitorPatternPoem() throws Exception {
+        GameState gameState = new GameState();
+        MainView mainView = new MainView(gameState);
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+
+        Word wordOne = new Word("Happy", WordType.ADJECTIVE);
+        Word wordTwo = new Word("Happy", WordType.ADJECTIVE);
+        Row rowOne = new Row(wordOne);
+        Row rowTwo = new Row(wordTwo);
+        Poem poemOne = new Poem(rowOne);
+        poemOne.connect(rowTwo);
+        WordView wordViewOne = new WordView(wordOne, new Position(0,0));
+        WordView wordViewTwo = new WordView(wordTwo, new Position(0,0));
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
+        PoemView poemView = new PoemView(poemOne, new Position(2, 2), mainView);
+        mainView.addProtectedAbstractWordView(poemView);
+        assertTrue(wordViewOne.acceptVisitor(disconnector, poemView));
+    }
+
+    @Test
+    public void testVisitorPatternRow() throws Exception {
+        GameState gameState = new GameState();
+        MainView mainView = new MainView(gameState);
+        DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
+
+        Word wordOne = new Word("Happy", WordType.ADJECTIVE);
+        Word wordTwo = new Word("Happy", WordType.ADJECTIVE);
+        Row rowOne = new Row(wordOne);
+        rowOne.connect(wordTwo);
+        WordView wordViewOne = new WordView(wordOne, new Position(0,0));
+        WordView wordViewTwo = new WordView(wordTwo, new Position(0,0));
+        mainView.addProtectedAbstractWordView(wordViewOne);
+        mainView.addProtectedAbstractWordView(wordViewTwo);
+        RowView rowView = new RowView(rowOne, new Position(2, 2), mainView);
+        mainView.addProtectedAbstractWordView(rowView);
+        assertTrue(wordViewOne.acceptVisitor(disconnector, rowView));
     }
 }

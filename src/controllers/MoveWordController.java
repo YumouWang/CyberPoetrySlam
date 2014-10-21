@@ -1,14 +1,18 @@
 package controllers;
 
+import java.awt.Color;
+import java.util.Collection;
+import java.util.List;
+
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
-
-import java.awt.*;
-import java.util.Collection;
+import views.PoemView;
+import views.RowView;
+import views.WordView;
 
 /**
  * A class for handling moving words
@@ -37,7 +41,7 @@ public class MoveWordController {
         Position newPosition = new Position(selectedWord.getPosition().getX() + positionDiff.getX(),
                 selectedWord.getPosition().getY() + positionDiff.getY());
         selectedWord.moveTo(newPosition);
-
+        
         if (mainView.isInProtectedArea(originPosition) && mainView.isInProtectedArea(newPosition)) {
             // word move from protect area to protect area
             protectAreaWordMove(selectedWord);
@@ -50,7 +54,18 @@ public class MoveWordController {
         else if (mainView.isInProtectedArea(originPosition) && !mainView.isInProtectedArea(newPosition)) {
             // word move from protect area to unprotect area;
             System.out.println("you are unprotecting word:" + selectedWord.getWord().getValue());
-            unprotectWord(selectedWord);
+            if(selectedWord instanceof WordView){
+            	unprotectWord(selectedWord);
+            }
+            if(selectedWord instanceof RowView) {
+            	System.out.println("release row");
+            	relaseRow((RowView)selectedWord);
+            }
+            if(selectedWord instanceof PoemView) {
+            	System.out.println("release poem");
+            	relasePoem((PoemView)selectedWord);
+            }
+            
         }
         // Otherwise, the word started and ended in the unprotected area,
         // So we don't need to do anything special
@@ -141,5 +156,48 @@ public class MoveWordController {
             System.out.print(word.getValue() + ",");
         }
         System.out.println();
+    }
+    
+	/**
+	 * release a row that was just moved
+	 */
+	void relaseRow(RowView rowView) {
+
+		List<WordView> words = rowView.getWordViews();
+
+		for (WordView word : words) {
+			gameState.getProtectedArea().removeAbstractWord(rowView.getWord());
+			gameState.getUnprotectedArea().addAbstractWord(word.getWord());
+			
+			unprotectWord(word);
+			
+			Collection<AbstractWord> protectedWords = gameState
+					.getProtectedArea().getAbstractWordCollection();
+			System.out.print("protectWord list: ");
+			for (AbstractWord word1 : protectedWords) {
+				System.out.print(word1.getValue() + ",");
+			}
+			System.out.println();
+
+			Collection<AbstractWord> unprotectedWords = gameState
+					.getUnprotectedArea().getAbstractWordCollection();
+			System.out.print("unprotectWord list: ");
+			for (AbstractWord word2 : unprotectedWords) {
+				System.out.print(word2.getValue() + ",");
+			}
+			System.out.println();
+		}
+	}
+    
+	/**
+	 * release a poem that was just moved
+	 */
+    void relasePoem(PoemView poemView) {
+    	List<RowView> rows = poemView.getRowViews();
+    	gameState.getProtectedArea().removeAbstractWord(poemView.getWord());
+    	for (RowView row : rows) {
+    		gameState.getProtectedArea().removeAbstractWord(row.getWord());
+    		relaseRow(row);
+    	}
     }
 }

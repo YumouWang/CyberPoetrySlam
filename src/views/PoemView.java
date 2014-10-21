@@ -103,6 +103,16 @@ public class PoemView extends AbstractWordView {
         return successful;
     }
 
+    public RowView getEmptyRowView() {
+        RowView result = null;
+        for(RowView rowView: rowViews) {
+            if(rowView.getWordViews().size() == 0) {
+                result = rowView;
+            }
+        }
+        return result;
+    }
+
     /**
      * Disconnects a word from one of the rows in this poem if the word is an edge word and is in the poem
      * @param wordView The word to disconnect
@@ -121,7 +131,7 @@ public class PoemView extends AbstractWordView {
                 break;
             }
         }
-        moveTo(rowViews.get(0).getPosition());
+        calculateDimensions();
         return successful;
     }
 

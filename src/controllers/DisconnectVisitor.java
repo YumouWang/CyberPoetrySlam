@@ -4,6 +4,7 @@ import models.*;
 import views.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A realization of the AbstractWordViewVisitor interface for disconnecting two words
@@ -144,60 +145,107 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewToDisconnectFrom, WordView wordView) {
-        System.out.println("Disconnect " + wordView.getWord().getValue() + " from " + poemViewToDisconnectFrom.getWord().getValue());
-//        Poem poemToDisconnectFrom = poemViewToDisconnectFrom.getWord();
-//        Word word = wordView.getWord();
-//        boolean successful = true;
-//        AbstractWord splitResult = null;
-//
-//        // Disconnect the two entities
-//        if(poemToDisconnectFrom.disconnectEdgeWord(word)) {
-//
-//            // Update the area to reflect the updated words
-//            protectedArea.addAbstractWord(word);
-//
-//            // Check if we removed the last word in a row
-//            splitResult = poemToDisconnectFrom.revalidate();
-//            // If we did, we might have also split the poem. If so,
-//            // Add the result to the protectedArea
-//            if(splitResult != null) {
-//                protectedArea.addAbstractWord(splitResult);
-//            }
-//
-//            // If the poem is now just one row, convert it to a row
-//            reducePoemToWordIfPossible(poemToDisconnectFrom);
-//        } else {
-//            // To add functionality where we can remove a word from the middle of a poem, put it here
-//            // Use the poem.splitPoemAt() and the row.splitRowAt() functions
-//            System.out.println("Error disconnecting " + word.getValue() + " from " + poemToDisconnectFrom.getValue());
-//            successful = false;
-//        }
-//
-//        // Disconnect the two entities
-//        if(poemViewToDisconnectFrom.removeEdgeWordView(wordView)) {
-//
-//            // Update the main view object to reflect the change
-//            mainView.addProtectedAbstractWordView(wordView);
-//
-//            // If we split the poem, create two new poems based on the poemToDisconnectFrom and the splitResult
-//            if(splitResult != null) {
-//                System.out.println("We split the poem. This isn't implemented yet");
-////                mainView.addProtectedAbstractWordView(splitResult);
-//            } else if(poemViewToDisconnectFrom.getRowViews().size() == 1) {
-//                // If the poem is now just one row, convert it to a row
-//                RowView rowViewFromPoem = poemViewToDisconnectFrom.getRowViews().get(0);
-//                // And then make the appropriate change in the protected area
-//                mainView.removeProtectedAbstractWordView(poemViewToDisconnectFrom);
-//                mainView.addProtectedAbstractWordView(rowViewFromPoem);
-//            }
-//        } else {
-//            // To add functionality where we can remove a wordView from the middle of a poem, put it here
-//            // Use the poem.splitPoemAt() and the row.splitRowAt() functions
-//            System.out.println("Error disconnecting " + word.getValue() + " from " + poemToDisconnectFrom.getValue());
-//            successful = false;
-//        }
+        Poem poemToDisconnectFrom = poemViewToDisconnectFrom.getWord();
+        Word word = wordView.getWord();
+        boolean successful = true;
+        Poem splitResult = null;
 
-        return false;
+        // Disconnect the two entities
+        if(poemToDisconnectFrom.disconnectEdgeWord(word)) {
+            // Update the area to reflect the updated words
+            protectedArea.addAbstractWord(word);
+            // Revalidate checks for empty rows and removes an empty row at the start
+            // or end of the poem or splits the poem at an empty row if there is one
+            // (It ensures that there are no empty rows in the poem)
+            splitResult = poemToDisconnectFrom.revalidate();
+
+            // If the poem is now just one row, convert it to a row
+            reducePoemToWordIfPossible(poemToDisconnectFrom);
+
+            // If we split the poem, add the result to the protectedArea
+            if(splitResult != null) {
+                // Reduce the splitResult to the smallest type it can be
+                reducePoemToWordIfPossible(splitResult);
+                // Add the result to the protected area
+                protectedArea.addAbstractWord(splitResult);
+            }
+        } else {
+            // To add functionality where we can remove a word from the middle of a poem, put it here
+            // Use the poem.splitPoemAt() and the row.splitRowAt() functions
+            // This would be complicated and the desired behavior is undefined, so this is intentionally not implemented
+            System.out.println("Error disconnecting " + word.getValue() + " from " + poemToDisconnectFrom.getValue());
+            successful = false;
+        }
+
+        // Synchronize the view with the entities
+        if(poemViewToDisconnectFrom.removeEdgeWordView(wordView)) {
+            // Update the main view object to reflect the change
+            mainView.addProtectedAbstractWordView(wordView);
+
+            // Get the empty row, if there was one
+            RowView emptyRow = poemViewToDisconnectFrom.getEmptyRowView();
+            // If we removed the last word from a row the we have to do special stuff
+            // Otherwise, we're already done
+            if(emptyRow != null) {
+                // If we split the poem, create two new poems based on the poemToDisconnectFrom and the splitResult
+                // If we did not split the poem, then the emptyRow was either the first or last row of the poem
+                if(splitResult == null) {
+                    // Now the rowView is at the end of poemViewToDisconnectFrom so we can
+                    // disconnect the rowView so the view reflects the entity change
+                    if(poemViewToDisconnectFrom.removeRowView(emptyRow)) {
+                        // Do NOT add the empty row to the mainView
+                        // Move the poem so all the words are in the appropriate location
+                        poemViewToDisconnectFrom.moveTo(poemViewToDisconnectFrom.getRowViews().get(0).getPosition());
+                        // If the poemView is now just one rowView, convert it to a rowView
+                        reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
+                    } else {
+                        System.out.println("Error disconnecting view for " + word.getValue() + " from view for " + poemToDisconnectFrom.getValue());
+                        successful = false;
+                    }
+                } else {
+                    // Otherwise, we removed the last word from a row in the middle of the poem,
+                    // So we have to split the poem
+                    // Remove the old rowViews from the poemView
+                    List<RowView> rowViewList = poemViewToDisconnectFrom.getRowViews();
+                    // Get the last RowView in the PoemView
+                    RowView lastRowViewInPoem = rowViewList.get(rowViewList.size() - 1);
+                    // Keep track of the first one in the new poem so we know its position
+                    RowView firstRowViewInSplitResult = null;
+                    // Remove rowViews from the end of the list until we get to the emptyRow we just split on
+                    while(!emptyRow.equals(lastRowViewInPoem)) {
+                        // Remove the row from the poem and add it to the pool of words in the mainView
+                        poemViewToDisconnectFrom.removeRowView(lastRowViewInPoem);
+                        mainView.addProtectedAbstractWordView(lastRowViewInPoem);
+                        reduceRowViewToWordViewIfPossible(lastRowViewInPoem);
+                        // Get the last one in the list
+                        firstRowViewInSplitResult = lastRowViewInPoem;
+                        lastRowViewInPoem = rowViewList.get(rowViewList.size()-1);
+                    }
+                    // lastRowViewInPoem is currently the empty row, so remove it
+                    poemViewToDisconnectFrom.removeRowView(emptyRow);
+                    reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
+                    // The poemView now only has the RowViews it should
+                    // And firstRowViewInSplitResult is the first RowView in the split poem view
+
+                    // Create a new PoemView for the second poem
+                    // Use the position of the first row in the poem when creating it
+                    // All rows should be available in the mainView so it should be able to construct using those rowViews
+                    PoemView splitPoemView = new PoemView(splitResult, firstRowViewInSplitResult.getPosition(), mainView);
+                    mainView.addProtectedAbstractWordView(splitPoemView);
+                    // if the splitPoemView is just one rowView, reduce it
+                    reducePoemViewToWordViewIfPossible(splitPoemView);
+                }
+            }
+        } else {
+            // To add functionality where we can remove a wordView from the middle of a poem, put it here
+            // Use the poem.splitPoemAt() and the row.splitRowAt() functions
+            // This would be complicated and the desired behavior is undefined, so this is intentionally not implemented
+            System.out.println("Error disconnecting view for " + word.getValue() + " from view for "
+                    + poemToDisconnectFrom.getValue());
+            successful = false;
+        }
+
+        return successful;
     }
 
     @Override

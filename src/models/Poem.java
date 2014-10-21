@@ -114,8 +114,8 @@ public class Poem extends AbstractWord {
      * Should be called after every call to disconnectEdgeWord
      * @return The split poem, row, or word, if any. Null otherwise
      */
-    public AbstractWord revalidate() {
-        AbstractWord result = null;
+    public Poem revalidate() {
+        Poem result = null;
         for(Row row: rows) {
             // Check if this row is invalid
             if(row.getWords().size() == 0) {

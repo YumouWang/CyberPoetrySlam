@@ -191,4 +191,14 @@ public class RowTest {
         assertEquals("Chair", row.getValue());
         assertEquals("Table House", result.getValue());
     }
+
+    @Test
+    public void testContains() throws Exception {
+        Word wordOne = new Word("MyWord", WordType.ANY);
+        Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);
+        Row rowOne = new Row(wordOne);
+        assertTrue(rowOne.contains(wordOne));
+        assertTrue(rowOne.contains(rowOne));
+        assertFalse(rowOne.contains(wordTwo));
+    }
 }

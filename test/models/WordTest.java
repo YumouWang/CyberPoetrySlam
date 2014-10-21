@@ -44,4 +44,12 @@ public class WordTest {
         wordThree.connect(row);
         assertEquals("House Chair Table", row.getValue());
     }
+
+    @Test
+    public void testContains() throws Exception {
+        Word wordOne = new Word("MyWord", WordType.ANY);
+        Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);
+        assertTrue(wordOne.contains(wordOne));
+        assertFalse(wordOne.contains(wordTwo));
+    }
 }

@@ -29,6 +29,11 @@ public class Word extends AbstractWord {
         return value;
     }
 
+    @Override
+    public boolean contains(AbstractWord otherWord) {
+        return this.equals(otherWord);
+    }
+
     public WordType getType() {
     	return type;
     }

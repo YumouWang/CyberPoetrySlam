@@ -4,7 +4,6 @@ import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
-import views.ConnectionBox;
 import views.MainView;
 
 import java.awt.*;
@@ -39,7 +38,27 @@ public class MouseInputController extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseDownPosition = new Position(e.getX(), e.getY());
+        Position mousePosition = new Position(e.getX(), e.getY());
+        mousePressedHandler(mousePosition);
+        mainView.refresh();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        Position mousePosition = new Position(e.getX(), e.getY());
+        mouseDraggedHandler(mousePosition);
+        mainView.refresh();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        Position mousePosition = new Position(e.getX(), e.getY());
+        mouseReleasedHandler(mousePosition);
+        mainView.refresh();
+    }
+
+    void mousePressedHandler(Position position) {
+        mouseDownPosition = position;
         if(selectedWord != null) {
             selectedWord.setBackground(Color.LIGHT_GRAY);
         }
@@ -65,7 +84,8 @@ public class MouseInputController extends MouseAdapter {
         if(selectedWord == null) {
             mainView.getSelectionBox().startNewSelection(mouseDownPosition);
         }
-        if(selectedWord != null && selectedWord.contains(selectedWordToDisconnect)) {
+        if(selectedWord != null && selectedWord.contains(selectedWordToDisconnect)
+                && selectedWordToDisconnect.isClicked(mouseDownPosition)) {
             // Disconnect the word
             DisconnectController controller = new DisconnectController(mainView, gameState);
             if(controller.disconnect(selectedWordToDisconnect, selectedWord)) {
@@ -75,16 +95,14 @@ public class MouseInputController extends MouseAdapter {
             }
         }
         selectedWordToDisconnect = null;
-        mainView.refresh();
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
+    void mouseDraggedHandler(Position mousePosition) {
         if(selectedWord != null) {
             MoveWordController moveController = new MoveWordController(mainView, gameState);
-            moveController.moveWord(selectedWord, mouseDownPosition, new Position(e.getX(), e.getY()));
+            moveController.moveWord(selectedWord, mouseDownPosition, mousePosition);
         }
-        mouseDownPosition = new Position(e.getX(), e.getY());
+        mouseDownPosition = mousePosition;
 
         if(selectedWord == null) {
             mainView.getSelectionBox().moveSelection(mouseDownPosition);
@@ -100,13 +118,10 @@ public class MouseInputController extends MouseAdapter {
                 selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
             }
         }
-
-        mainView.refresh();
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        if(selectedWord != null && mainView.isInProtectedArea(new Position(e.getX(), e.getY()))) {
+    void mouseReleasedHandler(Position mousePosition) {
+        if(selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
             Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
             AbstractWordView connectTarget = null;
             for (AbstractWordView word : words) {
@@ -131,6 +146,5 @@ public class MouseInputController extends MouseAdapter {
 
             mainView.getSelectionBox().clearBox();
         }
-        mainView.refresh();
     }
 }

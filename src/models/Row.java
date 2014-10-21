@@ -100,6 +100,15 @@ public class Row extends AbstractWord {
         return rowContents.substring(1);
     }
 
+    @Override
+    public boolean contains(AbstractWord otherWord) {
+        boolean isFound = this.equals(otherWord);
+        for(Word word : words) {
+            isFound = isFound || word.contains(otherWord);
+        }
+        return isFound;
+    }
+
     /**
      * Gets all the words in the row
      * @return Returns a list of words in the row

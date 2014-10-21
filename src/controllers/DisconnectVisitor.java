@@ -4,7 +4,6 @@ import models.*;
 import views.*;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * A realization of the AbstractWordViewVisitor interface for disconnecting two words
@@ -70,15 +69,11 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             reduceRowToWordIfPossible(splitResult);
 
             // Now the row is at the end of rowToDisconnectFrom so we can disconnect it
-            if(rowToDisconnectFrom.disconnect(word)) {
-                // Update the area to reflect the updated words
-                protectedArea.addAbstractWord(word);
-                // If the poem is just one row or just one word, convert it to a row or word
-                reduceRowToWordIfPossible(rowToDisconnectFrom);
-            } else {
-                System.out.println("Error disconnecting " + word.getValue() + " from " + rowToDisconnectFrom.getValue());
-                successful = false;
-            }
+            rowToDisconnectFrom.disconnect(word);
+            // Update the area to reflect the updated words
+            protectedArea.addAbstractWord(word);
+            // If the poem is just one row or just one word, convert it to a row or word
+            reduceRowToWordIfPossible(rowToDisconnectFrom);
         }
 
         // Disconnect the wordView so the view reflects the entity change
@@ -115,15 +110,11 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
             // Now the wordView is at the end of rowViewToDisconnectFrom so we can
             // disconnect the wordView so the view reflects the entity change
-            if(rowViewToDisconnectFrom.removeWordView(wordView)) {
-                // Update the main view object to reflect the change
-                mainView.addProtectedAbstractWordView(wordView);
-                // If the rowView is now just one wordView, convert it to a wordView
-                reduceRowViewToWordViewIfPossible(rowViewToDisconnectFrom);
-            } else {
-                System.out.println("Error disconnecting view for " + word.getValue() + " from view for " + rowToDisconnectFrom.getValue());
-                successful = false;
-            }
+            rowViewToDisconnectFrom.removeWordView(wordView);
+            // Update the main view object to reflect the change
+            mainView.addProtectedAbstractWordView(wordView);
+            // If the rowView is now just one wordView, convert it to a wordView
+            reduceRowViewToWordViewIfPossible(rowViewToDisconnectFrom);
         }
         // Move the row to the appropriate position
         // This also updates the positions of all the words in the row
@@ -192,16 +183,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
                 if(splitResult == null) {
                     // Now the rowView is at the end of poemViewToDisconnectFrom so we can
                     // disconnect the rowView so the view reflects the entity change
-                    if(poemViewToDisconnectFrom.removeRowView(emptyRow)) {
-                        // Do NOT add the empty row to the mainView
-                        // Move the poem so all the words are in the appropriate location
-                        poemViewToDisconnectFrom.moveTo(poemViewToDisconnectFrom.getRowViews().get(0).getPosition());
-                        // If the poemView is now just one rowView, convert it to a rowView
-                        reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
-                    } else {
-                        System.out.println("Error disconnecting view for " + word.getValue() + " from view for " + poemToDisconnectFrom.getValue());
-                        successful = false;
-                    }
+                    poemViewToDisconnectFrom.removeRowView(emptyRow);
+                    // Do NOT add the empty row to the mainView
+                    // Move the poem so all the words are in the appropriate location
+                    poemViewToDisconnectFrom.moveTo(poemViewToDisconnectFrom.getRowViews().get(0).getPosition());
+                    // If the poemView is now just one rowView, convert it to a rowView
+                    reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
                 } else {
                     // Otherwise, we removed the last word from a row in the middle of the poem,
                     // So we have to split the poem
@@ -276,17 +263,13 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             reducePoemToWordIfPossible(splitResult);
 
             // Now the row is at the end of poemToDisconnectFrom so we can disconnect it
-            if(poemToDisconnectFrom.disconnect(row)) {
-                // Update the area to reflect the updated words
-                protectedArea.addAbstractWord(row);
-                // If the row is just one word, convert it to a word
-                reduceRowToWordIfPossible(row);
-                // If the poem is just one row or just one word, convert it to a row or word
-                reducePoemToWordIfPossible(poemToDisconnectFrom);
-            } else {
-                System.out.println("Error disconnecting " + row.getValue() + " from " + poemToDisconnectFrom.getValue());
-                successful = false;
-            }
+            poemToDisconnectFrom.disconnect(row);
+            // Update the area to reflect the updated words
+            protectedArea.addAbstractWord(row);
+            // If the row is just one word, convert it to a word
+            reduceRowToWordIfPossible(row);
+            // If the poem is just one row or just one word, convert it to a row or word
+            reducePoemToWordIfPossible(poemToDisconnectFrom);
         }
 
         // Disconnect the wordView so the view reflects the entity change
@@ -325,17 +308,13 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
             // Now the rowView is at the end of poemViewToDisconnectFrom so we can
             // disconnect the rowView so the view reflects the entity change
-            if(poemViewToDisconnectFrom.removeRowView(rowView)) {
-                // Update the main view object to reflect the change
-                mainView.addProtectedAbstractWordView(rowView);
-                // If the rowView is just one wordView, convert it to a wordView
-                reduceRowViewToWordViewIfPossible(rowView);
-                // If the poemView is now just one rowView, convert it to a rowView
-                reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
-            } else {
-                System.out.println("Error disconnecting view for " + row.getValue() + " from view for " + poemToDisconnectFrom.getValue());
-                successful = false;
-            }
+            poemViewToDisconnectFrom.removeRowView(rowView);
+            // Update the main view object to reflect the change
+            mainView.addProtectedAbstractWordView(rowView);
+            // If the rowView is just one wordView, convert it to a wordView
+            reduceRowViewToWordViewIfPossible(rowView);
+            // If the poemView is now just one rowView, convert it to a rowView
+            reducePoemViewToWordViewIfPossible(poemViewToDisconnectFrom);
         }
         // Move the row to the appropriate position
         // This also updates the positions of all the words in the row

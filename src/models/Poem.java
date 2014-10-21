@@ -141,6 +141,15 @@ public class Poem extends AbstractWord {
         return poemContents.substring(1);
     }
 
+    @Override
+    public boolean contains(AbstractWord otherWord) {
+        boolean isFound = this.equals(otherWord);
+        for(Row row : rows) {
+            isFound = isFound || row.contains(otherWord);
+        }
+        return isFound;
+    }
+
     /**
      * Gets all the rows in the poem
      * @return Returns a list of rows in the poem

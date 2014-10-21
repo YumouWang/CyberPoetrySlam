@@ -25,8 +25,15 @@ public abstract class AbstractWord {
      */
     public abstract String getValue();
 
+    /**
+     * Check whether this abstract word is or contains another given abstract word
+     * @param otherWord The word to check for
+     * @return boolean Returns whether the other word is in this one
+     */
+    public abstract boolean contains(AbstractWord otherWord);
+
 	/**
-	 * @return the id
+	 * @return long The id
 	 */
 	public long getId() {
 		return id;

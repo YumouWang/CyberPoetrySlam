@@ -523,4 +523,16 @@ public class PoemTest {
         assertEquals("Dog Cat", poem.getValue());
         assertEquals("Hawk", result.getValue());
     }
+
+    @Test
+    public void testContains() throws Exception {
+        Word wordOne = new Word("MyWord", WordType.ANY);
+        Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);
+        Row rowOne = new Row(wordOne);
+        Poem poemOne = new Poem(rowOne);
+        assertTrue(poemOne.contains(wordOne));
+        assertTrue(poemOne.contains(rowOne));
+        assertTrue(poemOne.contains(poemOne));
+        assertFalse(poemOne.contains(wordTwo));
+    }
 }

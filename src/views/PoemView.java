@@ -98,7 +98,6 @@ public class PoemView extends AbstractWordView {
         if(index == 0 || index == rowViews.size() - 1) {
             successful = rowViews.remove(otherRow);
         }
-        moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
         return successful;
     }
@@ -148,6 +147,9 @@ public class PoemView extends AbstractWordView {
             if(row.width > widest) {
                 widest = row.width;
             }
+        }
+        if(0 < rowViews.size()) {
+            position = rowViews.get(0).getPosition();
         }
         setSize(widest, totalHeight);
     }

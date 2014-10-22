@@ -97,6 +97,9 @@ public class RowView extends AbstractWordView {
                 tallestHeight = word.height;
             }
         }
+        if(0 < wordViews.size()) {
+            position = wordViews.get(0).getPosition();
+        }
         setSize(totalWidth, tallestHeight);
     }
 
@@ -141,9 +144,6 @@ public class RowView extends AbstractWordView {
         // If the word is first or last, remove it and we're done
         if(index == 0 || index == wordViews.size() - 1) {
             successful = wordViews.remove(otherWord);
-        }
-        if(0 < wordViews.size()) {
-            moveTo(wordViews.get(0).getPosition());
         }
         calculateDimensions();
         return successful;

@@ -72,10 +72,6 @@ public abstract class AbstractWordView extends AbstractView {
     public AbstractWord getWord() {
         return word;
     }
-    
-    public Position getPosition(){
-    	return this.position;
-    }
 
     /**
      * Moves the word to the specified position

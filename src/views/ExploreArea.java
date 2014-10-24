@@ -69,7 +69,7 @@ public class ExploreArea extends JFrame {
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
 		String[] columnNames = { "Word", "WordType" };
-		gameState = new GameState("Hello");
+		gameState = new GameState();
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
 		cellData = new String[unprotectedWords.size()][2];

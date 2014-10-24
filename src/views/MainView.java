@@ -8,10 +8,8 @@ import models.Word;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Random;
@@ -35,7 +33,7 @@ public class MainView extends JFrame {
      * Constructor
      * @param gameState The GameState that this view represents
      */
-	public MainView(GameState gameState, String mode) {
+	public MainView(GameState gameState) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 475);
         contentPane = getContentPane();
@@ -48,57 +46,25 @@ public class MainView extends JFrame {
 
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
 		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
-		//protectedAreaWords = new ArrayList<AbstractWordView>();
-		//unprotectedAreaWords = new ArrayList<AbstractWordView>();
 
-		if(mode.matches("new")){
-			Random random = new Random();
-			Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-					.getAbstractWordCollection();
-			
-			for (AbstractWord word : protectedWords) {
-				int x = random.nextInt(300);
-				int y = random.nextInt(200);
-				WordView view = new WordView((Word)word, new Position(x, y));
-				panel.add(view.label);
-				addProtectedAbstractWordView(view);
-				gameState.getProtectedWordView().add(view);
-			}
-		
-			Collection<AbstractWord> unprotectedWords = gameState
-					.getUnprotectedArea().getAbstractWordCollection();
-			for (AbstractWord word : unprotectedWords) {
-				int x = random.nextInt(300);
-				int y = random.nextInt(100) + 300;
-				WordView view = new WordView((Word)word, new Position(x, y));
-				panel.add(view.label);
-				addUnprotectedAbstractWordView(view);
-				gameState.getUnprotectedWordView().add(view);
-			}
-			System.out.println(gameState.getProtectedWordView().size());
-			System.out.println(gameState.getUnprotectedWordView().size());
+		Random random = new Random();
+		Collection<AbstractWord> protectedWords = gameState.getProtectedArea().getAbstractWordCollection();
+		for (AbstractWord word : protectedWords) {
+			int x = random.nextInt(300);
+			int y = random.nextInt(200);
+			WordView view = new WordView((Word)word, new Position(x, y));
+            panel.add(view.label);
+			addProtectedAbstractWordView(view);
 		}
-		else{
-			Collection<AbstractWordView> protectedWordViews = gameState.getProtectedWordView();
-			Collection<AbstractWordView> unprotectedWordViews = gameState.getUnprotectedWordView();
-			//System.out.println(unprotectedAreaWords.size());
-			//protectedAreaWords = gameState.getProtectedWordView();
-			//System.out.println(protectedAreaWords.size());
-			for (AbstractWordView s : unprotectedWordViews) {
-				WordView view = new WordView((Word)s.getWord(), s.getPosition());
-				//AbstractWordView view = new Abstractpanel.add(view.label);
-				panel.add(view.label);
-				addUnprotectedAbstractWordView(view);
-				gameState.getUnprotectedWordView().add(view);
-			}
-			for (AbstractWordView s : protectedWordViews) {
-				//AbstractWordView view = new AbstractWordView(word.getWord(), word.getPosition());
-				WordView view = new WordView((Word)s.getWord(), s.getPosition());
-				//AbstractWordView view = new Abstractpanel.add(view.label);
-				panel.add(view.label);
-				addProtectedAbstractWordView(view);
-				gameState.getProtectedWordView().add(view);
-			}
+
+		Collection<AbstractWord> unprotectedWords = gameState
+				.getUnprotectedArea().getAbstractWordCollection();
+		for (AbstractWord word : unprotectedWords) {
+			int x = random.nextInt(300);
+			int y = random.nextInt(100) + 300;
+			WordView view = new WordView((Word)word, new Position(x, y));
+            panel.add(view.label);
+			addUnprotectedAbstractWordView(view);
 		}
 		contentPane.add(panel);
 

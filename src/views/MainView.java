@@ -8,6 +8,7 @@ import models.Word;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.util.Collection;
@@ -67,6 +68,12 @@ public class MainView extends JFrame {
 			addUnprotectedAbstractWordView(view);
 		}
 		contentPane.add(panel);
+		
+		JLabel label = new JLabel("");
+		label.setOpaque(true);
+		label.setBounds(0, 271, 400, 2);
+		label.setBackground(Color.black);
+		panel.add(label);
 
 		exploreArea = new ExploreArea();
 		//JPanel explorePanel = new JPanel();
@@ -109,7 +116,7 @@ public class MainView extends JFrame {
 	@Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405, Constants.PROTECTED_AREA_HEIGHT);
+        //g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405, Constants.PROTECTED_AREA_HEIGHT);
     }
 
     /**

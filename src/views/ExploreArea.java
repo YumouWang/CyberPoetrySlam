@@ -14,7 +14,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
-
+/**
+ * Class for explore area
+ *
+ * Created by Yumou on 10/3/2014.
+ */
 public class ExploreArea extends JFrame {
 
 	public JPanel contentPane;

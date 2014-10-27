@@ -8,6 +8,10 @@ import models.GameState;
 import models.Word;
 import views.MainView;
 
+/**
+ * Search Area controller
+ * Created by Yumou on 10/3/2014.
+ */
 public class Search {
 	private static Search search;
 	public Collection<AbstractWord> wordtable;

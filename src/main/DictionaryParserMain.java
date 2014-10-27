@@ -3,7 +3,11 @@ package main;
 import java.util.Set;
 
 import controllers.DictionaryParser;
-
+/**
+ * Main Launcher for DictionaryParser
+ * 
+ * Created by Yumou on 10/3/2014.
+ */
 public class DictionaryParserMain {
 	public static void main(String[] args) {
 		String FileName = "Dictionary/WordDictionary.csv";

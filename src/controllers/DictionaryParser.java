@@ -7,7 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Set;
-
+/**
+ * Dictionary parser for word initialize
+ * 
+ * Created by Yumou on 10/3/2014.
+ */
 public class DictionaryParser {
 	String csvFile;
 	BufferedReader br;

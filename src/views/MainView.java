@@ -112,6 +112,11 @@ public class MainView extends JFrame {
         AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
         return removed.equals(oldWord);
     }
+    
+    public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
+        AbstractWordView removed = unprotectedAreaWords.remove(oldWord.getWord().getId());
+        return removed.equals(oldWord);
+    }
 	
 	@Override
     public void paint(Graphics g) {

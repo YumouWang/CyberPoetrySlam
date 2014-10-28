@@ -24,8 +24,8 @@ public class GameState {
 	 */
 	public GameState() {
 		Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-		// protectedWords.add(new Word("Cat", WordType.NOUN));
-		// protectedWords.add(new Word("Dog", WordType.NOUN));
+		//protectedWords.add(new Word("Cat", WordType.NOUN));
+		//protectedWords.add(new Word("Dog", WordType.NOUN));
 		// protectedWords.add(new Word("Mouse", WordType.NOUN));
 		// protectedWords.add(new Word("Tiger", WordType.NOUN));
 		// protectedWords.add(new Word("Bear", WordType.NOUN));

@@ -5,15 +5,26 @@ import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import models.Word;
+import models.WordType;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import controllers.ButtonController;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Random;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The main view that tracks all other views
@@ -27,8 +38,10 @@ public class MainView extends JFrame {
 	Container contentPane;
 	JPanel panel;
 	public ExploreArea exploreArea;
+	public JButton btnNewButton;
 
     SelectionBox selectionBox;
+    public JButton btnUpdate;
 
     /**
      * Constructor
@@ -57,7 +70,7 @@ public class MainView extends JFrame {
             panel.add(view.label);
 			addProtectedAbstractWordView(view);
 		}
-
+		
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
 		for (AbstractWord word : unprotectedWords) {
@@ -74,6 +87,22 @@ public class MainView extends JFrame {
 		label.setBounds(0, 271, 400, 2);
 		label.setBackground(Color.black);
 		panel.add(label);
+		
+		btnNewButton = new JButton("SAVE");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(0, 0, 67, 23);
+		panel.add(btnNewButton);
+		
+		btnUpdate = new JButton("UPDATE");
+		btnUpdate.setBounds(72, 0, 90, 23);
+		panel.add(btnUpdate);
+
+		ButtonController buttonController = new ButtonController(this);
+		btnNewButton.addActionListener(buttonController);
+		btnUpdate.addActionListener(buttonController);
 
 		exploreArea = new ExploreArea();
 		//JPanel explorePanel = new JPanel();
@@ -172,4 +201,5 @@ public class MainView extends JFrame {
     public boolean isInProtectedArea(Position position) {
         return position.getY() < Constants.PROTECTED_AREA_HEIGHT;
     }
+	
 }

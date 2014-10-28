@@ -19,7 +19,7 @@ public class SearchTest {
     public void test() {
         GameState gameState = new GameState();
         MainView mainView = new MainView(gameState);
-        Search search = new Search(mainView, gameState);
+        SearchController search = new SearchController(mainView, gameState);
         search.updateWordTable();
 
         Collection<AbstractWord> result = search.search("Moon", "");

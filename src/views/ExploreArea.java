@@ -1,6 +1,6 @@
 package views;
 
-import controllers.Search;
+import controllers.SearchController;
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
@@ -101,7 +101,7 @@ public class ExploreArea extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Search search = new Search(mainView, gameState);
+				SearchController search = new SearchController(mainView, gameState);
 				search.updateWordTable();
 				if (comboBox.getSelectedIndex() == -1) {
 					input = "";
@@ -128,7 +128,7 @@ public class ExploreArea extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					Search search = new Search(mainView, gameState);
+					SearchController search = new SearchController(mainView, gameState);
 					search.updateWordTable();
 					if (comboBox.getSelectedIndex() == -1) {
 						input = "";

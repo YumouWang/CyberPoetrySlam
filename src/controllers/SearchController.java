@@ -12,14 +12,14 @@ import views.MainView;
  * Search Area controller
  * Created by Yumou on 10/3/2014.
  */
-public class Search {
-	private static Search search;
+public class SearchController {
+	private static SearchController search;
 	public Collection<AbstractWord> wordtable;
 	MainView mainView;
 	GameState gameState;
 	Collection<AbstractWord> result;
 	
-	public Search(MainView mainView, GameState gameState) {
+	public SearchController(MainView mainView, GameState gameState) {
 		this.mainView = mainView;
 		this.gameState = gameState;
 	}

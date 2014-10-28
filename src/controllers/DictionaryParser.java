@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Set;
 /**
- * Dictionary parser for word initialize
+ * Dictionary parser to get a word list from a CSV file
  * 
  * Created by Yumou on 10/3/2014.
  */

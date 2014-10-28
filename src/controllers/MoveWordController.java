@@ -219,9 +219,11 @@ public class MoveWordController {
 		// remove row from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(rowView.getWord());
 		for (WordView word : words) {
-			// for every word add in this row it to the unprotected abstractWord in GameState
+			// for every word add in this row it to the unprotected abstractWord
+			// in GameState
 			gameState.getUnprotectedArea().addAbstractWord(word.getWord());
-			// for every word view in this row view add it to the unprotected abstractWord view in MainView
+			// for every word view in this row view add it to the unprotected
+			// abstractWord view in MainView
 			mainView.addUnprotectedAbstractWordView(word);
 		}
 
@@ -271,9 +273,11 @@ public class MoveWordController {
 		for (RowView row : rows) {
 			List<WordView> words = row.getWordViews();
 			for (WordView word : words) {
-				// for every word in this poem add it to the unprotected abstractWord in GameState
+				// for every word in this poem add it to the unprotected
+				// abstractWord in GameState
 				gameState.getUnprotectedArea().addAbstractWord(word.getWord());
-				// for every word in this poem view add it to the unprotected abstractWord view in MainView
+				// for every word in this poem view add it to the unprotected
+				// abstractWord view in MainView
 				mainView.addUnprotectedAbstractWordView(word);
 			}
 		}

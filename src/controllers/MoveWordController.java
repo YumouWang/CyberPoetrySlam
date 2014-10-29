@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 
+import common.Constants;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
@@ -50,16 +51,32 @@ public class MoveWordController {
 		if (mainView.isInProtectedArea(originPosition)
 				&& mainView.isInProtectedArea(newPosition)) {
 			// word move from protect area to protect area
+			// if cross the line
+			if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - 20))
+					&& (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
+				System.out.println("cross...");
+				moveWord(selectedWord, newPosition,
+						new Position(newPosition.getX(),
+								Constants.PROTECTED_AREA_HEIGHT));
+			}
 			protectAreaWordMove(selectedWord);
 		} else if (!mainView.isInProtectedArea(originPosition)
 				&& mainView.isInProtectedArea(newPosition)) {
 			// word move from unprotect area to protect area
+			if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - 20))
+					&& (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
+				selectedWord.moveTo(new Position(newPosition.getX(), 230));
+			}
 			System.out.println("you are protecting word:"
 					+ selectedWord.getWord().getValue());
 			protectWord(selectedWord);
 		} else if (mainView.isInProtectedArea(originPosition)
 				&& !mainView.isInProtectedArea(newPosition)) {
-			// word move from protect area to unprotect area;
+			// word move from protect area to unprotect area
+			if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - selectedWord.HEIGHT))
+					&& (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
+				selectedWord.moveTo(new Position(newPosition.getX(), 270));
+			}
 			System.out.println("you are unprotecting word:"
 					+ selectedWord.getWord().getValue());
 			if (selectedWord instanceof WordView) {

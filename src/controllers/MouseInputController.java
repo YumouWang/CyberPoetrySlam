@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 
+import common.Constants;
+
 /**
  * A controller for handling mouse input. Delegates to other controllers.
  * Unlike other controllers, this controller exists for the duration of the program

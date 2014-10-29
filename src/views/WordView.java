@@ -5,6 +5,9 @@ import models.Position;
 import models.Word;
 
 import javax.swing.*;
+
+import common.Constants;
+
 import java.awt.*;
 
 /**
@@ -52,7 +55,7 @@ public class WordView extends AbstractWordView {
      * @return Returns whether the move was successful
      */
     public boolean moveTo(Position toPosition) {
-        super.position = toPosition;
+    	super.position = toPosition;
         updateView();
         return true;
     }

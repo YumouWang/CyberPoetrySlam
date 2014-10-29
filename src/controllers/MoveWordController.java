@@ -75,9 +75,10 @@ public class MoveWordController {
 		} else if (mainView.isInProtectedArea(originPosition)
 				&& !mainView.isInProtectedArea(newPosition)) {
 			// word move from protect area to unprotect area
-			if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - selectedWord.HEIGHT))
+			// if cross the line
+			if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - 20))
 					&& (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
-				selectedWord.moveTo(new Position(newPosition.getX(), 270));
+				selectedWord.moveTo(new Position(newPosition.getX(), Constants.PROTECTED_AREA_HEIGHT));
 			}
 			System.out.println("you are unprotecting word:"
 					+ selectedWord.getWord().getValue());

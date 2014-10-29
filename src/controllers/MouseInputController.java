@@ -143,7 +143,6 @@ public class MouseInputController extends MouseAdapter {
             if(selectedWordToDisconnect != null) {
                 selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
             }
-
             mainView.getSelectionBox().clearBox();
         }
     }

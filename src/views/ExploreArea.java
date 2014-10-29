@@ -31,11 +31,15 @@ public class ExploreArea extends JFrame {
 	private Object[][] cellData;
 	GameState gameState;
 	MainView mainView;
+	SearchController search;
 
 	/**
 	 * Create the frame.
 	 */
-	public ExploreArea() {
+	public ExploreArea(GameState gameState) {
+		this.gameState = gameState;
+		this.search = new SearchController(mainView, gameState);
+		
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 278, 302);
 		contentPane = new JPanel();
@@ -73,7 +77,6 @@ public class ExploreArea extends JFrame {
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
 		String[] columnNames = { "Word", "WordType" };
-		gameState = new GameState();
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
 		cellData = new String[unprotectedWords.size()][2];
@@ -101,7 +104,7 @@ public class ExploreArea extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchController search = new SearchController(mainView, gameState);
+				
 				search.updateWordTable();
 				if (comboBox.getSelectedIndex() == -1) {
 					input = "";
@@ -128,7 +131,6 @@ public class ExploreArea extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					SearchController search = new SearchController(mainView, gameState);
 					search.updateWordTable();
 					if (comboBox.getSelectedIndex() == -1) {
 						input = "";

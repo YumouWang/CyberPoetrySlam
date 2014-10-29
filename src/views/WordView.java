@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class WordView extends AbstractWordView {
 
-    JLabel label;
+    public JLabel label;
 
     /**
      * Constructor

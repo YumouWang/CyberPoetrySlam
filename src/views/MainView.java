@@ -36,12 +36,12 @@ public class MainView extends JFrame {
     Hashtable<Long, AbstractWordView> protectedAreaWords;
     Hashtable<Long, AbstractWordView> unprotectedAreaWords;
 	Container contentPane;
-	JPanel panel;
+	public JPanel panel;
 	public ExploreArea exploreArea;
-	public JButton btnNewButton;
-
     SelectionBox selectionBox;
-    public JButton btnUpdate;
+    public JButton btnRedo;
+    public JButton btnUndo;
+    public JButton btnSave;
 
     /**
      * Constructor
@@ -52,6 +52,8 @@ public class MainView extends JFrame {
 		setBounds(100, 100, 700, 475);
         contentPane = getContentPane();
         contentPane.setLayout(null);
+        
+        setTitle("CyberPoetrySlam");
 
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.BLACK));
@@ -84,27 +86,32 @@ public class MainView extends JFrame {
 		
 		JLabel label = new JLabel("");
 		label.setOpaque(true);
-		label.setBounds(0, 271, 400, 2);
+		label.setBounds(0, 250, 400, 2);
 		label.setBackground(Color.black);
 		panel.add(label);
 		
-		btnNewButton = new JButton("SAVE");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnSave = new JButton("SAVE");
+		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(0, 0, 67, 23);
-		panel.add(btnNewButton);
+		btnSave.setBounds(0, 0, 70, 23);
+		panel.add(btnSave);
 		
-		btnUpdate = new JButton("UPDATE");
-		btnUpdate.setBounds(72, 0, 90, 23);
-		panel.add(btnUpdate);
+		btnRedo = new JButton("REDO");
+		btnRedo.setBounds(72, 0, 70, 23);
+		panel.add(btnRedo);
+		
+		btnUndo = new JButton("UNDO");
+		btnUndo.setBounds(144, 0, 70, 23);
+		panel.add(btnUndo);
 
 		ButtonController buttonController = new ButtonController(this);
-		btnNewButton.addActionListener(buttonController);
-		btnUpdate.addActionListener(buttonController);
+		btnSave.addActionListener(buttonController);
+		btnRedo.addActionListener(buttonController);
+		btnUndo.addActionListener(buttonController);
 
-		exploreArea = new ExploreArea();
+		exploreArea = new ExploreArea(gameState);
 		//JPanel explorePanel = new JPanel();
 		JPanel explorePanel = exploreArea.contentPane;
 		explorePanel.setBorder(new LineBorder(Color.BLACK));

@@ -1,14 +1,13 @@
 package views;
 
-import controllers.AbstractWordViewVisitor;
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+
 import models.Position;
 import models.Word;
-
-import javax.swing.*;
-
-import common.Constants;
-
-import java.awt.*;
+import controllers.AbstractWordViewVisitor;
 
 /**
  * A view for representing words on the screen

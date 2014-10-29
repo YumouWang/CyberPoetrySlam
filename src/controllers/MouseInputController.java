@@ -1,17 +1,15 @@
 package controllers;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Collection;
+
 import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
-
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
-
-import common.Constants;
 
 /**
  * A controller for handling mouse input. Delegates to other controllers.

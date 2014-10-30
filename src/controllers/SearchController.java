@@ -39,12 +39,12 @@ public class SearchController {
 			return wordtable;
 		}
 		for (AbstractWord word1 : wordtable) {
-			String wordValue = word1.getValue();
+			String wordValue = word1.getValue().toLowerCase();
 			String wordType = ((Word)word1).getType().toString();
-			if(word.equalsIgnoreCase(wordValue) && wordtype.equalsIgnoreCase(wordType)) {
+			if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase(wordType)) {
             	result.add(word1);
             }
-            if(word.equalsIgnoreCase(wordValue) && wordtype.equalsIgnoreCase("")) {
+            if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase("")) {
             	result.add(word1);
             }
             if(word.equalsIgnoreCase("") && wordtype.equalsIgnoreCase(wordType)) {

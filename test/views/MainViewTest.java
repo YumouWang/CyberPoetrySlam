@@ -145,7 +145,7 @@ public class MainViewTest {
     public void testIsInProtectedArea() throws Exception {
     	MainView mainView = new MainView(gameState);
     	Position positionOne = new Position(0, 200);
-    	Position positionTwo = new Position(0, 300);
+    	Position positionTwo = new Position(0, 500);
     	assertTrue(mainView.isInProtectedArea(positionOne));
     	assertFalse(mainView.isInProtectedArea(positionTwo));
     }
@@ -157,8 +157,8 @@ public class MainViewTest {
     	WordView wordView = new WordView(word, new Position(0, 0));
     	Position positionOne = new Position(-10, 200);
     	Position positionTwo = new Position(0, -10);
-    	Position positionThree = new Position(400, 100);
-    	Position positionFour = new Position(0, 500);
+    	Position positionThree = new Position(1000, 100);
+    	Position positionFour = new Position(0, 1000);
     	Position positionFive = new Position(10, 100);
     	
     	

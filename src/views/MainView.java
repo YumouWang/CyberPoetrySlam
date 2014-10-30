@@ -26,68 +26,74 @@ import controllers.ButtonController;
 
 /**
  * The main view that tracks all other views
- *
+ * 
  * Created by Yumou on 10/4/2014.
  */
 public class MainView extends JFrame {
 
-    Hashtable<Long, AbstractWordView> protectedAreaWords;
-    Hashtable<Long, AbstractWordView> unprotectedAreaWords;
+	Hashtable<Long, AbstractWordView> protectedAreaWords;
+	Hashtable<Long, AbstractWordView> unprotectedAreaWords;
 	Container contentPane;
 	public JPanel panel;
 	public ExploreArea exploreArea;
-    SelectionBox selectionBox;
-    public JButton btnRedo;
-    public JButton btnUndo;
-    public JButton btnSave;
+	SelectionBox selectionBox;
+	public JButton btnRedo;
+	public JButton btnUndo;
+	public JButton btnSave;
+	public JButton btnSwap;
 
-    /**
-     * Constructor
-     * @param gameState The GameState that this view represents
-     */
+	/**
+	 * Constructor
+	 * 
+	 * @param gameState
+	 *            The GameState that this view represents
+	 */
 	public MainView(GameState gameState) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 475);
-        contentPane = getContentPane();
-        contentPane.setLayout(null);
-        
-        setTitle("CyberPoetrySlam");
+		setBounds(100, 100, 1000, 700);
+		contentPane = getContentPane();
+		contentPane.setLayout(null);
+
+		setTitle("CyberPoetrySlam");
 
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.BLACK));
-		panel.setBounds(0, 0, 400, 437);
+		panel.setBounds(0, 0, Constants.AREA_WIDTH, Constants.AREA_HEIGHT);
 		panel.setLayout(null);
 
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
 		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
 
 		Random random = new Random();
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea().getAbstractWordCollection();
+		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
+				.getAbstractWordCollection();
 		for (AbstractWord word : protectedWords) {
-			int x = random.nextInt(300);
-			int y = random.nextInt(200);
-			WordView view = new WordView((Word)word, new Position(x, y));
-            panel.add(view.label);
+			int x = random.nextInt(Constants.AREA_WIDTH - 100);
+			int y = random.nextInt(Constants.AREA_HEIGHT);
+			WordView view = new WordView((Word) word, new Position(x, y));
+			panel.add(view.label);
 			addProtectedAbstractWordView(view);
 		}
-		
+
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
 		for (AbstractWord word : unprotectedWords) {
-			int x = random.nextInt(300);
-			int y = random.nextInt(100) + 300;
-			WordView view = new WordView((Word)word, new Position(x, y));
-            panel.add(view.label);
+			int x = random.nextInt(Constants.AREA_WIDTH - 100);
+			int y = random.nextInt(Constants.AREA_HEIGHT
+					- Constants.PROTECTED_AREA_HEIGHT - 20)
+					+ Constants.PROTECTED_AREA_HEIGHT;
+			WordView view = new WordView((Word) word, new Position(x, y));
+			panel.add(view.label);
 			addUnprotectedAbstractWordView(view);
 		}
 		contentPane.add(panel);
-		
+
 		JLabel label = new JLabel("");
 		label.setOpaque(true);
-		label.setBounds(0, 250, 400, 2);
+		label.setBounds(0, Constants.PROTECTED_AREA_HEIGHT, 716, 2);
 		label.setBackground(Color.black);
 		panel.add(label);
-		
+
 		btnSave = new JButton("SAVE");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -95,11 +101,11 @@ public class MainView extends JFrame {
 		});
 		btnSave.setBounds(0, 0, 70, 20);
 		panel.add(btnSave);
-		
+
 		btnRedo = new JButton("REDO");
 		btnRedo.setBounds(72, 0, 70, 20);
 		panel.add(btnRedo);
-		
+
 		btnUndo = new JButton("UNDO");
 		btnUndo.setBounds(144, 0, 70, 20);
 		panel.add(btnUndo);
@@ -110,23 +116,29 @@ public class MainView extends JFrame {
 		btnUndo.addActionListener(buttonController);
 
 		exploreArea = new ExploreArea(gameState);
-		//JPanel explorePanel = new JPanel();
+		// JPanel explorePanel = new JPanel();
 		JPanel explorePanel = exploreArea.contentPane;
 		explorePanel.setBorder(new LineBorder(Color.BLACK));
-		explorePanel.setBounds(400, 184, 284, 253);
+		explorePanel.setBounds(716, 310, 284, 353);
 		contentPane.add(explorePanel);
 		explorePanel.setLayout(null);
 
 		JPanel swapPanel = new JPanel();
 		swapPanel.setBorder(new LineBorder(Color.BLACK));
-		swapPanel.setBounds(400, 0, 284, 184);
+		swapPanel.setBounds(716, 0, 284, 310);
 		contentPane.add(swapPanel);
 		swapPanel.setLayout(null);
+		
+		btnSwap = new JButton("SWAP");
+		btnSwap.setBounds(0, 0, 70, 20);
+		swapPanel.add(btnSwap);
+		btnSwap.addActionListener(buttonController);
 
-        // Puts the selectionBox on the pane in front of the words.
-        // The selectionBox can be set to visible or not from the selectionBox class
-        selectionBox = new SelectionBox();
-        setGlassPane(selectionBox);
+		// Puts the selectionBox on the pane in front of the words.
+		// The selectionBox can be set to visible or not from the selectionBox
+		// class
+		selectionBox = new SelectionBox();
+		setGlassPane(selectionBox);
 	}
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
@@ -137,122 +149,130 @@ public class MainView extends JFrame {
 		unprotectedAreaWords.put(newWord.getWord().getId(), newWord);
 	}
 
-    /**
-     * Removes a word view from the protected area
-     * @param oldWord The word to remove
-     * @return Returns whether the word was successfully removed
-     */
-    public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
-        AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
-        return removed.equals(oldWord);
-    }
-    
-    public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
-        AbstractWordView removed = unprotectedAreaWords.remove(oldWord.getWord().getId());
-        return removed.equals(oldWord);
-    }
-	
-	@Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        //g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405, Constants.PROTECTED_AREA_HEIGHT);
-    }
+	/**
+	 * Removes a word view from the protected area
+	 * 
+	 * @param oldWord
+	 *            The word to remove
+	 * @return Returns whether the word was successfully removed
+	 */
+	public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
+		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord()
+				.getId());
+		return removed.equals(oldWord);
+	}
 
-    /**
-     * Refreshes the display
-     */
+	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
+		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
+				.getWord().getId());
+		return removed.equals(oldWord);
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		// g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405,
+		// Constants.PROTECTED_AREA_HEIGHT);
+	}
+
+	/**
+	 * Refreshes the display
+	 */
 	public void refresh() {
-        revalidate();
+		revalidate();
 		repaint();
 	}
 
-    /**
-     * Adds a MouseInputController to the MouseListeners and MouseMotionListeners
-     * @param controller The controller to handle user input
-     */
+	/**
+	 * Adds a MouseInputController to the MouseListeners and
+	 * MouseMotionListeners
+	 * 
+	 * @param controller
+	 *            The controller to handle user input
+	 */
 	public void addMouseInputController(MouseAdapter controller) {
 		panel.addMouseListener(controller);
 		panel.addMouseMotionListener(controller);
 	}
 
-    public AbstractWordView getProtectedAbstractWordById(long id) {
-        return protectedAreaWords.get(id);
-    }
+	public AbstractWordView getProtectedAbstractWordById(long id) {
+		return protectedAreaWords.get(id);
+	}
 
-    public AbstractWordView getUnprotectedAbstractWordById(long id) {
-        return unprotectedAreaWords.get(id);
-    }
+	public AbstractWordView getUnprotectedAbstractWordById(long id) {
+		return unprotectedAreaWords.get(id);
+	}
 
-    /**
-     * Gets all the protected word views in this MainView
-     * @return A collection of word views
-     */
+	/**
+	 * Gets all the protected word views in this MainView
+	 * 
+	 * @return A collection of word views
+	 */
 	public Collection<AbstractWordView> getProtectedAreaWords() {
 		return protectedAreaWords.values();
 	}
 
-    /**
-     * Gets all the unprotected word views in this MainView
-     * @return A collection of word views
-     */
+	/**
+	 * Gets all the unprotected word views in this MainView
+	 * 
+	 * @return A collection of word views
+	 */
 	public Collection<AbstractWordView> getUnprotectedAreaWords() {
 		return unprotectedAreaWords.values();
 	}
 
-    public SelectionBox getSelectionBox() {
-        return selectionBox;
-    }
+	public SelectionBox getSelectionBox() {
+		return selectionBox;
+	}
 
-    /**
-     * check a position is in protected area or in unprotected area
-     * @param position
-     * @return
-     */
-    public boolean isInProtectedArea(Position position) {
-        return position.getY() < Constants.PROTECTED_AREA_HEIGHT;
-    }
-    
-    /**
-     * check a wordView moving to toPosition is out of bounds or not
-     * @param wordView
-     * @param toPosition
-     * @return
-     */
-    public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
-    	// get AbsctracWordView width
-    	int width = 0;
-    	if(wordView instanceof WordView) {
-    		width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
-    	}
-    	else if(wordView instanceof RowView) {
-    		width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
-    	}
-    	// if it is a poemView, get is maximum width
-    	else {
-    		PoemView poemView = (PoemView) wordView;
-    		Collection<RowView> rowViewList = poemView.getRowViews();
-    		for(RowView rowView : rowViewList) {
-    			if(rowView.getWord().getValue().replaceAll(" ", "").length() * 8 > width) {
-    				width = rowView.getWord().getValue().replaceAll(" ", "").length() * 8;
-    			}
-    		}
-    	}
-    	
-    	if(toPosition.getX() < 0) {
-    		return true;
-    	}
-		else if(toPosition.getX() + width > 400) {
-			return true;
+	/**
+	 * check a position is in protected area or in unprotected area
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public boolean isInProtectedArea(Position position) {
+		return position.getY() < Constants.PROTECTED_AREA_HEIGHT;
+	}
+
+	/**
+	 * check a wordView moving to toPosition is out of bounds or not
+	 * 
+	 * @param wordView
+	 * @param toPosition
+	 * @return
+	 */
+	public boolean isMoveOutOfBounds(AbstractWordView wordView,
+			Position toPosition) {
+		// get AbsctracWordView width
+		int width = 0;
+		if (wordView instanceof WordView) {
+			width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
+		} else if (wordView instanceof RowView) {
+			width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
 		}
-		else if(toPosition.getY() < 20) {
-			return true;
+		// if it is a poemView, get is maximum width
+		else {
+			PoemView poemView = (PoemView) wordView;
+			Collection<RowView> rowViewList = poemView.getRowViews();
+			for (RowView rowView : rowViewList) {
+				if (rowView.getWord().getValue().replaceAll(" ", "").length() * 8 > width) {
+					width = rowView.getWord().getValue().replaceAll(" ", "")
+							.length() * 8;
+				}
+			}
 		}
-		else if(toPosition.getY() + 20 > 437) {
+
+		if (toPosition.getX() < 0) {
 			return true;
+		} else if (toPosition.getX() + width > 716) {
+			return true;
+		} else if (toPosition.getY() < 20) {
+			return true;
+		} else if (toPosition.getY() + 20 > 663) {
+			return true;
+		} else {
+			return false;
 		}
-    	else {
-    		return false;
-    	}
-    }
-	
+	}
 }

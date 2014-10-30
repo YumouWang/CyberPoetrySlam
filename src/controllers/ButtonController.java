@@ -51,5 +51,9 @@ public class ButtonController implements ActionListener {
 			// Handle Undo
 			System.out.println("Undo...");
 		}
+		if (clickedButton.equals(mainView.btnSwap)) {
+			// Handle Swap
+			System.out.println("Swap...");
+		}
 	}
 }

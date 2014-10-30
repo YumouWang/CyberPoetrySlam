@@ -22,12 +22,12 @@ public class SearchTest {
         SearchController search = new SearchController(mainView, gameState);
         search.updateWordTable();
 
-        Collection<AbstractWord> result = search.search("Moon", "");
+        Collection<AbstractWord> result = search.search("Moonlight", "");
         assertNotNull(search.wordtable);
         assertNotNull(result);
         String word = result.iterator().next().getValue().toString();
         String wordType = ((Word)result.iterator().next()).getType().toString();
-        assertEquals(word, "Moon");
+        assertEquals(word, "Moonlight");
         assertEquals(wordType, "NOUN");
 
         Collection<AbstractWord> result1 = search.search("SUN", "NOUN");

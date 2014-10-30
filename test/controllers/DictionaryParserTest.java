@@ -28,7 +28,6 @@ public class DictionaryParserTest {
 		assertEquals(hashTable.get("Lake"),"noun");
 		assertEquals(hashTable.get("River"),"noun");
 		assertEquals(hashTable.get("Sun"),"noun");
-		assertEquals(hashTable.get("Moon"),"noun");
 		assertEquals(hashTable.get("Sea"),"noun");
 	}
 

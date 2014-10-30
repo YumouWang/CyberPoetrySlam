@@ -53,7 +53,7 @@ public class MoveWordControllerTest {
 		wordViewOne = new WordView(wordOne, new Position(10, 10));
 		wordViewTwo = new WordView(wordTwo, new Position(50, 50));
 		wordViewThree = new WordView(wordThree, new Position(50, 70));
-		wordViewFour = new WordView(wordFour, new Position(10, 300));
+		wordViewFour = new WordView(wordFour, new Position(10, 500));
 		// Add them to the MainView and GameState
 		mainView.addProtectedAbstractWordView(wordViewOne);
 		gameState.getProtectedArea().addAbstractWord(wordOne);
@@ -66,8 +66,8 @@ public class MoveWordControllerTest {
 		// Create three position, one is in protected area, one is in
 		// unprotected area, the crossLinePosition is the position near the line
 		protectedAreaPosition = new Position(10, 20);
-		unprotectedAreaPosition = new Position(30, 300);
-		crossLinePosition = new Position(30, 240);
+		unprotectedAreaPosition = new Position(30, 500);
+		crossLinePosition = new Position(30, Constants.PROTECTED_AREA_HEIGHT - 10);
 		// Create row
 		rowOne = new Row(wordOne);
 		rowOne.connect(wordTwo);
@@ -327,6 +327,6 @@ public class MoveWordControllerTest {
 				.contains(wordOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(wordViewOne));
 		assertEquals(wordViewOne.getPosition().getX(), crossLinePosition.getX());
-		assertEquals(wordViewOne.getPosition().getY(), 230);
+		assertEquals(wordViewOne.getPosition().getY(), Constants.PROTECTED_AREA_HEIGHT - 20);
 	}
 }

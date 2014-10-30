@@ -4,19 +4,22 @@ import controllers.SearchController;
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
+import models.WordType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
+
 /**
  * Class for explore area
- *
+ * 
  * Created by Yumou on 10/3/2014.
  */
 public class ExploreArea extends JFrame {
@@ -39,7 +42,7 @@ public class ExploreArea extends JFrame {
 	public ExploreArea(GameState gameState) {
 		this.gameState = gameState;
 		this.search = new SearchController(mainView, gameState);
-		
+
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 278, 302);
 		contentPane = new JPanel();
@@ -72,7 +75,12 @@ public class ExploreArea extends JFrame {
 		comboBox.setBounds(20, 44, 232, 21);
 		contentPane.add(comboBox);
 		comboBox.setModel(new javax.swing.DefaultComboBoxModel<String>(
-				new String[] { null, "noun", "adverb", "adjective", "verb" }));
+				new String[] { null, WordType.ADJECTIVE.name(),
+						WordType.ADVERB.name(), WordType.CONJUNCTION.name(),
+						WordType.INTERJECTION.name(), WordType.NOUN.name(),
+						WordType.POSTFIX.name(), WordType.PREFIX.name(),
+						WordType.PREPOSITION.name(), WordType.PRONOUN.name(),
+						WordType.VERB.name() }));
 
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
@@ -97,14 +105,14 @@ public class ExploreArea extends JFrame {
 		table.setEnabled(false);
 
 		jScrollPane = new JScrollPane();
-		jScrollPane.setBounds(20, 75, 232, 168);
+		jScrollPane.setBounds(20, 75, 232, 268);
 		contentPane.add(jScrollPane);
 		jScrollPane.setViewportView(table);
 
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				search.updateWordTable();
 				if (comboBox.getSelectedIndex() == -1) {
 					input = "";

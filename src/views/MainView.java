@@ -21,9 +21,7 @@ import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import models.Word;
-
 import common.Constants;
-
 import controllers.ButtonController;
 
 /**
@@ -95,15 +93,15 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnSave.setBounds(0, 0, 70, 23);
+		btnSave.setBounds(0, 0, 70, 20);
 		panel.add(btnSave);
 		
 		btnRedo = new JButton("REDO");
-		btnRedo.setBounds(72, 0, 70, 23);
+		btnRedo.setBounds(72, 0, 70, 20);
 		panel.add(btnRedo);
 		
 		btnUndo = new JButton("UNDO");
-		btnUndo.setBounds(144, 0, 70, 23);
+		btnUndo.setBounds(144, 0, 70, 20);
 		panel.add(btnUndo);
 
 		ButtonController buttonController = new ButtonController(this);
@@ -205,8 +203,56 @@ public class MainView extends JFrame {
         return selectionBox;
     }
 
+    /**
+     * check a position is in protected area or in unprotected area
+     * @param position
+     * @return
+     */
     public boolean isInProtectedArea(Position position) {
         return position.getY() < Constants.PROTECTED_AREA_HEIGHT;
+    }
+    
+    /**
+     * check a wordView moving to toPosition is out of bounds or not
+     * @param wordView
+     * @param toPosition
+     * @return
+     */
+    public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
+    	// get AbsctracWordView width
+    	int width = 0;
+    	if(wordView instanceof WordView) {
+    		width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
+    	}
+    	else if(wordView instanceof RowView) {
+    		width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
+    	}
+    	// if it is a poemView, get is maximum width
+    	else {
+    		PoemView poemView = (PoemView) wordView;
+    		Collection<RowView> rowViewList = poemView.getRowViews();
+    		for(RowView rowView : rowViewList) {
+    			if(rowView.getWord().getValue().replaceAll(" ", "").length() * 8 > width) {
+    				width = rowView.getWord().getValue().replaceAll(" ", "").length() * 8;
+    			}
+    		}
+    	}
+    	
+    	if(toPosition.getX() < 0) {
+    		return true;
+    	}
+		else if(toPosition.getX() + width > 400) {
+			return true;
+		}
+		else if(toPosition.getY() < 20) {
+			return true;
+		}
+		else if(toPosition.getY() + 20 > 437) {
+			return true;
+		}
+    	else {
+    		return false;
+    	}
     }
 	
 }

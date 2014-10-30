@@ -2,6 +2,7 @@ package views;
 
 import controllers.MouseInputController;
 import models.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,7 +68,9 @@ public class MainViewTest {
     @Test
     public void testRemoveAbstractWordView() throws Exception {
         Word wordOne = new Word("TestWord", WordType.ADJECTIVE);
+        Word wordTwo = new Word("TestWord", WordType.ADJECTIVE);
         WordView wordOneView = new WordView(wordOne, new Position(0, 0));
+        WordView wordTwoView = new WordView(wordTwo, new Position(0, 300));
         MainView mainView = new MainView(gameState);
         assertEquals(0, mainView.getProtectedAreaWords().size());
         mainView.addProtectedAbstractWordView(wordOneView);
@@ -76,6 +79,15 @@ public class MainViewTest {
         mainView.removeProtectedAbstractWordView(wordOneView);
         assertEquals(0, mainView.getProtectedAreaWords().size());
         assertFalse(mainView.getProtectedAreaWords().contains(wordOneView));
+        
+        assertEquals(0, mainView.getUnprotectedAreaWords().size());
+        mainView.addUnprotectedAbstractWordView(wordTwoView);
+        assertEquals(1, mainView.getUnprotectedAreaWords().size());
+        assertTrue(mainView.getUnprotectedAreaWords().contains(wordTwoView));
+        mainView.removeUnprotectedAbstractWordView(wordTwoView);
+        assertEquals(0, mainView.getUnprotectedAreaWords().size());
+        assertFalse(mainView.getUnprotectedAreaWords().contains(wordOneView));
+
     }
 
     @Test
@@ -127,5 +139,31 @@ public class MainViewTest {
         Graphics2D g2 = bi.createGraphics();
         mainView.paint(g2);
         g2.dispose();
+    }
+    
+    @Test
+    public void testIsInProtectedArea() throws Exception {
+    	MainView mainView = new MainView(gameState);
+    	Position positionOne = new Position(0, 200);
+    	Position positionTwo = new Position(0, 300);
+    	assertTrue(mainView.isInProtectedArea(positionOne));
+    	assertFalse(mainView.isInProtectedArea(positionTwo));
+    }
+    
+    @Test
+    public void testIsMoveOutOfBounds() throws Exception {
+    	MainView mainView = new MainView(gameState);
+    	Word word = new Word("wordOne", WordType.NOUN);
+    	WordView wordView = new WordView(word, new Position(0, 0));
+    	Position positionOne = new Position(-10, 200);
+    	Position positionTwo = new Position(0, -10);
+    	Position positionThree = new Position(400, 100);
+    	Position positionFour = new Position(0, 500);
+    	Position positionFive = new Position(10, 100);
+    	assertTrue(mainView.isMoveOutOfBounds(wordView, positionOne));
+    	assertTrue(mainView.isMoveOutOfBounds(wordView, positionTwo));
+    	assertTrue(mainView.isMoveOutOfBounds(wordView, positionThree));
+    	assertTrue(mainView.isMoveOutOfBounds(wordView, positionFour));
+    	assertFalse(mainView.isMoveOutOfBounds(wordView, positionFive));	
     }
 }

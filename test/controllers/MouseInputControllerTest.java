@@ -70,16 +70,16 @@ public class MouseInputControllerTest {
 
     @Test
     public void testMouseDraggedSomethingSelected() throws Exception {
-        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 15, 15, 1, false);
+        MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 15, 30, 1, false);
         controller.selectedWord = wordViewOne;
         controller.mouseDownPosition = new Position(11, 11);
 
         controller.mouseDragged(event);
         assertEquals(wordViewOne, controller.selectedWord);
         assertEquals(15, controller.mouseDownPosition.getX());
-        assertEquals(15, controller.mouseDownPosition.getY());
+        assertEquals(30, controller.mouseDownPosition.getY());
         assertEquals(14, wordViewOne.getPosition().getX());
-        assertEquals(14, wordViewOne.getPosition().getY());
+        assertEquals(29, wordViewOne.getPosition().getY());
     }
 
     @Test

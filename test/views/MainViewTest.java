@@ -160,10 +160,12 @@ public class MainViewTest {
     	Position positionThree = new Position(400, 100);
     	Position positionFour = new Position(0, 500);
     	Position positionFive = new Position(10, 100);
+    	
+    	
     	assertTrue(mainView.isMoveOutOfBounds(wordView, positionOne));
     	assertTrue(mainView.isMoveOutOfBounds(wordView, positionTwo));
     	assertTrue(mainView.isMoveOutOfBounds(wordView, positionThree));
     	assertTrue(mainView.isMoveOutOfBounds(wordView, positionFour));
-    	assertFalse(mainView.isMoveOutOfBounds(wordView, positionFive));	
+    	assertFalse(mainView.isMoveOutOfBounds(wordView, positionFive));
     }
 }

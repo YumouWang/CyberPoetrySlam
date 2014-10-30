@@ -48,12 +48,11 @@ public class MoveWordController {
 				+ positionDiff.getY());
 		selectedWord.moveTo(newPosition);
 		
-		if(mainView.isMoveOutOfBounds(selectedWord, newPosition)) {
+		if (mainView.isMoveOutOfBounds(selectedWord, newPosition)) {
 			selectedWord.moveTo(originPosition);
-    	}
-    	else {
-    		selectedWord.moveTo(newPosition);
-    	}
+		} else {
+			selectedWord.moveTo(newPosition);
+		}
 
 		if (mainView.isInProtectedArea(originPosition)
 				&& mainView.isInProtectedArea(newPosition)) {

@@ -23,6 +23,7 @@ public class MouseInputController extends MouseAdapter {
     AbstractWordView selectedWord;
     AbstractWordView selectedWordToDisconnect;
     Position mouseDownPosition;
+    Position selectedWordPositionRelativeToMouse;
     MainView mainView;
     GameState gameState;
 
@@ -81,9 +82,6 @@ public class MouseInputController extends MouseAdapter {
             }
         }
 
-        if(selectedWord == null) {
-            mainView.getSelectionBox().startNewSelection(mouseDownPosition);
-        }
         if(selectedWord != null && selectedWord.contains(selectedWordToDisconnect)
                 && selectedWordToDisconnect.isClicked(mouseDownPosition)) {
             // Disconnect the word
@@ -94,13 +92,28 @@ public class MouseInputController extends MouseAdapter {
                 selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
             }
         }
+
+        if(selectedWord == null) {
+            mainView.getSelectionBox().startNewSelection(mouseDownPosition);
+            selectedWordPositionRelativeToMouse = null;
+        } else {
+            // Determine the location of the word relative to the mouse when the word was selected
+            selectedWordPositionRelativeToMouse = new Position(
+                    selectedWord.getPosition().getX() - position.getX(),
+                    selectedWord.getPosition().getY() - position.getY()
+            );
+        }
+
         selectedWordToDisconnect = null;
     }
 
     void mouseDraggedHandler(Position mousePosition) {
         if(selectedWord != null) {
             MoveWordController moveController = new MoveWordController(mainView, gameState);
-            moveController.moveWord(selectedWord, mouseDownPosition, mousePosition);
+//            moveController.moveWord(selectedWord, mouseDownPosition, mousePosition);
+            moveController.moveWord(selectedWord, selectedWord.getPosition(),
+                    new Position(mousePosition.getX() + selectedWordPositionRelativeToMouse.getX(),
+                            mousePosition.getY() + selectedWordPositionRelativeToMouse.getY()));
         }
         mouseDownPosition = mousePosition;
 

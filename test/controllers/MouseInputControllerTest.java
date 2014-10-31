@@ -73,6 +73,7 @@ public class MouseInputControllerTest {
         MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 15, 30, 1, false);
         controller.selectedWord = wordViewOne;
         controller.mouseDownPosition = new Position(11, 11);
+        controller.selectedWordPositionRelativeToMouse = new Position(-1, -1);
 
         controller.mouseDragged(event);
         assertEquals(wordViewOne, controller.selectedWord);
@@ -158,8 +159,8 @@ public class MouseInputControllerTest {
     public void testMouseReleasedHandlerWordSelected() throws Exception {
         controller.selectedWord = wordViewOne;
         controller.mousePressedHandler(new Position(wordViewOne.getPosition().getX() + 2, wordViewOne.getPosition().getY() + 2));
-        controller.mouseDraggedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 2));
-        controller.mouseReleasedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 2));
+        controller.mouseDraggedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 4));
+        controller.mouseReleasedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 4));
         assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
         assertFalse(mainView.getProtectedAreaWords().contains(wordViewTwo));
 

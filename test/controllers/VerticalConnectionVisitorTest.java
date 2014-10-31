@@ -99,6 +99,7 @@ public class VerticalConnectionVisitorTest {
 
     @Test
     public void testVisitWordWord() throws Exception {
+        wordViewOne.moveTo(new Position(50, 50));
         assertTrue(verticalConnectionVisitor.visit(wordViewOne, wordViewTwo));
         assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
         assertFalse(protectedArea.getAbstractWordCollection().contains(wordTwo));

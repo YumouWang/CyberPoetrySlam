@@ -17,6 +17,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     MainView mainView;
     Area protectedArea;
+    GameState gameState;
 
     /**
      * Constructor
@@ -26,10 +27,19 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
     public VerticalConnectionVisitor(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.protectedArea = gameState.getProtectedArea();
+        this.gameState = gameState;
     }
 
     @Override
     public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(wordViewOne.getPosition().getX(), wordViewOne.getPosition().getY() + wordViewOne.getHeight() + 1);
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
+        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+            return false;
+        }
+
         Word wordOne = wordViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 

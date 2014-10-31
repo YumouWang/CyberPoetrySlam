@@ -165,7 +165,7 @@ public class MainView extends JFrame {
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
 		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
 				.getWord().getId());
-		return removed.equals(oldWord);
+		return oldWord.equals(removed);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package views;
 
 import controllers.DisconnectVisitor;
 import models.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,11 +18,13 @@ public class PoemViewTest {
     WordView wordViewTwo;
     GameState gameState;
     MainView mainView;
+    unprotectedMemento un = null;
+	protectedMemento p = null;
 
     @Before
     public void setUp() throws Exception {
-        gameState = new GameState();
-        mainView = new MainView(gameState);
+        gameState = new GameState(un,p);
+		mainView = new MainView(gameState, un, p);
 
         Word wordOne = new Word("WordOne", WordType.VERB);
         Word wordTwo = new Word("WordTwo", WordType.ADVERB);

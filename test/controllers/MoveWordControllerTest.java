@@ -7,12 +7,13 @@ import models.Position;
 import models.Row;
 import models.Word;
 import models.WordType;
+import models.protectedMemento;
+import models.unprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import common.Constants;
-
 import views.MainView;
 import views.PoemView;
 import views.RowView;
@@ -38,13 +39,15 @@ public class MoveWordControllerTest {
 	Position protectedAreaPosition;
 	Position unprotectedAreaPosition;
 	Position crossLinePosition;
+	unprotectedMemento un = null;
+	protectedMemento p = null;
 
 	@Before
 	public void initialize() {
-		gameState = new GameState();
+		gameState = new GameState(un, p);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState);
+		mainView = new MainView(gameState, un, p);
 		// Create all the word
 		wordOne = new Word("Word1", WordType.NOUN);
 		wordTwo = new Word("Word2", WordType.NOUN);
@@ -67,7 +70,8 @@ public class MoveWordControllerTest {
 		// unprotected area, the crossLinePosition is the position near the line
 		protectedAreaPosition = new Position(10, 20);
 		unprotectedAreaPosition = new Position(30, 500);
-		crossLinePosition = new Position(30, Constants.PROTECTED_AREA_HEIGHT - 10);
+		crossLinePosition = new Position(30,
+				Constants.PROTECTED_AREA_HEIGHT - 10);
 		// Create row
 		rowOne = new Row(wordOne);
 		rowOne.connect(wordTwo);
@@ -327,6 +331,7 @@ public class MoveWordControllerTest {
 				.contains(wordOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(wordViewOne));
 		assertEquals(wordViewOne.getPosition().getX(), crossLinePosition.getX());
-		assertEquals(wordViewOne.getPosition().getY(), Constants.PROTECTED_AREA_HEIGHT - 20);
+		assertEquals(wordViewOne.getPosition().getY(),
+				Constants.PROTECTED_AREA_HEIGHT - 20);
 	}
 }

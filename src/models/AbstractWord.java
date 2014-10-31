@@ -1,36 +1,44 @@
 package models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * The AbstractWord model class. Acts as a base class for Words, Rows, and Poems.
- * All other objects refer to a collection of AbstractWords and don't distinguish
- * between Words, Rows, and Poems.
+ * The AbstractWord model class. Acts as a base class for Words, Rows, and
+ * Poems. All other objects refer to a collection of AbstractWords and don't
+ * distinguish between Words, Rows, and Poems.
  */
-public abstract class AbstractWord {
+public abstract class AbstractWord implements Serializable {
 
-    long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3483957752005294209L;
+	long id;
 
-    /**
-     * Constructor
-     */
-    public AbstractWord() {
-        this.id = UUID.randomUUID().getMostSignificantBits();
-    }
+	/**
+	 * Constructor
+	 */
+	public AbstractWord() {
+		this.id = UUID.randomUUID().getMostSignificantBits();
+	}
 
-    /**
-     * getValue returns the value of the AbstractWord as a String
-     *
-     * @return String The value of the AbstractWord
-     */
-    public abstract String getValue();
+	/**
+	 * getValue returns the value of the AbstractWord as a String
+	 *
+	 * @return String The value of the AbstractWord
+	 */
+	public abstract String getValue();
 
-    /**
-     * Check whether this abstract word is or contains another given abstract word
-     * @param otherWord The word to check for
-     * @return boolean Returns whether the other word is in this one
-     */
-    public abstract boolean contains(AbstractWord otherWord);
+	/**
+	 * Check whether this abstract word is or contains another given abstract
+	 * word
+	 * 
+	 * @param otherWord
+	 *            The word to check for
+	 * @return boolean Returns whether the other word is in this one
+	 */
+	public abstract boolean contains(AbstractWord otherWord);
 
 	/**
 	 * @return long The id

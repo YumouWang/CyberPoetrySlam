@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -22,8 +23,12 @@ import java.util.Collection;
  * 
  * Created by Yumou on 10/3/2014.
  */
-public class ExploreArea extends JFrame {
+public class ExploreArea extends JFrame implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3913212348104753802L;
 	public JPanel contentPane;
 	private JTextField textField;
 	private JComboBox<String> comboBox;

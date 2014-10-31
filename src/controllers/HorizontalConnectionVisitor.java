@@ -1,10 +1,7 @@
 package controllers;
 
 import models.*;
-import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
+import views.*;
 
 import java.awt.*;
 
@@ -32,11 +29,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
-        // Check if the connection will cause an overlap
-        Position targetPosition = new Position(wordViewOne.getPosition().getX() + wordViewOne.getWidth() + 1, wordViewOne.getPosition().getY());
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
-        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+        if(connectionCausesOverlap(wordViewOne, wordViewTwo)) {
             return false;
         }
 
@@ -63,11 +56,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, RowView rowViewTwo) {
-        // Check if the connection will cause an overlap
-        Position targetPosition = new Position(wordViewOne.getPosition().getX() + wordViewOne.getWidth() + 1, wordViewOne.getPosition().getY());
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(rowViewTwo, rowViewTwo.getPosition(), targetPosition);
-        if(!rowViewTwo.getPosition().equals(targetPosition)) {
+        if(connectionCausesOverlap(wordViewOne, rowViewTwo)) {
             return false;
         }
 
@@ -100,11 +89,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, WordView wordViewTwo) {
-        // Check if the connection will cause an overlap
-        Position targetPosition = new Position(rowViewOne.getPosition().getX() + rowViewOne.getWidth() + 1, rowViewOne.getPosition().getY());
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
-        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+        if(connectionCausesOverlap(rowViewOne, wordViewTwo)) {
             return false;
         }
 
@@ -131,11 +116,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, RowView rowViewTwo) {
-        // Check if the connection will cause an overlap
-        Position targetPosition = new Position(rowViewOne.getPosition().getX() + rowViewOne.getWidth() + 1, rowViewOne.getPosition().getY());
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(rowViewTwo, rowViewTwo.getPosition(), targetPosition);
-        if(!rowViewTwo.getPosition().equals(targetPosition)) {
+        if(connectionCausesOverlap(rowViewOne, rowViewTwo)) {
             return false;
         }
 
@@ -182,5 +163,20 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     public boolean visit(PoemView poemViewOne, PoemView poemViewTwo) {
         // Cannot horizontally connect two poems, so do nothing
         return false;
+    }
+
+    /**
+     * Attempts to move the second word to right after the first word (where it will be after connection)
+     * and returns whether the connection would cause an overlap
+     * @param one The word on top of the connection
+     * @param two The word below the connection
+     * @return Returns whether the connection would cause an overlap
+     */
+    protected boolean connectionCausesOverlap(AbstractWordView one, AbstractWordView two) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(one.getPosition().getX() + one.getWidth() + 1, one.getPosition().getY());
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(two, two.getPosition(), targetPosition);
+        return !two.getPosition().equals(targetPosition);
     }
 }

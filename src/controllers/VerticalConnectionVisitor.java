@@ -1,10 +1,7 @@
 package controllers;
 
 import models.*;
-import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
+import views.*;
 
 import java.awt.*;
 
@@ -32,11 +29,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
-        // Check if the connection will cause an overlap
-        Position targetPosition = new Position(wordViewOne.getPosition().getX(), wordViewOne.getPosition().getY() + wordViewOne.getHeight() + 1);
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
-        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+        if(connectionCausesOverlap(wordViewOne, wordViewTwo)) {
             return false;
         }
 
@@ -73,6 +66,10 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, RowView rowViewTwo) {
+        if(connectionCausesOverlap(wordViewOne, rowViewTwo)) {
+            return false;
+        }
+
         Word wordOne = wordViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -104,6 +101,10 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, PoemView poemViewTwo) {
+        if(connectionCausesOverlap(wordViewOne, poemViewTwo)) {
+            return false;
+        }
+
         Word wordOne = wordViewOne.getWord();
         Poem poemTwo = poemViewTwo.getWord();
 
@@ -132,6 +133,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, WordView wordViewTwo) {
+        if(connectionCausesOverlap(rowViewOne, wordViewTwo)) {
+            return false;
+        }
         Row rowOne = rowViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -164,6 +168,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, RowView rowViewTwo) {
+        if(connectionCausesOverlap(rowViewOne, rowViewTwo)) {
+            return false;
+        }
         Row rowOne = rowViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -194,6 +201,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, PoemView poemViewTwo) {
+        if(connectionCausesOverlap(rowViewOne, poemViewTwo)) {
+            return false;
+        }
         Row rowOne = rowViewOne.getWord();
         Poem poemTwo = poemViewTwo.getWord();
 
@@ -217,6 +227,10 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewOne, WordView wordViewTwo) {
+        if(connectionCausesOverlap(poemViewOne, wordViewTwo)) {
+            return false;
+        }
+
         Poem poemOne = poemViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -245,6 +259,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewOne, RowView rowViewTwo) {
+        if(connectionCausesOverlap(poemViewOne, rowViewTwo)) {
+            return false;
+        }
         Poem poemOne = poemViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -268,6 +285,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewOne, PoemView poemViewTwo) {
+        if(connectionCausesOverlap(poemViewOne, poemViewTwo)) {
+            return false;
+        }
         Poem poemOne = poemViewOne.getWord();
         Poem poemTwo = poemViewTwo.getWord();
 
@@ -287,5 +307,20 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // This also updates the positions of all the words in the poem
         poemViewOne.moveTo(poemViewOne.getPosition());
         return true;
+    }
+
+    /**
+     * Attempts to move the second word to right under the first word (where it will be after connection)
+     * and returns whether the connection would cause an overlap
+     * @param one The word on top of the connection
+     * @param two The word below the connection
+     * @return Returns whether the connection would cause an overlap
+     */
+    protected boolean connectionCausesOverlap(AbstractWordView one, AbstractWordView two) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(one.getPosition().getX(), one.getPosition().getY() + one.getHeight() + 1);
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(two, two.getPosition(), targetPosition);
+        return !two.getPosition().equals(targetPosition);
     }
 }

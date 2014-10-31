@@ -33,6 +33,8 @@ public class VerticalConnectionVisitorTest {
 	public void setUp() throws Exception {
 		gameState = new GameState(un, p);
 		protectedArea = gameState.getProtectedArea();
+        protectedArea.getAbstractWordCollection().clear();
+        gameState.getUnprotectedArea().getAbstractWordCollection().clear();
 		mainView = new MainView(gameState, un, p);
 		// Create all the words separately
 		wordOne = new Word("Word", WordType.ADVERB);
@@ -81,6 +83,10 @@ public class VerticalConnectionVisitorTest {
 		// Create rowViews
 		rowViewOne = new RowView(rowOne, pos, mainView);
 		rowViewTwo = new RowView(rowTwo, pos, mainView);
+        mainView.removeProtectedAbstractWordView(wordViewThree);
+        mainView.removeProtectedAbstractWordView(wordViewFour);
+        mainView.removeProtectedAbstractWordView(wordViewFive);
+        mainView.removeProtectedAbstractWordView(wordViewSix);
 		mainView.addProtectedAbstractWordView(rowViewOne);
 		mainView.addProtectedAbstractWordView(rowViewTwo);
 		// Create Poems
@@ -95,10 +101,13 @@ public class VerticalConnectionVisitorTest {
 		// Create PoemViews
 		poemViewOne = new PoemView(poemOne, pos, mainView);
 		poemViewTwo = new PoemView(poemTwo, pos, mainView);
+        mainView.removeProtectedAbstractWordView(wordViewSeven);
+        mainView.removeProtectedAbstractWordView(wordViewEight);
+        mainView.removeProtectedAbstractWordView(wordViewNine);
+        mainView.removeProtectedAbstractWordView(wordViewTen);
 		mainView.addProtectedAbstractWordView(poemViewOne);
 		mainView.addProtectedAbstractWordView(poemViewTwo);
-		verticalConnectionVisitor = new VerticalConnectionVisitor(mainView,
-				gameState);
+		verticalConnectionVisitor = new VerticalConnectionVisitor(mainView,gameState);
 	}
 
 	@Test
@@ -129,6 +138,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitWordRow() throws Exception {
+        wordViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(wordViewOne, rowViewTwo));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowTwo));
@@ -154,6 +164,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitWordPoem() throws Exception {
+        wordViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(wordViewOne, poemViewOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(poemOne));
@@ -165,6 +176,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowWord() throws Exception {
+        rowViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(rowViewOne, wordViewOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
@@ -190,6 +202,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowRow() throws Exception {
+        rowViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(rowViewOne, rowViewTwo));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowTwo));
@@ -215,6 +228,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowPoem() throws Exception {
+        rowViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(rowViewOne, poemViewOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(poemOne));
@@ -226,6 +240,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitPoemWord() throws Exception {
+        poemViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(poemViewOne, wordViewOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(poemOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
@@ -237,6 +252,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitPoemRow() throws Exception {
+        poemViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(poemViewOne, rowViewOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(poemOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowOne));
@@ -248,6 +264,7 @@ public class VerticalConnectionVisitorTest {
 
 	@Test
 	public void testVisitPoemPoem() throws Exception {
+        poemViewOne.moveTo(new Position(10, 100));
 		assertTrue(verticalConnectionVisitor.visit(poemViewOne, poemViewTwo));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(poemOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(poemTwo));

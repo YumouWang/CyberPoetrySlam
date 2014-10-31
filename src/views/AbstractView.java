@@ -9,7 +9,7 @@ import javax.swing.*;
  *
  * Created by Nathan on 10/3/2014.
  */
-public abstract class AbstractView extends JComponent {
+public abstract class AbstractView {
     Position position;
     int width;
     int height;
@@ -78,4 +78,8 @@ public abstract class AbstractView extends JComponent {
     public Position getPosition() {
         return position;
     }
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
 }

@@ -47,7 +47,16 @@ public class MoveWordController {
 				+ positionDiff.getX(), selectedWord.getPosition().getY()
 				+ positionDiff.getY());
 
-		if (mainView.isMoveOutOfBounds(selectedWord, newPosition)) {
+        selectedWord.moveTo(newPosition);
+
+        boolean isOverlappingOtherWord = false;
+        for(AbstractWordView otherView : mainView.getProtectedAreaWords()) {
+            if(!selectedWord.equals(otherView) && selectedWord.isOverlapping(otherView)) {
+                isOverlappingOtherWord = true;
+            }
+        }
+
+		if (mainView.isMoveOutOfBounds(selectedWord, newPosition) || isOverlappingOtherWord) {
 			selectedWord.moveTo(originPosition);
 		} else {
 			selectedWord.moveTo(newPosition);

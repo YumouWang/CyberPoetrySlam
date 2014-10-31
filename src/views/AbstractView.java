@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * Created by Nathan on 10/3/2014.
  */
-public abstract class AbstractView extends JComponent implements Serializable {
+public abstract class AbstractView implements Serializable {
 	/**
 	 * 
 	 */

@@ -103,6 +103,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitWordWord() throws Exception {
+        wordViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(wordViewOne, wordViewTwo));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordTwo));
@@ -128,6 +129,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitWordRow() throws Exception {
+        wordViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(wordViewOne, rowViewOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
@@ -144,6 +146,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowWord() throws Exception {
+        rowViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(rowViewOne, wordViewOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
@@ -155,6 +158,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowRow() throws Exception {
+        rowViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(rowViewOne, rowViewTwo));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowTwo));

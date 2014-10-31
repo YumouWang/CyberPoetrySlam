@@ -366,4 +366,5 @@ public class DisconnectVisitorTest {
 		assertFalse(mainView.getProtectedAreaWords().contains(rowView));
 		assertTrue(mainView.getProtectedAreaWords().contains(wordViewOne));
 	}
+
 }

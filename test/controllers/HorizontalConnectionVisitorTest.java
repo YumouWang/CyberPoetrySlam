@@ -183,4 +183,5 @@ public class HorizontalConnectionVisitorTest {
 	public void testVisitPoemPoem() throws Exception {
 		assertFalse(horizontalConnectionVisitor.visit(poemViewOne, poemViewTwo));
 	}
+
 }

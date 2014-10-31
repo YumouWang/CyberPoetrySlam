@@ -16,7 +16,7 @@ import views.WordView;
 import static org.junit.Assert.*;
 
 public class ConnectControllerTest {
-
+	
 	GameState gameState;
 	MainView mainView;
 	WordView viewOne;

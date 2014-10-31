@@ -255,4 +255,5 @@ public class VerticalConnectionVisitorTest {
 		assertTrue(poemOne.contains(poemTwo.getRows().get(0)));
 		assertTrue(poemViewOne.contains(poemViewTwo.getRowViews().get(0)));
 	}
+
 }

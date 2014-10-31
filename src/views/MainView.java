@@ -249,7 +249,7 @@ public class MainView extends JFrame implements Serializable {
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
 		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
 				.getWord().getId());
-		return removed.equals(oldWord);
+		return oldWord.equals(removed);
 	}
 
 	@Override

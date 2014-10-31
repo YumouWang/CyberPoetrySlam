@@ -186,4 +186,5 @@ public class MouseInputControllerTest {
 		controller.mouseReleasedHandler(new Position(55, 55));
 		assertEquals(wordViewTwo, controller.selectedWordToDisconnect);
 	}
+
 }

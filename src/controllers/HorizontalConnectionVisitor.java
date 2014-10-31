@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Area;
-import models.GameState;
-import models.Row;
-import models.Word;
+import models.*;
 import views.MainView;
 import views.PoemView;
 import views.RowView;
@@ -19,6 +16,7 @@ import java.awt.*;
 public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     MainView mainView;
+    GameState gameState;
     Area protectedArea;
 
     /**
@@ -29,10 +27,19 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     public HorizontalConnectionVisitor(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.protectedArea = gameState.getProtectedArea();
+        this.gameState = gameState;
     }
 
     @Override
     public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(wordViewOne.getPosition().getX() + wordViewOne.getWidth() + 1, wordViewOne.getPosition().getY());
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
+        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+            return false;
+        }
+
         Word wordOne = wordViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -56,6 +63,14 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, RowView rowViewTwo) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(wordViewOne.getPosition().getX() + wordViewOne.getWidth() + 1, wordViewOne.getPosition().getY());
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(rowViewTwo, rowViewTwo.getPosition(), targetPosition);
+        if(!rowViewTwo.getPosition().equals(targetPosition)) {
+            return false;
+        }
+
         Word wordOne = wordViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 
@@ -85,6 +100,14 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, WordView wordViewTwo) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(rowViewOne.getPosition().getX() + rowViewOne.getWidth() + 1, rowViewOne.getPosition().getY());
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(wordViewTwo, wordViewTwo.getPosition(), targetPosition);
+        if(!wordViewTwo.getPosition().equals(targetPosition)) {
+            return false;
+        }
+
         Row rowOne = rowViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 
@@ -108,6 +131,14 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, RowView rowViewTwo) {
+        // Check if the connection will cause an overlap
+        Position targetPosition = new Position(rowViewOne.getPosition().getX() + rowViewOne.getWidth() + 1, rowViewOne.getPosition().getY());
+        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
+        moveWordController.moveWord(rowViewTwo, rowViewTwo.getPosition(), targetPosition);
+        if(!rowViewTwo.getPosition().equals(targetPosition)) {
+            return false;
+        }
+
         Row rowOne = rowViewOne.getWord();
         Row rowTwo = rowViewTwo.getWord();
 

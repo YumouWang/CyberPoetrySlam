@@ -103,4 +103,9 @@ public abstract class AbstractView extends JComponent implements Serializable {
 	public Position getPosition() {
 		return position;
 	}
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
+
 }

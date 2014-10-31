@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import models.Position;
 import models.Word;
@@ -25,8 +26,8 @@ public class WordView extends AbstractWordView {
      */
     public WordView(Word word, Position position) {
         super(word, position);
-        setSize(word.getValue().length() * 8, 20);
-        label = new JLabel(word.getValue());
+        setSize(word.getValue().length() * 10, 20);
+        label = new JLabel(word.getValue(), SwingConstants.CENTER);
         updateView();
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         label.setBackground(Color.LIGHT_GRAY);

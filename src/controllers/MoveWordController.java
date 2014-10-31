@@ -46,7 +46,6 @@ public class MoveWordController {
 		Position newPosition = new Position(selectedWord.getPosition().getX()
 				+ positionDiff.getX(), selectedWord.getPosition().getY()
 				+ positionDiff.getY());
-		selectedWord.moveTo(newPosition);
 
 		if (mainView.isMoveOutOfBounds(selectedWord, newPosition)) {
 			selectedWord.moveTo(originPosition);

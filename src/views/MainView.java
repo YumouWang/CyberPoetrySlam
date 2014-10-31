@@ -241,14 +241,12 @@ public class MainView extends JFrame implements Serializable {
 	 * @return Returns whether the word was successfully removed
 	 */
 	public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord()
-				.getId());
+		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
 		return removed.equals(oldWord);
 	}
 
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
-				.getWord().getId());
+		AbstractWordView removed = unprotectedAreaWords.remove(oldWord.getWord().getId());
 		return oldWord.equals(removed);
 	}
 
@@ -326,8 +324,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @param toPosition
 	 * @return
 	 */
-	public boolean isMoveOutOfBounds(AbstractWordView wordView,
-			Position toPosition) {
+	public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
 		// get AbsctracWordView width
 		int width = 0;
 		if (wordView instanceof WordView) {
@@ -341,8 +338,7 @@ public class MainView extends JFrame implements Serializable {
 			Collection<RowView> rowViewList = poemView.getRowViews();
 			for (RowView rowView : rowViewList) {
 				if (rowView.getWord().getValue().replaceAll(" ", "").length() * 8 > width) {
-					width = rowView.getWord().getValue().replaceAll(" ", "")
-							.length() * 8;
+					width = rowView.getWord().getValue().replaceAll(" ", "").length() * 8;
 				}
 			}
 		}

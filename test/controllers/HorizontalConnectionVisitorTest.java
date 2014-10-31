@@ -32,6 +32,8 @@ public class HorizontalConnectionVisitorTest {
 	@Before
 	public void setUp() throws Exception {
 		gameState = new GameState(un, p);
+        gameState.getUnprotectedArea().getAbstractWordCollection().clear();
+        gameState.getProtectedArea().getAbstractWordCollection().clear();
 		protectedArea = gameState.getProtectedArea();
 		mainView = new MainView(gameState, un, p);
 		// Create all the words separately
@@ -81,6 +83,10 @@ public class HorizontalConnectionVisitorTest {
 		// Create rowViews
 		rowViewOne = new RowView(rowOne, pos, mainView);
 		rowViewTwo = new RowView(rowTwo, pos, mainView);
+        mainView.removeProtectedAbstractWordView(wordViewThree);
+        mainView.removeProtectedAbstractWordView(wordViewFour);
+        mainView.removeProtectedAbstractWordView(wordViewFive);
+        mainView.removeProtectedAbstractWordView(wordViewSix);
 		mainView.addProtectedAbstractWordView(rowViewOne);
 		mainView.addProtectedAbstractWordView(rowViewTwo);
 		// Create Poems
@@ -95,14 +101,18 @@ public class HorizontalConnectionVisitorTest {
 		// Create PoemViews
 		poemViewOne = new PoemView(poemOne, pos, mainView);
 		poemViewTwo = new PoemView(poemTwo, pos, mainView);
+        mainView.removeProtectedAbstractWordView(wordViewSeven);
+        mainView.removeProtectedAbstractWordView(wordViewEight);
+        mainView.removeProtectedAbstractWordView(wordViewNine);
+        mainView.removeProtectedAbstractWordView(wordViewTen);
 		mainView.addProtectedAbstractWordView(poemViewOne);
 		mainView.addProtectedAbstractWordView(poemViewTwo);
-		horizontalConnectionVisitor = new HorizontalConnectionVisitor(mainView,
-				gameState);
+		horizontalConnectionVisitor = new HorizontalConnectionVisitor(mainView, gameState);
 	}
 
 	@Test
 	public void testVisitWordWord() throws Exception {
+        wordViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(wordViewOne, wordViewTwo));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordTwo));
@@ -128,6 +138,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitWordRow() throws Exception {
+        wordViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(wordViewOne, rowViewOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
@@ -144,6 +155,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowWord() throws Exception {
+        rowViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(rowViewOne, wordViewOne));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(wordOne));
@@ -155,6 +167,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitRowRow() throws Exception {
+        rowViewOne.moveTo(new Position(30, 100));
 		assertTrue(horizontalConnectionVisitor.visit(rowViewOne, rowViewTwo));
 		assertTrue(protectedArea.getAbstractWordCollection().contains(rowOne));
 		assertFalse(protectedArea.getAbstractWordCollection().contains(rowTwo));

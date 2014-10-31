@@ -27,8 +27,8 @@ public class MainLauncher implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 623363781824512600L;
-	static final String protectedWordStorage = "protectedWords.Storage";
-	static final String unprotectedWordStorage = "unprotectedWords.Storage";
+	static final String protectedWordStorage = "protectedWords.storage";
+	static final String unprotectedWordStorage = "unprotectedWords.storage";
 
 	// location1 is where we stores unprotectedWords
 	// location2 is where we stores protectedWords

@@ -36,8 +36,7 @@ public class RowView extends AbstractWordView implements Serializable {
 
 		// Find all wordViews
 		for (Word word : words) {
-			WordView view = (WordView) mainView
-					.getProtectedAbstractWordById(word.getId());
+			WordView view = (WordView) mainView.getProtectedAbstractWordById(word.getId());
 			wordViews.add(view);
 		}
 

@@ -137,9 +137,9 @@ public class DisconnectVisitorTest {
 
 	@Test
 	public void testVisitRowWordMiddleDisconnect() throws Exception {
-		HorizontalConnectionVisitor connectionVisitor = new HorizontalConnectionVisitor(
-				mainView, gameState);
-		connectionVisitor.visit(rowViewOne, wordViewOne);
+        rowViewOne.moveTo(new Position(50, 50));
+		HorizontalConnectionVisitor connectionVisitor = new HorizontalConnectionVisitor(mainView, gameState);
+		assertTrue(connectionVisitor.visit(rowViewOne, wordViewOne));
 
 		WordView rowWordViewOne = rowViewOne.getWordViews().get(0);
 		WordView rowWordViewTwo = rowViewOne.getWordViews().get(1);

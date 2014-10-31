@@ -110,7 +110,6 @@ public class MouseInputController extends MouseAdapter {
     void mouseDraggedHandler(Position mousePosition) {
         if(selectedWord != null) {
             MoveWordController moveController = new MoveWordController(mainView, gameState);
-//            moveController.moveWord(selectedWord, mouseDownPosition, mousePosition);
             moveController.moveWord(selectedWord, selectedWord.getPosition(),
                     new Position(mousePosition.getX() + selectedWordPositionRelativeToMouse.getX(),
                             mousePosition.getY() + selectedWordPositionRelativeToMouse.getY()));

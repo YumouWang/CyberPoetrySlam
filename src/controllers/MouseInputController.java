@@ -60,10 +60,6 @@ public class MouseInputController extends MouseAdapter {
 
     void mousePressedHandler(Position position) {
         mouseDownPosition = position;
-        if(selectedWord != null) {
-            selectedWord.setBackground(Color.LIGHT_GRAY);
-        }
-        selectedWord = null;
 
         Collection<AbstractWordView> words;
         // If it's in the protected area, select a word from the protectedArea
@@ -156,6 +152,12 @@ public class MouseInputController extends MouseAdapter {
                 selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
             }
             mainView.getSelectionBox().clearBox();
+        } else {
+            selectedWord.setBackground(Color.LIGHT_GRAY);
+            selectedWord = null;
+            for(AbstractWordView view : mainView.getProtectedAreaWords()) {
+                view.setBackground(Color.LIGHT_GRAY);
+            }
         }
     }
 }

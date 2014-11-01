@@ -106,7 +106,7 @@ public class MouseInputControllerTest {
 		controller.mouseDownPosition = new Position(11, 11);
 
 		controller.mouseReleased(event);
-		assertEquals(wordViewOne, controller.selectedWord);
+		assertNull(controller.selectedWord);
 		assertEquals(11, controller.mouseDownPosition.getX());
 		assertEquals(11, controller.mouseDownPosition.getY());
 		assertEquals(10, wordViewOne.getPosition().getX());

@@ -325,27 +325,9 @@ public class MainView extends JFrame implements Serializable {
 	 * @return
 	 */
 	public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
-		// get AbsctracWordView width
-		int width = 0;
-		if (wordView instanceof WordView) {
-			width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
-		} else if (wordView instanceof RowView) {
-			width = wordView.getWord().getValue().replaceAll(" ", "").length() * 8;
-		}
-		// if it is a poemView, get is maximum width
-		else {
-			PoemView poemView = (PoemView) wordView;
-			Collection<RowView> rowViewList = poemView.getRowViews();
-			for (RowView rowView : rowViewList) {
-				if (rowView.getWord().getValue().replaceAll(" ", "").length() * 8 > width) {
-					width = rowView.getWord().getValue().replaceAll(" ", "").length() * 8;
-				}
-			}
-		}
-
 		if (toPosition.getX() < 0) {
 			return true;
-		} else if (toPosition.getX() + width > 716) {
+		} else if (toPosition.getX() + wordView.getWidth() > 716) {
 			return true;
 		} else if (toPosition.getY() < 20) {
 			return true;

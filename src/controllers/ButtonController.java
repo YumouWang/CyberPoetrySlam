@@ -1,26 +1,11 @@
 package controllers;
 
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
 
 import javax.swing.JButton;
 
-import models.Position;
-import models.Word;
-import models.WordType;
-import views.AbstractWordView;
 import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
 
 /**
  * ButtonController handles all the actions for MainView panel buttons

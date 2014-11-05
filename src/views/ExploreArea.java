@@ -119,26 +119,7 @@ public class ExploreArea extends JFrame implements Serializable {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				search.updateWordTable();
-				if (comboBox.getSelectedIndex() == -1) {
-					input = "";
-				} else {
-					input = comboBox.getSelectedItem().toString();
-				}
-				Collection<AbstractWord> result = search.search(
-						textField.getText(), input);
-				for (int rowNum = 0; rowNum < cellData.length; rowNum++) {
-					cellData[rowNum][0] = null;
-					cellData[rowNum][1] = null;
-				}
-				int i = 0;
-				for (AbstractWord word : result) {
-					cellData[i][0] = word.getValue();
-					cellData[i][1] = ((Word) word).getType().toString();
-					i++;
-				}
-				table.updateUI();
+				updateTable();
 			}
 		});
 
@@ -146,29 +127,33 @@ public class ExploreArea extends JFrame implements Serializable {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					search.updateWordTable();
-					if (comboBox.getSelectedIndex() == -1) {
-						input = "";
-					} else {
-						input = comboBox.getSelectedItem().toString();
-					}
-					Collection<AbstractWord> result = search.search(
-							textField.getText(), input);
-
-					for (int rowNum = 0; rowNum < cellData.length; rowNum++) {
-						cellData[rowNum][0] = null;
-						cellData[rowNum][1] = null;
-					}
-					int i = 0;
-					for (AbstractWord word : result) {
-						cellData[i][0] = word.getValue();
-						cellData[i][1] = ((Word) word).getType().toString();
-						i++;
-					}
-					table.updateUI();
+					updateTable();
 				}
 			}
 		});
+	}
+	
+	public void updateTable() {
+		search.updateWordTable();
+		if (comboBox.getSelectedIndex() == -1) {
+			input = "";
+		} else {
+			input = comboBox.getSelectedItem().toString();
+		}
+		Collection<AbstractWord> result = search.search(
+				textField.getText(), input);
+
+		for (int rowNum = 0; rowNum < cellData.length; rowNum++) {
+			cellData[rowNum][0] = null;
+			cellData[rowNum][1] = null;
+		}
+		int i = 0;
+		for (AbstractWord word : result) {
+			cellData[i][0] = word.getValue();
+			cellData[i][1] = ((Word) word).getType().toString();
+			i++;
+		}
+		table.updateUI();
 	}
 
 	public void refresh() {

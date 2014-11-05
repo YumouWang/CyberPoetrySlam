@@ -155,12 +155,14 @@ public class MoveWordController {
 	 *            The wordView to protect
 	 */
 	void protectWord(AbstractWordView wordView) {
+		
 		// Add word to protected word list
 		gameState.protect(wordView.getWord());
 		// Add word view to protected word view list and remove word view from
 		// unprotected word view
 		mainView.addProtectedAbstractWordView(wordView);
-		mainView.removeUnprotectedAbstractWordView(wordView);
+		mainView.removeUnprotectedAbstractWordView(wordView);		
+		mainView.getExploreArea().updateTable();	
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -208,7 +210,7 @@ public class MoveWordController {
 		// protected word view
 		mainView.addUnprotectedAbstractWordView(wordView);
 		mainView.removeProtectedAbstractWordView(wordView);
-
+		mainView.getExploreArea().updateTable();	
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -261,7 +263,7 @@ public class MoveWordController {
 			// abstractWord view in MainView
 			mainView.addUnprotectedAbstractWordView(word);
 		}
-
+		mainView.getExploreArea().updateTable();
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -316,6 +318,7 @@ public class MoveWordController {
 				mainView.addUnprotectedAbstractWordView(word);
 			}
 		}
+		mainView.getExploreArea().updateTable();
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();

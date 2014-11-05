@@ -355,5 +355,9 @@ public class MainView extends JFrame implements Serializable {
 		// return this.protectedWordViews;
 		return this.protectedAreaWords.values();
 	}
+	
+	public ExploreArea getExploreArea() {
+		return exploreArea;
+	}
 
 }

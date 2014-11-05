@@ -9,12 +9,15 @@ import models.WordType;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -44,9 +47,10 @@ public class ExploreArea extends JFrame implements Serializable {
 	/**
 	 * Create the frame.
 	 */
-	public ExploreArea(GameState gameState) {
+	public ExploreArea(GameState gameState, final MainView mainView) {
 		this.gameState = gameState;
 		this.search = new SearchController(mainView, gameState);
+		this.mainView = mainView;
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 278, 302);
@@ -89,32 +93,49 @@ public class ExploreArea extends JFrame implements Serializable {
 
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
-		String[] columnNames = { "Word", "WordType" };
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		Collection<AbstractWord> protectedWords = gameState
-				.getProtectedArea().getAbstractWordCollection();
-		cellData = new String[unprotectedWords.size() + protectedWords.size()][2];
-		int i = 0;
-		for (AbstractWord word : unprotectedWords) {
-			// cellData[i] = new String[2];
-			cellData[i][0] = word.getValue();
-			// System.out.println(word.getValue() + "," + word.getType());
-			cellData[i][1] = ((Word) word).getType().toString();
-			i++;
-		}
 
-		table = new JTable(cellData, columnNames);
+		table = getTable();
 
 		table.setBorder(new LineBorder(Color.BLACK));
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setBounds(44, 172, 346, 67);
-		table.setEnabled(false);
+		// table.setEnabled(false);
+		table.setCellSelectionEnabled(true);
+		table.setRowSelectionAllowed(true);
+		table.setColumnSelectionAllowed(false);
 
 		jScrollPane = new JScrollPane();
 		jScrollPane.setBounds(20, 75, 232, 268);
 		contentPane.add(jScrollPane);
 		jScrollPane.setViewportView(table);
+
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					updateTable();
+					table = (JTable) e.getSource();
+					int row = table.getSelectedRow();
+					//int column = table.getSelectedColumn();
+					String selectedWord = table.getValueAt(row, 0)
+							.toString();
+					if (row > -1) {
+						Collection<AbstractWordView> words = mainView
+								.getUnprotectedAreaWords();
+						for (AbstractWordView word : words) {
+							if (word.getWord().getValue()
+									.equalsIgnoreCase(selectedWord)) {
+								word.setBackground(Color.orange);
+							} else {
+								word.setBackground(Color.LIGHT_GRAY);
+							}
+
+						}
+					} else {
+						System.out.println("fail");
+					}
+				}
+			}
+		});
 
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
@@ -132,7 +153,7 @@ public class ExploreArea extends JFrame implements Serializable {
 			}
 		});
 	}
-	
+
 	public void updateTable() {
 		search.updateWordTable();
 		if (comboBox.getSelectedIndex() == -1) {
@@ -140,17 +161,21 @@ public class ExploreArea extends JFrame implements Serializable {
 		} else {
 			input = comboBox.getSelectedItem().toString();
 		}
-		Collection<AbstractWord> result = search.search(
-				textField.getText(), input);
+		Collection<AbstractWord> result = search.search(textField.getText(),
+				input);
 
 		for (int rowNum = 0; rowNum < cellData.length; rowNum++) {
-			cellData[rowNum][0] = null;
-			cellData[rowNum][1] = null;
+			table.setValueAt(null, rowNum, 0);
+			table.setValueAt(null, rowNum, 1);
+			// cellData[rowNum][0] = null;
+			// cellData[rowNum][1] = null;
 		}
 		int i = 0;
 		for (AbstractWord word : result) {
-			cellData[i][0] = word.getValue();
-			cellData[i][1] = ((Word) word).getType().toString();
+			// cellData[i][0] = word.getValue();
+			// cellData[i][1] = ((Word) word).getType().toString();
+			table.setValueAt(word.getValue(), i, 0);
+			table.setValueAt(((Word) word).getType().toString(), i, 1);
 			i++;
 		}
 		table.updateUI();
@@ -160,5 +185,44 @@ public class ExploreArea extends JFrame implements Serializable {
 		revalidate();
 		repaint();
 		table.updateUI();
+	}
+
+	private JTable getTable() {
+		String[] columnNames = { "Word", "WordType" };
+		Collection<AbstractWord> unprotectedWords = gameState
+				.getUnprotectedArea().getAbstractWordCollection();
+		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
+				.getAbstractWordCollection();
+		cellData = new String[unprotectedWords.size() + protectedWords.size() + 10][2];
+		int i = 0;
+		for (AbstractWord word : unprotectedWords) {
+			// cellData[i] = new String[2];
+			cellData[i][0] = word.getValue();
+			// System.out.println(word.getValue() + "," + word.getType());
+			cellData[i][1] = ((Word) word).getType().toString();
+			i++;
+		}
+		DefaultTableModel model = new DefaultTableModel(cellData, columnNames) {
+			/**
+				 * 
+				 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
+		return new JTable(model) {
+			/**
+				 * 
+				 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredScrollableViewportSize() {
+				return getPreferredSize();
+			}
+		};
 	}
 }

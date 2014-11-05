@@ -199,7 +199,7 @@ public class MainView extends JFrame implements Serializable {
 		btnRedo.addActionListener(buttonController);
 		btnUndo.addActionListener(buttonController);
 
-		exploreArea = new ExploreArea(gameState);
+		exploreArea = new ExploreArea(gameState, this);
 		// JPanel explorePanel = new JPanel();
 		JPanel explorePanel = exploreArea.contentPane;
 		explorePanel.setBorder(new LineBorder(Color.BLACK));

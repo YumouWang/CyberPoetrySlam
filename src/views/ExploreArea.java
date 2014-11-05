@@ -92,7 +92,9 @@ public class ExploreArea extends JFrame implements Serializable {
 		String[] columnNames = { "Word", "WordType" };
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
-		cellData = new String[unprotectedWords.size()][2];
+		Collection<AbstractWord> protectedWords = gameState
+				.getProtectedArea().getAbstractWordCollection();
+		cellData = new String[unprotectedWords.size() + protectedWords.size()][2];
 		int i = 0;
 		for (AbstractWord word : unprotectedWords) {
 			// cellData[i] = new String[2];

@@ -185,6 +185,7 @@ public class MainView extends JFrame implements Serializable {
 		btnPublish = new JButton("PUBLISH");
 		btnPublish.setMargin(new Insets(1, 1, 1, 1));
 		btnPublish.setBounds(0, 0, 70, 20);
+		btnPublish.setEnabled(false);
 		panel.add(btnPublish);
 
 		btnRedo = new JButton("REDO");

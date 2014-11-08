@@ -57,6 +57,7 @@ public class ButtonController implements ActionListener {
 						+ publishPoem.getWord().getValue());
 				publishPoem((PoemView) publishPoem);
 			}
+			mainView.getPublishButton().setEnabled(false);
 			publishPoem = null;
 		}
 		// click on Redo button

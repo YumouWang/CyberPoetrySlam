@@ -10,6 +10,7 @@ import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
+import views.PoemView;
 
 /**
  * A controller for handling mouse input. Delegates to other controllers. Unlike
@@ -146,6 +147,11 @@ public class MouseInputController extends MouseAdapter {
 	void mouseReleasedHandler(Position mousePosition) {
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
+			if(lastSelectedWord instanceof PoemView) {
+				mainView.getPublishButton().setEnabled(true);
+			} else {
+				mainView.getPublishButton().setEnabled(false);
+			}
 			Collection<AbstractWordView> words = mainView
 					.getProtectedAreaWords();
 			AbstractWordView connectTarget = null;

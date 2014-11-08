@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * The model class for a word
  *
- * Created by Nathan on 10/2/2014.
+ * @author Nathan
+ * @version 10/2/2014
  */
 public class Word extends AbstractWord implements Serializable {
 

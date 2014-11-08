@@ -8,7 +8,8 @@ import views.MainView;
 /**
  * A controller for handling connecting words
  *
- * Created by Nathan on 10/4/2014.
+ * @author Nathan
+ * @version 10/4/2014
  */
 public class ConnectController {
 

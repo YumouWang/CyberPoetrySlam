@@ -12,7 +12,11 @@ import java.util.UUID;
 /**
  * This is the part of your client code that reaches out to the WELL KNOWN broker to
  * make swaps.
- * 
+ *
+ * Taken directly from professor Heineman's code
+ *
+ * @author gheineman
+ * @version 11/7/14
  */
 public class BrokerClient {
 	
@@ -20,7 +24,7 @@ public class BrokerClient {
 	final String host;
 	
 	/** Port on which host is listening. */
-	final int    port;
+	final int port;
 	
 	/** 
 	 * Status of client. 

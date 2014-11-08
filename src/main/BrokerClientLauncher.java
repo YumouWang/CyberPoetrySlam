@@ -13,6 +13,9 @@ import java.util.Scanner;
 
 /**
  * Used to manually test client-side broker without having working client yet.
+ *
+ * @author gheineman
+ * @version 11/7/2014
  */
 public class BrokerClientLauncher implements IHandleBrokerMessage {
 	
@@ -154,6 +157,4 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 			return;
 		}
 	}
-
-	
 }

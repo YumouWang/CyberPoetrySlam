@@ -12,7 +12,10 @@ import models.Word;
 import controllers.AbstractWordViewVisitor;
 
 /**
- * A view for representing words on the screen Created by Nathan on 10/9/2014.
+ * A view for representing words on the screen
+ *
+ * @author Nathan
+ * @version 10/9/2014
  */
 public class WordView extends AbstractWordView implements Serializable {
 

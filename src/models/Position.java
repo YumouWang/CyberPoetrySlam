@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * The Position model class
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public class Position implements Serializable {
 	/**

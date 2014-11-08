@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A view class representing a row Created by Nathan on 10/9/2014.
+ * A view class representing a row
+ *
+ * @author Nathan
+ * @version 10/9/2014
  */
 public class RowView extends AbstractWordView implements Serializable {
 

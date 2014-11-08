@@ -12,7 +12,8 @@ import models.Word;
 /**
  * WordInitialize uses dictionary parser to get a word list from a CSV file
  * 
- * Created by Yumou on 10/28/2014.
+ * @author Yumou
+ * @version 10/28/2014
  */
 
 public class WordInitialize {

@@ -7,7 +7,8 @@ import java.util.Observable;
 /**
  * The swap model class. Encapsulates data about the current swap.
  *
- * Created by Yumou on 10/3/2014.
+ * @author Yumou
+ * @version 10/3/2014
  */
 public class Swap extends Observable {
 	int num;

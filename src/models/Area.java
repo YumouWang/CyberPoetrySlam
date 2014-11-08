@@ -8,7 +8,8 @@ import java.util.Observable;
 /**
  * The Area model class
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public class Area extends Observable implements Serializable {
 

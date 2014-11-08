@@ -1,8 +1,6 @@
 package broker.ipc;
 
-import broker.BrokerClient;
-import broker.ipc.Broker;
-import broker.ipc.ProcessMessageHandler;
+import controllers.client.BrokerClient;
 import broker.server.controller.ConfirmSwapController;
 import broker.server.controller.DenySwapController;
 import broker.server.controller.RequestSwapController;

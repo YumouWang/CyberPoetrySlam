@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A view to represent the poem model Created by Nathan on 10/10/2014.
+ * A view to represent the poem model
+ *
+ * @author Nathan
+ * @version 10/10/2014
  */
 public class PoemView extends AbstractWordView implements Serializable {
 

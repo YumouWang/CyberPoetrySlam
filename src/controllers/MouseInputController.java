@@ -16,7 +16,8 @@ import views.MainView;
  * Unlike other controllers, this controller exists for the duration of the program
  * to handle mouse events and maintain state between mouse events.
  *
- * Created by Nathan on 10/4/2014.
+ * @author Nathan
+ * @version 10/4/2014
  */
 public class MouseInputController extends MouseAdapter {
 

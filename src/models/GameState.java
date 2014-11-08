@@ -13,7 +13,9 @@ import controllers.WordInitialize;
 /**
  * The main model class that tracks all other models
  * 
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @author Jian
+ * @version 10/3/2014
  */
 public class GameState implements Serializable {
 

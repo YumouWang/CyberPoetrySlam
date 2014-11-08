@@ -1,6 +1,6 @@
 package broker.handler;
 
-import broker.BrokerClient;
+import controllers.client.BrokerClient;
 
 /**
  * 

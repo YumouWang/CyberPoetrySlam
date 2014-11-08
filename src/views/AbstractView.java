@@ -9,7 +9,8 @@ import javax.swing.*;
 /**
  * The base class for each view component of CyberPoetrySlam
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public abstract class AbstractView implements Serializable {
 	/**

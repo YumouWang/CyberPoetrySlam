@@ -11,7 +11,8 @@ import java.io.Serializable;
 /**
  * The view class for each word in CyberPoetrySlam
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public abstract class AbstractWordView extends AbstractView implements
 		Serializable {

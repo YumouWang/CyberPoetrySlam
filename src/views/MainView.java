@@ -34,7 +34,8 @@ import controllers.ButtonController;
 /**
  * The main view that tracks all other views
  * 
- * Created by Yumou on 10/4/2014.
+ * @author Yumou
+ * @version 10/4/2014
  */
 public class MainView extends JFrame implements Serializable {
 

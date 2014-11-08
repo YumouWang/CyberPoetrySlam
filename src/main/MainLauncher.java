@@ -19,7 +19,10 @@ import views.MainView;
 /**
  * The main launcher for starting the program
  *
- * Created by Yumou on 10/3/2014.
+ * @author Yumou
+ * @author Jian
+ * @author Nathan
+ * @version 10/3/2014
  */
 public class MainLauncher implements Serializable {
 

@@ -10,7 +10,8 @@ import views.MainView;
 /**
  * ButtonController handles all the actions for MainView panel buttons
  * 
- * Created by Yumou on 10/28/2014.
+ * @author Yumou
+ * @version 10/28/2014
  */
 public class ButtonController implements ActionListener {
 	private MainView mainView;

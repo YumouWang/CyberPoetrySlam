@@ -5,8 +5,11 @@ import java.util.UUID;
 
 /**
  * The AbstractWord model class. Acts as a base class for Words, Rows, and
- * Poems. All other objects refer to a collection of AbstractWords and don't
- * distinguish between Words, Rows, and Poems.
+ * Poems. All other objects can refer to a collection of AbstractWords and don't
+ * have to distinguish between Words, Rows, and Poems.
+ *
+ * @author Nathan
+ * @version 10/2/2014
  */
 public abstract class AbstractWord implements Serializable {
 

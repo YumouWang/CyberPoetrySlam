@@ -18,7 +18,9 @@ import views.WordView;
 /**
  * A class for handling moving words
  * 
- * Created by Nathan and Yumou on 10/16/2014.
+ * @author Nathan
+ * @author Yumou
+ * @version 10/16/2014
  */
 public class MoveWordController {
 

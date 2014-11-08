@@ -7,7 +7,8 @@ import views.MainView;
 /**
  * A controller for handling disconnecting words
  *
- * Created by Nathan on 10/12/2014.
+ * @author Nathan
+ * @version 10/12/2014
  */
 public class DisconnectController {
 

@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import controllers.MouseInputController;
 import models.GameState;
 import models.protectedMemento;
 import models.unprotectedMemento;
@@ -18,7 +17,7 @@ import views.MainView;
 
 /**
  * The main launcher for starting the program
- *
+ * 
  * @author Yumou
  * @author Jian
  * @author Nathan
@@ -38,22 +37,20 @@ public class MainLauncher implements Serializable {
 	static void storeState(MainView mainView, String location1, String location2) {
 		File unprotectedWord = new File(location1);
 		File protectedWord = new File(location2);
-		if(!unprotectedWord.exists()) {
-			try{
+		if (!unprotectedWord.exists()) {
+			try {
 				unprotectedWord.createNewFile();
+			} catch (Exception e) {
+
 			}
-			catch (Exception e) {
-				
-			}
-		} 
-		if(!protectedWord.exists()) {
-			try{
+		}
+		if (!protectedWord.exists()) {
+			try {
 				unprotectedWord.createNewFile();
+			} catch (Exception e) {
+
 			}
-			catch (Exception e) {
-				
-			}
-		} 
+		}
 		ObjectOutputStream oos1 = null;
 		ObjectOutputStream oos2 = null;
 		try {
@@ -125,8 +122,8 @@ public class MainLauncher implements Serializable {
 		// Initialize the MainView pointing at the GameState
 		final MainView mainView = new MainView(gameState, un, p);
 		// Add a controller to handle user input
-		mainView.addMouseInputController(new MouseInputController(mainView,
-				gameState));
+		// mainView.addMouseInputController(new MouseInputController(mainView,
+		// gameState));
 		mainView.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				storeState(mainView, unprotectedWordStorage,

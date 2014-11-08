@@ -3,6 +3,7 @@ package views;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,6 +31,7 @@ import models.protectedMemento;
 import models.unprotectedMemento;
 import common.Constants;
 import controllers.ButtonController;
+import controllers.MouseInputController;
 
 /**
  * The main view that tracks all other views
@@ -48,13 +50,14 @@ public class MainView extends JFrame implements Serializable {
 	Collection<AbstractWordView> unprotectedWordViews;
 	Collection<AbstractWordView> protectedWordViews;
 	Container contentPane;
-	public JPanel panel;
-	public ExploreArea exploreArea;
+	private JPanel panel;
+	private ExploreArea exploreArea;
 	SelectionBox selectionBox;
-	public JButton btnRedo;
-	public JButton btnUndo;
-	public JButton btnSave;
-	public JButton btnSwap;
+	private JButton btnRedo;
+	private JButton btnUndo;
+	private JButton btnPublish;
+	private JButton btnSwap;
+	private MouseInputController mouseInputController;
 
 	/**
 	 * Constructor
@@ -179,13 +182,10 @@ public class MainView extends JFrame implements Serializable {
 		label.setBackground(Color.black);
 		panel.add(label);
 
-		btnSave = new JButton("SAVE");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSave.setBounds(0, 0, 70, 20);
-		panel.add(btnSave);
+		btnPublish = new JButton("PUBLISH");
+		btnPublish.setMargin(new Insets(1, 1, 1, 1));
+		btnPublish.setBounds(0, 0, 70, 20);
+		panel.add(btnPublish);
 
 		btnRedo = new JButton("REDO");
 		btnRedo.setBounds(72, 0, 70, 20);
@@ -195,8 +195,9 @@ public class MainView extends JFrame implements Serializable {
 		btnUndo.setBounds(144, 0, 70, 20);
 		panel.add(btnUndo);
 
-		ButtonController buttonController = new ButtonController(this);
-		btnSave.addActionListener(buttonController);
+		ButtonController buttonController = new ButtonController(this,
+				gameState);
+		btnPublish.addActionListener(buttonController);
 		btnRedo.addActionListener(buttonController);
 		btnUndo.addActionListener(buttonController);
 
@@ -224,6 +225,9 @@ public class MainView extends JFrame implements Serializable {
 		// class
 		selectionBox = new SelectionBox();
 		setGlassPane(selectionBox);
+
+		mouseInputController = new MouseInputController(this, gameState);
+		this.addMouseInputController(mouseInputController);
 	}
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
@@ -242,12 +246,14 @@ public class MainView extends JFrame implements Serializable {
 	 * @return Returns whether the word was successfully removed
 	 */
 	public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
+		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord()
+				.getId());
 		return oldWord.equals(removed);
 	}
 
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = unprotectedAreaWords.remove(oldWord.getWord().getId());
+		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
+				.getWord().getId());
 		return oldWord.equals(removed);
 	}
 
@@ -325,7 +331,8 @@ public class MainView extends JFrame implements Serializable {
 	 * @param toPosition
 	 * @return
 	 */
-	public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
+	public boolean isMoveOutOfBounds(AbstractWordView wordView,
+			Position toPosition) {
 		if (toPosition.getX() < 0) {
 			return true;
 		} else if (toPosition.getX() + wordView.getWidth() > 716) {
@@ -356,9 +363,28 @@ public class MainView extends JFrame implements Serializable {
 		// return this.protectedWordViews;
 		return this.protectedAreaWords.values();
 	}
-	
+
 	public ExploreArea getExploreArea() {
 		return exploreArea;
 	}
 
+	public JButton getPublishButton() {
+		return btnPublish;
+	}
+
+	public JButton getRedoButton() {
+		return btnRedo;
+	}
+
+	public JButton getUndoButton() {
+		return btnUndo;
+	}
+
+	public JButton getSwapButton() {
+		return btnSwap;
+	}
+
+	public MouseInputController getMouseInputController() {
+		return mouseInputController;
+	}
 }

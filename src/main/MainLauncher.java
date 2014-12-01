@@ -10,6 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import controllers.swap.BrokerConnection;
+import controllers.swap.BrokerConnectionController;
+import controllers.swap.ConnectionException;
 import models.GameState;
 import models.protectedMemento;
 import models.unprotectedMemento;
@@ -133,5 +136,13 @@ public class MainLauncher implements Serializable {
 		});
 		// Display the view
 		mainView.setVisible(true);
+
+		// Attempt to connect to the broker immediately on startup
+		// If we can't then disable the swap area
+		try {
+			BrokerConnectionController.getConnection(mainView, gameState);
+		} catch (ConnectionException e) {
+			mainView.getSwapAreaView().disable();
+		}
 	}
 }

@@ -12,6 +12,10 @@ import java.util.Random;
 
 import javax.swing.JButton;
 
+import controllers.swap.BrokerConnection;
+import controllers.swap.BrokerConnectionController;
+import controllers.swap.ConnectionException;
+import controllers.swap.SwapController;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
@@ -26,6 +30,7 @@ import views.WordView;
  * ButtonController handles all the actions for MainView panel buttons
  * 
  * @author Yumou
+ * @author Nathan
  * @version 10/28/2014
  */
 public class ButtonController implements ActionListener {
@@ -35,8 +40,8 @@ public class ButtonController implements ActionListener {
 	
 	/**
 	 * Constructor
-	 * @param mainView
-	 * @param gameState
+	 * @param mainView The mainView
+	 * @param gameState The gameState
 	 */
 	public ButtonController(MainView mainView, GameState gameState) {
 		this.mainView = mainView;
@@ -70,15 +75,11 @@ public class ButtonController implements ActionListener {
 			// Handle Undo
 			System.out.println("Undo...");
 		}
-		if (clickedButton.equals(mainView.getSwapButton())) {
-			// Handle Swap
-			System.out.println("Swap...");
-		}
 	}
 	
 	/**
 	 * publish a selected poem into wall.txt
-	 * @param poemView
+	 * @param poemView The poem to publish
 	 */
 	public void publishPoem(PoemView poemView) {
 		try {
@@ -100,12 +101,12 @@ public class ButtonController implements ActionListener {
 			e.printStackTrace();
 		}
 		// After publish poem to wall, release this poem
-		releasePoem((PoemView) poemView);
+		releasePoem(poemView);
 	}
 
 	/**
 	 * release the selected poem when it has been published
-	 * @param poemView
+	 * @param poemView The poem to release
 	 */
 	public void releasePoem(PoemView poemView) {
 		// remove poem from protected abstractWord in GameState

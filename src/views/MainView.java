@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
+import controllers.swap.BrokerConnection;
 import models.AbstractWord;
 import models.GameState;
 import models.Poem;
@@ -52,11 +53,11 @@ public class MainView extends JFrame implements Serializable {
 	Container contentPane;
 	private JPanel panel;
 	private ExploreArea exploreArea;
+	private SwapAreaView swapAreaView;
 	SelectionBox selectionBox;
 	private JButton btnRedo;
 	private JButton btnUndo;
 	private JButton btnPublish;
-	private JButton btnSwap;
 	private MouseInputController mouseInputController;
 
 	/**
@@ -65,8 +66,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @param gameState
 	 *            The GameState that this view represents
 	 */
-	public MainView(GameState gameState, unprotectedMemento un,
-			protectedMemento p) {
+	public MainView(GameState gameState, unprotectedMemento un, protectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = getContentPane();
@@ -196,8 +196,7 @@ public class MainView extends JFrame implements Serializable {
 		btnUndo.setBounds(144, 0, 70, 20);
 		panel.add(btnUndo);
 
-		ButtonController buttonController = new ButtonController(this,
-				gameState);
+		ButtonController buttonController = new ButtonController(this, gameState);
 		btnPublish.addActionListener(buttonController);
 		btnRedo.addActionListener(buttonController);
 		btnUndo.addActionListener(buttonController);
@@ -210,20 +209,12 @@ public class MainView extends JFrame implements Serializable {
 		contentPane.add(explorePanel);
 		explorePanel.setLayout(null);
 
-		JPanel swapPanel = new JPanel();
-		swapPanel.setBorder(new LineBorder(Color.BLACK));
-		swapPanel.setBounds(716, 0, 284, 310);
-		contentPane.add(swapPanel);
-		swapPanel.setLayout(null);
-
-		btnSwap = new JButton("SWAP");
-		btnSwap.setBounds(0, 0, 70, 20);
-		swapPanel.add(btnSwap);
-		btnSwap.addActionListener(buttonController);
+		// Create the swap area view
+		swapAreaView = new SwapAreaView(new Position(716, 0), 284, 310, this, gameState);
+		contentPane.add(swapAreaView.getPanel());
 
 		// Puts the selectionBox on the pane in front of the words.
-		// The selectionBox can be set to visible or not from the selectionBox
-		// class
+		// The selectionBox can be set to visible or not from the selectionBox class
 		selectionBox = new SelectionBox();
 		setGlassPane(selectionBox);
 
@@ -369,6 +360,8 @@ public class MainView extends JFrame implements Serializable {
 		return exploreArea;
 	}
 
+	public SwapAreaView getSwapAreaView() { return swapAreaView; }
+
 	public JButton getPublishButton() {
 		return btnPublish;
 	}
@@ -379,10 +372,6 @@ public class MainView extends JFrame implements Serializable {
 
 	public JButton getUndoButton() {
 		return btnUndo;
-	}
-
-	public JButton getSwapButton() {
-		return btnSwap;
 	}
 
 	public MouseInputController getMouseInputController() {

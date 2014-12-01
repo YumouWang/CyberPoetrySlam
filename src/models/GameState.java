@@ -3,7 +3,6 @@ package models;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 import views.AbstractWordView;
 import views.RowView;
@@ -30,7 +29,6 @@ public class GameState implements Serializable {
 
 	Area protectedArea;
 	Area unprotectedArea;
-	String FileName = "Dictionary/WordDictionary.csv";
 
 	/**
 	 * Constructor

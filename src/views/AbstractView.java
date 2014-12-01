@@ -24,8 +24,7 @@ public abstract class AbstractView implements Serializable {
 	/**
 	 * Constructor
 	 * 
-	 * @param position
-	 *            The position of the view object
+	 * @param position The position of the view object
 	 */
 	public AbstractView(Position position) {
 		this.position = position;
@@ -36,12 +35,9 @@ public abstract class AbstractView implements Serializable {
 	/**
 	 * Constructor
 	 * 
-	 * @param position
-	 *            The position of the view object
-	 * @param width
-	 *            The width of the view object
-	 * @param height
-	 *            The height of the view object
+	 * @param position The position of the view object
+	 * @param width The width of the view object
+	 * @param height The height of the view object
 	 */
 	public AbstractView(Position position, int width, int height) {
 		this.position = position;
@@ -52,8 +48,7 @@ public abstract class AbstractView implements Serializable {
 	/**
 	 * Determines whether a position is inside of this view object
 	 * 
-	 * @param click
-	 *            The position of the click
+	 * @param click The position of the click
 	 * @return Returns whether this view object was clicked
 	 */
 	public boolean isClicked(Position click) {
@@ -70,8 +65,7 @@ public abstract class AbstractView implements Serializable {
 	/**
 	 * Determines whether this view object is overlapping a given view
 	 * 
-	 * @param otherView
-	 *            The other view
+	 * @param otherView The other view
 	 * @return Returns whether this view overlaps with the other view
 	 */
 	public boolean isOverlapping(AbstractView otherView) {

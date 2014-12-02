@@ -141,6 +141,7 @@ public class MainLauncher implements Serializable {
 		// If we can't then disable the swap area
 		try {
 			BrokerConnectionController.getConnection(mainView, gameState);
+			mainView.getSwapAreaView().enable();
 		} catch (ConnectionException e) {
 			mainView.getSwapAreaView().disable();
 		}

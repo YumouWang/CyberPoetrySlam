@@ -38,6 +38,7 @@ public class SwapController {
      */
     public void swap() {
         if(connection == null) { return; }
+        mainView.getSwapAreaView().swapPending();
         ArrayList<String> giveTypes = new ArrayList<String>();
         ArrayList<String> giveWords = new ArrayList<String>();
         ArrayList<String> getTypes = new ArrayList<String>();

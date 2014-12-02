@@ -20,11 +20,12 @@ public class BrokerConnection {
 
     private BrokerClient broker;
     private ReaderThread brokerCommunicationThread;
+    private HandleBrokerMessageImplementation handler;
 
     public BrokerConnection(BrokerClient broker, MainView mainView, GameState gameState) {
         this.broker = broker;
         // Set up the thread to handle incoming communication
-        HandleBrokerMessageImplementation handler = new HandleBrokerMessageImplementation(mainView, gameState);
+        handler = new HandleBrokerMessageImplementation(mainView, gameState);
         brokerCommunicationThread = new ReaderThread(broker, handler);
         brokerCommunicationThread.start();
     }

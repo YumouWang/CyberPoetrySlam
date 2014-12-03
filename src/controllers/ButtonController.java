@@ -11,11 +11,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.JButton;
-
-import controllers.swap.BrokerConnection;
-import controllers.swap.BrokerConnectionController;
-import controllers.swap.ConnectionException;
-import controllers.swap.SwapController;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;

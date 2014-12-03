@@ -27,7 +27,6 @@ public class SwapAreaView extends AbstractView {
     private JPanel swapPanel;
 
     private JButton btnSwap;
-    private JButton btnRevokeSwap;
     private JButton btnReconnect;
 
     private JPanel statusIndicator;
@@ -62,7 +61,7 @@ public class SwapAreaView extends AbstractView {
     private void createControlPanel(JPanel controlPanel) {
         controlPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(0,2,0,2);
+        c.insets = new Insets(0,5,0,5);
         c.fill = GridBagConstraints.HORIZONTAL;
 
         statusIndicator = new JPanel();
@@ -75,13 +74,8 @@ public class SwapAreaView extends AbstractView {
         c.gridx = 1; c.gridy = 0;
         controlPanel.add(btnSwap, c);
 
-        btnRevokeSwap = new JButton("Revoke");
-        c.gridx = 2; c.gridy = 0;
-        controlPanel.add(btnRevokeSwap, c);
-        btnRevokeSwap.setEnabled(false);
-
         btnReconnect = new JButton("Reconnect");
-        c.gridx = 3; c.gridy = 0;
+        c.gridx = 2; c.gridy = 0;
         controlPanel.add(btnReconnect, c);
         btnReconnect.setEnabled(false);
 
@@ -93,7 +87,7 @@ public class SwapAreaView extends AbstractView {
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         // Put it below the other elements
         c.gridx = 0; c.gridy = 1;
-        c.gridwidth = 4;
+        c.gridwidth = 3;
         status.setText("Connecting to broker...");
         status.setOpaque(false);
         status.setPreferredSize(new Dimension(10, 25));
@@ -103,7 +97,7 @@ public class SwapAreaView extends AbstractView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SwapController swapController = new SwapController(mainView, gameState);
-                swapController.swap();
+                swapController.requestSwap();
             }
         });
         btnReconnect.addActionListener(new ActionListener() {
@@ -122,7 +116,7 @@ public class SwapAreaView extends AbstractView {
     private void createInputPanel(JPanel inputPanel) {
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(0,2,0,2);
+        c.insets = new Insets(0,5,0,5);
         c.fill = GridBagConstraints.HORIZONTAL;
 
         inputElements = new ArrayList<ArrayList<JComponent>>();
@@ -146,10 +140,14 @@ public class SwapAreaView extends AbstractView {
             JTextField giveWord = new JTextField();
             c.gridx = 2;
             giveWord.setPreferredSize(new Dimension(80, 25));
+            giveWord.setMinimumSize(new Dimension(80, 25));
             inputPanel.add(giveWord, c);
             elements.add(giveWord);
 
             JComboBox<WordType> giveTypes = new JComboBox<WordType>(WordType.values());
+            Font oldFont = giveTypes.getFont();
+            Font comboBoxFont = new Font(oldFont.getFontName(), oldFont.getStyle(), oldFont.getSize() - 2);
+            giveTypes.setFont(comboBoxFont);
             c.gridx = 3;
             inputPanel.add(giveTypes, c);
             elements.add(giveTypes);
@@ -165,10 +163,12 @@ public class SwapAreaView extends AbstractView {
             JTextField getWord = new JTextField();
             c.gridx = 2;
             getWord.setPreferredSize(new Dimension(80, 25));
+            getWord.setMinimumSize(new Dimension(80, 25));
             inputPanel.add(getWord, c);
             elements.add(getWord);
 
             JComboBox<WordType> getTypes = new JComboBox<WordType>(WordType.values());
+            getTypes.setFont(comboBoxFont);
             c.gridx = 3;
             inputPanel.add(getTypes, c);
             elements.add(getTypes);
@@ -180,7 +180,6 @@ public class SwapAreaView extends AbstractView {
      */
     public void disable() {
         btnSwap.setEnabled(false);
-        btnRevokeSwap.setEnabled(false);
         btnReconnect.setEnabled(true);
         statusIndicator.setBackground(Color.RED);
         status.setText("Unable to connect to broker");
@@ -191,7 +190,6 @@ public class SwapAreaView extends AbstractView {
      */
     public void enable() {
         btnSwap.setEnabled(true);
-        btnRevokeSwap.setEnabled(false);
         btnReconnect.setEnabled(false);
         statusIndicator.setBackground(Color.GREEN);
         status.setText("Connected to broker, ready to swap");
@@ -202,7 +200,6 @@ public class SwapAreaView extends AbstractView {
      */
     public void swapPending() {
         btnSwap.setEnabled(false);
-        btnRevokeSwap.setEnabled(true);
         statusIndicator.setBackground(Color.YELLOW);
         status.setText("Swap Pending");
     }
@@ -212,7 +209,6 @@ public class SwapAreaView extends AbstractView {
      */
     public void swapSuccessful() {
         btnSwap.setEnabled(true);
-        btnRevokeSwap.setEnabled(false);
         statusIndicator.setBackground(Color.GREEN);
         status.setText("Swap Successful");
     }
@@ -222,9 +218,17 @@ public class SwapAreaView extends AbstractView {
      */
     public void swapFailed() {
         btnSwap.setEnabled(true);
-        btnRevokeSwap.setEnabled(false);
         statusIndicator.setBackground(Color.GREEN);
         status.setText("Swap Rejected");
+    }
+
+    /**
+     * Updates the view to reflect that the swap a user requested is not valid
+     */
+    public void swapInvalid() {
+        btnSwap.setEnabled(true);
+        statusIndicator.setBackground(Color.GREEN);
+        status.setText("You can't trade words you don't have!");
     }
 
     /**
@@ -234,4 +238,6 @@ public class SwapAreaView extends AbstractView {
     public JPanel getPanel() {
         return swapPanel;
     }
+
+    public ArrayList<ArrayList<JComponent>> getInputElements() { return inputElements; }
 }

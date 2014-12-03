@@ -13,5 +13,5 @@ public class Constants {
     public static final int AREA_WIDTH = 716;
 
     public static final int BROKER_PORT = 9172;
-    public static final String BROKER_HOSTNAME = "localhost";//"gheineman.cs.wpi.edu";
+    public static final String BROKER_HOSTNAME = "gheineman.cs.wpi.edu";
 }

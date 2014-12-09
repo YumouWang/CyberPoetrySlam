@@ -1,5 +1,12 @@
 package controllers;
 
+import common.Constants;
+import models.AbstractWord;
+import models.GameState;
+import models.Position;
+import views.*;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -9,17 +16,6 @@ import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
-import javax.swing.JButton;
-import models.AbstractWord;
-import models.GameState;
-import models.Position;
-import common.Constants;
-import views.AbstractWordView;
-import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
 
 /**
  * ButtonController handles all the actions for MainView panel buttons

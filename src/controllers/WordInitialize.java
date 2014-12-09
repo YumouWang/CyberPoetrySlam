@@ -1,13 +1,12 @@
 package controllers;
 
+import models.Word;
 import models.WordType;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-
-import models.Word;
 
 /**
  * WordInitialize uses dictionary parser to get a word list from a CSV file

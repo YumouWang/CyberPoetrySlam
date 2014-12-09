@@ -7,8 +7,6 @@ import models.GameState;
 import models.Swap;
 import views.MainView;
 
-import java.util.ArrayList;
-
 /**
  * A wrapper around BrokerClient to make communicating with the broker simpler
  * This class only handles outgoing communication
@@ -38,4 +36,9 @@ public class BrokerConnection {
         System.out.println("Sending: " + requestToSend);
         brokerCommunicationThread.sendMessage(requestToSend);
     }
+
+    public String getSessionID() {
+        return broker.getID();
+    }
+
 }

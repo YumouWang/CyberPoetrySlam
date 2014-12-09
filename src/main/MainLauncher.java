@@ -1,22 +1,16 @@
 package main;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import controllers.swap.BrokerConnection;
 import controllers.swap.BrokerConnectionController;
 import controllers.swap.ConnectionException;
+import controllers.swap.SwapController;
 import models.GameState;
 import models.protectedMemento;
 import models.unprotectedMemento;
 import views.MainView;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
 
 /**
  * The main launcher for starting the program
@@ -121,7 +115,7 @@ public class MainLauncher implements Serializable {
 		unprotectedMemento un = loadUnprotectedMemento(unprotectedWordStorage);
 		protectedMemento p = loadProtectedMemento(protectedWordStorage);
 		// Initialize the GameState object
-		GameState gameState = new GameState(un, p);
+		final GameState gameState = new GameState(un, p);
 		// Initialize the MainView pointing at the GameState
 		final MainView mainView = new MainView(gameState, un, p);
 		// Add a controller to handle user input
@@ -129,6 +123,8 @@ public class MainLauncher implements Serializable {
 		// gameState));
 		mainView.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				SwapController swapController = new SwapController(mainView, gameState);
+				swapController.cancelPendingSwaps();
 				storeState(mainView, unprotectedWordStorage,
 						protectedWordStorage);
 				System.exit(0);

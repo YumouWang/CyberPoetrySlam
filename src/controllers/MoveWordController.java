@@ -1,19 +1,14 @@
 package controllers;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.List;
-
 import common.Constants;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
-import views.AbstractWordView;
-import views.AdjacencyType;
-import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
+import views.*;
+
+import java.awt.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A class for handling moving words

@@ -1,38 +1,19 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Random;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
-
-import controllers.swap.BrokerConnection;
-import models.AbstractWord;
-import models.GameState;
-import models.Poem;
-import models.Position;
-import models.Row;
-import models.Word;
-import models.protectedMemento;
-import models.unprotectedMemento;
 import common.Constants;
 import controllers.ButtonController;
 import controllers.MouseInputController;
+import models.*;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Random;
 
 /**
  * The main view that tracks all other views

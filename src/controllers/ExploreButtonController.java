@@ -1,12 +1,11 @@
 package controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-
 import views.ExploreArea;
 import views.MainView;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ExploreButtonController implements ActionListener {
 	private MainView mainView;

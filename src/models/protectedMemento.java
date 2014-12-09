@@ -1,13 +1,10 @@
 package models;
 
+import views.AbstractWordView;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-
-import views.AbstractWordView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
 
 public class protectedMemento implements Serializable {
 

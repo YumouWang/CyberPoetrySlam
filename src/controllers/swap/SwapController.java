@@ -2,7 +2,6 @@ package controllers.swap;
 
 import common.Constants;
 import models.*;
-import views.AbstractWordView;
 import views.MainView;
 import views.WordView;
 
@@ -72,24 +71,23 @@ public class SwapController {
         }
 
         try {
-            Swap swap = new Swap(gameState, giveTypes, giveWords, getTypes, getWords, true);
+            Swap swap = new Swap(gameState, giveTypes, giveWords, getTypes, getWords, true, connection.getSessionID());
+            gameState.getPendingSwaps().add(swap);
             connection.sendSwapRequest(swap);
         } catch (InvalidSwapException e) {
             mainView.getSwapAreaView().swapInvalid();
         }
     }
 
+    /**
+     * Executes the Swap
+     * @param swap The swap to execute
+     */
     public void executeSwap(Swap swap) {
-        List<Word> oldWords = swap.getMyWords();
         List<String> newWords = swap.getTheirWords();
         List<WordType> newTypes = swap.getTheirTypes();
 
-        for(Word myWord : oldWords) {
-            gameState.getUnprotectedArea().removeAbstractWord(myWord);
-            WordView wordView = (WordView)mainView.getUnprotectedAbstractWordById(myWord.getId());
-            mainView.removeLabelOf(wordView);
-            mainView.removeUnprotectedAbstractWordView(wordView);
-        }
+        removeSwapWords(swap);
         for(int i = 0; i < newWords.size(); i++) {
             Word word = new Word(newWords.get(i), newTypes.get(i));
             gameState.getUnprotectedArea().addAbstractWord(word);
@@ -102,6 +100,50 @@ public class SwapController {
             WordView wordView = new WordView(word, new Position(x, y));
             mainView.addLabelOf(wordView);
             mainView.addUnprotectedAbstractWordView(wordView);
+        }
+    }
+
+    /**
+     * Hides the words in the swap by removing them from the mainView and gameState
+     */
+    void removeSwapWords(Swap swap) {
+        List<Word> oldWords = swap.getMyWords();
+        for(Word myWord : oldWords) {
+            gameState.getUnprotectedArea().removeAbstractWord(myWord);
+            WordView wordView = (WordView)mainView.getUnprotectedAbstractWordById(myWord.getId());
+            mainView.removeLabelOf(wordView);
+            mainView.removeUnprotectedAbstractWordView(wordView);
+        }
+    }
+
+    /**
+     * Cancels the current swap and puts the words back in the mainView and gameState. Opposite of hideWords
+     */
+    public void cancelSwap(Swap swap) {
+        if(swap != null && !swap.getIsCancelled()) {
+            List<Word> myWords = swap.getMyWords();
+            for(Word myWord : myWords) {
+                gameState.getUnprotectedArea().addAbstractWord(myWord);
+                Random random = new Random();
+                // Randomly determine the position of the word in the unprotected area
+                int x = random.nextInt(Constants.AREA_WIDTH - 100);
+                int y = random.nextInt(Constants.AREA_HEIGHT
+                        - Constants.PROTECTED_AREA_HEIGHT - 20)
+                        + Constants.PROTECTED_AREA_HEIGHT;
+                WordView wordView = new WordView(myWord, new Position(x, y));
+                mainView.addLabelOf(wordView);
+                mainView.addUnprotectedAbstractWordView(wordView);
+            }
+            swap.setIsCancelled(true);
+        }
+    }
+
+    /**
+     * Cancels all the pending swaps
+     */
+    public void cancelPendingSwaps() {
+        for(Swap swap: gameState.getPendingSwaps()) {
+            cancelSwap(swap);
         }
     }
 }

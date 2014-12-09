@@ -7,7 +7,7 @@ import models.GameState;
 import models.Swap;
 import views.MainView;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 /**
@@ -33,13 +33,23 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
         StringTokenizer st = new StringTokenizer(msg, ":");
         String msgType = st.nextToken();
         String requestorID = st.nextToken();
-        String acceptorID = st.nextToken();
+        String acceptorID = "";
+        if(st.hasMoreTokens()) {
+            acceptorID = st.nextToken();
+        }
         if(msgType.equals(IProtocol.denySwapMsg)) {
             mainView.getSwapAreaView().swapFailed();
+            SwapController swapController = new SwapController(mainView, gameState);
+            Collection<Swap> swaps = gameState.getPendingSwaps();
+            for(Swap s : swaps) {
+                if(requestorID.equals(s.getRequestorID())) {
+                    swapController.cancelSwap(s);
+                }
+            }
         } else if(msgType.equals(IProtocol.matchSwapMsg)) {
             try {
                 // Try to create the swap, if it's successful then it means we can fulfill the swap
-                Swap swap = Swap.getSwap(gameState, msg, false);
+                Swap swap = Swap.getSwap(gameState, msg, false, requestorID);
                 String responseString = IProtocol.confirmSwapMsg + IProtocol.separator;
                 responseString += requestorID + IProtocol.separator;
                 responseString += acceptorID + IProtocol.separator;
@@ -54,17 +64,19 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                 brokerClient.getBrokerOutput().println(responseString);
             }
         } else if(msgType.equals(IProtocol.confirmSwapMsg)) {
-            try {
-                // Try to fulfill the swap, it should be successful
-                Swap swap = Swap.getSwap(gameState, msg, requestorID.equals(brokerClient.getID()));
-                SwapController swapController = new SwapController(mainView, gameState);
-                swapController.executeSwap(swap);
-                mainView.getSwapAreaView().swapSuccessful();
-            } catch (InvalidSwapException e) {
-                // Swap request cannot be fulfilled. This is bad,
-                // we said we could do a swap but now we can't
-                e.printStackTrace();
+            SwapController swapController = new SwapController(mainView, gameState);
+            Collection<Swap> swaps = gameState.getPendingSwaps();
+            for(Swap s : swaps) {
+                if(requestorID.equals(s.getRequestorID())) {
+                    try {
+                        s.updateTheirWordsForConfirmSwap(msg, requestorID.equals(brokerClient.getID()));
+                        swapController.executeSwap(s);
+                    } catch (InvalidSwapException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+            mainView.getSwapAreaView().swapSuccessful();
         } else {
             try {
                 throw new ConnectionException("Bad message from broker");

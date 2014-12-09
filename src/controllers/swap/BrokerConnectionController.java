@@ -15,7 +15,7 @@ public class BrokerConnectionController {
     /**
      * The singleton connection to the broker
      */
-    private static BrokerConnection connection;
+    static BrokerConnection connection;
 
     /**
      * Implementation of the singleton pattern for maintaining a single connection with the broker

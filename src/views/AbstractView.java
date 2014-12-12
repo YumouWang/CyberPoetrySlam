@@ -67,7 +67,9 @@ public abstract class AbstractView implements Serializable{
 	 * @return Returns whether this view overlaps with the other view
 	 */
 	public boolean isOverlapping(AbstractView otherView) {
-		//System.out.println(otherView == null);
+		if(otherView instanceof PoemView) {
+			return otherView.isOverlapping(this);
+		}
 		boolean isOverlapping = false;
 		Position otherPosition = otherView.getPosition();
 		Position otherBottomRightPosition = new Position(otherPosition.getX()

@@ -5,6 +5,7 @@ import models.GameState;
 import models.Position;
 import views.AbstractWordView;
 import views.AdjacencyType;
+import views.ConnectionBox;
 import views.MainView;
 import views.WordView;
 
@@ -47,7 +48,7 @@ public class UndoDisconnectAbstractWord extends UndoMove{
 		//System.out.println("NJBJKBJK" + " " + wordViewOne.getWord().getValue());
 		MoveWordController moveController = new MoveWordController(
 				mainView, gameState);
-		if ((wordViewOne instanceof WordView) && (connectTarget instanceof WordView)) {
+		//if ((wordViewOne instanceof WordView) && (connectTarget instanceof WordView)) {
 			AbstractWord wordOne = wordViewOne.getWord();
 			AbstractWord wordTwo = connectTarget.getWord();
 			//System.out.println("NJBJKBJK" + " " + wordTwo.getValue());
@@ -76,44 +77,42 @@ public class UndoDisconnectAbstractWord extends UndoMove{
 			// wordViewOne.getPosition(),oldp);
 			moveController.moveWord(wordViewOne, oldp, newp);
 			//moveController.moveWord(wordViewOne, newp, oldp);
-		}
+		/*}
 		else {
 			DisconnectController disconnectController = new DisconnectController(mainView, gameState);
 			disconnectController.disconnect(wordViewOne, connectTarget);
 			//moveController.moveWord(wordViewOne, newp, oldp);
 			moveController.moveWord(wordViewOne, oldp, newp);
-		}
+		}*/
 		return true;
 	}
 
 	
 	@Override
 	public boolean undo() {
-		if(oldp.getX() <= targetPosition.getX()) {
-			oldp.setX(newp.getX() - 3);
+		
+		Position test = new Position(oldp.getX(), oldp.getY());
+		if (test.equals(targetPosition)){
+			test.setX(oldp.getX() - 3);
+			test.setY(oldp.getY() - 3);
 		}
-		else {
-			oldp.setX(oldp.getX() + 3);
-		}
-		if(oldp.getY() >= targetPosition.getY()) {
-			oldp.setY(oldp.getY() + 3);
-		}
-		else {
-			oldp.setY(oldp.getY() - 3);
+		else{
+			test.setX(oldp.getX() + 3);
+			test.setY(oldp.getY() + 3);
 		}
 		MoveWordController moveController = new MoveWordController(mainView, gameState);
-        moveController.moveWord(wordViewOne,newp,oldp);		
+        moveController.moveWord(wordViewOne,newp,test);		
         //AbstractWordView connectTarget = null;
         for (AbstractWordView word : mainView.getProtectedWordView()) {
             if (!word.equals(wordViewOne)) {
                 AdjacencyType adjacencyType = wordViewOne.isAdjacentTo(word);
                 if (adjacencyType != AdjacencyType.NOT_ADJACENT) {
-                    connectTarget = word;
+                    this.connectTarget = word;
                 }
             }
         }        
         ConnectController controller = new ConnectController(mainView, gameState);
-        controller.connect(wordViewOne, connectTarget);  
+        controller.connect(wordViewOne, this.connectTarget);  
 		return true;
 	}
 }

@@ -119,13 +119,11 @@ public class MouseInputController extends MouseAdapter {
 				DisconnectController controller = new DisconnectController(
 						mainView, gameState);
 				if (controller.disconnect(selectedWordToDisconnect,
-						selectedWord)) {
-					
+						selectedWord)) {					
 					selectedWord.setBackground(Color.LIGHT_GRAY);
-	                //selectedWordCopy = (AbstractWordView) selectedWord.clone();                
+	                selectedWordCopy = (AbstractWordView) selectedWord.clone();                
 	                selectedWord = selectedWordToDisconnect;
 	                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
-	                //here indicates disconnect happens here
 	                this.isDisconnect = true;
 				}
 			}
@@ -213,8 +211,10 @@ public class MouseInputController extends MouseAdapter {
 			if (connectTarget != null) {
 				ConnectController controller = new ConnectController(mainView,
 						gameState);
+				Position targetPosition = connectTarget.getPosition();
+				//System.out.println("44444 "+connectTarget.getWord().getValue());
 				controller.connect(selectedWord, connectTarget);// connectTarget
-																// is RowView;
+				//System.out.println("55555 "+connectTarget.getWord().getValue());
 				// Here is to create connect move
 				this.isConnect = true;
 				Position oldp = new Position(this.originalx
@@ -222,7 +222,7 @@ public class MouseInputController extends MouseAdapter {
 						this.originaly
 								+ selectedWordPositionRelativeToMouse.getY());
 				Position newp = mousePosition;
-				Position targetPosition = connectTarget.getPosition();
+				
 				UndoConnectAbstractWord undoConnect = new UndoConnectAbstractWord(
 						targetPosition, oldp, newp, selectedWord,
 						connectTarget, mainView, gameState);

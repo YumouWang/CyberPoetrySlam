@@ -80,11 +80,11 @@ public class ShiftRowController {
 		if (mainView.isMoveOutOfBounds(theRow, theRow.getPosition())) {
 			isOutOfBounds = true;
 		}
-		
-		if(isOutOfBounds) {
+
+		if (isOutOfBounds) {
 			shiftRowTemp(selectedPoem, theRow, -shiftAmount);
 		}
-		
+
 	}
 
 	public void shiftRowTemp(PoemView selectedPoem,

@@ -95,7 +95,7 @@ public class MouseInputController extends MouseAdapter {
 				break;
 			}
 		}
-
+		
 		if (selectedWord != null
 				&& selectedWord.contains(selectedWordToDisconnect)
 				&& selectedWordToDisconnect.isClicked(mouseDownPosition)) {
@@ -130,6 +130,11 @@ public class MouseInputController extends MouseAdapter {
 	}
 
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
+		if(selectedWord !=null || selectedWordToDisconnect == null 
+				|| isShift) {
+			return;
+		}
+		
 		if (selectedWord != null) {
 			MoveWordController moveController = new MoveWordController(
 					mainView, gameState);

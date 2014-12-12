@@ -15,7 +15,7 @@ public class unprotectedMementoTest {
 	public void testConstructor() throws Exception {
 		Collection<AbstractWordView> abs = new HashSet<AbstractWordView>();
 		abs.add(new WordView(new Word("Dog", WordType.NOUN), new Position(0, 0)));
-		unprotectedMemento un = new unprotectedMemento(abs);
+		UnprotectedMemento un = new UnprotectedMemento(abs);
 		assertNotNull(un);
 	}
 
@@ -23,7 +23,7 @@ public class unprotectedMementoTest {
 	public void testGetUnprotectedView() throws Exception {
 		Collection<AbstractWordView> abs = new HashSet<AbstractWordView>();
 		abs.add(new WordView(new Word("Dog", WordType.NOUN), new Position(0, 0)));
-		unprotectedMemento un = new unprotectedMemento(abs);
+		UnprotectedMemento un = new UnprotectedMemento(abs);
 		assertEquals(abs, un.getUnprotectedView());
 	}
 

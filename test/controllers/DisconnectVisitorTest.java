@@ -26,8 +26,8 @@ public class DisconnectVisitorTest {
 	PoemView poemViewOne;
 	PoemView poemViewTwo;
 	DisconnectVisitor disconnectVisitor;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void setUp() throws Exception {

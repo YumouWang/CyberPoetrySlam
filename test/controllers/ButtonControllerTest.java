@@ -8,8 +8,8 @@ import models.Position;
 import models.Row;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +32,8 @@ public class ButtonControllerTest {
 	RowView rowViewTwo;
 	Poem poemOne;
 	PoemView poemViewOne;
-	unprotectedMemento unprotectedMemeneto;
-	protectedMemento protectedMemento;
+	UnprotectedMemento unprotectedMemeneto;
+	ProtectedMemento protectedMemento;
 	ButtonController buttonController;
 
 	@Before

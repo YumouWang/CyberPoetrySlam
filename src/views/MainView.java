@@ -45,7 +45,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @param gameState
 	 *            The GameState that this view represents
 	 */
-	public MainView(GameState gameState, unprotectedMemento un, protectedMemento p) {
+	public MainView(GameState gameState, UnprotectedMemento un, ProtectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		setSize(1027, 735);
@@ -309,12 +309,12 @@ public class MainView extends JFrame implements Serializable {
 		}
 	}
 
-	public unprotectedMemento getUnprotectedState() {
-		return new unprotectedMemento(this.unprotectedAreaWords.values());
+	public UnprotectedMemento getUnprotectedState() {
+		return new UnprotectedMemento(this.unprotectedAreaWords.values());
 	}
 
-	public protectedMemento getProtectedState() {
-		return new protectedMemento(this.protectedAreaWords.values());
+	public ProtectedMemento getProtectedState() {
+		return new ProtectedMemento(this.protectedAreaWords.values());
 	}
 
 	public Collection<AbstractWordView> getUnprotectedWordView() {

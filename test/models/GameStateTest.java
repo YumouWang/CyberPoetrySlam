@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 public class GameStateTest {
 
 	GameState gameState;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {
@@ -26,11 +26,11 @@ public class GameStateTest {
 		Collection<AbstractWordView> absProtect = new HashSet<AbstractWordView>();
 		absProtect.add(new WordView(new Word("Dog", WordType.NOUN),
 				new Position(0, 0)));
-		p = new protectedMemento(absProtect);
+		p = new ProtectedMemento(absProtect);
 		Collection<AbstractWordView> absUnprotect = new HashSet<AbstractWordView>();
 		absUnprotect.add(new WordView(new Word("Dog", WordType.NOUN),
 				new Position(0, 0)));
-		un = new unprotectedMemento(absUnprotect);
+		un = new UnprotectedMemento(absUnprotect);
 		gameState = new GameState(un, p);
 		assertEquals(1, gameState.getProtectedArea()
 				.getAbstractWordCollection().size());

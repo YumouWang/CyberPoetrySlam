@@ -35,16 +35,12 @@ public class GameState implements Serializable {
 	/**
 	 * Constructor
 	 */
-	public GameState(unprotectedMemento un, protectedMemento p) {
+
+	public GameState(UnprotectedMemento un, ProtectedMemento p) {
 		pendingSwaps = new HashSet<Swap>();
 		if (un == null && p == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-			// protectedWords.add(new Word("Cat", WordType.NOUN));
-			// protectedWords.add(new Word("Dog", WordType.NOUN));
-			// protectedWords.add(new Word("Mouse", WordType.NOUN));
-			// protectedWords.add(new Word("Tiger", WordType.NOUN));
-			// protectedWords.add(new Word("Bear", WordType.NOUN));
-			// protectedWords.add(new Word("Lion", WordType.NOUN));
+			
 
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
@@ -53,12 +49,7 @@ public class GameState implements Serializable {
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}
-			// unprotectedWords.add(new Word("River", WordType.NOUN));
-			// unprotectedWords.add(new Word("Sun", WordType.NOUN));
-			// unprotectedWords.add(new Word("Moon", WordType.NOUN));
-			// unprotectedWords.add(new Word("Tree", WordType.NOUN));
-			// unprotectedWords.add(new Word("Sea", WordType.NOUN));
-			// unprotectedWords.add(new Word("Lake", WordType.NOUN));
+			
 
 			protectedArea = new Area(protectedWords);
 			unprotectedArea = new Area(unprotectedWords);

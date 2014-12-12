@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class unprotectedMemento implements Serializable {
+public class UnprotectedMemento implements Serializable {
 
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class unprotectedMemento implements Serializable {
 
 	private Collection<AbstractWordView> unprotectedViews = new HashSet<AbstractWordView>();
 
-	public unprotectedMemento(Collection<AbstractWordView> view) {
+	public UnprotectedMemento(Collection<AbstractWordView> view) {
 		unprotectedViews.addAll(view);
 	}
 

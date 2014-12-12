@@ -1,13 +1,13 @@
 package models;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-
+import controllers.WordInitialize;
 import views.AbstractWordView;
 import views.RowView;
 import views.WordView;
-import controllers.WordInitialize;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The main model class that tracks all other models
@@ -27,6 +27,8 @@ public class GameState implements Serializable {
 	Collection<AbstractWordView> unprotectedWordViews;
 	Collection<AbstractWordView> protectedWordViews;
 
+	Collection<Swap> pendingSwaps;
+
 	Area protectedArea;
 	Area unprotectedArea;
 
@@ -34,6 +36,7 @@ public class GameState implements Serializable {
 	 * Constructor
 	 */
 	public GameState(unprotectedMemento un, protectedMemento p) {
+		pendingSwaps = new HashSet<Swap>();
 		if (un == null && p == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
 			// protectedWords.add(new Word("Cat", WordType.NOUN));
@@ -141,4 +144,6 @@ public class GameState implements Serializable {
 	public Area getUnprotectedArea() {
 		return unprotectedArea;
 	}
+
+	public Collection<Swap> getPendingSwaps() { return pendingSwaps; }
 }

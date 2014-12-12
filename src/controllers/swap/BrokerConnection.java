@@ -4,10 +4,8 @@ import broker.BrokerClient;
 import broker.handler.ReaderThread;
 import broker.util.IProtocol;
 import models.GameState;
+import models.Swap;
 import views.MainView;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
  * A wrapper around BrokerClient to make communicating with the broker simpler
@@ -30,33 +28,17 @@ public class BrokerConnection {
         brokerCommunicationThread.start();
     }
 
-    public void sendSwapRequest(ArrayList<String> giveTypes, ArrayList<String> giveWords,
-                                ArrayList<String> getTypes, ArrayList<String> getWords) throws SwapException {
-        int size = giveTypes.size();
-        if(size != giveWords.size() || size != getTypes.size() || size != getWords.size()) {
-            throw new SwapException("Invalid swap input");
-        }
-        String swapString = "" + size;
-        for(String s : giveTypes) {
-            swapString += IProtocol.separator + s;
-        }
-        for(String s : giveWords) {
-            swapString += IProtocol.separator + s;
-        }
-        for(String s : getTypes) {
-            swapString += IProtocol.separator + s;
-        }
-        for(String s : getWords) {
-            swapString += IProtocol.separator + s;
-        }
-
-        System.out.println(constructMessage(swapString));
-        brokerCommunicationThread.sendMessage(constructMessage(swapString));
-    }
-
-    private String constructMessage(String message) {
-        return IProtocol.requestSwapMsg + IProtocol.separator +
+    public void sendSwapRequest(Swap swap) {
+        String requestToSend = IProtocol.requestSwapMsg + IProtocol.separator +
                 broker.getID() + IProtocol.separator + "*" + IProtocol.separator +
-                message;
+                swap.toString();
+
+        System.out.println("Sending: " + requestToSend);
+        brokerCommunicationThread.sendMessage(requestToSend);
     }
+
+    public String getSessionID() {
+        return broker.getID();
+    }
+
 }

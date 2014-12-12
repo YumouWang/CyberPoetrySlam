@@ -1,38 +1,19 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Random;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
-
-import controllers.swap.BrokerConnection;
-import models.AbstractWord;
-import models.GameState;
-import models.Poem;
-import models.Position;
-import models.Row;
-import models.Word;
-import models.protectedMemento;
-import models.unprotectedMemento;
 import common.Constants;
 import controllers.ButtonController;
 import controllers.MouseInputController;
+import models.*;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Random;
 
 /**
  * The main view that tracks all other views
@@ -48,8 +29,6 @@ public class MainView extends JFrame implements Serializable {
 	private static final long serialVersionUID = -4809871727043385666L;
 	Hashtable<Long, AbstractWordView> protectedAreaWords;
 	Hashtable<Long, AbstractWordView> unprotectedAreaWords;
-	Collection<AbstractWordView> unprotectedWordViews;
-	Collection<AbstractWordView> protectedWordViews;
 	Container contentPane;
 	private JPanel panel;
 	private ExploreArea exploreArea;
@@ -69,6 +48,7 @@ public class MainView extends JFrame implements Serializable {
 	public MainView(GameState gameState, unprotectedMemento un, protectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
+		setSize(1027, 735);
 		contentPane = getContentPane();
 		contentPane.setLayout(null);
 
@@ -81,8 +61,6 @@ public class MainView extends JFrame implements Serializable {
 
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
 		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
-		unprotectedWordViews = new HashSet<AbstractWordView>();
-		protectedWordViews = new HashSet<AbstractWordView>();
 
 		if (p == null && un == null) {
 			Random random = new Random();
@@ -94,7 +72,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView((Word) word, new Position(x, y));
 				panel.add(view.label);
 				addProtectedAbstractWordView(view);
-				protectedWordViews.add(view);
 			}
 
 			Collection<AbstractWord> unprotectedWords = gameState
@@ -107,7 +84,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView((Word) word, new Position(x, y));
 				panel.add(view.label);
 				addUnprotectedAbstractWordView(view);
-				unprotectedWordViews.add(view);
 			}
 		} else {
 			Collection<AbstractWordView> unprotectedWordViewTemps = un
@@ -121,7 +97,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView(w, position);
 				panel.add(view.label);
 				addUnprotectedAbstractWordView(view);
-				unprotectedWordViews.add(view);
 			}
 			for (AbstractWordView abs : protectedWordViewTemps) {
 				if (abs instanceof WordView) {
@@ -131,7 +106,6 @@ public class MainView extends JFrame implements Serializable {
 					WordView view = new WordView(w, position);
 					panel.add(view.label);
 					addProtectedAbstractWordView(view);
-					protectedWordViews.add(view);
 					System.out.println(wordView.getWord());
 				} else if (abs instanceof RowView) {
 					Row r = (Row) abs.getWord();
@@ -142,7 +116,6 @@ public class MainView extends JFrame implements Serializable {
 					}
 					RowView rowView = new RowView(r, abs.getPosition(), this);
 					addProtectedAbstractWordView(rowView);
-					protectedWordViews.add(rowView);
 					for (WordView w : list) {
 						removeProtectedAbstractWordView(w);
 					}
@@ -159,9 +132,7 @@ public class MainView extends JFrame implements Serializable {
 
 						addProtectedAbstractWordView(rowView);
 					}
-					PoemView poemView = new PoemView(poem, abs.getPosition(),
-							this);
-					protectedWordViews.add(poemView);
+					PoemView poemView = new PoemView(poem, abs.getPosition(), this);
 					addProtectedAbstractWordView(poemView);
 					for (RowView rowView : rowList) {
 						List<WordView> list = rowView.getWordViews();
@@ -347,12 +318,10 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	public Collection<AbstractWordView> getUnprotectedWordView() {
-		// return this.unprotectedWordViews;
 		return this.unprotectedAreaWords.values();
 	}
 
 	public Collection<AbstractWordView> getProtectedWordView() {
-		// return this.protectedWordViews;
 		return this.protectedAreaWords.values();
 	}
 
@@ -376,5 +345,13 @@ public class MainView extends JFrame implements Serializable {
 
 	public MouseInputController getMouseInputController() {
 		return mouseInputController;
+	}
+
+	public void addLabelOf(WordView wordView) {
+		panel.add(wordView.label);
+	}
+
+	public void removeLabelOf(WordView wordView) {
+		panel.remove(wordView.label);
 	}
 }

@@ -1,12 +1,12 @@
 package controllers;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
 import views.MainView;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Search Area controller

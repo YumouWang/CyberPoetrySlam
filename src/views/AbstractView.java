@@ -1,10 +1,8 @@
 package views;
 
-import java.io.Serializable;
-
 import models.Position;
 
-import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * The base class for each view component of CyberPoetrySlam

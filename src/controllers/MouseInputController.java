@@ -1,10 +1,12 @@
 package controllers;
 
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.List;
+
 
 import models.GameState;
 import models.Position;
@@ -14,6 +16,11 @@ import views.MainView;
 import views.PoemView;
 import views.RowView;
 import views.WordView;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Collection;
 
 /**
  * A controller for handling mouse input. Delegates to other controllers. Unlike

@@ -5,8 +5,8 @@ package controllers.swap;
  * @author Nathan
  * @version 11/30/2014
  */
-public class SwapException extends Throwable {
-    public SwapException(String msg) {
+public class InvalidSwapException extends Throwable {
+    public InvalidSwapException(String msg) {
         super(msg);
     }
 }

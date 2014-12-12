@@ -1,7 +1,10 @@
 package controllers;
 
 import models.*;
-import views.*;
+import views.MainView;
+import views.PoemView;
+import views.RowView;
+import views.WordView;
 
 import java.util.ArrayList;
 import java.util.List;

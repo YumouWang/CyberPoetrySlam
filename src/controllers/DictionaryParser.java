@@ -1,12 +1,10 @@
 package controllers;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Set;
 /**
  * Dictionary parser to get a word list from a CSV file
  * 

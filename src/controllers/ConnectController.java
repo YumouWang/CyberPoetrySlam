@@ -30,7 +30,7 @@ public class ConnectController {
      * Connects two words. Handles deciding how they should be connected based on their positions.
      * @param wordOne The first word to connect
      * @param wordTwo The second word to connect
-     * @Return Returns whether the connect was successful
+     * @return Returns whether the connect was successful
      */
     public boolean connect(AbstractWordView wordOne, AbstractWordView wordTwo) {
         AdjacencyType adjacencyType = wordOne.isAdjacentTo(wordTwo);
@@ -56,7 +56,7 @@ public class ConnectController {
      * Private helper for ConnectController. Connects wordViewOne to wordViewTwo horizontally
      * @param wordViewOne The word to connect to the left
      * @param wordViewTwo The word to connect to the right
-     * @Return Returns whether the connect was successful
+     * @return Returns whether the connect was successful
      */
     boolean connectHorizontal(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) {
         HorizontalConnectionVisitor connector = new HorizontalConnectionVisitor(mainView, gameState);
@@ -67,7 +67,7 @@ public class ConnectController {
      * Private helper for ConnectController. Connects wordViewOne to wordViewTwo vertically
      * @param wordViewOne The word to connect to the top
      * @param wordViewTwo The word to connect to the bottom
-     * @Return Returns whether the connect was successful
+     * @return Returns whether the connect was successful
      */
     boolean connectVertical(AbstractWordView wordViewOne, AbstractWordView wordViewTwo) {
         VerticalConnectionVisitor connector = new VerticalConnectionVisitor(mainView, gameState);

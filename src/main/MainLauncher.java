@@ -4,8 +4,8 @@ import controllers.swap.BrokerConnectionController;
 import controllers.swap.ConnectionException;
 import controllers.swap.SwapController;
 import models.GameState;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 import views.MainView;
 
 import java.awt.event.WindowAdapter;
@@ -14,11 +14,16 @@ import java.io.*;
 
 /**
  * The main launcher for starting the program
+<<<<<<< HEAD
+ *
+ * Created by Yumou and Jian on 10/3/2014.
+=======
  * 
  * @author Yumou
  * @author Jian
  * @author Nathan
  * @version 10/3/2014
+>>>>>>> c5fde96a5cd10ad69f37e14637f6fde443154ecf
  */
 public class MainLauncher implements Serializable {
 
@@ -66,12 +71,12 @@ public class MainLauncher implements Serializable {
 		}
 	}
 
-	static unprotectedMemento loadUnprotectedMemento(String location) {
+	static UnprotectedMemento loadUnprotectedMemento(String location) {
 		ObjectInputStream ois = null;
-		unprotectedMemento un = null;
+		UnprotectedMemento un = null;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(location));
-			un = (unprotectedMemento) ois.readObject();
+			un = (UnprotectedMemento) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
 			// unable to perform restore
@@ -87,12 +92,12 @@ public class MainLauncher implements Serializable {
 		return un;
 	}
 
-	static protectedMemento loadProtectedMemento(String location) {
+	static ProtectedMemento loadProtectedMemento(String location) {
 		ObjectInputStream ois = null;
-		protectedMemento p = null;
+		ProtectedMemento p = null;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(location));
-			p = (protectedMemento) ois.readObject();
+			p = (ProtectedMemento) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
 			// unable to perform restore
@@ -112,8 +117,8 @@ public class MainLauncher implements Serializable {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		unprotectedMemento un = loadUnprotectedMemento(unprotectedWordStorage);
-		protectedMemento p = loadProtectedMemento(protectedWordStorage);
+		UnprotectedMemento un = loadUnprotectedMemento(unprotectedWordStorage);
+		ProtectedMemento p = loadProtectedMemento(protectedWordStorage);
 		// Initialize the GameState object
 		final GameState gameState = new GameState(un, p);
 		// Initialize the MainView pointing at the GameState

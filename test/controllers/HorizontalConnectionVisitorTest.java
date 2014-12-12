@@ -26,8 +26,8 @@ public class HorizontalConnectionVisitorTest {
 	PoemView poemViewOne;
 	PoemView poemViewTwo;
 	HorizontalConnectionVisitor horizontalConnectionVisitor;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void setUp() throws Exception {

@@ -268,6 +268,15 @@ public class PoemView extends AbstractWordView implements Serializable {
 		return (Poem) word;
 	}
 
+	
+	@Override
+	public Object clone() {
+		PoemView poemView = null;
+		poemView = (PoemView) super.clone();
+		return poemView;
+	}
+
+
 	/**
 	 * Determines whether this view object is overlapping a given view
 	 *
@@ -322,5 +331,6 @@ public class PoemView extends AbstractWordView implements Serializable {
 			isClicked = isClicked || rowView.isClicked(click);
 		}
 		return isClicked;
+
 	}
 }

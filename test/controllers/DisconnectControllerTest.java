@@ -4,8 +4,8 @@ import models.GameState;
 import models.Position;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Test;
 
@@ -14,8 +14,8 @@ import views.WordView;
 import static org.junit.Assert.*;
 
 public class DisconnectControllerTest {
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Test
 	public void testDisconnect() throws Exception {

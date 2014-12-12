@@ -29,6 +29,7 @@ import java.util.Collection;
  * 
  * @author Nathan
  * @author YangWang
+ * @author Jian
  * @version 10/4/2014
  */
 public class MouseInputController extends MouseAdapter {
@@ -198,8 +199,7 @@ public class MouseInputController extends MouseAdapter {
 				}
 			}
 			if (connectTarget != null) {
-				ConnectController controller = new ConnectController(mainView,
-						gameState);
+				ConnectController controller = new ConnectController(mainView, gameState);
 				controller.connect(selectedWord, connectTarget);
 			}
 		}

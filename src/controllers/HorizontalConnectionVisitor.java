@@ -3,7 +3,10 @@ package controllers;
 import models.*;
 import views.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.awt.*;
+
 
 /**
  * A realization of the AbstractWordViewVisitor interface for connecting two words
@@ -150,8 +153,20 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewOne, WordView wordViewTwo) {
-        // Cannot horizontally connect a poem and a word, so do nothing
-        return false;
+        List<RowView> rowViews = poemViewOne.getRowViews();
+        boolean successful = false;
+        for(RowView rowView : rowViews) {
+            AdjacencyType adjacencyType = rowView.isAdjacentTo(wordViewTwo);
+            if(adjacencyType == AdjacencyType.RIGHT) {
+                successful = visit(wordViewTwo, rowView);
+                break;
+            } else if(adjacencyType == AdjacencyType.LEFT) {
+                successful = visit(rowView, wordViewTwo);
+                break;
+            }
+        }
+
+        return successful;
     }
 
     @Override
@@ -176,8 +191,22 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     protected boolean connectionCausesOverlap(AbstractWordView one, AbstractWordView two) {
         // Check if the connection will cause an overlap
         Position targetPosition = new Position(one.getPosition().getX() + one.getWidth() + 1, one.getPosition().getY());
-        MoveWordController moveWordController = new MoveWordController(mainView, gameState);
-        moveWordController.moveWord(two, two.getPosition(), targetPosition);
-        return !two.getPosition().equals(targetPosition);
+        Position originalPosition = two.getPosition();
+        two.moveTo(targetPosition);
+        // Check if it's overlapping with other words
+        Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
+        boolean isOverlapping = false;
+        for (AbstractWordView word : words) {
+            if (!word.equals(two) && !(word.equals(one) || word.contains(one))) {
+                if (word.isOverlapping(two)) {
+                    isOverlapping = true;
+                }
+            }
+        }
+        if(isOverlapping) {
+            two.moveTo(originalPosition);
+            return true;
+        }
+        return false;
     }
 }

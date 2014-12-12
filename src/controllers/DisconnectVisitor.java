@@ -33,29 +33,8 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewToDisconnectFrom, WordView wordView) {
-        // This is not for regular disconnect function. This disconnection only works for undo/redo
-    		Word word = wordView.getWord();
-    		Word wordToDisconnect = wordViewToDisconnectFrom.getWord();
-    		System.out.println(word + " " + wordToDisconnect + "" + protectedArea.getAbstractWordCollection().size());
-    		boolean result = true;
-    		for (AbstractWord abstractWord: protectedArea.getAbstractWordCollection()){
-    			System.out.println(abstractWord.getValue());
-    			if(abstractWord.contains(wordToDisconnect)){
-    				protectedArea.removeAbstractWord(abstractWord);
-    				break;
-    			}
-    		}
-    		protectedArea.addAbstractWord(word);
-    		protectedArea.addAbstractWord(wordToDisconnect);
-    		for (AbstractWordView abstractWordView: mainView.getProtectedWordView()){
-    			if(abstractWordView.contains(wordViewToDisconnectFrom)){
-    				mainView.removeProtectedAbstractWordView(abstractWordView);
-    				break;
-    			}
-    		}
-    		mainView.addProtectedAbstractWordView(wordView);
-    		mainView.addProtectedAbstractWordView(wordViewToDisconnectFrom);
-        return result;
+        // Cannot disconnect a word from another word, so do nothing
+        return false;
     }
 
     @Override

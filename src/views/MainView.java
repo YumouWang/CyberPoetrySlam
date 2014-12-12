@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,15 +27,17 @@ import models.Poem;
 import models.Position;
 import models.Row;
 import models.Word;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 import common.Constants;
 import controllers.ButtonController;
+import controllers.UndoMove;
+
 
 /**
  * The main view that tracks all other views
  * 
- * Created by Yumou on 10/4/2014.
+ * Created by Yumou and Jian on 10/4/2014.
  */
 public class MainView extends JFrame implements Serializable {
 
@@ -54,6 +57,9 @@ public class MainView extends JFrame implements Serializable {
 	public JButton btnUndo;
 	public JButton btnSave;
 	public JButton btnSwap;
+	
+	Stack<UndoMove> moves = new Stack<UndoMove>();
+	Stack<UndoMove> redoMoves = new Stack<UndoMove>();
 
 	/**
 	 * Constructor
@@ -61,8 +67,8 @@ public class MainView extends JFrame implements Serializable {
 	 * @param gameState
 	 *            The GameState that this view represents
 	 */
-	public MainView(GameState gameState, unprotectedMemento un,
-			protectedMemento p) {
+	public MainView(GameState gameState, UnprotectedMemento un,
+			ProtectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = getContentPane();
@@ -170,6 +176,7 @@ public class MainView extends JFrame implements Serializable {
 
 			}
 		}
+		
 		contentPane.add(panel);
 
 		JLabel label = new JLabel("");
@@ -338,12 +345,12 @@ public class MainView extends JFrame implements Serializable {
 		}
 	}
 
-	public unprotectedMemento getUnprotectedState() {
-		return new unprotectedMemento(this.unprotectedAreaWords.values());
+	public UnprotectedMemento getUnprotectedState() {
+		return new UnprotectedMemento(this.unprotectedAreaWords.values());
 	}
 
-	public protectedMemento getProtectedState() {
-		return new protectedMemento(this.protectedAreaWords.values());
+	public ProtectedMemento getProtectedState() {
+		return new ProtectedMemento(this.protectedAreaWords.values());
 	}
 
 	public Collection<AbstractWordView> getUnprotectedWordView() {
@@ -355,5 +362,30 @@ public class MainView extends JFrame implements Serializable {
 		// return this.protectedWordViews;
 		return this.protectedAreaWords.values();
 	}
+	
+	public void recordUndoMove(UndoMove move) {
+		moves.add(move);
+	}
+	
+	public void recordRedoMove(UndoMove move) {
+		redoMoves.add(move);
+	}
 
+	public UndoMove removeLastUndoMove() {
+		if (moves.isEmpty()) { return null; }
+		return moves.pop();
+	}
+	
+	public UndoMove removeLastRedoMove() {
+		if (redoMoves.isEmpty()) { return null; }
+		return redoMoves.pop();
+	}
+
+	public Stack<UndoMove> getUndoMoves(){
+		return this.moves;
+	}
+	
+	public Stack<UndoMove> getRedoMoves() {
+		return this.redoMoves;
+	}
 }

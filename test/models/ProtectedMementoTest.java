@@ -9,13 +9,13 @@ import views.AbstractWordView;
 import views.WordView;
 import static org.junit.Assert.*;
 
-public class protectedMementoTest {
+public class ProtectedMementoTest {
 
 	@Test
 	public void testConstructor() throws Exception {
 		Collection<AbstractWordView> abs = new HashSet<AbstractWordView>();
 		abs.add(new WordView(new Word("Dog", WordType.NOUN), new Position(0, 0)));
-		protectedMemento p = new protectedMemento(abs);
+		ProtectedMemento p = new ProtectedMemento(abs);
 		assertNotNull(p);
 	}
 
@@ -23,7 +23,7 @@ public class protectedMementoTest {
 	public void testGetUnprotectedView() {
 		Collection<AbstractWordView> abs = new HashSet<AbstractWordView>();
 		abs.add(new WordView(new Word("Dog", WordType.NOUN), new Position(0, 0)));
-		protectedMemento p = new protectedMemento(abs);
+		ProtectedMemento p = new ProtectedMemento(abs);
 		assertEquals(abs, p.getProtectedView());
 	}
 }

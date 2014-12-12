@@ -1,8 +1,8 @@
 package controllers;
 
 import models.GameState;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Before;
 
@@ -12,8 +12,8 @@ public class ConnectionControllerTest {
 
 	GameState gameState;
 	MainView mainView;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {

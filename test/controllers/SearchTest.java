@@ -8,16 +8,16 @@ import models.AbstractWord;
 import models.GameState;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Test;
 
 import views.MainView;
 
 public class SearchTest {
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Test
 	public void test() {

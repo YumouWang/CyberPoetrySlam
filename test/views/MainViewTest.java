@@ -18,8 +18,8 @@ public class MainViewTest {
 	GameState gameState;
 	Collection<AbstractWord> protectedWords;
 	Collection<AbstractWord> unprotectedWords;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {
@@ -37,15 +37,15 @@ public class MainViewTest {
 		Collection<AbstractWordView> absProtect = new HashSet<AbstractWordView>();
 		absProtect.add(new WordView(new Word("Dog", WordType.NOUN),
 				new Position(0, 0)));
-		protectedMemento pp = new protectedMemento(absProtect);
+		ProtectedMemento pp = new ProtectedMemento(absProtect);
 		Collection<AbstractWordView> absUnprotect = new HashSet<AbstractWordView>();
 		absUnprotect.add(new WordView(new Word("Dog", WordType.NOUN),
 				new Position(0, 0)));
-		unprotectedMemento unun = new unprotectedMemento(absUnprotect);
+		UnprotectedMemento unun = new UnprotectedMemento(absUnprotect);
 		GameState gamestate = new GameState(unun, pp);
 		MainView mainview = new MainView(gamestate, unun, pp);
-		protectedMemento ppp = mainview.getProtectedState();
-		unprotectedMemento ununun = mainview.getUnprotectedState();
+		ProtectedMemento ppp = mainview.getProtectedState();
+		UnprotectedMemento ununun = mainview.getUnprotectedState();
 		absProtect = mainview.getProtectedWordView();
 		absUnprotect = mainview.getUnprotectedWordView();
 		assertNotNull(ppp);

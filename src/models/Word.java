@@ -71,4 +71,5 @@ public class Word extends AbstractWord implements Serializable {
 		row.connectToFront(this);
 		return row;
 	}
+
 }

@@ -4,9 +4,9 @@ import models.GameState;
 import models.Position;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.protectedMementoTest;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.ProtectedMementoTest;
+import models.UnprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +22,8 @@ public class ConnectControllerTest {
 	WordView viewOne;
 	WordView viewTwo;
 	ConnectController connectController;
-	protectedMemento p = null;
-	unprotectedMemento un = null;
+	ProtectedMemento p = null;
+	UnprotectedMemento un = null;
 
 	@Before
 	public void setUp()

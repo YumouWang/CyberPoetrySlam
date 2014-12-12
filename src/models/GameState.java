@@ -13,7 +13,7 @@ import controllers.WordInitialize;
 /**
  * The main model class that tracks all other models
  * 
- * Created by Nathan on 10/3/2014.
+ * Created by Nathan and Jian on 10/3/2014.
  */
 public class GameState implements Serializable {
 
@@ -33,7 +33,7 @@ public class GameState implements Serializable {
 	/**
 	 * Constructor
 	 */
-	public GameState(unprotectedMemento un, protectedMemento p) {
+	public GameState(UnprotectedMemento un, ProtectedMemento p) {
 		if (un == null && p == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
 			// protectedWords.add(new Word("Cat", WordType.NOUN));

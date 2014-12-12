@@ -5,11 +5,13 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import views.AbstractWordView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
 
-public class unprotectedMemento implements Serializable {
+/**
+ * This is UnprotectedMemento Class for unprotected state preservation
+ * @author xujian Created on 10/25/2014 
+ *
+ */
+public class UnprotectedMemento implements Serializable {
 
 	/**
 	 * 
@@ -18,7 +20,7 @@ public class unprotectedMemento implements Serializable {
 
 	private Collection<AbstractWordView> unprotectedViews = new HashSet<AbstractWordView>();
 
-	public unprotectedMemento(Collection<AbstractWordView> view) {
+	public UnprotectedMemento(Collection<AbstractWordView> view) {
 		unprotectedViews.addAll(view);
 	}
 

@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 
 public class WordViewTest {
 
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Test
 	public void testConstructor() throws Exception {

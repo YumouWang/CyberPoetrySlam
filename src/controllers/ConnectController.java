@@ -33,6 +33,7 @@ public class ConnectController {
      */
     public boolean connect(AbstractWordView wordOne, AbstractWordView wordTwo) {
         AdjacencyType adjacencyType = wordOne.isAdjacentTo(wordTwo);
+        //System.out.println(adjacencyType);
         boolean successful = false;
         switch(adjacencyType) {
             case ABOVE:
@@ -47,6 +48,8 @@ public class ConnectController {
             case RIGHT:
                 successful = connectHorizontal(wordTwo, wordOne);
                 break;
+            default:
+            		break;
         }
         return successful;
     }

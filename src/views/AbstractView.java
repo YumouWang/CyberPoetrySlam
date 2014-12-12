@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * Created by Nathan on 10/3/2014.
  */
-public abstract class AbstractView implements Serializable {
+public abstract class AbstractView implements Serializable{
 	/**
 	 * 
 	 */
@@ -74,6 +74,7 @@ public abstract class AbstractView implements Serializable {
 	 * @return Returns whether this view overlaps with the other view
 	 */
 	public boolean isOverlapping(AbstractView otherView) {
+		//System.out.println(otherView == null);
 		boolean isOverlapping = false;
 		Position otherPosition = otherView.getPosition();
 		Position otherBottomRightPosition = new Position(otherPosition.getX()

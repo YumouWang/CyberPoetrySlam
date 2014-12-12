@@ -32,7 +32,6 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         if(connectionCausesOverlap(wordViewOne, wordViewTwo)) {
             return false;
         }
-
         Word wordOne = wordViewOne.getWord();
         Word wordTwo = wordViewTwo.getWord();
 

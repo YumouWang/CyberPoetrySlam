@@ -229,4 +229,11 @@ public class PoemView extends AbstractWordView implements Serializable {
 	public Poem getWord() {
 		return (Poem) word;
 	}
+	
+	@Override
+	public Object clone() {
+		PoemView poemView = null;
+		poemView = (PoemView) super.clone();
+		return poemView;
+	}
 }

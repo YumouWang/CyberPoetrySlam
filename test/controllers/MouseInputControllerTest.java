@@ -21,8 +21,8 @@ public class MouseInputControllerTest {
 	MouseInputController controller;
 	WordView wordViewOne;
 	WordView wordViewTwo;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {

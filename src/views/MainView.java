@@ -1,14 +1,16 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import common.Constants;
+import controllers.ButtonController;
+import controllers.MouseInputController;
+import models.*;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +39,8 @@ import controllers.UndoMove;
 /**
  * The main view that tracks all other views
  * 
- * Created by Yumou and Jian on 10/4/2014.
+ * @author Yumou Jian
+ * @version 10/4/2014
  */
 public class MainView extends JFrame implements Serializable {
 
@@ -47,19 +50,20 @@ public class MainView extends JFrame implements Serializable {
 	private static final long serialVersionUID = -4809871727043385666L;
 	Hashtable<Long, AbstractWordView> protectedAreaWords;
 	Hashtable<Long, AbstractWordView> unprotectedAreaWords;
-	Collection<AbstractWordView> unprotectedWordViews;
-	Collection<AbstractWordView> protectedWordViews;
 	Container contentPane;
-	public JPanel panel;
-	public ExploreArea exploreArea;
+	private JPanel panel;
+	private ExploreArea exploreArea;
+	private SwapAreaView swapAreaView;
 	SelectionBox selectionBox;
-	public JButton btnRedo;
-	public JButton btnUndo;
-	public JButton btnSave;
-	public JButton btnSwap;
 	
 	Stack<UndoMove> moves = new Stack<UndoMove>();
 	Stack<UndoMove> redoMoves = new Stack<UndoMove>();
+
+	private JButton btnRedo;
+	private JButton btnUndo;
+	private JButton btnPublish;
+	private MouseInputController mouseInputController;
+
 
 	/**
 	 * Constructor
@@ -67,10 +71,11 @@ public class MainView extends JFrame implements Serializable {
 	 * @param gameState
 	 *            The GameState that this view represents
 	 */
-	public MainView(GameState gameState, UnprotectedMemento un,
-			ProtectedMemento p) {
+
+	public MainView(GameState gameState, UnprotectedMemento un, ProtectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
+		setSize(1027, 735);
 		contentPane = getContentPane();
 		contentPane.setLayout(null);
 
@@ -83,8 +88,6 @@ public class MainView extends JFrame implements Serializable {
 
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
 		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
-		unprotectedWordViews = new HashSet<AbstractWordView>();
-		protectedWordViews = new HashSet<AbstractWordView>();
 
 		if (p == null && un == null) {
 			Random random = new Random();
@@ -96,7 +99,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView((Word) word, new Position(x, y));
 				panel.add(view.label);
 				addProtectedAbstractWordView(view);
-				protectedWordViews.add(view);
 			}
 
 			Collection<AbstractWord> unprotectedWords = gameState
@@ -109,7 +111,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView((Word) word, new Position(x, y));
 				panel.add(view.label);
 				addUnprotectedAbstractWordView(view);
-				unprotectedWordViews.add(view);
 			}
 		} else {
 			Collection<AbstractWordView> unprotectedWordViewTemps = un
@@ -123,7 +124,6 @@ public class MainView extends JFrame implements Serializable {
 				WordView view = new WordView(w, position);
 				panel.add(view.label);
 				addUnprotectedAbstractWordView(view);
-				unprotectedWordViews.add(view);
 			}
 			for (AbstractWordView abs : protectedWordViewTemps) {
 				if (abs instanceof WordView) {
@@ -133,7 +133,6 @@ public class MainView extends JFrame implements Serializable {
 					WordView view = new WordView(w, position);
 					panel.add(view.label);
 					addProtectedAbstractWordView(view);
-					protectedWordViews.add(view);
 					System.out.println(wordView.getWord());
 				} else if (abs instanceof RowView) {
 					Row r = (Row) abs.getWord();
@@ -144,7 +143,6 @@ public class MainView extends JFrame implements Serializable {
 					}
 					RowView rowView = new RowView(r, abs.getPosition(), this);
 					addProtectedAbstractWordView(rowView);
-					protectedWordViews.add(rowView);
 					for (WordView w : list) {
 						removeProtectedAbstractWordView(w);
 					}
@@ -161,9 +159,7 @@ public class MainView extends JFrame implements Serializable {
 
 						addProtectedAbstractWordView(rowView);
 					}
-					PoemView poemView = new PoemView(poem, abs.getPosition(),
-							this);
-					protectedWordViews.add(poemView);
+					PoemView poemView = new PoemView(poem, abs.getPosition(), this);
 					addProtectedAbstractWordView(poemView);
 					for (RowView rowView : rowList) {
 						List<WordView> list = rowView.getWordViews();
@@ -185,13 +181,11 @@ public class MainView extends JFrame implements Serializable {
 		label.setBackground(Color.black);
 		panel.add(label);
 
-		btnSave = new JButton("SAVE");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSave.setBounds(0, 0, 70, 20);
-		panel.add(btnSave);
+		btnPublish = new JButton("PUBLISH");
+		btnPublish.setMargin(new Insets(1, 1, 1, 1));
+		btnPublish.setBounds(0, 0, 70, 20);
+		btnPublish.setEnabled(false);
+		panel.add(btnPublish);
 
 		btnRedo = new JButton("REDO");
 		btnRedo.setBounds(72, 0, 70, 20);
@@ -201,12 +195,12 @@ public class MainView extends JFrame implements Serializable {
 		btnUndo.setBounds(144, 0, 70, 20);
 		panel.add(btnUndo);
 
-		ButtonController buttonController = new ButtonController(this);
-		btnSave.addActionListener(buttonController);
+		ButtonController buttonController = new ButtonController(this, gameState);
+		btnPublish.addActionListener(buttonController);
 		btnRedo.addActionListener(buttonController);
 		btnUndo.addActionListener(buttonController);
 
-		exploreArea = new ExploreArea(gameState);
+		exploreArea = new ExploreArea(gameState, this);
 		// JPanel explorePanel = new JPanel();
 		JPanel explorePanel = exploreArea.contentPane;
 		explorePanel.setBorder(new LineBorder(Color.BLACK));
@@ -214,22 +208,17 @@ public class MainView extends JFrame implements Serializable {
 		contentPane.add(explorePanel);
 		explorePanel.setLayout(null);
 
-		JPanel swapPanel = new JPanel();
-		swapPanel.setBorder(new LineBorder(Color.BLACK));
-		swapPanel.setBounds(716, 0, 284, 310);
-		contentPane.add(swapPanel);
-		swapPanel.setLayout(null);
-
-		btnSwap = new JButton("SWAP");
-		btnSwap.setBounds(0, 0, 70, 20);
-		swapPanel.add(btnSwap);
-		btnSwap.addActionListener(buttonController);
+		// Create the swap area view
+		swapAreaView = new SwapAreaView(new Position(716, 0), 284, 310, this, gameState);
+		contentPane.add(swapAreaView.getPanel());
 
 		// Puts the selectionBox on the pane in front of the words.
-		// The selectionBox can be set to visible or not from the selectionBox
-		// class
+		// The selectionBox can be set to visible or not from the selectionBox class
 		selectionBox = new SelectionBox();
 		setGlassPane(selectionBox);
+
+		mouseInputController = new MouseInputController(this, gameState);
+		this.addMouseInputController(mouseInputController);
 	}
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
@@ -248,12 +237,14 @@ public class MainView extends JFrame implements Serializable {
 	 * @return Returns whether the word was successfully removed
 	 */
 	public boolean removeProtectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord().getId());
+		AbstractWordView removed = protectedAreaWords.remove(oldWord.getWord()
+				.getId());
 		return oldWord.equals(removed);
 	}
 
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = unprotectedAreaWords.remove(oldWord.getWord().getId());
+		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
+				.getWord().getId());
 		return oldWord.equals(removed);
 	}
 
@@ -331,7 +322,8 @@ public class MainView extends JFrame implements Serializable {
 	 * @param toPosition
 	 * @return
 	 */
-	public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
+	public boolean isMoveOutOfBounds(AbstractWordView wordView,
+			Position toPosition) {
 		if (toPosition.getX() < 0) {
 			return true;
 		} else if (toPosition.getX() + wordView.getWidth() > 716) {
@@ -354,12 +346,10 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	public Collection<AbstractWordView> getUnprotectedWordView() {
-		// return this.unprotectedWordViews;
 		return this.unprotectedAreaWords.values();
 	}
 
 	public Collection<AbstractWordView> getProtectedWordView() {
-		// return this.protectedWordViews;
 		return this.protectedAreaWords.values();
 	}
 	
@@ -387,5 +377,35 @@ public class MainView extends JFrame implements Serializable {
 	
 	public Stack<UndoMove> getRedoMoves() {
 		return this.redoMoves;
+	}
+	
+	public ExploreArea getExploreArea() {
+		return exploreArea;
+	}
+
+	public SwapAreaView getSwapAreaView() { return swapAreaView; }
+
+	public JButton getPublishButton() {
+		return btnPublish;
+	}
+
+	public JButton getRedoButton() {
+		return btnRedo;
+	}
+
+	public JButton getUndoButton() {
+		return btnUndo;
+	}
+
+	public MouseInputController getMouseInputController() {
+		return mouseInputController;
+	}
+
+	public void addLabelOf(WordView wordView) {
+		panel.add(wordView.label);
+	}
+
+	public void removeLabelOf(WordView wordView) {
+		panel.remove(wordView.label);
 	}
 }

@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * The Poem model class
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public class Poem extends AbstractWord implements Serializable {
 

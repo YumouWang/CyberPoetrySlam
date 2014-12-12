@@ -7,7 +7,8 @@ import models.Position;
  * Used when checking if the user wanted to make a connection, one is put on each edge of the word
  * to check if it intersects with the word that was just moved.
  *
- * Created by Nathan on 10/3/2014.
+ * @author Nathan
+ * @version 10/3/2014
  */
 public class ConnectionBox extends AbstractView {
 

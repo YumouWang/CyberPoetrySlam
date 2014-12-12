@@ -1,18 +1,18 @@
 package views;
 
-import java.awt.Color;
-import java.io.Serializable;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
+import controllers.AbstractWordViewVisitor;
 import models.Position;
 import models.Word;
-import controllers.AbstractWordViewVisitor;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.Serializable;
 
 /**
- * A view for representing words on the screen Created by Nathan on 10/9/2014.
+ * A view for representing words on the screen
+ *
+ * @author Nathan
+ * @version 10/9/2014
  */
 public class WordView extends AbstractWordView implements Serializable,Cloneable{
 

@@ -1,10 +1,10 @@
 package models;
 
+import views.AbstractWordView;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-
-import views.AbstractWordView;
 
 /**
  * This is UnprotectedMemento Class for unprotected state preservation

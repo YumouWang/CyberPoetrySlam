@@ -1,16 +1,18 @@
 package controllers;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 import models.AbstractWord;
 import models.GameState;
 import models.Word;
 import views.MainView;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 /**
  * Search Area controller
- * Created by Yumou on 10/3/2014.
+ *
+ * @author Yumou
+ * @version 10/3/2014
  */
 public class SearchController {
 	private static SearchController search;
@@ -54,6 +56,4 @@ public class SearchController {
 		}
 		return result;
 	}
-
 }
-

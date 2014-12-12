@@ -119,7 +119,7 @@ public class MouseInputControllerTest {
 		mainView.removeProtectedAbstractWordView(wordViewTwo);
 		mainView.addUnprotectedAbstractWordView(wordViewTwo);
 		controller.selectedWord = wordViewOne;
-		controller.mousePressedHandler(new Position(52, Constants.PROTECTED_AREA_HEIGHT + 12));
+		controller.mousePressedHandler(new Position(52, Constants.PROTECTED_AREA_HEIGHT + 12), false);
 		assertEquals(wordViewTwo, controller.selectedWord);
 	}
 
@@ -133,7 +133,7 @@ public class MouseInputControllerTest {
 		mainView.addProtectedAbstractWordView(rowViewOne);
 
 		controller.selectedWordToDisconnect = wordViewOne;
-		controller.mousePressedHandler(new Position(12, 12));
+		controller.mousePressedHandler(new Position(12, 12), false);
 		assertFalse(rowViewOne.contains(wordViewOne));
 	}
 
@@ -147,16 +147,16 @@ public class MouseInputControllerTest {
 		mainView.addProtectedAbstractWordView(rowViewOne);
 
 		controller.selectedWordToDisconnect = wordViewTwo;
-		controller.mousePressedHandler(new Position(12, 12));
+		controller.mousePressedHandler(new Position(12, 12),false);
 		assertTrue(rowViewOne.contains(wordViewTwo));
 	}
 
 	@Test
 	public void testMouseDraggedHandler() throws Exception {
-		controller.mousePressedHandler(new Position(48, 48));
-		controller.mouseDraggedHandler(new Position(55, 55));
+		controller.mousePressedHandler(new Position(48, 48),false);
+		controller.mouseDraggedHandler(new Position(55, 55),false);
 		assertEquals(wordViewTwo, controller.selectedWordToDisconnect);
-		controller.mouseDraggedHandler(new Position(57, 57));
+		controller.mouseDraggedHandler(new Position(57, 57),false);
 		assertEquals(wordViewTwo, controller.selectedWordToDisconnect);
 	}
 
@@ -164,8 +164,8 @@ public class MouseInputControllerTest {
 	public void testMouseReleasedHandlerWordSelected() throws Exception {
 		controller.selectedWord = wordViewOne;
 		controller.mousePressedHandler(new Position(wordViewOne.getPosition().getX() + 2,
-                wordViewOne.getPosition().getY() + 2));
-		controller.mouseDraggedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 4));
+                wordViewOne.getPosition().getY() + 2),false);
+		controller.mouseDraggedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 4),false);
 		controller.mouseReleasedHandler(new Position(50, 50 + wordViewTwo.getHeight() + 4));
 		assertFalse(mainView.getProtectedAreaWords().contains(wordViewOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(wordViewTwo));
@@ -176,8 +176,8 @@ public class MouseInputControllerTest {
 		controller.mouseReleasedHandler(new Position(48,
 				Constants.PROTECTED_AREA_HEIGHT + 10));
 
-		controller.mousePressedHandler(new Position(48, 48));
-		controller.mouseDraggedHandler(new Position(55, 55));
+		controller.mousePressedHandler(new Position(48, 48),false);
+		controller.mouseDraggedHandler(new Position(55, 55),false);
 		controller.mouseReleasedHandler(new Position(55, 55));
 		assertEquals(wordViewTwo, controller.selectedWordToDisconnect);
 	}

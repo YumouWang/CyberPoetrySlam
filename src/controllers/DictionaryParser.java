@@ -1,16 +1,15 @@
 package controllers;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Set;
 /**
  * Dictionary parser to get a word list from a CSV file
  * 
- * Created by Yumou on 10/3/2014.
+ * @author Yumou
+ * @version 10/3/2014
  */
 public class DictionaryParser {
 	String csvFile;

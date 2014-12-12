@@ -1,25 +1,29 @@
 package main;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import controllers.MouseInputController;
+import controllers.swap.BrokerConnectionController;
+import controllers.swap.ConnectionException;
+import controllers.swap.SwapController;
 import models.GameState;
 import models.ProtectedMemento;
 import models.UnprotectedMemento;
 import views.MainView;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+
 /**
  * The main launcher for starting the program
+<<<<<<< HEAD
  *
  * Created by Yumou and Jian on 10/3/2014.
+=======
+ * 
+ * @author Yumou
+ * @author Jian
+ * @author Nathan
+ * @version 10/3/2014
+>>>>>>> c5fde96a5cd10ad69f37e14637f6fde443154ecf
  */
 public class MainLauncher implements Serializable {
 
@@ -35,22 +39,20 @@ public class MainLauncher implements Serializable {
 	static void storeState(MainView mainView, String location1, String location2) {
 		File unprotectedWord = new File(location1);
 		File protectedWord = new File(location2);
-		if(!unprotectedWord.exists()) {
-			try{
+		if (!unprotectedWord.exists()) {
+			try {
 				unprotectedWord.createNewFile();
+			} catch (Exception e) {
+
 			}
-			catch (Exception e) {
-				
+		}
+		if (!protectedWord.exists()) {
+			try {
+				unprotectedWord.createNewFile();
+			} catch (Exception e) {
+
 			}
-		} 
-		if(!protectedWord.exists()) {
-			try{
-				protectedWord.createNewFile();
-			}
-			catch (Exception e) {
-				
-			}
-		} 
+		}
 		ObjectOutputStream oos1 = null;
 		ObjectOutputStream oos2 = null;
 		try {
@@ -118,14 +120,16 @@ public class MainLauncher implements Serializable {
 		UnprotectedMemento un = loadUnprotectedMemento(unprotectedWordStorage);
 		ProtectedMemento p = loadProtectedMemento(protectedWordStorage);
 		// Initialize the GameState object
-		GameState gameState = new GameState(un, p);
+		final GameState gameState = new GameState(un, p);
 		// Initialize the MainView pointing at the GameState
 		final MainView mainView = new MainView(gameState, un, p);
 		// Add a controller to handle user input
-		mainView.addMouseInputController(new MouseInputController(mainView,
-				gameState));
+		// mainView.addMouseInputController(new MouseInputController(mainView,
+		// gameState));
 		mainView.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				SwapController swapController = new SwapController(mainView, gameState);
+				swapController.cancelPendingSwaps();
 				storeState(mainView, unprotectedWordStorage,
 						protectedWordStorage);
 				System.exit(0);
@@ -133,5 +137,14 @@ public class MainLauncher implements Serializable {
 		});
 		// Display the view
 		mainView.setVisible(true);
+
+		// Attempt to connect to the broker immediately on startup
+		// If we can't then disable the swap area
+		try {
+			BrokerConnectionController.getConnection(mainView, gameState);
+			mainView.getSwapAreaView().enable();
+		} catch (ConnectionException e) {
+			mainView.getSwapAreaView().disable();
+		}
 	}
 }

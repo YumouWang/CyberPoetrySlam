@@ -1,24 +1,21 @@
 package controllers;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.List;
-
 import common.Constants;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
-import views.AbstractWordView;
-import views.AdjacencyType;
-import views.MainView;
-import views.PoemView;
-import views.RowView;
-import views.WordView;
+import views.*;
+
+import java.awt.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A class for handling moving words
  * 
- * Created by Nathan and Yumou on 10/16/2014.
+ * @author Nathan
+ * @author Yumou
+ * @version 10/16/2014
  */
 public class MoveWordController {
 
@@ -155,12 +152,14 @@ public class MoveWordController {
 	 *            The wordView to protect
 	 */
 	void protectWord(AbstractWordView wordView) {
+		
 		// Add word to protected word list
 		gameState.protect(wordView.getWord());
 		// Add word view to protected word view list and remove word view from
 		// unprotected word view
 		mainView.addProtectedAbstractWordView(wordView);
-		mainView.removeUnprotectedAbstractWordView(wordView);
+		mainView.removeUnprotectedAbstractWordView(wordView);		
+		mainView.getExploreArea().updateTable();	
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -208,7 +207,7 @@ public class MoveWordController {
 		// protected word view
 		mainView.addUnprotectedAbstractWordView(wordView);
 		mainView.removeProtectedAbstractWordView(wordView);
-
+		mainView.getExploreArea().updateTable();	
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -261,7 +260,7 @@ public class MoveWordController {
 			// abstractWord view in MainView
 			mainView.addUnprotectedAbstractWordView(word);
 		}
-
+		mainView.getExploreArea().updateTable();
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
@@ -316,6 +315,7 @@ public class MoveWordController {
 				mainView.addUnprotectedAbstractWordView(word);
 			}
 		}
+		mainView.getExploreArea().updateTable();
 		// Print out the results
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();

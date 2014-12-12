@@ -1,19 +1,20 @@
 package models;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
+import controllers.WordInitialize;
 import views.AbstractWordView;
 import views.RowView;
 import views.WordView;
-import controllers.WordInitialize;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The main model class that tracks all other models
  * 
- * Created by Nathan and Jian on 10/3/2014.
+ * @author Nathan
+ * @author Jian
+ * @version 10/3/2014
  */
 public class GameState implements Serializable {
 
@@ -26,22 +27,20 @@ public class GameState implements Serializable {
 	Collection<AbstractWordView> unprotectedWordViews;
 	Collection<AbstractWordView> protectedWordViews;
 
+	Collection<Swap> pendingSwaps;
+
 	Area protectedArea;
 	Area unprotectedArea;
-	String FileName = "Dictionary/WordDictionary.csv";
 
 	/**
 	 * Constructor
 	 */
+
 	public GameState(UnprotectedMemento un, ProtectedMemento p) {
+		pendingSwaps = new HashSet<Swap>();
 		if (un == null && p == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-			// protectedWords.add(new Word("Cat", WordType.NOUN));
-			// protectedWords.add(new Word("Dog", WordType.NOUN));
-			// protectedWords.add(new Word("Mouse", WordType.NOUN));
-			// protectedWords.add(new Word("Tiger", WordType.NOUN));
-			// protectedWords.add(new Word("Bear", WordType.NOUN));
-			// protectedWords.add(new Word("Lion", WordType.NOUN));
+			
 
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
@@ -50,12 +49,7 @@ public class GameState implements Serializable {
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}
-			// unprotectedWords.add(new Word("River", WordType.NOUN));
-			// unprotectedWords.add(new Word("Sun", WordType.NOUN));
-			// unprotectedWords.add(new Word("Moon", WordType.NOUN));
-			// unprotectedWords.add(new Word("Tree", WordType.NOUN));
-			// unprotectedWords.add(new Word("Sea", WordType.NOUN));
-			// unprotectedWords.add(new Word("Lake", WordType.NOUN));
+			
 
 			protectedArea = new Area(protectedWords);
 			unprotectedArea = new Area(unprotectedWords);
@@ -141,4 +135,6 @@ public class GameState implements Serializable {
 	public Area getUnprotectedArea() {
 		return unprotectedArea;
 	}
+
+	public Collection<Swap> getPendingSwaps() { return pendingSwaps; }
 }

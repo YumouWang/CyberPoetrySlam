@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * The model row class
  *
- * Created by Nathan on 10/2/2014.
+ * @author Nathan
+ * @version 10/2/2014
  */
 public class Row extends AbstractWord implements Serializable {
 

@@ -8,7 +8,8 @@ import java.awt.*;
 /**
  * A realization of the AbstractWordViewVisitor interface for connecting two words
  *
- * Created by Nathan on 10/15/2014.
+ * @author Nathan
+ * @version 10/15/2014
  */
 public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 

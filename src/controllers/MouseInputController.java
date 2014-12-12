@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
+import java.util.List;
 
 import models.GameState;
 import models.Position;
@@ -11,6 +12,8 @@ import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
 import views.PoemView;
+import views.RowView;
+import views.WordView;
 
 /**
  * A controller for handling mouse input. Delegates to other controllers. Unlike
@@ -18,6 +21,7 @@ import views.PoemView;
  * handle mouse events and maintain state between mouse events.
  * 
  * @author Nathan
+ * @author YangWang
  * @version 10/4/2014
  */
 public class MouseInputController extends MouseAdapter {
@@ -29,6 +33,7 @@ public class MouseInputController extends MouseAdapter {
 	MainView mainView;
 	GameState gameState;
 	AbstractWordView lastSelectedWord;
+	AbstractWordView selectedRowToShift;
 
 	/**
 	 * Constructor
@@ -46,14 +51,14 @@ public class MouseInputController extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		mousePressedHandler(mousePosition);
+		mousePressedHandler(mousePosition, e.isShiftDown());
 		mainView.refresh();
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		mouseDraggedHandler(mousePosition);
+		mouseDraggedHandler(mousePosition, e.isShiftDown());
 		mainView.refresh();
 	}
 
@@ -64,7 +69,7 @@ public class MouseInputController extends MouseAdapter {
 		mainView.refresh();
 	}
 
-	void mousePressedHandler(Position position) {
+	void mousePressedHandler(Position position, boolean isShift) {
 		mouseDownPosition = position;
 
 		Collection<AbstractWordView> words;
@@ -87,13 +92,19 @@ public class MouseInputController extends MouseAdapter {
 		if (selectedWord != null
 				&& selectedWord.contains(selectedWordToDisconnect)
 				&& selectedWordToDisconnect.isClicked(mouseDownPosition)) {
-			// Disconnect the word
-			DisconnectController controller = new DisconnectController(
-					mainView, gameState);
-			if (controller.disconnect(selectedWordToDisconnect, selectedWord)) {
-				selectedWord.setBackground(Color.LIGHT_GRAY);
-				selectedWord = selectedWordToDisconnect;
-				selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+			if (isShift) {
+				selectedRowToShift = selectedWordToDisconnect;
+			}
+			if (!isShift) {
+				// Disconnect the word
+				DisconnectController controller = new DisconnectController(
+						mainView, gameState);
+				if (controller.disconnect(selectedWordToDisconnect,
+						selectedWord)) {
+					selectedWord.setBackground(Color.LIGHT_GRAY);
+					selectedWord = selectedWordToDisconnect;
+					selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+				}
 			}
 		}
 
@@ -111,18 +122,27 @@ public class MouseInputController extends MouseAdapter {
 		selectedWordToDisconnect = null;
 	}
 
-	void mouseDraggedHandler(Position mousePosition) {
+	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
 		if (selectedWord != null) {
 			MoveWordController moveController = new MoveWordController(
 					mainView, gameState);
-			moveController.moveWord(
-					selectedWord,
-					selectedWord.getPosition(),
-					new Position(mousePosition.getX()
-							+ selectedWordPositionRelativeToMouse.getX(),
-							mousePosition.getY()
-									+ selectedWordPositionRelativeToMouse
-											.getY()));
+
+			if (isShift) {
+				ShiftRowController shiftController = 
+						new ShiftRowController(mainView, gameState);
+				shiftController.shiftRow((PoemView) selectedWord,selectedRowToShift,
+						mousePosition,mouseDownPosition);
+				//((PoemView) selectedWord).shiftRow(selectedRowToShift,
+						//mousePosition.getX() - mouseDownPosition.getX());
+			}
+
+			else {
+				moveController.moveWord(selectedWord, selectedWord
+						.getPosition(), new Position(mousePosition.getX()
+						+ selectedWordPositionRelativeToMouse.getX(),
+						mousePosition.getY()
+								+ selectedWordPositionRelativeToMouse.getY()));
+			}
 		}
 		mouseDownPosition = mousePosition;
 
@@ -147,7 +167,7 @@ public class MouseInputController extends MouseAdapter {
 	void mouseReleasedHandler(Position mousePosition) {
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if(lastSelectedWord instanceof PoemView) {
+			if (lastSelectedWord instanceof PoemView) {
 				mainView.getPublishButton().setEnabled(true);
 			} else {
 				mainView.getPublishButton().setEnabled(false);

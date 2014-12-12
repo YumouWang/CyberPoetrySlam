@@ -130,8 +130,8 @@ public class MouseInputController extends MouseAdapter {
 	}
 
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
-		if(selectedWord !=null || selectedWordToDisconnect == null 
-				|| isShift) {
+		if(selectedWord !=null && selectedWordToDisconnect == null 
+				&& isShift) {
 			return;
 		}
 		

@@ -14,11 +14,32 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
+
+import models.AbstractWord;
+import models.GameState;
+import models.Poem;
+import models.Position;
+import models.Row;
+import models.Word;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
+import common.Constants;
+import controllers.ButtonController;
+import controllers.UndoMove;
+
 
 /**
  * The main view that tracks all other views
  * 
- * @author Yumou
+ * @author Yumou Jian
  * @version 10/4/2014
  */
 public class MainView extends JFrame implements Serializable {
@@ -34,10 +55,15 @@ public class MainView extends JFrame implements Serializable {
 	private ExploreArea exploreArea;
 	private SwapAreaView swapAreaView;
 	SelectionBox selectionBox;
+	
+	Stack<UndoMove> moves = new Stack<UndoMove>();
+	Stack<UndoMove> redoMoves = new Stack<UndoMove>();
+
 	private JButton btnRedo;
 	private JButton btnUndo;
 	private JButton btnPublish;
 	private MouseInputController mouseInputController;
+
 
 	/**
 	 * Constructor
@@ -45,6 +71,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @param gameState
 	 *            The GameState that this view represents
 	 */
+
 	public MainView(GameState gameState, UnprotectedMemento un, ProtectedMemento p) {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
@@ -145,6 +172,7 @@ public class MainView extends JFrame implements Serializable {
 
 			}
 		}
+		
 		contentPane.add(panel);
 
 		JLabel label = new JLabel("");
@@ -324,7 +352,33 @@ public class MainView extends JFrame implements Serializable {
 	public Collection<AbstractWordView> getProtectedWordView() {
 		return this.protectedAreaWords.values();
 	}
+	
+	public void recordUndoMove(UndoMove move) {
+		moves.add(move);
+	}
+	
+	public void recordRedoMove(UndoMove move) {
+		redoMoves.add(move);
+	}
 
+	public UndoMove removeLastUndoMove() {
+		if (moves.isEmpty()) { return null; }
+		return moves.pop();
+	}
+	
+	public UndoMove removeLastRedoMove() {
+		if (redoMoves.isEmpty()) { return null; }
+		return redoMoves.pop();
+	}
+
+	public Stack<UndoMove> getUndoMoves(){
+		return this.moves;
+	}
+	
+	public Stack<UndoMove> getRedoMoves() {
+		return this.redoMoves;
+	}
+	
 	public ExploreArea getExploreArea() {
 		return exploreArea;
 	}

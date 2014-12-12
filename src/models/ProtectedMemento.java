@@ -6,6 +6,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * This is ProtectedMemento Class for protected state preservation
+ * @author xujian Created on 10/25/2014
+ *
+ */
+
 public class ProtectedMemento implements Serializable {
 
 	/**

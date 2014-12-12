@@ -35,7 +35,7 @@ public class MoveWordController {
 		this.gameState = gameState;
 	}
 
-	public void moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
+	public boolean moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
 		Position originPosition = selectedWord.getPosition();
 		Position positionDiff = new Position(positionTo.getX()
 				- positionFrom.getX(), positionTo.getY() - positionFrom.getY());
@@ -80,8 +80,6 @@ public class MoveWordController {
 				selectedWord.moveTo(new Position(newPosition.getX(),
 						Constants.PROTECTED_AREA_HEIGHT - 20));
 			}
-			System.out.println("you are protecting word:"
-					+ selectedWord.getWord().getValue());
 			protectWord(selectedWord);
 		} else if (mainView.isInProtectedArea(originPosition)
 				&& !mainView.isInProtectedArea(newPosition)) {
@@ -92,31 +90,27 @@ public class MoveWordController {
 				selectedWord.moveTo(new Position(newPosition.getX(),
 						Constants.PROTECTED_AREA_HEIGHT));
 			}
-			System.out.println("you are unprotecting word:"
-					+ selectedWord.getWord().getValue());
 			if (selectedWord instanceof WordView) {
 				unprotectWord(selectedWord);
 			}
 			if (selectedWord instanceof RowView) {
-				System.out.println("release row");
 				relaseRow((RowView) selectedWord);
 			}
 			if (selectedWord instanceof PoemView) {
-				System.out.println("release poem");
 				relasePoem((PoemView) selectedWord);
 			}
 
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special
+		return isOverlappingOtherWord;
 	}
 
 	/**
 	 * Checks for collisions or adjacency and changes colors after moving a word
 	 * in the protected area
 	 * 
-	 * @param selectedWord
-	 *            The word being moved
+	 * @param selectedWord The word being moved
 	 */
 	void protectAreaWordMove(AbstractWordView selectedWord) {
 		boolean isOverlapping = false;
@@ -128,7 +122,8 @@ public class MoveWordController {
 					isOverlapping = true;
 				}
 				AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
-				if (adjacencyType != AdjacencyType.NOT_ADJACENT) {
+				AdjacencyType adjacencyTypeTwo = word.isAdjacentTo(selectedWord);
+				if (adjacencyType != AdjacencyType.NOT_ADJACENT && adjacencyTypeTwo != AdjacencyType.NOT_ADJACENT) {
 					isAdjacent = true;
 					word.setBackground(Color.GREEN);
 				} else {
@@ -159,39 +154,7 @@ public class MoveWordController {
 		// unprotected word view
 		mainView.addProtectedAbstractWordView(wordView);
 		mainView.removeUnprotectedAbstractWordView(wordView);		
-		mainView.getExploreArea().updateTable();	
-		// Print out the results
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-				.getAbstractWordCollection();
-		System.out.print("protectWord list: ");
-		for (AbstractWord word : protectedWords) {
-			System.out.print(word.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		System.out.print("unprotectWord list: ");
-		for (AbstractWord word : unprotectedWords) {
-			System.out.print(word.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> protectedWordsView = mainView
-				.getProtectedAreaWords();
-		System.out.print("protectWordView list: ");
-		for (AbstractWordView word : protectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> unprotectedWordsView = mainView
-				.getUnprotectedAreaWords();
-		System.out.print("unprotectWordView list: ");
-		for (AbstractWordView word : unprotectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
+		mainView.getExploreArea().updateTable();
 	}
 
 	/**
@@ -207,39 +170,7 @@ public class MoveWordController {
 		// protected word view
 		mainView.addUnprotectedAbstractWordView(wordView);
 		mainView.removeProtectedAbstractWordView(wordView);
-		mainView.getExploreArea().updateTable();	
-		// Print out the results
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-				.getAbstractWordCollection();
-		System.out.print("protectWord list: ");
-		for (AbstractWord word : protectedWords) {
-			System.out.print(word.getValue() + ",");
-		}
-		System.out.println();
-
-		System.out.print("unprotectWord list: ");
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		for (AbstractWord word : unprotectedWords) {
-			System.out.print(word.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> protectedWordsView = mainView
-				.getProtectedAreaWords();
-		System.out.print("protectWordView list: ");
-		for (AbstractWordView word : protectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> unprotectedWordsView = mainView
-				.getUnprotectedAreaWords();
-		System.out.print("unprotectWordView list: ");
-		for (AbstractWordView word : unprotectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
+		mainView.getExploreArea().updateTable();
 	}
 
 	/**
@@ -261,38 +192,6 @@ public class MoveWordController {
 			mainView.addUnprotectedAbstractWordView(word);
 		}
 		mainView.getExploreArea().updateTable();
-		// Print out the results
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-				.getAbstractWordCollection();
-		System.out.print("protectWord list: ");
-		for (AbstractWord word1 : protectedWords) {
-			System.out.print(word1.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		System.out.print("unprotectWord list: ");
-		for (AbstractWord word2 : unprotectedWords) {
-			System.out.print(word2.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> protectedWordsView = mainView
-				.getProtectedAreaWords();
-		System.out.print("protectWordView list: ");
-		for (AbstractWordView word : protectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> unprotectedWordsView = mainView
-				.getUnprotectedAreaWords();
-		System.out.print("unprotectWordView list: ");
-		for (AbstractWordView word : unprotectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
 	}
 
 	/**
@@ -316,38 +215,5 @@ public class MoveWordController {
 			}
 		}
 		mainView.getExploreArea().updateTable();
-		// Print out the results
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-				.getAbstractWordCollection();
-		System.out.print("protectWord list: ");
-		for (AbstractWord word1 : protectedWords) {
-			System.out.print(word1.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		System.out.print("unprotectWord list: ");
-		for (AbstractWord word2 : unprotectedWords) {
-			System.out.print(word2.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> protectedWordsView = mainView
-				.getProtectedAreaWords();
-		System.out.print("protectWordView list: ");
-		for (AbstractWordView word : protectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> unprotectedWordsView = mainView
-				.getUnprotectedAreaWords();
-		System.out.print("unprotectWordView list: ");
-		for (AbstractWordView word : unprotectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
 	}
 }

@@ -74,7 +74,7 @@ public class PoemView extends AbstractWordView implements Serializable {
 		boolean successful = true;
 		// Move all words to the appropriate locations
 		int currentHeightOffset = 0;
-		int currentOffset = 0;
+		int currentOffset;
 		for (int i = 0; i < rowViews.size() ;i++) {
 			RowView view = rowViews.get(i);
 			currentOffset  = rowoffset.get(i);
@@ -191,7 +191,7 @@ public class PoemView extends AbstractWordView implements Serializable {
 		}
 		position = rowViews.get(0).getPosition();
 		int totalHeight = 0;
-		int widest = 0;
+		int widest;
 		int min = getPosition().getX();
 		int max = getPosition().getX() + rowViews.get(0).getWidth();
 		for(RowView row:rowViews) {
@@ -203,15 +203,11 @@ public class PoemView extends AbstractWordView implements Serializable {
 			}
 		}
 		widest = max - min;
-		for (int i = 0;i < rowViews.size(); i ++) {
-			RowView row = rowViews.get(i);
-			
+		for (RowView row : rowViews) {
 			totalHeight += row.height;
 		}
 		
 		setSize(widest, totalHeight);
-		System.out.println(totalHeight);
-		System.out.println(widest);
 	}
 
 	public AbstractWordView getSelectedElement(ConnectionBox box) {
@@ -270,5 +266,71 @@ public class PoemView extends AbstractWordView implements Serializable {
 
 	public Poem getWord() {
 		return (Poem) word;
+	}
+
+	
+	@Override
+	public Object clone() {
+		PoemView poemView = null;
+		poemView = (PoemView) super.clone();
+		return poemView;
+	}
+
+
+	/**
+	 * Determines whether this view object is overlapping a given view
+	 *
+	 * @param otherView The other view
+	 * @return Returns whether this view overlaps with the other view
+	 */
+	@Override
+	public boolean isOverlapping(AbstractView otherView) {
+		boolean isOverlapping = false;
+
+		for(RowView rowView : rowViews) {
+			isOverlapping = isOverlapping || rowView.isOverlapping(otherView);
+		}
+		return isOverlapping;
+	}
+
+	/**
+	 * Checks if this view is adjacent to a given other word. Distance that
+	 * determines whether a word is adjacent is defined in
+	 * Constants.CONNECT_DISTANCE
+	 *
+	 * @param otherWord The word to check adjacency
+	 * @return Returns the type of adjacency (NOT_ADJACENT, ABOVE, BELOW, LEFT,
+	 *         or RIGHT)
+	 */
+	public AdjacencyType isAdjacentTo(AbstractWordView otherWord) {
+		AdjacencyType returnType = AdjacencyType.NOT_ADJACENT;
+
+		for(int i = 0; i < rowViews.size(); i++) {
+			AdjacencyType rowAdjacency = rowViews.get(i).isAdjacentTo(otherWord);
+			if(rowAdjacency == AdjacencyType.LEFT || rowAdjacency == AdjacencyType.RIGHT ||
+					(rowAdjacency == AdjacencyType.ABOVE && i == rowViews.size() - 1) ||
+					(rowAdjacency == AdjacencyType.BELOW && i == 0)){
+				returnType = rowAdjacency;
+				break;
+			}
+		}
+		return returnType;
+	}
+
+	/**
+	 * Determines whether a position is inside of this view object
+	 *
+	 * @param click The position of the click
+	 * @return Returns whether this view object was clicked
+	 */
+	@Override
+	public boolean isClicked(Position click) {
+		boolean isClicked = false;
+
+		for(RowView rowView : rowViews) {
+			isClicked = isClicked || rowView.isClicked(click);
+		}
+		return isClicked;
+
 	}
 }

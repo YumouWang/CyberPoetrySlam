@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Nathan
  * @version 10/3/2014
  */
-public abstract class AbstractView implements Serializable {
+public abstract class AbstractView implements Serializable{
 	/**
 	 * 
 	 */
@@ -67,6 +67,9 @@ public abstract class AbstractView implements Serializable {
 	 * @return Returns whether this view overlaps with the other view
 	 */
 	public boolean isOverlapping(AbstractView otherView) {
+		if(otherView instanceof PoemView) {
+			return otherView.isOverlapping(this);
+		}
 		boolean isOverlapping = false;
 		Position otherPosition = otherView.getPosition();
 		Position otherBottomRightPosition = new Position(otherPosition.getX()

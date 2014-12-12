@@ -34,13 +34,18 @@ public class ConnectController {
      */
     public boolean connect(AbstractWordView wordOne, AbstractWordView wordTwo) {
         AdjacencyType adjacencyType = wordOne.isAdjacentTo(wordTwo);
+        AdjacencyType adjacencyTypeTwo = wordTwo.isAdjacentTo(wordOne);
         boolean successful = false;
         switch(adjacencyType) {
             case ABOVE:
-                successful = connectVertical(wordOne, wordTwo);
+                if(adjacencyTypeTwo == AdjacencyType.BELOW) {
+                    successful = connectVertical(wordOne, wordTwo);
+                }
                 break;
             case BELOW:
-                successful = connectVertical(wordTwo, wordOne);
+                if(adjacencyTypeTwo == AdjacencyType.ABOVE) {
+                    successful = connectVertical(wordTwo, wordOne);
+                }
                 break;
             case LEFT:
                 successful = connectHorizontal(wordOne, wordTwo);
@@ -48,6 +53,8 @@ public class ConnectController {
             case RIGHT:
                 successful = connectHorizontal(wordTwo, wordOne);
                 break;
+            default:
+            		break;
         }
         return successful;
     }

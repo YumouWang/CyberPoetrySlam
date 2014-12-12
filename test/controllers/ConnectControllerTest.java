@@ -1,19 +1,18 @@
 package controllers;
 
+import static org.junit.Assert.assertTrue;
 import models.GameState;
 import models.Position;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 import models.Word;
 import models.WordType;
-import models.ProtectedMemento;
-import models.protectedMementoTest;
-import models.UnprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import views.MainView;
 import views.WordView;
-import static org.junit.Assert.*;
 
 public class ConnectControllerTest {
 	

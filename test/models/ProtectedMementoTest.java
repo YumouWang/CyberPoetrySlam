@@ -9,7 +9,7 @@ import views.AbstractWordView;
 import views.WordView;
 import static org.junit.Assert.*;
 
-public class protectedMementoTest {
+public class ProtectedMementoTest {
 
 	@Test
 	public void testConstructor() throws Exception {

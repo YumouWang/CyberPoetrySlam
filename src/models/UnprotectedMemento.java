@@ -6,6 +6,13 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
+
+/**
+ * This is UnprotectedMemento Class for unprotected state preservation
+ * @author xujian Created on 10/25/2014 
+ *
+ */
+
 public class UnprotectedMemento implements Serializable {
 
 	/**

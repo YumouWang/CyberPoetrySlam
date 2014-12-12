@@ -104,6 +104,7 @@ public class MouseInputControllerTest {
 		MouseEvent event = new MouseEvent(mainView, 0, 0, 0, 13, 13, 1, false);
 		controller.selectedWord = wordViewOne;
 		controller.mouseDownPosition = new Position(11, 11);
+		controller.selectedWordPositionRelativeToMouse = new Position(2, 2);
 
 		controller.mouseReleased(event);
 		assertNull(controller.selectedWord);

@@ -13,7 +13,6 @@ import models.UnprotectedMemento;
 import org.junit.Before;
 import org.junit.Test;
 
-import views.AdjacencyType;
 import views.MainView;
 import views.PoemView;
 import views.WordView;
@@ -34,6 +33,8 @@ public class ShiftRowControllerTestTest {
 	@Before
 	public void setUp() throws Exception {
 		gameState = new GameState(un, p);
+		gameState.getProtectedArea().getAbstractWordCollection().clear();
+        gameState.getUnprotectedArea().getAbstractWordCollection().clear();
 		mainView = new MainView(gameState, un, p);
 
 		Word wordOne = new Word("MyWord", WordType.ANY);
@@ -45,18 +46,18 @@ public class ShiftRowControllerTestTest {
 		poem.connect(new Row(wordTwo));
 		poem.connect(new Row(wordThree));
 		poem.connect(new Row(wordFour));
-		viewOne = new WordView(wordOne, new Position(1, 1));
-		viewTwo = new WordView(wordTwo, new Position(1, 40));
-		viewThree = new WordView(wordThree, new Position(1, 80));
-		viewFour = new WordView(wordFour, new Position(1, 130));
-		viewFive = new WordView(wordFive, new Position(250, 150));
-		
+		viewOne = new WordView(wordOne, new Position(1, 71));
+		viewTwo = new WordView(wordTwo, new Position(1, 110));
+		viewThree = new WordView(wordThree, new Position(1, 150));
+		viewFour = new WordView(wordFour, new Position(1, 200));
+		viewFive = new WordView(wordFive, new Position(250, 220));
+
 		mainView.addProtectedAbstractWordView(viewOne);
 		mainView.addProtectedAbstractWordView(viewTwo);
 		mainView.addProtectedAbstractWordView(viewThree);
 		mainView.addProtectedAbstractWordView(viewFour);
 		mainView.addProtectedAbstractWordView(viewFive);
-		poemView = new PoemView(poem, new Position(1, 180), mainView);
+		poemView = new PoemView(poem, new Position(100, 210), mainView);
 		mainView.removeProtectedAbstractWordView(viewTwo);
 		mainView.removeProtectedAbstractWordView(viewOne);
 		mainView.removeProtectedAbstractWordView(viewThree);
@@ -67,19 +68,36 @@ public class ShiftRowControllerTestTest {
 	}
 
 	@Test
+	public void testOverlappingWord() throws Exception {
+		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(1),
+				new Position(260, 34), new Position(10, 23));
+		boolean WordOverlapping = poemView.getRowViews().get(1)
+				.isOverlapping(viewFive);
+		assertTrue(!WordOverlapping);
+
+		/*shiftRowController.shiftRow(poemView, poemView.getRowViews().get(1),
+				new Position(10, 34), new Position(210, 23));
+		boolean isAdjacent = false;
+		if (poemView.getRowViews().get(1).isAdjacentTo(viewFour) != AdjacencyType.NOT_ADJACENT) {
+			isAdjacent = true;
+		}
+		assertTrue(isAdjacent);*/
+	}
+	
+	@Test
 	public void test() throws Exception {
 		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(0),
 				new Position(5, 34), new Position(3, 23));
 		Position pos = poemView.getRowViews().get(0).getPosition();
-		assertEquals(3, pos.getX());
-		assertEquals(180, pos.getY());
+		assertEquals(102, pos.getX());
+		assertEquals(210, pos.getY());
 
 		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(0),
-				new Position(150, 34), new Position(10, 23));
+				new Position(10, 34), new Position(150, 23));
 		boolean PoemConnected = poemView.getRowViews().get(0)
 				.isOverlapping(poemView.getRowViews().get(1));
 		assertTrue(PoemConnected);
-		
+
 		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(1),
 				new Position(210, 34), new Position(10, 23));
 		boolean PoemConnected1 = (poemView.getRowViews().get(1)
@@ -87,7 +105,7 @@ public class ShiftRowControllerTestTest {
 				&& (poemView.getRowViews().get(1).isOverlapping(poemView
 						.getRowViews().get(2)));
 		assertTrue(PoemConnected1);
-		
+
 		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(3),
 				new Position(210, 34), new Position(10, 23));
 		boolean PoemConnected2 = poemView.getRowViews().get(3)
@@ -96,25 +114,12 @@ public class ShiftRowControllerTestTest {
 
 		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(2),
 				new Position(10, 34), new Position(210, 23));
-		boolean isOutOfBounds = 
-				mainView.isMoveOutOfBounds(poemView.getRowViews().get(2), 
-						poemView.getRowViews().get(2).getPosition());
+		boolean isOutOfBounds = mainView.isMoveOutOfBounds(poemView
+				.getRowViews().get(2), poemView.getRowViews().get(2)
+				.getPosition());
 		assertTrue(!isOutOfBounds);
-		
-		/*shiftRowController.shiftRow(poemView, poemView.getRowViews().get(2),
-				new Position(260, 34), new Position(10, 23));
-		boolean WordOverlapping = poemView.getRowViews().get(2)
-				.isOverlapping(viewFive);
-		assertTrue(WordOverlapping);
-		/*
-		shiftRowController.shiftRow(poemView, poemView.getRowViews().get(2),
-				new Position(10, 34), new Position(210, 23));
-		boolean isAdjacent = false;
-		if(poemView.getRowViews().get(2).isAdjacentTo(viewFour)!=
-				AdjacencyType.NOT_ADJACENT) {
-			isAdjacent = true;
-		}
-		assertTrue(isAdjacent);*/
+
 	}
 
+	
 }

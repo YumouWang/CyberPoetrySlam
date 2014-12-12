@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Nathan
  * @version 10/9/2014
  */
-public class WordView extends AbstractWordView implements Serializable {
+public class WordView extends AbstractWordView implements Serializable,Cloneable{
 
 	/**
 	 * 
@@ -104,5 +104,12 @@ public class WordView extends AbstractWordView implements Serializable {
 
 	public Word getWord() {
 		return (Word) word;
+	}
+	
+	@Override
+	public Object clone() {
+		WordView wordView = null;
+		wordView = (WordView) super.clone();
+		return wordView;
 	}
 }

@@ -6,6 +6,7 @@ import models.GameState;
 import models.Poem;
 import models.Position;
 import models.Row;
+import models.UnprotectedMemento;
 import models.Word;
 import models.WordType;
 import models.ProtectedMemento;

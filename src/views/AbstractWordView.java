@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @version 10/3/2014
  */
 public abstract class AbstractWordView extends AbstractView implements
-		Serializable {
+		Serializable,Cloneable {
 
 	/**
 	 * 
@@ -132,4 +132,15 @@ public abstract class AbstractWordView extends AbstractView implements
 
 	public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor,
 			PoemView poemView);
+	
+	@Override
+	public Object clone() {
+		AbstractWordView abstractWordView = null;
+		try{
+			abstractWordView = (AbstractWordView) super.clone();
+		}catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return abstractWordView;
+	}
 }

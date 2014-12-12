@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import views.AbstractWordView;
 import views.MainView;
 import views.PoemView;
 import views.RowView;

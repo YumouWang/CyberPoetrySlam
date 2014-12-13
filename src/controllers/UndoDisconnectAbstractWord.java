@@ -48,11 +48,10 @@ public class UndoDisconnectAbstractWord extends UndoMove{
 		//System.out.println("NJBJKBJK" + " " + wordViewOne.getWord().getValue());
 		MoveWordController moveController = new MoveWordController(
 				mainView, gameState);
-		//if ((wordViewOne instanceof WordView) && (connectTarget instanceof WordView)) {
+		if ((wordViewOne instanceof WordView) && (connectTarget instanceof WordView)) {
 			AbstractWord wordOne = wordViewOne.getWord();
 			AbstractWord wordTwo = connectTarget.getWord();
 			//System.out.println("NJBJKBJK" + " " + wordTwo.getValue());
-			//boolean result = true;
 			for (AbstractWord abstractWord : gameState.getProtectedArea()
 					.getAbstractWordCollection()) {
 				// System.out.println(abstractWord.getValue());
@@ -73,17 +72,13 @@ public class UndoDisconnectAbstractWord extends UndoMove{
 			}
 			mainView.addProtectedAbstractWordView(wordViewOne);
 			mainView.addProtectedAbstractWordView(connectTarget);		
-			// moveController.moveWord(wordViewOne,
-			// wordViewOne.getPosition(),oldp);
 			moveController.moveWord(wordViewOne, oldp, newp);
-			//moveController.moveWord(wordViewOne, newp, oldp);
-		/*}
+		}
 		else {
 			DisconnectController disconnectController = new DisconnectController(mainView, gameState);
 			disconnectController.disconnect(wordViewOne, connectTarget);
-			//moveController.moveWord(wordViewOne, newp, oldp);
 			moveController.moveWord(wordViewOne, oldp, newp);
-		}*/
+		}
 		return true;
 	}
 
@@ -111,6 +106,7 @@ public class UndoDisconnectAbstractWord extends UndoMove{
                 }
             }
         }        
+        //System.out.println("Hi111 " +connectTarget.getWord().getValue());
         ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewOne, this.connectTarget);  
 		return true;

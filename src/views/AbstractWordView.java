@@ -20,8 +20,11 @@ public abstract class AbstractWordView extends AbstractView implements
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = -8621254877402775008L;
 	AbstractWord word;
+	int furthestRight;
+	int furthestLeft;
 
 	/**
 	 * Constructor
@@ -34,6 +37,8 @@ public abstract class AbstractWordView extends AbstractView implements
 	public AbstractWordView(AbstractWord word, Position position) {
 		super(position);
 		this.word = word;
+		furthestLeft = 0;
+		furthestRight = width;
 	}
 
 	/**
@@ -142,5 +147,13 @@ public abstract class AbstractWordView extends AbstractView implements
 			e.printStackTrace();
 		}
 		return abstractWordView;
+	}
+
+	public int getFurthestRight() {
+		return furthestRight;
+	}
+
+	public int getFurthestLeft() {
+		return furthestLeft;
 	}
 }

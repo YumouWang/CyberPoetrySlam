@@ -189,10 +189,12 @@ public class MainView extends JFrame implements Serializable {
 
 		btnRedo = new JButton("REDO");
 		btnRedo.setBounds(72, 0, 70, 20);
+		btnRedo.setEnabled(false);
 		panel.add(btnRedo);
 
 		btnUndo = new JButton("UNDO");
 		btnUndo.setBounds(144, 0, 70, 20);
+		btnUndo.setEnabled(false);
 		panel.add(btnUndo);
 
 		ButtonController buttonController = new ButtonController(this, gameState);

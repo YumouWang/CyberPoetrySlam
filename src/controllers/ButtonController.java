@@ -57,6 +57,8 @@ public class ButtonController implements ActionListener {
 		if (clickedButton.equals(mainView.getPublishButton())) {
 			mainView.getUndoMoves().clear();
 			mainView.getRedoMoves().clear();
+			mainView.getUndoButton().setEnabled(false);
+			mainView.getRedoButton().setEnabled(false);
 			System.out.println("Publish...");
 			publishPoem = mainView.getMouseInputController()
 					.getLastSelectedWord();

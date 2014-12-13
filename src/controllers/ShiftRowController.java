@@ -25,6 +25,10 @@ public class ShiftRowController {
 
 	public void shiftRow(PoemView selectedPoem, AbstractWordView selectedRow,
 			Position positionFrom, Position positionTo) {
+		if (selectedRow == null || selectedRow instanceof PoemView) {
+			return;
+		}
+
 		int shiftAmount = positionFrom.getX() - positionTo.getX();
 		RowView theRow = null;
 
@@ -89,7 +93,9 @@ public class ShiftRowController {
 
 	public void shiftRowTemp(PoemView selectedPoem,
 			AbstractWordView selectedRow, int shiftAmount) {
-
+		if (selectedRow == null || selectedRow instanceof PoemView) {
+			return;
+		}
 		selectedPoem.shiftRow(selectedRow, shiftAmount);
 	}
 

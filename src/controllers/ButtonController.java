@@ -4,15 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import views.MainView;
 
+import views.MainView;
 import common.Constants;
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
+import models.Word;
 import views.*;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -61,7 +63,14 @@ public class ButtonController implements ActionListener {
 				System.out.println("select poem --> "
 						+ publishPoem.getWord().getValue());
 				publishPoem((PoemView) publishPoem);
+			} else if(publishPoem instanceof RowView && mainView.getProtectedAreaWords().contains(publishPoem)) {
+				System.out.println("select poem --> "
+						+ publishPoem.getWord().getValue());
+				publishPoem((RowView) publishPoem);
+			} else {
+				
 			}
+			
 			mainView.getPublishButton().setEnabled(false);
 			publishPoem = null;
 		}
@@ -86,7 +95,13 @@ public class ButtonController implements ActionListener {
 	public void publishPoem(PoemView poemView) {
 		try {
 			File file = new File("file/wall.txt");
-			// writename.createNewFile();
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
 			BufferedWriter bufferedWriter = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file, true)));
 			List<RowView> rowsInPoem = poemView.getRowViews();
@@ -104,6 +119,36 @@ public class ButtonController implements ActionListener {
 		}
 		// After publish poem to wall, release this poem
 		releasePoem(poemView);
+	}
+	
+	/**
+	 * publish a selected poem which is a single row into wall.txt
+	 * @param rowView The poem to publish
+	 */
+	public void publishPoem(RowView rowView) {
+		try {
+			File file = new File("file/wall.txt");
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
+			BufferedWriter bufferedWriter = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(file, true)));
+			List<WordView> wordsInPoem = rowView.getWordViews();
+			for (WordView word : wordsInPoem) {
+				bufferedWriter.write(word.getWord().getValue() + " ");
+			}
+			bufferedWriter.write("\r\n");
+			bufferedWriter.write("\r\n");
+			bufferedWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// After publish poem to wall, release this poem
+		releaseRow(rowView);
 	}
 
 	/**
@@ -134,37 +179,34 @@ public class ButtonController implements ActionListener {
 			}
 		}
 		mainView.getExploreArea().updateTable();
-		// print th result
-		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
-				.getAbstractWordCollection();
-		System.out.print("protectWord list: ");
-		for (AbstractWord word1 : protectedWords) {
-			System.out.print(word1.getValue() + ",");
+	}
+	
+	/**
+	 * release the selected poem when it has been published
+	 * @param rowView The poem to release
+	 */
+	public void releaseRow(RowView rowView) {
+		// remove poem from protected abstractWord in GameState
+		gameState.getProtectedArea().removeAbstractWord(rowView.getWord());
+		// remove poem view from protected abstractWord view in MainView
+		mainView.removeProtectedAbstractWordView(rowView);
+		List<WordView> words = rowView.getWordViews();
+		
+		for (WordView word : words) {
+			// for every word in this poem add it to the unprotected
+			// abstractWord in GameState
+			gameState.getUnprotectedArea().addAbstractWord(word.getWord());
+			// for every word in this poem view add it to the unprotected
+			// abstractWord view in MainView
+			mainView.addUnprotectedAbstractWordView(word);
+			Random random = new Random();
+			int x = random.nextInt(Constants.AREA_WIDTH - 100);
+			int y = random.nextInt(Constants.AREA_HEIGHT
+					- Constants.PROTECTED_AREA_HEIGHT - 20)
+					+ Constants.PROTECTED_AREA_HEIGHT;
+			word.moveTo(new Position(x, y));
 		}
-		System.out.println();
-
-		Collection<AbstractWord> unprotectedWords = gameState
-				.getUnprotectedArea().getAbstractWordCollection();
-		System.out.print("unprotectWord list: ");
-		for (AbstractWord word2 : unprotectedWords) {
-			System.out.print(word2.getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> protectedWordsView = mainView
-				.getProtectedAreaWords();
-		System.out.print("protectWordView list: ");
-		for (AbstractWordView word : protectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
-
-		Collection<AbstractWordView> unprotectedWordsView = mainView
-				.getUnprotectedAreaWords();
-		System.out.print("unprotectWordView list: ");
-		for (AbstractWordView word : unprotectedWordsView) {
-			System.out.print(word.getWord().getValue() + ",");
-		}
-		System.out.println();
+		mainView.getExploreArea().updateTable();
+		
 	}
 }

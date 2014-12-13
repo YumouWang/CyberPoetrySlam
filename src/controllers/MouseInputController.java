@@ -1,12 +1,10 @@
 package controllers;
 
-
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.List;
-
 
 import models.GameState;
 import models.Position;
@@ -33,6 +31,7 @@ public class MouseInputController extends MouseAdapter {
     AbstractWordView selectedWordCopy;	
 	AbstractWordView lastSelectedWord;
 	AbstractWordView selectedRowToShift;
+	static boolean isShift = false;
     
     Position mouseDownPosition;
     Position selectedWordPositionRelativeToMouse;
@@ -62,21 +61,27 @@ public class MouseInputController extends MouseAdapter {
         this.gameState = gameState;      
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        Position mousePosition = new Position(e.getX(), e.getY());
+	@Override
+	public void mousePressed(MouseEvent e) {
+		Position mousePosition = new Position(e.getX(), e.getY());
+		if (e.isShiftDown()) {
+			isShift = true;
+		}
         this.originalx = e.getX();
         this.originaly = e.getY();
-        mousePressedHandler(mousePosition,e.isShiftDown());
-        mainView.refresh();
-    }
+		mousePressedHandler(mousePosition, isShift);
+		mainView.refresh();
+	}
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        Position mousePosition = new Position(e.getX(), e.getY());
-        mouseDraggedHandler(mousePosition,e.isShiftDown());
-        mainView.refresh();
-    }
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		Position mousePosition = new Position(e.getX(), e.getY());
+		if (e.isShiftDown()) {
+			isShift = true;
+		}
+		mouseDraggedHandler(mousePosition, isShift);
+		mainView.refresh();
+	}
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -104,7 +109,7 @@ public class MouseInputController extends MouseAdapter {
 				break;
 			}
 		}
-		
+
 		if (selectedWord != null
 				&& selectedWord.contains(selectedWordToDisconnect)
 				&& selectedWordToDisconnect.isClicked(mouseDownPosition)) {
@@ -143,22 +148,18 @@ public class MouseInputController extends MouseAdapter {
 
 
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
-		if(selectedWord !=null && selectedWordToDisconnect == null 
-				&& isShift) {
-			return;
-		}
-		
+
 		if (selectedWord != null) {
 			MoveWordController moveController = new MoveWordController(
 					mainView, gameState);
 
 			if (isShift) {
-				ShiftRowController shiftController = 
-						new ShiftRowController(mainView, gameState);
-				shiftController.shiftRow((PoemView) selectedWord,selectedRowToShift,
-						mousePosition,mouseDownPosition);
-				//((PoemView) selectedWord).shiftRow(selectedRowToShift,
-						//mousePosition.getX() - mouseDownPosition.getX());
+				ShiftRowController shiftController = new ShiftRowController(
+						mainView, gameState);
+				shiftController.shiftRow((PoemView) selectedWord,
+						selectedRowToShift, mousePosition, mouseDownPosition);
+				// ((PoemView) selectedWord).shiftRow(selectedRowToShift,
+				// mousePosition.getX() - mouseDownPosition.getX());
 			}
 
 			else {
@@ -191,9 +192,10 @@ public class MouseInputController extends MouseAdapter {
 
 
 	void mouseReleasedHandler(Position mousePosition) {
+		isShift = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if (lastSelectedWord instanceof PoemView) {
+			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
 				mainView.getPublishButton().setEnabled(true);
 			} else {
 				mainView.getPublishButton().setEnabled(false);

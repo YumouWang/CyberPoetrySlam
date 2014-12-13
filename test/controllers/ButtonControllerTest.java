@@ -111,6 +111,16 @@ public class ButtonControllerTest {
 				.contains(poemOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(poemViewOne));
 
+		//test publish a single row
+		buttonController.publishPoem(rowViewOne);
+		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
+				.contains(rowOne));
+		assertFalse(mainView.getProtectedAreaWords().contains(rowViewOne));
+		assertTrue(gameState.getUnprotectedArea().getAbstractWordCollection()
+				.contains(wordOne));
+		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewOne));
+		
+		//test publish a poem
 		buttonController.publishPoem(poemViewOne);
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(poemOne));

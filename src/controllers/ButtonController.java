@@ -96,6 +96,7 @@ public class ButtonController implements ActionListener {
 	 */
 	public void publishPoem(PoemView poemView) {
 		try {
+			new File("file").mkdir();
 			File file = new File("file/wall.txt");
 			if (!file.exists()) {
 				try {
@@ -129,6 +130,7 @@ public class ButtonController implements ActionListener {
 	 */
 	public void publishPoem(RowView rowView) {
 		try {
+			new File("file").mkdir();
 			File file = new File("file/wall.txt");
 			if (!file.exists()) {
 				try {

@@ -177,10 +177,17 @@ public class PoemView extends AbstractWordView implements Serializable {
 	
 	public void shiftRow(AbstractWordView  row, int shiftoffset) {
 		int index = rowViews.indexOf(row);
-		int offset = rowoffset.get(index);
-		
-		rowoffset.set(index,offset+shiftoffset);
-		moveTo(position);
+
+		if(index != 0) {
+			int offset = rowoffset.get(index);
+			rowoffset.set(index, offset + shiftoffset);
+			moveTo(position);
+		} else {
+			for(int i = 1; i < rowoffset.size(); i++) {
+				rowoffset.set(i, rowoffset.get(i) - shiftoffset);
+			}
+			moveTo(new Position(position.getX() + shiftoffset, position.getY()));
+		}
 
 		calculateDimensions();
 	}

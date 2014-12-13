@@ -199,7 +199,7 @@ public class MouseInputController extends MouseAdapter {
 		isShift = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if (lastSelectedWord instanceof PoemView) {
+			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
 				mainView.getPublishButton().setEnabled(true);
 			} else {
 				mainView.getPublishButton().setEnabled(false);

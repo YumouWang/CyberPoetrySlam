@@ -7,12 +7,16 @@ import models.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
@@ -225,6 +229,11 @@ public class MainView extends JFrame implements Serializable {
 
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
 		protectedAreaWords.put(newWord.getWord().getId(), newWord);
+	}
+	
+	public void updateProtectedAbstractWordView(PoemView poemView) {
+		protectedAreaWords.remove(poemView.getWord().getId());
+		protectedAreaWords.put(poemView.getWord().getId(),poemView);
 	}
 
 	public void addUnprotectedAbstractWordView(AbstractWordView newWord) {

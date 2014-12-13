@@ -177,7 +177,6 @@ public class MoveWordController {
 	 * release a row that was just moved
 	 */
 	void relaseRow(RowView rowView) {
-
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);

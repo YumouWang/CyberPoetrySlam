@@ -98,7 +98,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
                 break;
             }
         }
-
+        poemViewTwo.moveTo(poemViewTwo.getPosition());
         return successful;
     }
 
@@ -175,7 +175,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
                 break;
             }
         }
-
+        poemViewOne.moveTo(poemViewOne.getPosition());
         return successful;
     }
 

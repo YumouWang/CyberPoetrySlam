@@ -88,7 +88,6 @@ public class ShiftRowController {
 		if (isOutOfBounds) {
 			shiftRowTemp(selectedPoem, theRow, -shiftAmount);
 		}
-
 	}
 
 	public void shiftRowTemp(PoemView selectedPoem,

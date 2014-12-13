@@ -43,15 +43,25 @@ public class SearchController {
 		for (AbstractWord word1 : wordtable) {
 			String wordValue = word1.getValue().toLowerCase();
 			String wordType = ((Word)word1).getType().toString();
-			if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase(wordType)) {
+//			if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase(wordType)) {
+//            	result.add(word1);
+//            }
+//            if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase("")) {
+//            	result.add(word1);
+//            }
+//            if(word.equalsIgnoreCase("") && wordtype.equalsIgnoreCase(wordType)) {
+//            	result.add(word1);
+//            }
+            
+            if(wordValue.equalsIgnoreCase(word) && wordtype.equalsIgnoreCase(wordType)) {
             	result.add(word1);
             }
-            if(wordValue.contains(word.toLowerCase()) && wordtype.equalsIgnoreCase("")) {
+            if(wordValue.equalsIgnoreCase(word) && wordtype.equalsIgnoreCase("")) {
             	result.add(word1);
             }
             if(word.equalsIgnoreCase("") && wordtype.equalsIgnoreCase(wordType)) {
             	result.add(word1);
-            }   
+            }
             //System.out.println(word1.getValue().toString());
 		}
 		return result;

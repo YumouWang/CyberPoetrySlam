@@ -38,6 +38,7 @@ public class ExploreArea extends JFrame implements Serializable {
 	GameState gameState;
 	MainView mainView;
 	SearchController search;
+	long[] rowId;
 
 	/**
 	 * Create the frame.
@@ -84,7 +85,7 @@ public class ExploreArea extends JFrame implements Serializable {
 						WordType.INTERJECTION.name(), WordType.NOUN.name(),
 						WordType.POSTFIX.name(), WordType.PREFIX.name(),
 						WordType.PREPOSITION.name(), WordType.PRONOUN.name(),
-						WordType.VERB.name() }));
+						WordType.VERB.name(), WordType.DETERMINER.name() }));
 
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
@@ -99,8 +100,13 @@ public class ExploreArea extends JFrame implements Serializable {
 		table.setRowSelectionAllowed(true);
 		table.setColumnSelectionAllowed(false);
 
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(40);
+		table.getColumnModel().getColumn(1).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(95);
+
 		jScrollPane = new JScrollPane();
-		jScrollPane.setBounds(20, 75, 232, 268);
+		jScrollPane.setBounds(20, 75, 233, 268);
 		contentPane.add(jScrollPane);
 		jScrollPane.setViewportView(table);
 
@@ -110,15 +116,15 @@ public class ExploreArea extends JFrame implements Serializable {
 					updateTable();
 					table = (JTable) e.getSource();
 					int row = table.getSelectedRow();
-					//int column = table.getSelectedColumn();
-					String selectedWord = table.getValueAt(row, 0)
-							.toString();
+					// int column = table.getSelectedColumn();
+					String selectedWord = table.getValueAt(row, 0).toString();
 					if (row > -1) {
 						Collection<AbstractWordView> words = mainView
 								.getUnprotectedAreaWords();
+						int i = 0;
 						for (AbstractWordView word : words) {
-							if (word.getWord().getValue()
-									.equalsIgnoreCase(selectedWord)) {
+
+							if (word.getWord().getId() == rowId[row]) {
 								word.setBackground(Color.orange);
 							} else {
 								word.setBackground(Color.LIGHT_GRAY);
@@ -162,6 +168,7 @@ public class ExploreArea extends JFrame implements Serializable {
 		for (int rowNum = 0; rowNum < cellData.length; rowNum++) {
 			table.setValueAt(null, rowNum, 0);
 			table.setValueAt(null, rowNum, 1);
+			table.setValueAt(null, rowNum, 2);
 			// cellData[rowNum][0] = null;
 			// cellData[rowNum][1] = null;
 		}
@@ -169,8 +176,10 @@ public class ExploreArea extends JFrame implements Serializable {
 		for (AbstractWord word : result) {
 			// cellData[i][0] = word.getValue();
 			// cellData[i][1] = ((Word) word).getType().toString();
-			table.setValueAt(word.getValue(), i, 0);
-			table.setValueAt(((Word) word).getType().toString(), i, 1);
+			table.setValueAt(i + 1, i, 0);
+			table.setValueAt(word.getValue(), i, 1);
+			table.setValueAt(((Word) word).getType().toString(), i, 2);
+			rowId[i] = word.getId();
 			i++;
 		}
 		table.updateUI();
@@ -183,18 +192,22 @@ public class ExploreArea extends JFrame implements Serializable {
 	}
 
 	private JTable getTable() {
-		String[] columnNames = { "Word", "WordType" };
+		rowId = new long[1000];
+		String[] columnNames = { "No.", "Word", "WordType" };
 		Collection<AbstractWord> unprotectedWords = gameState
 				.getUnprotectedArea().getAbstractWordCollection();
 		Collection<AbstractWord> protectedWords = gameState.getProtectedArea()
 				.getAbstractWordCollection();
-		cellData = new String[unprotectedWords.size() + protectedWords.size() + 10][2];
+		cellData = new String[unprotectedWords.size() + protectedWords.size()
+				+ 10][3];
 		int i = 0;
 		for (AbstractWord word : unprotectedWords) {
 			// cellData[i] = new String[2];
-			cellData[i][0] = word.getValue();
+			cellData[i][0] = String.valueOf(i + 1);
+			cellData[i][1] = word.getValue();
 			// System.out.println(word.getValue() + "," + word.getType());
-			cellData[i][1] = ((Word) word).getType().toString();
+			cellData[i][2] = ((Word) word).getType().toString();
+			rowId[i] = word.getId();
 			i++;
 		}
 		DefaultTableModel model = new DefaultTableModel(cellData, columnNames) {

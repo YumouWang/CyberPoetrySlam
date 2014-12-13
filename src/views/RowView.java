@@ -16,7 +16,7 @@ import java.util.List;
  * @author Nathan
  * @version 10/9/2014
  */
-public class RowView extends AbstractWordView implements Serializable {
+public class RowView extends AbstractWordView implements Serializable,Cloneable {
 
 	/**
 	 * 
@@ -186,5 +186,12 @@ public class RowView extends AbstractWordView implements Serializable {
 
 	public Row getWord() {
 		return (Row) word;
+	}
+	
+	@Override
+	public Object clone() {
+		RowView rowView = null;
+		rowView = (RowView) super.clone();
+		return rowView;
 	}
 }

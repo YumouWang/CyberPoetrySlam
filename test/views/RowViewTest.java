@@ -18,8 +18,8 @@ public class RowViewTest {
 	WordView wordViewTwo;
 	GameState gameState;
 	MainView mainView;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void setUp() throws Exception {

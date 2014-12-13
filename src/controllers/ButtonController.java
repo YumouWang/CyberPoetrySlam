@@ -1,5 +1,11 @@
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import views.MainView;
+
 import common.Constants;
 import models.AbstractWord;
 import models.GameState;
@@ -17,8 +23,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+
 /**
  * ButtonController handles all the actions for MainView panel buttons
+ * 
+ * Created by Yumou & Jian on 10/28/2014.
  * 
  * @author Yumou
  * @author Nathan
@@ -59,11 +68,13 @@ public class ButtonController implements ActionListener {
 		// click on Redo button
 		if (clickedButton.equals(mainView.getRedoButton())) {
 			// Handle redo
+			new RedoController(this.mainView).process();
 			System.out.println("Redo...");
 		}
 		// click on Undo button
 		if (clickedButton.equals(mainView.getUndoButton())) {
 			// Handle Undo
+			new UndoController(this.mainView).process();
 			System.out.println("Undo...");
 		}
 	}

@@ -7,13 +7,12 @@ import models.Position;
 import models.Row;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import views.AdjacencyType;
 import views.MainView;
 import views.PoemView;
 import views.WordView;
@@ -28,8 +27,8 @@ public class ShiftRowControllerTestTest {
 	WordView viewFive;
 	PoemView poemView;
 	ShiftRowController shiftRowController;
-	protectedMemento p = null;
-	unprotectedMemento un = null;
+	ProtectedMemento p = null;
+	UnprotectedMemento un = null;
 
 	@Before
 	public void setUp() throws Exception {

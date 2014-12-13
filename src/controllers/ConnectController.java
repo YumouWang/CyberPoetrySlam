@@ -53,6 +53,8 @@ public class ConnectController {
             case RIGHT:
                 successful = connectHorizontal(wordTwo, wordOne);
                 break;
+            default:
+            		break;
         }
         return successful;
     }

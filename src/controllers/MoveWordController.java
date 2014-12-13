@@ -35,7 +35,7 @@ public class MoveWordController {
 		this.gameState = gameState;
 	}
 
-	public void moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
+	public boolean moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
 		Position originPosition = selectedWord.getPosition();
 		Position positionDiff = new Position(positionTo.getX()
 				- positionFrom.getX(), positionTo.getY() - positionFrom.getY());
@@ -103,6 +103,7 @@ public class MoveWordController {
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special
+		return isOverlappingOtherWord;
 	}
 
 	/**

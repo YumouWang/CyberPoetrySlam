@@ -6,7 +6,13 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class protectedMemento implements Serializable {
+/**
+ * This is ProtectedMemento Class for protected state preservation
+ * @author xujian Created on 10/25/2014
+ *
+ */
+
+public class ProtectedMemento implements Serializable {
 
 	/**
 	 * 
@@ -15,7 +21,7 @@ public class protectedMemento implements Serializable {
 
 	private Collection<AbstractWordView> protectedViews = new HashSet<AbstractWordView>();
 
-	public protectedMemento(Collection<AbstractWordView> view) {
+	public ProtectedMemento(Collection<AbstractWordView> view) {
 		protectedViews.addAll(view);
 	}
 

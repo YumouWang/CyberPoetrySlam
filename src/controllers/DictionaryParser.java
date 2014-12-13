@@ -4,7 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
+
+import models.Word;
+import models.WordType;
+
 /**
  * Dictionary parser to get a word list from a CSV file
  * 
@@ -16,22 +24,27 @@ public class DictionaryParser {
 	BufferedReader br;
 	String line;
 	String cvsSplitBy = ",";
-	Hashtable<String, String> hashTable = new Hashtable<String, String>();
-	
+	List<Word> wordList = new ArrayList<Word>();
+
 	public DictionaryParser(String FileName) {
 		csvFile = FileName;
 	}
-	
+
 	public String getFileName() {
 		return this.csvFile;
 	}
-	
-	public Hashtable<String, String> parse() {
+
+	public List<Word> parse() {
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
 			while ((line = br.readLine()) != null) {
 				String[] s = line.split(cvsSplitBy);
-				hashTable.put(s[0], s[1]);
+				String wordValue = s[0].trim();
+				WordType wordType = stringToWordType(s[1].trim());
+				if (wordType != null) {
+					Word word = new Word(wordValue, wordType);
+					wordList.add(word);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -46,6 +59,22 @@ public class DictionaryParser {
 				}
 			}
 		}
-		return hashTable;
+		return wordList;
 	}
+
+	/**
+	 * transfer a string to an enum word type
+	 * 
+	 * @param wordType
+	 * @return
+	 */
+	public WordType stringToWordType(String wordType) {
+		for (WordType w : WordType.values()) {
+			if (w.toString().equalsIgnoreCase(wordType)) {
+				return w;
+			}
+		}
+		return null;
+	}
+
 }

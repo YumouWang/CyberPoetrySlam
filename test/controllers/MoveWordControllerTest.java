@@ -7,8 +7,8 @@ import models.Position;
 import models.Row;
 import models.Word;
 import models.WordType;
-import models.protectedMemento;
-import models.unprotectedMemento;
+import models.ProtectedMemento;
+import models.UnprotectedMemento;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,8 +39,8 @@ public class MoveWordControllerTest {
 	Position protectedAreaPosition;
 	Position unprotectedAreaPosition;
 	Position crossLinePosition;
-	unprotectedMemento un = null;
-	protectedMemento p = null;
+	UnprotectedMemento un = null;
+	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {

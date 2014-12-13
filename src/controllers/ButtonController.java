@@ -95,7 +95,13 @@ public class ButtonController implements ActionListener {
 	public void publishPoem(PoemView poemView) {
 		try {
 			File file = new File("file/wall.txt");
-			// writename.createNewFile();
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
 			BufferedWriter bufferedWriter = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file, true)));
 			List<RowView> rowsInPoem = poemView.getRowViews();
@@ -122,7 +128,13 @@ public class ButtonController implements ActionListener {
 	public void publishPoem(RowView rowView) {
 		try {
 			File file = new File("file/wall.txt");
-			// writename.createNewFile();
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
 			BufferedWriter bufferedWriter = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file, true)));
 			List<WordView> wordsInPoem = rowView.getWordViews();

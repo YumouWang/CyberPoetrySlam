@@ -38,14 +38,14 @@ public class MainLauncher implements Serializable {
 			try {
 				unprotectedWord.createNewFile();
 			} catch (Exception e) {
-
+				System.out.println(e);
 			}
 		}
 		if (!protectedWord.exists()) {
 			try {
 				unprotectedWord.createNewFile();
 			} catch (Exception e) {
-
+				System.out.println(e);
 			}
 		}
 		ObjectOutputStream oos1 = null;

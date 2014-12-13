@@ -355,10 +355,16 @@ public class MainView extends JFrame implements Serializable {
 	
 	public void recordUndoMove(UndoMove move) {
 		moves.add(move);
+		if(!moves.isEmpty()) {
+			this.getUndoButton().setEnabled(true);
+		}
 	}
 	
 	public void recordRedoMove(UndoMove move) {
 		redoMoves.add(move);
+		if(!redoMoves.isEmpty()) {
+			this.getRedoButton().setEnabled(true);
+		}
 	}
 
 	public UndoMove removeLastUndoMove() {

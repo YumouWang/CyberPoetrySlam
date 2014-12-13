@@ -22,5 +22,8 @@ public class RedoController {
 			mainView.recordUndoMove(m);
 			this.mainView.refresh();
 		}
+		if (this.mainView.getRedoMoves().isEmpty()){
+			this.mainView.getRedoButton().setEnabled(false);
+		}
 	}
 }

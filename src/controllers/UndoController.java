@@ -23,5 +23,9 @@ public class UndoController {
 			mainView.recordRedoMove(m);
 			this.mainView.refresh();
 		}
+		if (this.mainView.getUndoMoves().isEmpty()){
+			this.mainView.getUndoButton().setEnabled(false);
+		}
+		
 	}
 }

@@ -42,11 +42,13 @@ public class ConnectControllerTest {
 
 	@Test
 	public void testConnectHorizontal() throws Exception {
+		viewTwo.moveTo(new Position(viewOne.getWidth() + 1, 0));
 		assertTrue(connectController.connect(viewOne, viewTwo));
 	}
 
 	@Test
 	public void testConnectHorizontal2() throws Exception {
+		viewTwo.moveTo(new Position(viewOne.getWidth() + 1, 0));
 		assertTrue(connectController.connect(viewTwo, viewOne));
 	}
 

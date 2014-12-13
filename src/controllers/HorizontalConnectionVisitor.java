@@ -86,8 +86,20 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, PoemView poemViewTwo) {
-        // Cannot horizontally connect a word and a poem, so do nothing
-        return false;
+        List<RowView> rowViews = poemViewTwo.getRowViews();
+        boolean successful = false;
+        for(RowView rowView : rowViews) {
+            AdjacencyType adjacencyType = rowView.isAdjacentTo(wordViewOne);
+            if(adjacencyType == AdjacencyType.RIGHT) {
+                successful = visit(wordViewOne, rowView);
+                break;
+            } else if(adjacencyType == AdjacencyType.LEFT) {
+                successful = visit(rowView, wordViewOne);
+                break;
+            }
+        }
+
+        return successful;
     }
 
     @Override
@@ -146,7 +158,6 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, PoemView poemViewTwo) {
-        // Cannot horizontally connect a row and a poem, so do nothing
         return false;
     }
 
@@ -170,8 +181,20 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(PoemView poemViewOne, RowView rowViewTwo) {
-        // Cannot horizontally connect a poem and a row, so do nothing
-        return false;
+        List<RowView> rowViews = poemViewOne.getRowViews();
+        boolean successful = false;
+        for(RowView rowView : rowViews) {
+            AdjacencyType adjacencyType = rowView.isAdjacentTo(rowViewTwo);
+            if(adjacencyType == AdjacencyType.RIGHT) {
+                successful = visit(rowViewTwo, rowView);
+                break;
+            } else if(adjacencyType == AdjacencyType.LEFT) {
+                successful = visit(rowView, rowViewTwo);
+                break;
+            }
+        }
+
+        return successful;
     }
 
     @Override
@@ -196,9 +219,10 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
         Collection<AbstractWordView> words = mainView.getProtectedAreaWords();
         boolean isOverlapping = false;
         for (AbstractWordView word : words) {
-            if (!word.equals(two) && !(word.equals(one) || word.contains(one))) {
+            if (!word.equals(two) && !(word.equals(two) || word.contains(two)) && !(word.equals(one) || word.contains(one))) {
                 if (word.isOverlapping(two)) {
                     isOverlapping = true;
+                    break;
                 }
             }
         }

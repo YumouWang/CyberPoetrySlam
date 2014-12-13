@@ -16,9 +16,9 @@ import views.MainView;
  */
 public class BrokerConnection {
 
-    private BrokerClient broker;
-    private ReaderThread brokerCommunicationThread;
-    private HandleBrokerMessageImplementation handler;
+    BrokerClient broker;
+    ReaderThread brokerCommunicationThread;
+    HandleBrokerMessageImplementation handler;
 
     public BrokerConnection(BrokerClient broker, MainView mainView, GameState gameState) {
         this.broker = broker;

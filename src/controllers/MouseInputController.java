@@ -14,14 +14,9 @@ import views.AbstractWordView;
 import views.AdjacencyType;
 import views.MainView;
 import views.PoemView;
-import views.RowView;
-import views.WordView;
-
-import java.awt.*;
 
 
 /**
-<<<<<<< HEAD
  * A controller for handling mouse input. Delegates to other controllers. Unlike
  * other controllers, this controller exists for the duration of the program to
  * handle mouse events and maintain state between mouse events.
@@ -30,14 +25,6 @@ import java.awt.*;
  * @author YangWang
  * @author Jian
  * @version 10/4/2014
-=======
- * A controller for handling mouse input. Delegates to other controllers.
- * Unlike other controllers, this controller exists for the duration of the program
- * to handle mouse events and maintain state between mouse events.
- *
- * Created by Nathan on 10/4/2014.
- * Modified by Jian on 11/11/2014.
->>>>>>> 0e2880e25a595f5d44fb12f107b3987ad004aa49
  */
 public class MouseInputController extends MouseAdapter {
 

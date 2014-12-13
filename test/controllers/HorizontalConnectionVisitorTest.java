@@ -189,7 +189,7 @@ public class HorizontalConnectionVisitorTest {
 
 	@Test
 	public void testVisitPoemRow() throws Exception {
-		assertFalse(horizontalConnectionVisitor.visit(poemViewOne, rowViewOne));
+		assertTrue(horizontalConnectionVisitor.visit(poemViewOne, rowViewOne));
 	}
 
 	@Test

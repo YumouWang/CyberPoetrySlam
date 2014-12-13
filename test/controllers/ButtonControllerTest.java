@@ -2,6 +2,9 @@ package controllers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.awt.Event;
+
 import models.GameState;
 import models.Poem;
 import models.Position;
@@ -73,9 +76,15 @@ public class ButtonControllerTest {
 		gameState.getProtectedArea().addAbstractWord(poemOne);
 		buttonController = new ButtonController(mainView, gameState);
 	}
+	
+	@Test
+	public void testButton() {
+		mainView.getPublishButton();
+	}
 
 	@Test
 	public void testPublishPoem() {
+		assertTrue(mainView.getPublishButton().isEnabled() == false);
 		assertTrue(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(wordOne));
 		assertTrue(mainView.getProtectedAreaWords().contains(wordViewOne));
@@ -110,7 +119,7 @@ public class ButtonControllerTest {
 		assertFalse(gameState.getUnprotectedArea().getAbstractWordCollection()
 				.contains(poemOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(poemViewOne));
-
+		
 		//test publish a single row
 		buttonController.publishPoem(rowViewOne);
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
@@ -131,5 +140,6 @@ public class ButtonControllerTest {
 		assertTrue(gameState.getUnprotectedArea().getAbstractWordCollection()
 				.contains(wordTwo));
 		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewTwo));
+		assertTrue(mainView.getPublishButton().isEnabled() == false);
 	}
 }

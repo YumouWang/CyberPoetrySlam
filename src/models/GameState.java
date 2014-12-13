@@ -45,7 +45,7 @@ public class GameState implements Serializable {
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
 			Collection<Word> wordList = wordInitialize
-					.getInitialWordFromFile("Dictionary/WordDictionary.csv");
+					.getInitialWordFromFile("Dictionary/WordsAndTypes.csv");
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}

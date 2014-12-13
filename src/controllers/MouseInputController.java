@@ -8,10 +8,7 @@ import java.util.List;
 
 import models.GameState;
 import models.Position;
-import views.AbstractWordView;
-import views.AdjacencyType;
-import views.MainView;
-import views.PoemView;
+import views.*;
 
 
 /**

@@ -55,12 +55,14 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                 responseString += acceptorID + IProtocol.separator;
                 // The swap we can fulfill
                 responseString += swap.toString();
+                System.out.println("Sending: " + responseString);
                 brokerClient.getBrokerOutput().println(responseString);
             } catch (InvalidSwapException e) {
                 // Swap request cannot be fulfilled, respond with denySwap
                 String responseString = IProtocol.denySwapMsg + IProtocol.separator;
                 // The id of the user requesting the swap
                 responseString += requestorID + IProtocol.separator;
+                System.out.println("Sending: " + responseString);
                 brokerClient.getBrokerOutput().println(responseString);
             }
         } else if(msgType.equals(IProtocol.confirmSwapMsg)) {

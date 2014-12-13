@@ -73,6 +73,7 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                     try {
                         s.updateTheirWordsForConfirmSwap(msg, requestorID.equals(brokerClient.getID()));
                         swapController.executeSwap(s);
+                        gameState.getPendingSwaps().remove(s);
                     } catch (InvalidSwapException e) {
                         e.printStackTrace();
                     }

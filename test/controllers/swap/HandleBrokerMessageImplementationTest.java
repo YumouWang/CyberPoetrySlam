@@ -1,15 +1,13 @@
 package controllers.swap;
 
-import models.GameState;
-import models.Swap;
-import models.Word;
-import models.WordType;
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.MainView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
@@ -20,12 +18,14 @@ public class HandleBrokerMessageImplementationTest {
     HandleBrokerMessageImplementation handler;
     MockBrokerClient brokerClient;
     Swap swap;
+    Word word;
 
     @Before
     public void setUp() throws Exception, InvalidSwapException {
         gameState = new GameState(null, null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-        gameState.getUnprotectedArea().addAbstractWord(new Word("Moonlight", WordType.NOUN));List<String> inputOfferTypes = new ArrayList<String>();
+        word = new Word("Moonlight", WordType.NOUN);
+        gameState.getUnprotectedArea().addAbstractWord(word);List<String> inputOfferTypes = new ArrayList<String>();
         inputOfferTypes.add("ANY");
         List<String> inputRequestTypes = new ArrayList<String>();
         inputRequestTypes.add("ANY");
@@ -44,7 +44,27 @@ public class HandleBrokerMessageImplementationTest {
     @Test
     public void testProcessDenySwap() throws Exception {
         handler.process(brokerClient, "DENY_SWAP:1");
-//        assertTrue(gameState.getPendingSwaps().isEmpty());
+        assertTrue(gameState.getPendingSwaps().isEmpty());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testBadMessage() throws Exception {
+        handler.process(brokerClient, "BadMessage");
+    }
+
+    @Test
+    public void testBadMessage2() throws Exception {
+        handler.process(brokerClient, "Bad:Message");
+        assertTrue(true);
+    }
+
+    @Test
+    public void testProcessConfirmSwap() throws Exception {
+        handler.process(brokerClient, "CONFIRM_SWAP:1:3:1:noun:moonlight:noun:yak");
+        assertTrue(gameState.getPendingSwaps().isEmpty());
+        assertFalse(gameState.getUnprotectedArea().getAbstractWordCollection().contains(word));
+        assertEquals(1, gameState.getUnprotectedArea().getAbstractWordCollection().size());
+        assertEquals("yak", ((AbstractWord)gameState.getUnprotectedArea().getAbstractWordCollection().toArray()[0]).getValue());
     }
 
     @Test

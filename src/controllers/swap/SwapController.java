@@ -73,6 +73,7 @@ public class SwapController {
         try {
             Swap swap = new Swap(gameState, giveTypes, giveWords, getTypes, getWords, true, connection.getSessionID());
             gameState.getPendingSwaps().add(swap);
+            removeSwapWords(swap);
             connection.sendSwapRequest(swap);
         } catch (InvalidSwapException e) {
             mainView.getSwapAreaView().swapInvalid();
@@ -135,6 +136,7 @@ public class SwapController {
                 mainView.addUnprotectedAbstractWordView(wordView);
             }
             swap.setIsCancelled(true);
+            gameState.getPendingSwaps().remove(swap);
         }
     }
 

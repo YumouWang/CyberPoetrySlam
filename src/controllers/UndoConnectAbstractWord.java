@@ -67,7 +67,9 @@ public class UndoConnectAbstractWord extends UndoMove{
                     connectTarget = word;
                 }
             }
-        }        
+        }       
+        System.out.println("Hello " + wordViewTwo.getWord().getValue());
+        System.out.println("Hello2 " + connectTarget.getWord().getValue());
         ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewOne, wordViewTwo);  
 		return true; 		

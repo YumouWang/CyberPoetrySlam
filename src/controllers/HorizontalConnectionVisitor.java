@@ -92,9 +92,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
             AdjacencyType adjacencyType = rowView.isAdjacentTo(wordViewOne);
             if(adjacencyType == AdjacencyType.RIGHT) {
                 successful = visit(wordViewOne, rowView);
-                break;
-            } else if(adjacencyType == AdjacencyType.LEFT) {
-                successful = visit(rowView, wordViewOne);
+                poemViewTwo.shiftRow(rowView, -wordViewOne.getWidth());
                 break;
             }
         }
@@ -193,7 +191,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
                 break;
             }
         }
-
+        poemViewOne.moveTo(poemViewOne.getPosition());
         return successful;
     }
 

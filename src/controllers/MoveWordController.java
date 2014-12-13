@@ -126,6 +126,10 @@ public class MoveWordController {
 				if (adjacencyType != AdjacencyType.NOT_ADJACENT && adjacencyTypeTwo != AdjacencyType.NOT_ADJACENT) {
 					isAdjacent = true;
 					word.setBackground(Color.GREEN);
+					if(selectedWord instanceof PoemView && word instanceof PoemView) {
+						isAdjacent = false;
+						word.setBackground(Color.LIGHT_GRAY);
+					}
 				} else {
 					word.setBackground(Color.LIGHT_GRAY);
 				}

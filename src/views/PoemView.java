@@ -126,6 +126,12 @@ public class PoemView extends AbstractWordView implements Serializable {
 		if (index == 0 || index == rowViews.size() - 1) {
 			successful = rowViews.remove(otherRow);
 			rowoffset.remove(index);
+			if(index == 0) {
+				int offset = rowoffset.get(0);
+				for(int i = 0; i < rowoffset.size(); i++) {
+					rowoffset.set(i, rowoffset.get(i) - offset);
+				}
+			}
 		}
 		calculateDimensions();
 		return successful;
@@ -155,7 +161,11 @@ public class PoemView extends AbstractWordView implements Serializable {
 		for (RowView rowView : rowViews) {
 			for (WordView rowWordView : rowView.getWordViews()) {
 				if (wordView.equals(rowWordView)) {
+					boolean isFirst = (rowView.getWordViews().indexOf(rowWordView) == 0);
 					successful = rowView.removeWordView(rowWordView);
+					if(successful && isFirst && rowView.getWordViews().size() > 0) {
+						shiftRow(rowView, rowWordView.getWidth());
+					}
 					break;
 				}
 			}

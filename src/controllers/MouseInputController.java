@@ -29,6 +29,7 @@ public class MouseInputController extends MouseAdapter {
 	AbstractWordView lastSelectedWord;
 	AbstractWordView selectedRowToShift;
 	static boolean isShift = false;
+	boolean isShifting = false;
     
     Position mouseDownPosition;
     Position selectedWordPositionRelativeToMouse;
@@ -61,9 +62,7 @@ public class MouseInputController extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		if (e.isShiftDown()) {
-			isShift = true;
-		}
+		isShift = e.isShiftDown();
         this.originalx = e.getX();
         this.originaly = e.getY();
 		mousePressedHandler(mousePosition, isShift);
@@ -73,9 +72,7 @@ public class MouseInputController extends MouseAdapter {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		if (e.isShiftDown()) {
-			isShift = true;
-		}
+		isShift = e.isShiftDown();
 		mouseDraggedHandler(mousePosition, isShift);
 		mainView.refresh();
 	}
@@ -112,6 +109,7 @@ public class MouseInputController extends MouseAdapter {
 				&& selectedWordToDisconnect.isClicked(mouseDownPosition)) {
 			if (isShift) {
 				selectedRowToShift = selectedWordToDisconnect;
+				isShifting = true;
 			}
 			if (!isShift) {
 				// Disconnect the word
@@ -143,14 +141,18 @@ public class MouseInputController extends MouseAdapter {
 		selectedWordToDisconnect = null;
 	}
 
-
+	/**
+	 * Handles mouse dragged events and delegates to the appropriate controller
+	 * @param mousePosition The position of the mouse when this event fires
+	 * @param isShift Whether shift is pressed
+	 */
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
 
 		if (selectedWord != null) {
 			MoveWordController moveController = new MoveWordController(
 					mainView, gameState);
 
-			if (isShift) {
+			if (isShift && isShifting) {
 				ShiftRowController shiftController = new ShiftRowController(
 						mainView, gameState);
 				shiftController.shiftRow((PoemView) selectedWord,
@@ -187,9 +189,13 @@ public class MouseInputController extends MouseAdapter {
 		}
 	}
 
-
+	/**
+	 * Handles mouse released events and delegates to the appropriate controller
+	 * @param mousePosition The position of the mouse when this event fired
+	 */
 	void mouseReleasedHandler(Position mousePosition) {
 		isShift = false;
+		isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
 			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {

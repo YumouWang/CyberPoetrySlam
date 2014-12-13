@@ -15,16 +15,24 @@ import java.util.HashSet;
 public class ProtectedMemento implements Serializable {
 
 	/**
-	 * 
+	 * protectedView is a collection for AbstractWordView
 	 */
 	private static final long serialVersionUID = -5795305432374010152L;
 
 	private Collection<AbstractWordView> protectedViews = new HashSet<AbstractWordView>();
 
+	/**
+	 * Constructor for ProtectedMemento
+	 * @param view
+	 */
 	public ProtectedMemento(Collection<AbstractWordView> view) {
 		protectedViews.addAll(view);
 	}
 
+	/**
+	 * get protectedViews this collection
+	 * @return protectedViews
+	 */
 	public Collection<AbstractWordView> getProtectedView() {
 		return protectedViews;
 	}

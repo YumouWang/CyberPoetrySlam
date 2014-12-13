@@ -26,7 +26,7 @@ public class UndoDisconnectAbstractWord extends UndoMove{
 	Position targetPosition;
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param wordViewOne This is the Abstractword to disconnect --> WordView
 	 * @param wordViewTwo This is the one who disconnects --> RowView
 	 * @param mainView

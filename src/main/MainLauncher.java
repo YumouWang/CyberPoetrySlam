@@ -14,7 +14,6 @@ import java.io.*;
 
 /**
  * The main launcher for starting the program
- * 
  * @author Yumou
  * @author Jian
  * @author Nathan
@@ -23,14 +22,18 @@ import java.io.*;
 public class MainLauncher implements Serializable {
 
 	/**
-	 * 
+	 * protectedWordStorage/unprotectedWordStorage is place for Memento
 	 */
 	private static final long serialVersionUID = 623363781824512600L;
 	static final String protectedWordStorage = "protectedWords.storage";
 	static final String unprotectedWordStorage = "unprotectedWords.storage";
 
-	// location1 is where we stores unprotectedWords
-	// location2 is where we stores protectedWords
+	/**
+	 * Stores the state of game when we trying to close the program
+	 * @param mainView
+	 * @param location1 UnprotectedWordStorage
+	 * @param location2 ProtectedWordStorage
+	 */
 	static void storeState(MainView mainView, String location1, String location2) {
 		File unprotectedWord = new File(location1);
 		File protectedWord = new File(location2);
@@ -56,16 +59,23 @@ public class MainLauncher implements Serializable {
 			oos1.writeObject(mainView.getUnprotectedState());
 			oos2.writeObject(mainView.getProtectedState());
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		if (oos1 != null || oos2 != null) {
 			try {
 				oos1.close();
 				oos2.close();
 			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
 			}
 		}
 	}
 
+	/**
+	 * Load the unprotected state
+	 * @param location
+	 * @return UnprotectedMemento
+	 */
 	static UnprotectedMemento loadUnprotectedMemento(String location) {
 		ObjectInputStream ois = null;
 		UnprotectedMemento un = null;
@@ -74,19 +84,24 @@ public class MainLauncher implements Serializable {
 			un = (UnprotectedMemento) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
-			// unable to perform restore
+			System.out.println(e.getMessage());
 		}
-		// close down safely
 		if (ois != null) {
 			try {
 				ois.close();
 			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
 			}
 		}
 
 		return un;
 	}
 
+	/**
+	 * Load protected state
+	 * @param location
+	 * @return ProtectedMemento
+	 */
 	static ProtectedMemento loadProtectedMemento(String location) {
 		ObjectInputStream ois = null;
 		ProtectedMemento p = null;
@@ -95,13 +110,14 @@ public class MainLauncher implements Serializable {
 			p = (ProtectedMemento) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
-			// unable to perform restore
+			System.out.println(e.getMessage());
 		}
 		// close down safely
 		if (ois != null) {
 			try {
 				ois.close();
 			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
 			}
 		}
 
@@ -109,6 +125,7 @@ public class MainLauncher implements Serializable {
 	}
 
 	/**
+	 * 
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {

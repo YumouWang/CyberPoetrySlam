@@ -3,7 +3,6 @@ package controllers;
 /**
  * This is Abstract Class for all the operation we could undo/redo
  * @author xujian Created on 11/05/2014
- *
  */
 public abstract class UndoMove{
 

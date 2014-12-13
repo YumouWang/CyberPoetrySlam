@@ -87,6 +87,11 @@ public class MouseInputController extends MouseAdapter {
         mainView.refresh();
     }
 
+    /**
+     * determine what words to select
+     * @param position
+     * @param isShift
+     */
     void mousePressedHandler(Position position, boolean isShift) {
 		mouseDownPosition = position;
 
@@ -143,7 +148,11 @@ public class MouseInputController extends MouseAdapter {
 		selectedWordToDisconnect = null;
 	}
 
-
+    /**
+     * determine selection box and determine the move
+     * @param mousePosition
+     * @param isShift
+     */
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
 
 		if (selectedWord != null) {
@@ -187,7 +196,10 @@ public class MouseInputController extends MouseAdapter {
 		}
 	}
 
-
+	/**
+	 * release mouse and make undo/redo moves 
+	 * @param mousePosition
+	 */
 	void mouseReleasedHandler(Position mousePosition) {
 		isShift = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
@@ -285,6 +297,10 @@ public class MouseInputController extends MouseAdapter {
 		this.isConnect = false;
 	}
 
+	/**
+	 * returns last selected word
+	 * @return AbstractWordView
+	 */
 	public AbstractWordView getLastSelectedWord() {
 		return lastSelectedWord;
 	}

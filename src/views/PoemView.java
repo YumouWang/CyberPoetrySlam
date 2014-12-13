@@ -181,6 +181,8 @@ public class PoemView extends AbstractWordView implements Serializable {
 		
 		rowoffset.set(index,offset+shiftoffset);
 		moveTo(position);
+
+		calculateDimensions();
 	}
 	
 	private void calculateDimensions() {
@@ -208,6 +210,21 @@ public class PoemView extends AbstractWordView implements Serializable {
 		}
 		
 		setSize(widest, totalHeight);
+
+		int left = 0;
+		int right = 0;
+		for(int i = 0; i < rowViews.size(); i++) {
+			int leftOffset = rowoffset.get(i);
+			int rightOffset = rowoffset.get(i) + rowViews.get(i).getWidth();
+			if(leftOffset < left) {
+				left = leftOffset;
+			}
+			if(rightOffset > right) {
+				right = rightOffset;
+			}
+		}
+		furthestRight = right;
+		furthestLeft = left;
 	}
 
 	public AbstractWordView getSelectedElement(ConnectionBox box) {

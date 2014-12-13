@@ -324,9 +324,9 @@ public class MainView extends JFrame implements Serializable {
 	 */
 	public boolean isMoveOutOfBounds(AbstractWordView wordView,
 			Position toPosition) {
-		if (toPosition.getX() < 0) {
+		if (toPosition.getX() + wordView.getFurthestLeft() < 0) {
 			return true;
-		} else if (toPosition.getX() + wordView.getWidth() > 716) {
+		} else if (toPosition.getX() + wordView.getFurthestRight() > 716) {
 			return true;
 		} else if (toPosition.getY() < 20) {
 			return true;

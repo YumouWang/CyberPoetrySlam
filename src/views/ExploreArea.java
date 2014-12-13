@@ -116,12 +116,16 @@ public class ExploreArea extends JFrame implements Serializable {
 					updateTable();
 					table = (JTable) e.getSource();
 					int row = table.getSelectedRow();
-					// int column = table.getSelectedColumn();
-					String selectedWord = table.getValueAt(row, 0).toString();
+//					String selectedWord;
+//					// int column = table.getSelectedColumn();
+//					if(table.getValueAt(row, 0) == null) {
+//					} else {
+//						selectedWord = table.getValueAt(row, 0).toString();
+//					}
 					if (row > -1) {
 						Collection<AbstractWordView> words = mainView
 								.getUnprotectedAreaWords();
-						int i = 0;
+//						int i = 0;
 						for (AbstractWordView word : words) {
 
 							if (word.getWord().getId() == rowId[row]) {

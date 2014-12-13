@@ -32,9 +32,9 @@ public class SearchController {
 	
 	public Collection<AbstractWord> search(String word, String wordtype) {
 		updateWordTable();
-		for (AbstractWord word2 : wordtable) {
-			System.out.print(word2.getValue() + ",");
-		}
+//		for (AbstractWord word2 : wordtable) {
+//			System.out.print(word2.getValue() + ",");
+//		}
 		
 		result = new HashSet<AbstractWord>();
 		if(word.equals("") && wordtype.equals("")) {

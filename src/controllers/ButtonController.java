@@ -53,8 +53,10 @@ public class ButtonController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton clickedButton = (JButton) e.getSource();
-		// click on Save button
+		// click on publish button
 		if (clickedButton.equals(mainView.getPublishButton())) {
+			mainView.getUndoMoves().clear();
+			mainView.getRedoMoves().clear();
 			System.out.println("Publish...");
 			publishPoem = mainView.getMouseInputController()
 					.getLastSelectedWord();

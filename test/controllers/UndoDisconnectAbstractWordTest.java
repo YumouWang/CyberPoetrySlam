@@ -10,6 +10,7 @@ import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QDecoderStream;
 import views.AbstractWordView;
 import views.MainView;
 import views.WordView;
+import views.WordViewTest;
 import models.GameState;
 import models.Position;
 import models.ProtectedMemento;
@@ -64,7 +65,8 @@ public class UndoDisconnectAbstractWordTest {
 		MoveWordController moveWordController = new MoveWordController(mainView, gameState);
 		moveWordController.moveWord(wordViewTwo, q, f);
 		undoDisconnectAbstractWord = new UndoDisconnectAbstractWord(p,p,f,
-				wordViewTwo,result,mainView,gameState);
+				wordViewTwo,wordViewOne,mainView,gameState);
+		undoDisconnectAbstractWord.connectTarget = wordViewOne;
 	}
 	
 	@Test
@@ -81,6 +83,7 @@ public class UndoDisconnectAbstractWordTest {
 	@Test
 	public void testRedo() {
 		assertTrue(undoDisconnectAbstractWord.undo());
+		undoDisconnectAbstractWord.connectTarget = wordViewOne;
 		assertTrue(undoDisconnectAbstractWord.execute());
 		assertEquals(wordViewTwo.getPosition().getX(), wordViewOne.getWidth() + 70);
 	}

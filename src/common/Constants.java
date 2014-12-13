@@ -14,4 +14,6 @@ public class Constants {
 
     public static final int BROKER_PORT = 9172;
     public static final String BROKER_HOSTNAME = "gheineman.cs.wpi.edu";//"localhost";
+
+    public static final String WORDS_AND_TYPES_FILENAME = "Dictionary/WordsAndTypes.csv";
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import common.Constants;
 import models.Word;
 import models.WordType;
 
@@ -10,25 +11,25 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class DictionaryParserTest {
-	String FileName = "Dictionary/WordDictionary.csv";
 	
 	@Test
 	public void testDictionaryParser() {
-		DictionaryParser parse = new DictionaryParser(FileName);
+		DictionaryParser parse = new DictionaryParser(Constants.WORDS_AND_TYPES_FILENAME);
 		assertNotNull(parse);
-		assertEquals(parse.getFileName(),FileName);
+		assertEquals(parse.getFileName(),Constants.WORDS_AND_TYPES_FILENAME);
 		
 		List<Word> wordList = parse.parse();
-		//System.out.println(wordList);
-		assertEquals(wordList.size(), 327);
+		assertNotNull(wordList);
+		assertTrue(wordList.size() > 0);
 	}
 	
 	
 	@Test
 	public void testStringToWordType() {
-		DictionaryParser parse = new DictionaryParser(FileName);
+		DictionaryParser parse = new DictionaryParser(Constants.WORDS_AND_TYPES_FILENAME);
 		String str1 = "noun";
 		String str2 = "pronoun";
 		String str3 = "n";

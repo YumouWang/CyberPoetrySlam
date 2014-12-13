@@ -1,5 +1,6 @@
 package models;
 
+import common.Constants;
 import controllers.WordInitialize;
 import views.AbstractWordView;
 import views.RowView;
@@ -45,7 +46,7 @@ public class GameState implements Serializable {
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
 			Collection<Word> wordList = wordInitialize
-					.getInitialWordFromFile("Dictionary/WordDictionary.csv");
+					.getInitialWordFromFile(Constants.WORDS_AND_TYPES_FILENAME);
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}

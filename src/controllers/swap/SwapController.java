@@ -73,6 +73,7 @@ public class SwapController {
         try {
             Swap swap = new Swap(gameState, giveTypes, giveWords, getTypes, getWords, true, connection.getSessionID());
             gameState.getPendingSwaps().add(swap);
+            removeSwapWords(swap);
             connection.sendSwapRequest(swap);
         } catch (InvalidSwapException e) {
             mainView.getSwapAreaView().swapInvalid();
@@ -87,7 +88,6 @@ public class SwapController {
         List<String> newWords = swap.getTheirWords();
         List<WordType> newTypes = swap.getTheirTypes();
 
-        removeSwapWords(swap);
         for(int i = 0; i < newWords.size(); i++) {
             Word word = new Word(newWords.get(i), newTypes.get(i));
             gameState.getUnprotectedArea().addAbstractWord(word);
@@ -135,6 +135,7 @@ public class SwapController {
                 mainView.addUnprotectedAbstractWordView(wordView);
             }
             swap.setIsCancelled(true);
+            gameState.getPendingSwaps().remove(swap);
         }
     }
 

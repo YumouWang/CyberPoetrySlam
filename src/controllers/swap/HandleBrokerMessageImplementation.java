@@ -56,6 +56,9 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                 // The swap we can fulfill
                 responseString += swap.toString();
                 System.out.println("Sending: " + responseString);
+                gameState.getPendingSwaps().add(swap);
+                SwapController swapController = new SwapController(mainView, gameState);
+                swapController.removeSwapWords(swap);
                 brokerClient.getBrokerOutput().println(responseString);
             } catch (InvalidSwapException e) {
                 // Swap request cannot be fulfilled, respond with denySwap
@@ -71,8 +74,9 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
             for(Swap s : swaps) {
                 if(requestorID.equals(s.getRequestorID())) {
                     try {
-                        s.updateTheirWordsForConfirmSwap(msg, requestorID.equals(brokerClient.getID()));
+                        s.updateTheirWordsForConfirmSwap(msg);
                         swapController.executeSwap(s);
+                        gameState.getPendingSwaps().remove(s);
                     } catch (InvalidSwapException e) {
                         e.printStackTrace();
                     }

@@ -85,7 +85,9 @@ public class ExploreArea extends JFrame implements Serializable {
 						WordType.INTERJECTION.name(), WordType.NOUN.name(),
 						WordType.POSTFIX.name(), WordType.PREFIX.name(),
 						WordType.PREPOSITION.name(), WordType.PRONOUN.name(),
-						WordType.VERB.name(), WordType.DETERMINER.name() }));
+						WordType.VERB.name(), WordType.DETERMINER.name(),
+						WordType.SUFFIX.name(), WordType.PRONOUNS.name(),
+						WordType.NUMBER.name()}));
 
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);

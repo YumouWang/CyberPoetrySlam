@@ -22,6 +22,16 @@ public class UndoMoveAbstractWord extends UndoMove{
 	final int oldx;
 	final int oldy;
 	
+	/**
+	 * Constructor function for undoMoveAbstractWord
+	 * @param wordview
+	 * @param oldx
+	 * @param oldy
+	 * @param newx
+	 * @param newy
+	 * @param mainView
+	 * @param gameState
+	 */
 	public UndoMoveAbstractWord(AbstractWordView wordview, int oldx, int oldy, int newx, int newy, MainView mainView, GameState gameState) {
 		this.wordview = wordview;
 		this.oldx = oldx;

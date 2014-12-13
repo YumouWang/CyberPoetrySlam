@@ -230,11 +230,6 @@ public class MainView extends JFrame implements Serializable {
 	public void addProtectedAbstractWordView(AbstractWordView newWord) {
 		protectedAreaWords.put(newWord.getWord().getId(), newWord);
 	}
-	
-	public void updateProtectedAbstractWordView(PoemView poemView) {
-		protectedAreaWords.remove(poemView.getWord().getId());
-		protectedAreaWords.put(poemView.getWord().getId(),poemView);
-	}
 
 	public void addUnprotectedAbstractWordView(AbstractWordView newWord) {
 		unprotectedAreaWords.put(newWord.getWord().getId(), newWord);
@@ -348,22 +343,42 @@ public class MainView extends JFrame implements Serializable {
 		}
 	}
 
+	/**
+	 * get current unprotected state for storage
+	 * @return UnprotectedMemento 
+	 */
 	public UnprotectedMemento getUnprotectedState() {
 		return new UnprotectedMemento(this.unprotectedAreaWords.values());
 	}
 
+	/**
+	 * get current protected state for storage
+	 * @return ProtectedMemento 
+	 */
 	public ProtectedMemento getProtectedState() {
 		return new ProtectedMemento(this.protectedAreaWords.values());
 	}
 
+	/**
+	 * 
+	 * @return Collection<AbstractAreaWords>
+	 */
 	public Collection<AbstractWordView> getUnprotectedWordView() {
 		return this.unprotectedAreaWords.values();
 	}
 
+	/**
+	 * 
+	 * @return Collection<AbstractAreaWords>
+	 */
 	public Collection<AbstractWordView> getProtectedWordView() {
 		return this.protectedAreaWords.values();
 	}
 	
+	/**
+	 * Add move into undo stack
+	 * @param move
+	 */
 	public void recordUndoMove(UndoMove move) {
 		moves.add(move);
 		if(!moves.isEmpty()) {
@@ -371,6 +386,10 @@ public class MainView extends JFrame implements Serializable {
 		}
 	}
 	
+	/**
+	 * Add move into redo stack
+	 * @param move
+	 */
 	public void recordRedoMove(UndoMove move) {
 		redoMoves.add(move);
 		if(!redoMoves.isEmpty()) {
@@ -378,20 +397,36 @@ public class MainView extends JFrame implements Serializable {
 		}
 	}
 
+	/**
+	 * remove last undo stack and do the correspoding operation
+	 * @return undoMove
+	 */
 	public UndoMove removeLastUndoMove() {
 		if (moves.isEmpty()) { return null; }
 		return moves.pop();
 	}
 	
+	/**
+	 * remove last redo stack and do the correspoding operation
+	 * @return redoMove
+	 */
 	public UndoMove removeLastRedoMove() {
 		if (redoMoves.isEmpty()) { return null; }
 		return redoMoves.pop();
 	}
 
+	/**
+	 * get the undomoves stack
+	 * @return Stack<UndoMove>
+	 */
 	public Stack<UndoMove> getUndoMoves(){
 		return this.moves;
 	}
 	
+	/**
+	 * get the redomoves stack
+	 * @return Stack<UndoMove>
+	 */
 	public Stack<UndoMove> getRedoMoves() {
 		return this.redoMoves;
 	}

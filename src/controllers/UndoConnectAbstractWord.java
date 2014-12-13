@@ -1,7 +1,5 @@
 package controllers;
 
-
-
 import models.AbstractWord;
 import models.GameState;
 import models.Position;
@@ -13,7 +11,6 @@ import views.WordView;
 /**
  * Real implementation of undo connect abstractword
  * @author xujian Created 11/17
- *
  */
 public class UndoConnectAbstractWord extends UndoMove{
 
@@ -26,7 +23,7 @@ public class UndoConnectAbstractWord extends UndoMove{
 	Position targetPosition;
 	
 	/**
-	 * 
+	 * Constructor function 
 	 * @param wordViewOne This is the one connects to wordViewTwo (removed)
 	 * @param wordViewTwo This is the one named ConnectTarget
 	 * @param mainView 
@@ -46,19 +43,22 @@ public class UndoConnectAbstractWord extends UndoMove{
 	public boolean execute() {
 		Position test = new Position(newp.getX(), newp.getY());
 		if(newp.getX() >= targetPosition.getX()){
-			test.setX(test.getX() + 3);
+			test.setX(test.getX() + 1);
 		}
 		else{
-			test.setX(test.getX() - 3);
+			test.setX(test.getX() - 1);
 		}
 		if(newp.getY() >= targetPosition.getY()){
-			test.setY(test.getY() + 3);
+			test.setY(test.getY() + 1);
 		}
 		else{
-			test.setY(test.getY() - 3);
+			test.setY(test.getY() - 1);
 		}
 		MoveWordController moveController = new MoveWordController(mainView, gameState);
-        moveController.moveWord(wordViewOne,oldp,test);	
+        moveController.moveWord(wordViewOne,oldp,test);
+        System.out.println("Hello " + oldp.getX());
+        System.out.println("Hello0 " + test.getX());
+        System.out.println("Hello1 " + wordViewOne.getPosition().getX());
         AbstractWordView connectTarget = null;
         for (AbstractWordView word : mainView.getProtectedWordView()) {
             if (!word.equals(wordViewOne)) {
@@ -68,8 +68,8 @@ public class UndoConnectAbstractWord extends UndoMove{
                 }
             }
         }       
-        System.out.println("Hello " + wordViewTwo.getWord().getValue());
-        System.out.println("Hello2 " + connectTarget.getWord().getValue());
+        System.out.println("Hello2 " + wordViewTwo.getWord().getValue());
+        System.out.println("Hello3 " + wordViewOne.getWord().getValue());
         ConnectController controller = new ConnectController(mainView, gameState);
         controller.connect(wordViewOne, wordViewTwo);  
 		return true; 		

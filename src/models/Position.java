@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * The Position model class
  *
- * @author Nathan
+ * @author Nathan Jian
  * @version 10/3/2014
  */
 public class Position implements Serializable {
@@ -58,10 +58,18 @@ public class Position implements Serializable {
 		return x == position.getX() && y == position.getY();
 	}
 	
+	/**
+	 * changes the position of x values
+	 * @param x
+	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 	
+	/**
+	 * changes the position of y values
+	 * @param y
+	 */
 	public void setY(int y) {
 		this.y = y;
 	}

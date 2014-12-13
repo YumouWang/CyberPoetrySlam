@@ -84,6 +84,11 @@ public class MouseInputController extends MouseAdapter {
         mainView.refresh();
     }
 
+    /**
+     * determine what words to select
+     * @param position
+     * @param isShift
+     */
     void mousePressedHandler(Position position, boolean isShift) {
 		mouseDownPosition = position;
 
@@ -291,6 +296,10 @@ public class MouseInputController extends MouseAdapter {
 		this.isConnect = false;
 	}
 
+	/**
+	 * returns last selected word
+	 * @return AbstractWordView
+	 */
 	public AbstractWordView getLastSelectedWord() {
 		return lastSelectedWord;
 	}

@@ -96,6 +96,10 @@ public class SwapAreaView extends AbstractView {
         btnSwap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            		mainView.getUndoMoves().clear();
+            		mainView.getRedoMoves().clear();
+            		mainView.getUndoButton().setEnabled(false);
+            		mainView.getRedoButton().setEnabled(false);
                 SwapController swapController = new SwapController(mainView, gameState);
                 swapController.requestSwap();
             }

@@ -85,7 +85,9 @@ public class ExploreArea extends JFrame implements Serializable {
 						WordType.INTERJECTION.name(), WordType.NOUN.name(),
 						WordType.POSTFIX.name(), WordType.PREFIX.name(),
 						WordType.PREPOSITION.name(), WordType.PRONOUN.name(),
-						WordType.VERB.name(), WordType.DETERMINER.name() }));
+						WordType.VERB.name(), WordType.DETERMINER.name(),
+						WordType.SUFFIX.name(), WordType.PRONOUNS.name(),
+						WordType.NUMBER.name()}));
 
 		// Search.getInstance().initTable();
 		// System.out.println(Search.wordtable);
@@ -116,12 +118,16 @@ public class ExploreArea extends JFrame implements Serializable {
 					updateTable();
 					table = (JTable) e.getSource();
 					int row = table.getSelectedRow();
-					// int column = table.getSelectedColumn();
-					String selectedWord = table.getValueAt(row, 0).toString();
+//					String selectedWord;
+//					// int column = table.getSelectedColumn();
+//					if(table.getValueAt(row, 0) == null) {
+//					} else {
+//						selectedWord = table.getValueAt(row, 0).toString();
+//					}
 					if (row > -1) {
 						Collection<AbstractWordView> words = mainView
 								.getUnprotectedAreaWords();
-						int i = 0;
+//						int i = 0;
 						for (AbstractWordView word : words) {
 
 							if (word.getWord().getId() == rowId[row]) {

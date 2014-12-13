@@ -4,6 +4,7 @@ import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.MainView;
+import views.WordView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,16 @@ public class HandleBrokerMessageImplementationTest {
         inputOfferWords.add("Moonlight");
         List<String> inputRequestWords = new ArrayList<String>();
         inputRequestWords.add("");
-
+        WordView wordView = new WordView(word, new Position(0,0));
         swap = new Swap(gameState, inputOfferTypes, inputOfferWords, inputRequestTypes, inputRequestWords, true, "1");
         gameState.getPendingSwaps().add(swap);
+
         mainView = new MainView(gameState, null, null);
+        mainView.addUnprotectedAbstractWordView(wordView);
+        mainView.addLabelOf(wordView);
+
+        SwapController swapController = new SwapController(mainView, gameState);
+        swapController.removeSwapWords(swap);
         handler = new HandleBrokerMessageImplementation(mainView, gameState);
         brokerClient = new MockBrokerClient();
     }
@@ -60,11 +67,12 @@ public class HandleBrokerMessageImplementationTest {
 
     @Test
     public void testProcessConfirmSwap() throws Exception {
-        handler.process(brokerClient, "CONFIRM_SWAP:1:3:1:noun:moonlight:noun:yak");
+        handler.process(brokerClient, "CONFIRM_SWAP:1:3:1:noun:Moonlight:noun:Yak");
         assertTrue(gameState.getPendingSwaps().isEmpty());
         assertFalse(gameState.getUnprotectedArea().getAbstractWordCollection().contains(word));
         assertEquals(1, gameState.getUnprotectedArea().getAbstractWordCollection().size());
-        assertEquals("yak", ((AbstractWord)gameState.getUnprotectedArea().getAbstractWordCollection().toArray()[0]).getValue());
+        assertEquals("Yak", ((AbstractWord) gameState.getUnprotectedArea().getAbstractWordCollection().toArray()[0]).getValue());
+        assertEquals(WordType.NOUN, ((Word) gameState.getUnprotectedArea().getAbstractWordCollection().toArray()[0]).getType());
     }
 
     @Test

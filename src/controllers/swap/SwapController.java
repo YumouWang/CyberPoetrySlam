@@ -88,7 +88,6 @@ public class SwapController {
         List<String> newWords = swap.getTheirWords();
         List<WordType> newTypes = swap.getTheirTypes();
 
-        removeSwapWords(swap);
         for(int i = 0; i < newWords.size(); i++) {
             Word word = new Word(newWords.get(i), newTypes.get(i));
             gameState.getUnprotectedArea().addAbstractWord(word);

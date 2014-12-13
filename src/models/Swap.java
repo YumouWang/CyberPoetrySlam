@@ -182,6 +182,10 @@ public class Swap {
         return theirWords;
     }
 
+    public boolean isRequestor() {
+        return isRequestor;
+    }
+
     public boolean getIsCancelled() {
         return isCancelled;
     }
@@ -242,7 +246,7 @@ public class Swap {
         return swapString;
     }
 
-    public void updateTheirWordsForConfirmSwap(String swapString, boolean isRequestor) throws InvalidSwapException {
+    public void updateTheirWordsForConfirmSwap(String swapString) throws InvalidSwapException {
         List<String> inputOfferTypes = new ArrayList<String>();
         List<String> inputOfferWords = new ArrayList<String>();
         List<String> inputRequestTypes = new ArrayList<String>();

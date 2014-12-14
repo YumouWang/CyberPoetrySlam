@@ -16,4 +16,5 @@ public class Constants {
     public static final String BROKER_HOSTNAME = "gheineman.cs.wpi.edu";//"localhost";
 
     public static final String WORDS_AND_TYPES_FILENAME = "Dictionary/WordsAndTypes.csv";
+    public static final String WALL_FILENAME = "wall.txt";
 }

@@ -66,11 +66,11 @@ public class ButtonController implements ActionListener {
 					&& mainView.getProtectedAreaWords().contains(publishPoem)) {
 				System.out.println("select poem --> "
 						+ publishPoem.getWord().getValue());
-				publishPoem((PoemView) publishPoem);
+				publishPoem((PoemView) publishPoem, Constants.WALL_FILENAME);
 			} else if(publishPoem instanceof RowView && mainView.getProtectedAreaWords().contains(publishPoem)) {
 				System.out.println("select poem --> "
 						+ publishPoem.getWord().getValue());
-				publishPoem((RowView) publishPoem);
+				publishPoem((RowView) publishPoem, Constants.WALL_FILENAME);
 			} else {
 				
 			}
@@ -96,10 +96,9 @@ public class ButtonController implements ActionListener {
 	 * publish a selected poem into wall.txt
 	 * @param poemView The poem to publish
 	 */
-	public void publishPoem(PoemView poemView) {
+	public void publishPoem(PoemView poemView, String filename) {
 		try {
-			new File("file").mkdir();
-			File file = new File("file/wall.txt");
+			File file = new File(filename);
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
@@ -130,10 +129,9 @@ public class ButtonController implements ActionListener {
 	 * publish a selected poem which is a single row into wall.txt
 	 * @param rowView The poem to publish
 	 */
-	public void publishPoem(RowView rowView) {
+	public void publishPoem(RowView rowView, String filename) {
 		try {
-			new File("file").mkdir();
-			File file = new File("file/wall.txt");
+			File file = new File(filename);
 			if (!file.exists()) {
 				try {
 					file.createNewFile();

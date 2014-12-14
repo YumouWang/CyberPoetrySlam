@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Event;
+import java.io.File;
 
 import models.GameState;
 import models.Poem;
@@ -121,7 +122,7 @@ public class ButtonControllerTest {
 		assertFalse(mainView.getUnprotectedAreaWords().contains(poemViewOne));
 		
 		//test publish a single row
-		buttonController.publishPoem(rowViewOne);
+		buttonController.publishPoem(rowViewOne, "testWall.txt");
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(rowOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(rowViewOne));
@@ -130,7 +131,7 @@ public class ButtonControllerTest {
 		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewOne));
 		
 		//test publish a poem
-		buttonController.publishPoem(poemViewOne);
+		buttonController.publishPoem(poemViewOne , "testWall.txt");
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(poemOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(poemViewOne));
@@ -141,5 +142,8 @@ public class ButtonControllerTest {
 				.contains(wordTwo));
 		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewTwo));
 		assertTrue(mainView.getPublishButton().isEnabled() == false);
+
+		File wall = new File("testWall.txt");
+		wall.delete();
 	}
 }

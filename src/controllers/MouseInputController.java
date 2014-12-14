@@ -41,7 +41,6 @@ public class MouseInputController extends MouseAdapter {
     /** Original x,y where AbstractWordView was before moving and connecting. */
     int originalx;
     int originaly;
-    long Id;
     
     MainView mainView;
     GameState gameState;
@@ -49,7 +48,6 @@ public class MouseInputController extends MouseAdapter {
     /** isDisconnect and isConnect is used to represent whether disconnect/connect happens */
     boolean isDisconnect;
     boolean isConnect;
-    boolean isReleaseOrProtect;
     boolean isMove;
 
     /**
@@ -123,8 +121,7 @@ public class MouseInputController extends MouseAdapter {
 			if (!isShift) {
 				// Disconnect the word
 				disconnectTargetPosition = selectedWord.getPosition();
-				DisconnectController controller = new DisconnectController(
-						mainView, gameState);
+				DisconnectController controller = new DisconnectController(mainView, gameState);
 				if (controller.disconnect(selectedWordToDisconnect,
 						selectedWord)) {					
 					selectedWord.setBackground(Color.LIGHT_GRAY);
@@ -162,8 +159,7 @@ public class MouseInputController extends MouseAdapter {
 					mainView, gameState);
 
 			if (isShift && isShifting) {
-				ShiftRowController shiftController = new ShiftRowController(
-						mainView, gameState);
+				ShiftRowController shiftController = new ShiftRowController(mainView, gameState);
 				shiftController.shiftRow((PoemView) selectedWord,
 						selectedRowToShift, mousePosition, mouseDownPosition);
 			}
@@ -191,8 +187,7 @@ public class MouseInputController extends MouseAdapter {
 					.getSelectedItem(mainView.getProtectedAreaWords());
 
 			if (selectedWordToDisconnect != null) {
-				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY
-						.brighter());
+				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
 			}
 		}
 	}
@@ -205,19 +200,13 @@ public class MouseInputController extends MouseAdapter {
 		isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
-				mainView.getPublishButton().setEnabled(true);
-			} else {
-				mainView.getPublishButton().setEnabled(false);
-			}
 
 			Collection<AbstractWordView> words = mainView
 					.getProtectedAreaWords();
 			AbstractWordView connectTarget = null;
 			for (AbstractWordView word : words) {
 				if (!word.equals(selectedWord)) {
-					AdjacencyType adjacencyType = selectedWord
-							.isAdjacentTo(word);
+					AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
 					if (adjacencyType != AdjacencyType.NOT_ADJACENT) {
 						connectTarget = word;
 						break;
@@ -225,11 +214,22 @@ public class MouseInputController extends MouseAdapter {
 				}
 			}
 			if (connectTarget != null) {
-				ConnectController controller = new ConnectController(mainView,
-						gameState);
+				ConnectController controller = new ConnectController(mainView, gameState);
 				this.isConnect = true;
 				controller.connect(selectedWord, connectTarget);// connectTarget
-			}			
+
+				for(AbstractWordView wordView :mainView.getProtectedAreaWords()) {
+					if(wordView.contains(selectedWord)) {
+						lastSelectedWord = wordView;
+					}
+				}
+			}
+
+			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
+				mainView.getPublishButton().setEnabled(true);
+			} else {
+				mainView.getPublishButton().setEnabled(false);
+			}
 		}
 
 		if(isMove || isDisconnect || isConnect || isShift){
@@ -240,8 +240,7 @@ public class MouseInputController extends MouseAdapter {
 			selectedWordToDisconnect = mainView.getSelectionBox()
 					.getSelectedItem(mainView.getProtectedAreaWords());
 			if (selectedWordToDisconnect != null) {
-				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY
-						.brighter());
+				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
 			}
 			mainView.getSelectionBox().clearBox();
 		} else {

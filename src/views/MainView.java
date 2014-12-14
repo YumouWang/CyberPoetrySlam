@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
@@ -23,7 +22,6 @@ import javax.swing.WindowConstants;
 
 import models.AbstractWord;
 import models.GameState;
-import models.Poem;
 import models.Position;
 import models.Word;
 import models.ProtectedMemento;
@@ -190,13 +188,6 @@ public class MainView extends JFrame implements Serializable {
 		return oldWord.equals(removed);
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		// g.drawLine(10, Constants.PROTECTED_AREA_HEIGHT, 405,
-		// Constants.PROTECTED_AREA_HEIGHT);
-	}
-
 	/**
 	 * Refreshes the display
 	 */
@@ -264,8 +255,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @param toPosition
 	 * @return
 	 */
-	public boolean isMoveOutOfBounds(AbstractWordView wordView,
-			Position toPosition) {
+	public boolean isMoveOutOfBounds(AbstractWordView wordView, Position toPosition) {
 		if (toPosition.getX() + wordView.getFurthestLeft() < 0) {
 			return true;
 		} else if (toPosition.getX() + wordView.getFurthestRight() > 716) {
@@ -397,10 +387,6 @@ public class MainView extends JFrame implements Serializable {
 		panel.remove(wordView.label);
 	}
 	
-	public JPanel getJPanel(){
-		return this.panel;
-	}
-	
 	public void clearPanel() {
 		Collection<AbstractWordView> collection = new HashSet<AbstractWordView>();
 		collection.addAll(protectedAreaWords.values());
@@ -409,9 +395,9 @@ public class MainView extends JFrame implements Serializable {
 			if (wordView instanceof WordView){
 				moveWordController.unprotectWord(wordView);
 			}else if(wordView instanceof RowView){
-				moveWordController.relaseRow((RowView) wordView);
+				moveWordController.releaseRow((RowView) wordView);
 			}else{
-				moveWordController.relasePoem((PoemView) wordView);
+				moveWordController.releasePoem((PoemView) wordView);
 			}
 		}
 		collection = new HashSet<AbstractWordView>();

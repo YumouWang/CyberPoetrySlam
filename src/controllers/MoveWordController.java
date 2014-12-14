@@ -1,7 +1,6 @@
 package controllers;
 
 import common.Constants;
-import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import views.*;
@@ -94,10 +93,10 @@ public class MoveWordController {
 				unprotectWord(selectedWord);
 			}
 			if (selectedWord instanceof RowView) {
-				relaseRow((RowView) selectedWord);
+				releaseRow((RowView) selectedWord);
 			}
 			if (selectedWord instanceof PoemView) {
-				relasePoem((PoemView) selectedWord);
+				releasePoem((PoemView) selectedWord);
 			}
 
 		}
@@ -181,7 +180,7 @@ public class MoveWordController {
 	/**
 	 * release a row that was just moved
 	 */
-	public void relaseRow(RowView rowView) {
+	public void releaseRow(RowView rowView) {
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -201,7 +200,7 @@ public class MoveWordController {
 	/**
 	 * release a poem that was just moved
 	 */
-	public void relasePoem(PoemView poemView) {
+	public void releasePoem(PoemView poemView) {
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(poemView.getWord());

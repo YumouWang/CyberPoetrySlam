@@ -203,9 +203,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
                     RowView firstRowViewInSplitResult = null;
                     // Keep track of all the rowViews in the splitPoemView so we can remove them from mainView after we make the view
                     List<RowView> resultRowViewList = new ArrayList<RowView>();
+                    List<Integer> resultRowViewOffset = new ArrayList<Integer>();
                     // Remove rowViews from the end of the list until we get to the emptyRow we just split on
                     while(!emptyRow.equals(lastRowViewInPoem)) {
                         // Remove the row from the poem and add it to the pool of words in the mainView
+                        int rowOffset = lastRowViewInPoem.getPosition().getX() - poemViewToDisconnectFrom.getPosition().getX();
+                        resultRowViewOffset.add(0, rowOffset);
                         poemViewToDisconnectFrom.removeRowView(lastRowViewInPoem);
                         mainView.addProtectedAbstractWordView(lastRowViewInPoem);
 
@@ -221,9 +224,14 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
                     // And firstRowViewInSplitResult is the first RowView in the split poem view
 
                     // Create a new PoemView for the second poem
-                    // Use the position of the first row in the poem when creating it1
+                    // Use the position of the first row in the poem when creating it
                     // All rows should be available in the mainView so it should be able to construct using those rowViews
-                    PoemView splitPoemView = new PoemView(splitResult, firstRowViewInSplitResult.getPosition(), mainView);
+                    Position newPoemPosition = firstRowViewInSplitResult.getPosition();
+                    PoemView splitPoemView = new PoemView(splitResult, newPoemPosition, mainView);
+                    for(int i = 0; i < splitPoemView.getRowViews().size(); i++) {
+                        splitPoemView.shiftRow(splitPoemView.getRowViews().get(i), resultRowViewOffset.get(i));
+                    }
+                    splitPoemView.moveTo(newPoemPosition);
                     mainView.addProtectedAbstractWordView(splitPoemView);
                     // Remove the wordViews used in making the splitPoemView
                     for(RowView view : resultRowViewList) {
@@ -299,7 +307,10 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             RowView firstRowViewInSplitResult = null;
             // Keep track of all the rowViews in the splitPoemView so we can remove them from mainView after we make the view
             List<RowView> resultRowViewList = new ArrayList<RowView>();
+            List<Integer> resultRowViewOffset = new ArrayList<Integer>();
             while(!rowView.equals(lastRowViewInPoem)) {
+                int rowOffset = lastRowViewInPoem.getPosition().getX() - poemViewToDisconnectFrom.getPosition().getX();
+                resultRowViewOffset.add(0, rowOffset);
                 // Remove the row from the poem and add it to the pool of words in the mainView
                 poemViewToDisconnectFrom.removeRowView(lastRowViewInPoem);
                 mainView.addProtectedAbstractWordView(lastRowViewInPoem);
@@ -314,7 +325,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // Create a new PoemView for the second poem
             // Use the position of the first row in the poem when creating it
             // All rows should be available in the mainView so it should be able to construct using those rowViews
-            PoemView splitPoemView = new PoemView(splitResult, firstRowViewInSplitResult.getPosition(), mainView);
+            Position newPoemPosition = firstRowViewInSplitResult.getPosition();
+            PoemView splitPoemView = new PoemView(splitResult, newPoemPosition, mainView);
+            for(int i = 0; i < splitPoemView.getRowViews().size(); i++) {
+                splitPoemView.shiftRow(splitPoemView.getRowViews().get(i), resultRowViewOffset.get(i));
+            }
+            splitPoemView.moveTo(newPoemPosition);
             mainView.addProtectedAbstractWordView(splitPoemView);
             // Remove the wordViews used in making the splitPoemView
             for(RowView view : resultRowViewList) {

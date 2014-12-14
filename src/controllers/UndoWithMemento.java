@@ -45,6 +45,7 @@ public class UndoWithMemento implements Serializable {
 		mainView.clearPanel();
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
+
 		Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
 		Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 		for (AbstractWordView abs : unprotectedMemento.getUnprotectedView()) {
@@ -70,12 +71,9 @@ public class UndoWithMemento implements Serializable {
 		gameState.resetUnprotectedArea(unprotectedWords);
 
 		for (AbstractWordView abs : unprotectedMemento.getUnprotectedView()) {
-			Position position = abs.getPosition();
 			WordView wordView = (WordView) abs;
-			Word w = wordView.getWord();
-			WordView view = new WordView(w, position);
-			mainView.addLabelOf(view);
-			mainView.addUnprotectedAbstractWordView(view);
+			mainView.addLabelOf(wordView);
+			mainView.addUnprotectedAbstractWordView(wordView);
 		}
 		for (AbstractWordView abs : protectedMemento.getProtectedView()) {
 			if (abs instanceof WordView) {

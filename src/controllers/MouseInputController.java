@@ -229,8 +229,6 @@ public class MouseInputController extends MouseAdapter {
 						gameState);
 				this.isConnect = true;
 				controller.connect(selectedWord, connectTarget);// connectTarget
-
-
 			}			
 		}
 

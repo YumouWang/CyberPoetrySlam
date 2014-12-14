@@ -23,7 +23,7 @@ public class UndoControllerTest {
 	Word wordOne;
 	WordView wordViewOne;
 	UndoController undoController;
-	UndoMoveAbstractWord undoMoveAbstractWord;
+	UndoMove undoMove;
 	
 	@Before
 	public void initialize() throws Exception{
@@ -41,9 +41,8 @@ public class UndoControllerTest {
 		undoController = new UndoController(mainView,gameState);
 		MoveWordController moveWordController = new MoveWordController(mainView, gameState);
 		moveWordController.moveWord(wordViewOne, new Position(50, 50), new Position(70, 70));
-		undoMoveAbstractWord = new UndoMoveAbstractWord(wordViewOne, 50, 50, 70, 70,
-				mainView, gameState);
-		mainView.recordUndoMove(undoMoveAbstractWord);
+		undoMove = new UndoWithMemento(mainView, gameState);
+		mainView.recordUndoMove(undoMove);
 	}
 	
 	@Test

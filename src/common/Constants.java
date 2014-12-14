@@ -17,4 +17,5 @@ public class Constants {
 
     public static final String WORDS_AND_TYPES_FILENAME = "Dictionary/WordsAndTypes.csv";
     public static final String WALL_FILENAME = "wall.txt";
+    public static final String MEMENTO_STORAGE = "memento.storage";
 }

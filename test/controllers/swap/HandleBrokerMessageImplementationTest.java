@@ -23,7 +23,7 @@ public class HandleBrokerMessageImplementationTest {
 
     @Before
     public void setUp() throws Exception, InvalidSwapException {
-        gameState = new GameState(null, null);
+        gameState = new GameState(null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
         word = new Word("Moonlight", WordType.NOUN);
         gameState.getUnprotectedArea().addAbstractWord(word);List<String> inputOfferTypes = new ArrayList<String>();
@@ -38,7 +38,7 @@ public class HandleBrokerMessageImplementationTest {
         swap = new Swap(gameState, inputOfferTypes, inputOfferWords, inputRequestTypes, inputRequestWords, true, "1");
         gameState.getPendingSwaps().add(swap);
 
-        mainView = new MainView(gameState, null, null);
+        mainView = new MainView(gameState, null);
         mainView.addUnprotectedAbstractWordView(wordView);
         mainView.addLabelOf(wordView);
 

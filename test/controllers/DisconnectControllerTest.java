@@ -19,8 +19,8 @@ public class DisconnectControllerTest {
 
 	@Test
 	public void testDisconnect() throws Exception {
-		GameState gameState = new GameState(un, p);
-		MainView mainView = new MainView(gameState, un, p);
+		GameState gameState = new GameState(null);
+		MainView mainView = new MainView(gameState, null);
 
 		Word wordOne = new Word("MyWord", WordType.ANY);
 		Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);

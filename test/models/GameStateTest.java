@@ -18,7 +18,7 @@ public class GameStateTest {
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 	}
 
 	@Before
@@ -31,7 +31,7 @@ public class GameStateTest {
 		absUnprotect.add(new WordView(new Word("Dog", WordType.NOUN),
 				new Position(0, 0)));
 		un = new UnprotectedMemento(absUnprotect);
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		assertEquals(1, gameState.getProtectedArea()
 				.getAbstractWordCollection().size());
 		assertEquals(1, gameState.getUnprotectedArea()

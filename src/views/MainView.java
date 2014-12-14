@@ -1,24 +1,17 @@
 package views;
 
 import common.Constants;
-import controllers.ButtonController;
-import controllers.MouseInputController;
-import controllers.MoveWordController;
-import models.*;
+import controllers.*;
 
-import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
@@ -27,19 +20,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
 
 import models.AbstractWord;
 import models.GameState;
 import models.Poem;
 import models.Position;
-import models.Row;
 import models.Word;
 import models.ProtectedMemento;
 import models.UnprotectedMemento;
-import common.Constants;
 import controllers.ButtonController;
-import controllers.UndoMove;
 
 
 /**
@@ -62,8 +51,8 @@ public class MainView extends JFrame implements Serializable {
 	private SwapAreaView swapAreaView;
 	SelectionBox selectionBox;
 	
-	Stack<UndoMove> moves = new Stack<UndoMove>();
-	Stack<UndoMove> redoMoves = new Stack<UndoMove>();
+	Stack<UndoWithMemento> moves = new Stack<UndoWithMemento>();
+	Stack<UndoWithMemento> redoMoves = new Stack<UndoWithMemento>();
 
 	private JButton btnRedo;
 	private JButton btnUndo;
@@ -79,7 +68,7 @@ public class MainView extends JFrame implements Serializable {
 	 *            The GameState that this view represents
 	 */
 
-	public MainView(GameState gameState, UnprotectedMemento un, ProtectedMemento p) {
+	public MainView(GameState gameState, UndoWithMemento memento) {
 		this.gameState = gameState;
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
@@ -97,7 +86,7 @@ public class MainView extends JFrame implements Serializable {
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
 		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
 
-		if (p == null && un == null) {
+		if (memento == null) {
 			Random random = new Random();
 			Collection<AbstractWord> protectedWords = gameState
 					.getProtectedArea().getAbstractWordCollection();
@@ -121,64 +110,7 @@ public class MainView extends JFrame implements Serializable {
 				addUnprotectedAbstractWordView(view);
 			}
 		} else {
-			Collection<AbstractWordView> unprotectedWordViewTemps = un
-					.getUnprotectedView();
-			Collection<AbstractWordView> protectedWordViewTemps = p
-					.getProtectedView();
-			for (AbstractWordView abs : unprotectedWordViewTemps) {
-				Position position = abs.getPosition();
-				WordView wordView = (WordView) abs;
-				Word w = wordView.getWord();
-				WordView view = new WordView(w, position);
-				panel.add(view.label);
-				addUnprotectedAbstractWordView(view);
-			}
-			for (AbstractWordView abs : protectedWordViewTemps) {
-				if (abs instanceof WordView) {
-					Position position = abs.getPosition();
-					WordView wordView = (WordView) abs;
-					Word w = wordView.getWord();
-					WordView view = new WordView(w, position);
-					panel.add(view.label);
-					addProtectedAbstractWordView(view);
-					System.out.println(wordView.getWord());
-				} else if (abs instanceof RowView) {
-					Row r = (Row) abs.getWord();
-					List<WordView> list = ((RowView) abs).getWordViews();
-					for (WordView w : list) {
-						panel.add(w.label);
-						addProtectedAbstractWordView(w);
-					}
-					RowView rowView = new RowView(r, abs.getPosition(), this);
-					addProtectedAbstractWordView(rowView);
-					for (WordView w : list) {
-						removeProtectedAbstractWordView(w);
-					}
-				} else {
-					// This is for PoemView
-					Poem poem = (Poem) abs.getWord();
-					List<RowView> rowList = ((PoemView) abs).getRowViews();
-					for (RowView rowView : rowList) {
-						List<WordView> list = rowView.getWordViews();
-						for (WordView w : list) {
-							panel.add(w.label);
-							addProtectedAbstractWordView(w);
-						}
-
-						addProtectedAbstractWordView(rowView);
-					}
-					PoemView poemView = new PoemView(poem, abs.getPosition(), this);
-					addProtectedAbstractWordView(poemView);
-					for (RowView rowView : rowList) {
-						List<WordView> list = rowView.getWordViews();
-						for (WordView w : list) {
-							removeProtectedAbstractWordView(w);
-						}
-						removeProtectedAbstractWordView(rowView);
-					}
-				}
-
-			}
+			memento.loadState(this, gameState);
 		}
 		
 		contentPane.add(panel);
@@ -383,7 +315,7 @@ public class MainView extends JFrame implements Serializable {
 	 * Add move into undo stack
 	 * @param move
 	 */
-	public void recordUndoMove(UndoMove move) {
+	public void recordUndoMove(UndoWithMemento move) {
 		moves.add(move);
 		if(!moves.isEmpty()) {
 			this.getUndoButton().setEnabled(true);
@@ -394,7 +326,7 @@ public class MainView extends JFrame implements Serializable {
 	 * Add move into redo stack
 	 * @param move
 	 */
-	public void recordRedoMove(UndoMove move) {
+	public void recordRedoMove(UndoWithMemento move) {
 		redoMoves.add(move);
 		if(!redoMoves.isEmpty()) {
 			this.getRedoButton().setEnabled(true);
@@ -405,7 +337,7 @@ public class MainView extends JFrame implements Serializable {
 	 * remove last undo stack and do the correspoding operation
 	 * @return undoMove
 	 */
-	public UndoMove removeLastUndoMove() {
+	public UndoWithMemento removeLastUndoMove() {
 		if (moves.isEmpty()) { return null; }
 		return moves.pop();
 	}
@@ -414,7 +346,7 @@ public class MainView extends JFrame implements Serializable {
 	 * remove last redo stack and do the correspoding operation
 	 * @return redoMove
 	 */
-	public UndoMove removeLastRedoMove() {
+	public UndoWithMemento removeLastRedoMove() {
 		if (redoMoves.isEmpty()) { return null; }
 		return redoMoves.pop();
 	}
@@ -423,7 +355,7 @@ public class MainView extends JFrame implements Serializable {
 	 * get the undomoves stack
 	 * @return Stack<UndoMove>
 	 */
-	public Stack<UndoMove> getUndoMoves(){
+	public Stack<UndoWithMemento> getUndoMoves(){
 		return this.moves;
 	}
 	
@@ -431,7 +363,7 @@ public class MainView extends JFrame implements Serializable {
 	 * get the redomoves stack
 	 * @return Stack<UndoMove>
 	 */
-	public Stack<UndoMove> getRedoMoves() {
+	public Stack<UndoWithMemento> getRedoMoves() {
 		return this.redoMoves;
 	}
 	

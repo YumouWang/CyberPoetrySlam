@@ -23,17 +23,14 @@ public class UndoControllerTest {
 	Word wordOne;
 	WordView wordViewOne;
 	UndoController undoController;
-	UndoMove undoMove;
+	UndoWithMemento undoMove;
 	
 	@Before
 	public void initialize() throws Exception{
-		unprotectedMemento = null;
-		protectedMemento = null;
-		gameState = new GameState(unprotectedMemento, protectedMemento);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, unprotectedMemento,
-				protectedMemento);
+		mainView = new MainView(gameState, null);
 		wordOne = new Word("wordOne", WordType.NOUN);
 		wordViewOne = new WordView(wordOne, new Position(50, 50));
 		mainView.addProtectedAbstractWordView(wordViewOne);

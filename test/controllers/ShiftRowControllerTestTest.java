@@ -32,10 +32,10 @@ public class ShiftRowControllerTestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 
 		Word wordOne = new Word("MyWord", WordType.ANY);
 		Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);

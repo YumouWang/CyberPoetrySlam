@@ -17,13 +17,10 @@ import org.junit.Test;
 import views.MainView;
 
 public class SearchTest {
-	UnprotectedMemento un = null;
-	ProtectedMemento p = null;
-
 	@Test
 	public void test() {
-		GameState gameState = new GameState(un, p);
-		MainView mainView = new MainView(gameState, un, p);
+		GameState gameState = new GameState(null);
+		MainView mainView = new MainView(gameState, null);
 		SearchController search = new SearchController(mainView, gameState);
 		search.updateWordTable();
 		Word word = new Word("a", WordType.NOUN);

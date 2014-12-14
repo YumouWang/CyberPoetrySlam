@@ -24,10 +24,10 @@ public class RedoController {
 	 * This is process of undoController
 	 */
 	public void process() {
-		UndoMove m = this.mainView.removeLastRedoMove();
+		UndoWithMemento m = this.mainView.removeLastRedoMove();
 		if (m != null) {
 			UndoWithMemento undo = new UndoWithMemento(this.mainView, this.gameState);
-			m.undo();	
+			m.loadState(mainView, gameState);
 			mainView.recordUndoMove(undo);
 			this.mainView.refresh();
 		}

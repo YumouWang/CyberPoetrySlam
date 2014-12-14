@@ -31,6 +31,7 @@ public class MouseInputController extends MouseAdapter {
 	AbstractWordView lastSelectedWord;
 	AbstractWordView selectedRowToShift;
 	static boolean isShift = false;
+	boolean isShifting = false;
     
     Position mouseDownPosition;
     Position selectedWordPositionRelativeToMouse;
@@ -64,9 +65,7 @@ public class MouseInputController extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		if (e.isShiftDown()) {
-			isShift = true;
-		}
+		isShift = e.isShiftDown();
         this.originalx = e.getX();
         this.originaly = e.getY();
 		mousePressedHandler(mousePosition, isShift);
@@ -76,9 +75,7 @@ public class MouseInputController extends MouseAdapter {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
-		if (e.isShiftDown()) {
-			isShift = true;
-		}
+		isShift = e.isShiftDown();
 		mouseDraggedHandler(mousePosition, isShift);
 		mainView.refresh();
 	}
@@ -121,6 +118,7 @@ public class MouseInputController extends MouseAdapter {
 				&& selectedWordToDisconnect.isClicked(mouseDownPosition)) {
 			if (isShift) {
 				selectedRowToShift = selectedWordToDisconnect;
+				isShifting = true;
 			}
 			if (!isShift) {
 				// Disconnect the word
@@ -152,24 +150,22 @@ public class MouseInputController extends MouseAdapter {
 		selectedWordToDisconnect = null;
 	}
 
-    /**
-     * determine selection box and determine the move
-     * @param mousePosition
-     * @param isShift
-     */
+	/**
+	 * Handles mouse dragged events and delegates to the appropriate controller
+	 * @param mousePosition The position of the mouse when this event fires
+	 * @param isShift Whether shift is pressed
+	 */
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
 
 		if (selectedWord != null) {
 			MoveWordController moveController = new MoveWordController(
 					mainView, gameState);
 
-			if (isShift) {
+			if (isShift && isShifting) {
 				ShiftRowController shiftController = new ShiftRowController(
 						mainView, gameState);
 				shiftController.shiftRow((PoemView) selectedWord,
 						selectedRowToShift, mousePosition, mouseDownPosition);
-				// ((PoemView) selectedWord).shiftRow(selectedRowToShift,
-				// mousePosition.getX() - mouseDownPosition.getX());
 			}
 
 			else {
@@ -202,11 +198,11 @@ public class MouseInputController extends MouseAdapter {
 	}
 
 	/**
-	 * release mouse and make undo/redo moves 
-	 * @param mousePosition
+	 * Handles mouse released events and delegates to the appropriate controller
+	 * @param mousePosition The position of the mouse when this event fired
 	 */
 	void mouseReleasedHandler(Position mousePosition) {
-		
+		isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
 			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
@@ -232,57 +228,9 @@ public class MouseInputController extends MouseAdapter {
 				ConnectController controller = new ConnectController(mainView,
 						gameState);
 				this.isConnect = true;
-				Position targetPosition = connectTarget.getPosition();
-				//System.out.println("44444 "+connectTarget.getWord().getValue());
 				controller.connect(selectedWord, connectTarget);// connectTarget
-				//System.out.println("55555 "+connectTarget.getWord().getValue());
-				// Here is to create connect move
-				/*
-				Position oldp = new Position(this.originalx
-						+ selectedWordPositionRelativeToMouse.getX(),
-						this.originaly
-								+ selectedWordPositionRelativeToMouse.getY());
-				Position newp = mousePosition;
-				
-				UndoConnectAbstractWord undoConnect = new UndoConnectAbstractWord(
-						targetPosition, oldp, newp, selectedWord,
-						connectTarget, mainView, gameState);
-				mainView.getRedoMoves().clear();
-				mainView.recordUndoMove(undoConnect);*/
 			}			
 		}
-
-		
-		/*if (isDisconnect && selectedWord !=null) {
-			Position oldp = new Position(this.originalx
-					+ selectedWordPositionRelativeToMouse.getX(),
-					this.originaly + selectedWordPositionRelativeToMouse.getY());
-			Position newp = new Position(mousePosition.getX()
-					+ selectedWordPositionRelativeToMouse.getX(),
-					mousePosition.getY()
-							+ selectedWordPositionRelativeToMouse.getY());
-			selectedWordCopy = mainView.getProtectedAbstractWordById(Id);
-			UndoDisconnectAbstractWord undoDisconnect = new UndoDisconnectAbstractWord(
-					disconnectTargetPosition, oldp, newp, selectedWord,
-					selectedWordCopy, mainView, gameState);
-			mainView.getRedoMoves().clear();
-			mainView.recordUndoMove(undoDisconnect);
-		}
-
-		if (!isDisconnect && !isConnect && selectedWord != null) {
-			// take a look at if connect and disconnect happens
-			UndoMoveAbstractWord move = new UndoMoveAbstractWord(selectedWord,
-					originalx + selectedWordPositionRelativeToMouse.getX(),
-					originaly + selectedWordPositionRelativeToMouse.getY(),
-					mousePosition.getX()
-							+ selectedWordPositionRelativeToMouse.getX(),
-					mousePosition.getY()
-							+ selectedWordPositionRelativeToMouse.getY(),
-					mainView, gameState);
-			mainView.getRedoMoves().clear();
-			mainView.recordUndoMove(move);
-			mainView.refresh();
-		}*/
 
 		if(isMove || isDisconnect || isConnect || isShift){
 			mainView.recordUndoMove(undo);

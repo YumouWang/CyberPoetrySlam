@@ -38,7 +38,7 @@ public class RedoControllerTest {
 		wordViewOne = new WordView(wordOne, new Position(50, 50));
 		mainView.addProtectedAbstractWordView(wordViewOne);
 		gameState.getProtectedArea().addAbstractWord(wordOne);
-		redoController = new RedoController(mainView);
+		redoController = new RedoController(mainView,gameState);
 		//undoController = new UndoController(mainView);
 		MoveWordController moveWordController = new MoveWordController(mainView, gameState);
 		moveWordController.moveWord(wordViewOne, new Position(50, 50), new Position(70, 70));

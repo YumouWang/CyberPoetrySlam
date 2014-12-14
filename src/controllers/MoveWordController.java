@@ -146,7 +146,7 @@ public class MoveWordController {
 	 * @param wordView
 	 *            The wordView to protect
 	 */
-	void protectWord(AbstractWordView wordView) {
+	public void protectWord(AbstractWordView wordView) {
 		
 		// Add word to protected word list
 		gameState.protect(wordView.getWord());
@@ -163,7 +163,7 @@ public class MoveWordController {
 	 * @param wordView
 	 *            The wordView to unprotect
 	 */
-	void unprotectWord(AbstractWordView wordView) {
+	public void unprotectWord(AbstractWordView wordView) {
 		// Add word to unprotected word list
 		gameState.unprotect(wordView.getWord());
 		// Add word view to unprotected word view list and remove word view from
@@ -176,7 +176,7 @@ public class MoveWordController {
 	/**
 	 * release a row that was just moved
 	 */
-	void relaseRow(RowView rowView) {
+	public void relaseRow(RowView rowView) {
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -196,7 +196,7 @@ public class MoveWordController {
 	/**
 	 * release a poem that was just moved
 	 */
-	void relasePoem(PoemView poemView) {
+	public void relasePoem(PoemView poemView) {
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(poemView.getWord());

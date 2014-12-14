@@ -3,8 +3,12 @@ package views;
 import controllers.AbstractWordViewVisitor;
 import models.Position;
 import models.Word;
+import models.WordType;
 
 import javax.swing.*;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -108,8 +112,7 @@ public class WordView extends AbstractWordView implements Serializable,Cloneable
 	
 	@Override
 	public Object clone() {
-		WordView wordView = null;
-		wordView = (WordView) super.clone();
+		WordView wordView = new WordView((Word) word.clone(), position);
 		return wordView;
 	}
 }

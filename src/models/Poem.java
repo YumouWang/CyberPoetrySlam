@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 /**
  * The Poem model class
  *
@@ -180,5 +182,13 @@ public class Poem extends AbstractWord implements Serializable {
 	 */
 	public List<Row> getRows() {
 		return rows;
+	}
+	
+	public Object clone() {
+		List<Row> cloneRows = new ArrayList<Row>();
+		for(Row row: rows) {
+			cloneRows.add((Row) row.clone());
+		}
+		return new Poem(cloneRows);
 	}
 }

@@ -23,6 +23,8 @@ import views.*;
  */
 public class MouseInputController extends MouseAdapter {
 
+	UndoWithMemento undo;
+	
     AbstractWordView selectedWord;
     AbstractWordView selectedWordToDisconnect;
     AbstractWordView selectedWordCopy;	
@@ -47,6 +49,7 @@ public class MouseInputController extends MouseAdapter {
     boolean isDisconnect;
     boolean isConnect;
     boolean isReleaseOrProtect;
+    boolean isMove;
 
     /**
      * Constructor
@@ -93,6 +96,7 @@ public class MouseInputController extends MouseAdapter {
      * @param isShift
      */
     void mousePressedHandler(Position position, boolean isShift) {
+    		undo = new UndoWithMemento(this.mainView, this.gameState);
 		mouseDownPosition = position;
 
 		Collection<AbstractWordView> words;
@@ -174,6 +178,7 @@ public class MouseInputController extends MouseAdapter {
 						+ selectedWordPositionRelativeToMouse.getX(),
 						mousePosition.getY()
 								+ selectedWordPositionRelativeToMouse.getY()));
+				this.isMove = true;
 			}
 		}
 		mouseDownPosition = mousePosition;
@@ -201,7 +206,7 @@ public class MouseInputController extends MouseAdapter {
 	 * @param mousePosition
 	 */
 	void mouseReleasedHandler(Position mousePosition) {
-		isShift = false;
+		
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
 			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
@@ -226,12 +231,13 @@ public class MouseInputController extends MouseAdapter {
 			if (connectTarget != null) {
 				ConnectController controller = new ConnectController(mainView,
 						gameState);
+				this.isConnect = true;
 				Position targetPosition = connectTarget.getPosition();
 				//System.out.println("44444 "+connectTarget.getWord().getValue());
 				controller.connect(selectedWord, connectTarget);// connectTarget
 				//System.out.println("55555 "+connectTarget.getWord().getValue());
 				// Here is to create connect move
-				this.isConnect = true;
+				/*
 				Position oldp = new Position(this.originalx
 						+ selectedWordPositionRelativeToMouse.getX(),
 						this.originaly
@@ -242,11 +248,12 @@ public class MouseInputController extends MouseAdapter {
 						targetPosition, oldp, newp, selectedWord,
 						connectTarget, mainView, gameState);
 				mainView.getRedoMoves().clear();
-				mainView.recordUndoMove(undoConnect);
+				mainView.recordUndoMove(undoConnect);*/
 			}			
 		}
 
-		if (isDisconnect && selectedWord !=null) {
+		
+		/*if (isDisconnect && selectedWord !=null) {
 			Position oldp = new Position(this.originalx
 					+ selectedWordPositionRelativeToMouse.getX(),
 					this.originaly + selectedWordPositionRelativeToMouse.getY());
@@ -275,8 +282,12 @@ public class MouseInputController extends MouseAdapter {
 			mainView.getRedoMoves().clear();
 			mainView.recordUndoMove(move);
 			mainView.refresh();
-		}
+		}*/
 
+		if(isMove || isDisconnect || isConnect || isShift){
+			mainView.recordUndoMove(undo);
+			mainView.refresh();
+		}
 		if (selectedWord == null) {
 			selectedWordToDisconnect = mainView.getSelectionBox()
 					.getSelectedItem(mainView.getProtectedAreaWords());
@@ -292,9 +303,10 @@ public class MouseInputController extends MouseAdapter {
 				view.setBackground(Color.LIGHT_GRAY);
 			}
 		}
-	
+		this.isShift = false;
 		this.isDisconnect = false;
 		this.isConnect = false;
+		this.isMove = false;
 	}
 
 	/**

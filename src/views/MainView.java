@@ -3,6 +3,7 @@ package views;
 import common.Constants;
 import controllers.ButtonController;
 import controllers.MouseInputController;
+import controllers.MoveWordController;
 import models.*;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +70,7 @@ public class MainView extends JFrame implements Serializable {
 	private JButton btnPublish;
 	private MouseInputController mouseInputController;
 
+	GameState gameState;
 
 	/**
 	 * Constructor
@@ -77,6 +80,7 @@ public class MainView extends JFrame implements Serializable {
 	 */
 
 	public MainView(GameState gameState, UnprotectedMemento un, ProtectedMemento p) {
+		this.gameState = gameState;
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		setSize(1027, 735);
@@ -459,5 +463,30 @@ public class MainView extends JFrame implements Serializable {
 
 	public void removeLabelOf(WordView wordView) {
 		panel.remove(wordView.label);
+	}
+	
+	public JPanel getJPanel(){
+		return this.panel;
+	}
+	
+	public void clearPanel() {
+		Collection<AbstractWordView> collection = new HashSet<AbstractWordView>();
+		collection.addAll(protectedAreaWords.values());
+		MoveWordController moveWordController = new MoveWordController(this, this.gameState);
+		for (AbstractWordView wordView : collection) {
+			if (wordView instanceof WordView){
+				moveWordController.unprotectWord(wordView);
+			}else if(wordView instanceof RowView){
+				moveWordController.relaseRow((RowView) wordView);
+			}else{
+				moveWordController.relasePoem((PoemView) wordView);
+			}
+		}
+		collection = new HashSet<AbstractWordView>();
+		collection.addAll(unprotectedAreaWords.values());
+		for (AbstractWordView wordView : collection) {
+			removeLabelOf((WordView)wordView);
+			removeUnprotectedAbstractWordView(wordView);
+		}
 	}
 }

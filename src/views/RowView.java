@@ -46,6 +46,25 @@ public class RowView extends AbstractWordView implements Serializable,Cloneable 
 		calculateDimensions();
 		moveTo(position);
 	}
+	
+	/**
+	 * Constructor
+	 *
+	 * @param row
+	 *            The row that this view represents
+	 * @param wordViews
+	 *            The wordViews in this row view
+	 * @param position
+	 *            The position of this row
+	 */
+	public RowView(Row row, List<WordView> wordViews, Position position) {
+		super(row, position);
+		this.wordViews = new ArrayList<WordView>();
+		this.wordViews.addAll(wordViews);
+
+		calculateDimensions();
+		moveTo(position);
+	}
 
 	/**
 	 * Moves the word to the specified position
@@ -190,8 +209,12 @@ public class RowView extends AbstractWordView implements Serializable,Cloneable 
 	
 	@Override
 	public Object clone() {
-		RowView rowView = null;
-		rowView = (RowView) super.clone();
-		return rowView;
+		Row cloneRow = (Row) word.clone();
+		List<WordView> cloneWordViews = new ArrayList<WordView>();
+		for(int i = 0; i < wordViews.size(); i++) {
+			WordView cloneWordView = new WordView(cloneRow.getWords().get(i), wordViews.get(i).getPosition());
+			cloneWordViews.add(cloneWordView);
+		}
+		return new RowView(cloneRow, cloneWordViews, position);
 	}
 }

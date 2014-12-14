@@ -27,7 +27,9 @@ public class UnprotectedMemento implements Serializable {
 	 * @param view
 	 */
 	public UnprotectedMemento(Collection<AbstractWordView> view) {
-		unprotectedViews.addAll(view);
+		for(AbstractWordView abstractWordView : view){
+			unprotectedViews.add((AbstractWordView)abstractWordView.clone());
+		}
 	}
 
 	/**

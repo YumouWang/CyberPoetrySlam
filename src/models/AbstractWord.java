@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author Nathan
  * @version 10/2/2014
  */
-public abstract class AbstractWord implements Serializable {
+public abstract class AbstractWord implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -49,4 +49,6 @@ public abstract class AbstractWord implements Serializable {
 	public long getId() {
 		return id;
 	}
+	
+	public abstract Object clone();
 }

@@ -138,4 +138,14 @@ public class GameState implements Serializable {
 	}
 
 	public Collection<Swap> getPendingSwaps() { return pendingSwaps; }
+	
+	public void resetUnprotectedArea(Collection<AbstractWord> collection) {
+		this.unprotectedArea = new Area(collection);
+		return;
+	}
+	
+	public void resetProtectedArea(Collection<AbstractWord> collection) {
+		this.protectedArea = new Area(collection);
+		return;
+	}
 }

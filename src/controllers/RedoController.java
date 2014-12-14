@@ -1,5 +1,6 @@
 package controllers;
 
+import models.GameState;
 import views.MainView;
 
 /**
@@ -8,13 +9,15 @@ import views.MainView;
  */
 public class RedoController {
 	private MainView mainView;
+	private GameState gameState;
 	
 	/**
 	 * Constructor of RedoController
 	 * @param mainView
 	 */
-	public RedoController(MainView mainView){
+	public RedoController(MainView mainView, GameState gameState){
 		this.mainView = mainView;
+		this.gameState = gameState;
 	}
 	
 	/**
@@ -23,8 +26,9 @@ public class RedoController {
 	public void process() {
 		UndoMove m = this.mainView.removeLastRedoMove();
 		if (m != null) {
-			m.execute();	
-			mainView.recordUndoMove(m);
+			UndoWithMemento undo = new UndoWithMemento(this.mainView, this.gameState);
+			m.undo();	
+			mainView.recordUndoMove(undo);
 			this.mainView.refresh();
 		}
 		if (this.mainView.getRedoMoves().isEmpty()){

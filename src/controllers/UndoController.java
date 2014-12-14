@@ -1,5 +1,6 @@
 package controllers;
 
+import models.GameState;
 import views.MainView;
 
 /**
@@ -9,13 +10,15 @@ import views.MainView;
 public class UndoController {
 	
 	private MainView mainView;
+	private GameState gameState;
 	
 	/**
 	 * Constructor of UndoController
 	 * @param mainView
 	 */
-	public UndoController(MainView mainView){
+	public UndoController(MainView mainView, GameState gameState){
 		this.mainView = mainView;
+		this.gameState = gameState;
 	}
 	
 	/**
@@ -24,8 +27,9 @@ public class UndoController {
 	public void process() {
 		UndoMove m = this.mainView.removeLastUndoMove();
 		if (m != null) {
+    		UndoWithMemento undo = new UndoWithMemento(this.mainView, this.gameState);
 			m.undo();	
-			mainView.recordRedoMove(m);
+			mainView.recordRedoMove(undo);
 			this.mainView.refresh();
 		}
 		if (this.mainView.getUndoMoves().isEmpty()){

@@ -55,8 +55,28 @@ public class PoemView extends AbstractWordView implements Serializable {
 			rowViews.add(view);
 			rowoffset.add(0);
 		}
-
 		
+		calculateDimensions();
+		moveTo(position);
+	}
+	
+	/**
+	 * Constructor
+	 *
+	 * @param poem
+	 *            The poem that this view represents
+	 * @param rowViews
+	 *            The rowViews in this poem view
+	 * @param position
+	 *            The position of this poem
+	 */
+	public PoemView(Poem poem, List<RowView> rowViews, List<Integer> rowOffset, Position position) {
+		super(poem, position);
+		this.rowViews = new ArrayList<RowView>();
+		this.rowViews.addAll(rowViews);
+		this.rowoffset = new ArrayList<Integer>();
+		this.rowoffset.addAll(rowOffset);
+
 		calculateDimensions();
 		moveTo(position);
 	}
@@ -295,9 +315,13 @@ public class PoemView extends AbstractWordView implements Serializable {
 	
 	@Override
 	public Object clone() {
-		PoemView poemView = null;
-		poemView = (PoemView) super.clone();
-		return poemView;
+
+		Poem clonePoem = (Poem) word.clone();
+		List<RowView> cloneRowViews = new ArrayList<RowView>();
+		for(RowView rowView : rowViews) {
+			cloneRowViews.add((RowView) rowView.clone());
+		}
+		return new PoemView(clonePoem, cloneRowViews, rowoffset, position);
 	}
 
 

@@ -10,7 +10,7 @@ import java.util.List;
  * @author Nathan
  * @version 10/2/2014
  */
-public class Word extends AbstractWord implements Serializable {
+public class Word extends AbstractWord implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -73,4 +73,8 @@ public class Word extends AbstractWord implements Serializable {
 		return row;
 	}
 
+	@Override
+	public Object clone() {
+		return new Word(value, type);
+	}
 }

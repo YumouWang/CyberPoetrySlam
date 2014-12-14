@@ -81,13 +81,13 @@ public class ButtonController implements ActionListener {
 		// click on Redo button
 		if (clickedButton.equals(mainView.getRedoButton())) {
 			// Handle redo
-			new RedoController(this.mainView).process();
+			new RedoController(this.mainView,this.gameState).process();
 			System.out.println("Redo...");
 		}
 		// click on Undo button
 		if (clickedButton.equals(mainView.getUndoButton())) {
 			// Handle Undo
-			new UndoController(this.mainView).process();
+			new UndoController(this.mainView,this.gameState).process();
 			System.out.println("Undo...");
 		}
 	}

@@ -38,7 +38,7 @@ public class UndoControllerTest {
 		wordViewOne = new WordView(wordOne, new Position(50, 50));
 		mainView.addProtectedAbstractWordView(wordViewOne);
 		gameState.getProtectedArea().addAbstractWord(wordOne);
-		undoController = new UndoController(mainView);
+		undoController = new UndoController(mainView,gameState);
 		MoveWordController moveWordController = new MoveWordController(mainView, gameState);
 		moveWordController.moveWord(wordViewOne, new Position(50, 50), new Position(70, 70));
 		undoMoveAbstractWord = new UndoMoveAbstractWord(wordViewOne, 50, 50, 70, 70,

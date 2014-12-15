@@ -18,16 +18,16 @@ public class BrokerConnectionTest {
 
     BrokerConnection brokerConnection;
     String id;
-    GameState gameState = new GameState(null, null);
-    MainView mainView = new MainView(gameState, null, null);
+    GameState gameState;
+    MainView mainView;
     MockReaderThread reader;
 
     @Before
      public void setUp() throws Exception {
-        gameState = new GameState(null, null);
+        gameState = new GameState(null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
         gameState.getUnprotectedArea().addAbstractWord(new Word("Moonlight", WordType.NOUN));
-        mainView = new MainView(gameState, null, null);
+        mainView = new MainView(gameState, null);
         try {
             brokerConnection = BrokerConnectionController.getConnection(mainView, gameState);
             assertNotNull(BrokerConnectionController.connection);

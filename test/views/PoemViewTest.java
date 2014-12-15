@@ -23,8 +23,8 @@ public class PoemViewTest {
 
     @Before
     public void setUp() throws Exception {
-        gameState = new GameState(un,p);
-		mainView = new MainView(gameState, un, p);
+        gameState = new GameState(null);
+		mainView = new MainView(gameState, null);
 
         Word wordOne = new Word("WordOne", WordType.VERB);
         Word wordTwo = new Word("WordTwo", WordType.ADVERB);

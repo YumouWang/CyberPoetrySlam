@@ -1,7 +1,6 @@
 package controllers;
 
 import common.Constants;
-import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import views.*;
@@ -192,6 +191,7 @@ public class MoveWordController {
 		this.mainView.getUndoMoves().clear();
 		this.mainView.getRedoButton().setEnabled(false);
 		this.mainView.getUndoButton().setEnabled(false);
+
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);

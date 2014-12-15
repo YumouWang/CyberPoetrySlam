@@ -44,10 +44,10 @@ public class MoveWordControllerTest {
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 		// Create all the word
 		wordOne = new Word("Word1", WordType.NOUN);
 		wordTwo = new Word("Word2", WordType.NOUN);

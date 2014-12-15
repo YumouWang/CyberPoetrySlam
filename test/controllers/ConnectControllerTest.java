@@ -27,8 +27,8 @@ public class ConnectControllerTest {
 	@Before
 	public void setUp()
 			throws Exception {
-		gameState = new GameState(un, p);
-		mainView = new MainView(gameState, un, p);
+		gameState = new GameState(null);
+		mainView = new MainView(gameState, null);
 
 		Word wordOne = new Word("MyWord", WordType.ANY);
 		Word wordTwo = new Word("MyOtherWord", WordType.ADJECTIVE);

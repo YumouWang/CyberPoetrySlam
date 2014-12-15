@@ -37,19 +37,14 @@ public class ButtonControllerTest {
 	RowView rowViewTwo;
 	Poem poemOne;
 	PoemView poemViewOne;
-	UnprotectedMemento unprotectedMemeneto;
-	ProtectedMemento protectedMemento;
 	ButtonController buttonController;
 
 	@Before
 	public void initialize() {
-		unprotectedMemeneto = null;
-		protectedMemento = null;
-		gameState = new GameState(unprotectedMemeneto, protectedMemento);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, unprotectedMemeneto,
-				protectedMemento);
+		mainView = new MainView(gameState, null);
 		// create two words
 		wordOne = new Word("wordOne", WordType.NOUN);
 		wordViewOne = new WordView(wordOne, new Position(50, 50));

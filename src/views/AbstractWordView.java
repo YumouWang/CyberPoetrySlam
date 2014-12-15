@@ -86,10 +86,8 @@ public abstract class AbstractWordView extends AbstractView implements
 	 * Sets the size of this word view. Used for testing, should not be
 	 * necessary for the game
 	 * 
-	 * @param width
-	 *            The desired width
-	 * @param height
-	 *            The desired height
+	 * @param width The desired width
+	 * @param height The desired height
 	 */
 	public void setSize(int width, int height) {
 		this.width = width;
@@ -108,8 +106,7 @@ public abstract class AbstractWordView extends AbstractView implements
 	/**
 	 * Moves the word to the specified position
 	 * 
-	 * @param toPosition
-	 *            The position to move to
+	 * @param toPosition The position to move to
 	 * @return Returns whether the move was successful
 	 */
 	public abstract boolean moveTo(Position toPosition);
@@ -121,8 +118,7 @@ public abstract class AbstractWordView extends AbstractView implements
 	/**
 	 * Sets the background color of this word view
 	 * 
-	 * @param color
-	 *            The color to set the background to
+	 * @param color The color to set the background to
 	 */
 	public abstract void setBackground(Color color);
 

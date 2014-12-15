@@ -31,11 +31,11 @@ public class HorizontalConnectionVisitorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
         gameState.getProtectedArea().getAbstractWordCollection().clear();
 		protectedArea = gameState.getProtectedArea();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 		// Create all the words separately
 		wordOne = new Word("Word", WordType.ADVERB);
 		wordTwo = new Word("Word", WordType.ADVERB);

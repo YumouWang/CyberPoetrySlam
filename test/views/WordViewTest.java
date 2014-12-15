@@ -415,8 +415,8 @@ public class WordViewTest {
 
 	@Test
 	public void testVisitorPatternAbstractWord() throws Exception {
-		GameState gameState = new GameState(un, p);
-		MainView mainView = new MainView(gameState, un, p);
+		GameState gameState = new GameState(null);
+		MainView mainView = new MainView(gameState, null);
 		DisconnectVisitor disconnector = new DisconnectVisitor(mainView,
 				gameState);
 
@@ -432,8 +432,8 @@ public class WordViewTest {
 
 	@Test
 	public void testVisitorPatternPoem() throws Exception {
-		GameState gameState = new GameState(un, p);
-		MainView mainView = new MainView(gameState, un, p);
+		GameState gameState = new GameState(null);
+		MainView mainView = new MainView(gameState, null);
 		DisconnectVisitor disconnector = new DisconnectVisitor(mainView,
 				gameState);
 
@@ -454,8 +454,8 @@ public class WordViewTest {
 
 	@Test
 	public void testVisitorPatternRow() throws Exception {
-		GameState gameState = new GameState(un, p);
-		MainView mainView = new MainView(gameState, un, p);
+		GameState gameState = new GameState(null);
+		MainView mainView = new MainView(gameState, null);
 		DisconnectVisitor disconnector = new DisconnectVisitor(mainView,
 				gameState);
 

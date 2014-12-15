@@ -31,9 +31,9 @@ public class DisconnectVisitorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		protectedArea = gameState.getProtectedArea();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 		// Create all the words separately
 		wordOne = new Word("Word", WordType.ADVERB);
 		wordTwo = new Word("Word", WordType.ADVERB);

@@ -25,10 +25,10 @@ public class UndoController {
 	 * process of undoController
 	 */
 	public void process() {
-		UndoMove m = this.mainView.removeLastUndoMove();
+		UndoWithMemento m = this.mainView.removeLastUndoMove();
 		if (m != null) {
     		UndoWithMemento undo = new UndoWithMemento(this.mainView, this.gameState);
-			m.undo();	
+			m.loadState(mainView, gameState);
 			mainView.recordRedoMove(undo);
 			this.mainView.refresh();
 		}

@@ -17,9 +17,9 @@ public class ConnectionControllerTest {
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 	}
 
 	// @Test

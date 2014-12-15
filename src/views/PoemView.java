@@ -322,14 +322,17 @@ public class PoemView extends AbstractWordView implements Serializable {
 		return (Poem) word;
 	}
 
-	
 	@Override
 	public Object clone() {
-
 		Poem clonePoem = (Poem) word.clone();
 		List<RowView> cloneRowViews = new ArrayList<RowView>();
-		for(RowView rowView : rowViews) {
-			cloneRowViews.add((RowView) rowView.clone());
+		for(int j = 0; j < rowViews.size(); j++) {
+			List<WordView> cloneWordViews = new ArrayList<WordView>();
+			for(int i = 0; i < rowViews.get(j).getWordViews().size(); i++) {
+				WordView cloneWordView = new WordView(clonePoem.getRows().get(j).getWords().get(i), rowViews.get(j).getWordViews().get(i).getPosition());
+				cloneWordViews.add(cloneWordView);
+			}
+			cloneRowViews.add(new RowView(clonePoem.getRows().get(j), cloneWordViews, rowViews.get(j).getPosition()));
 		}
 		return new PoemView(clonePoem, cloneRowViews, rowoffset, position);
 	}

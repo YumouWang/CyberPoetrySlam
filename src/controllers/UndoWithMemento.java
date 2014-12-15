@@ -40,14 +40,12 @@ public class UndoWithMemento extends UndoMove{
 	 * @param gameState
 	 */
 	public UndoWithMemento(MainView mainView, GameState gameState) {
-		// TODO Auto-generated constructor stub
 		this.mainView = mainView;
 		this.gameState = gameState;
 		this.protectedMemento = new ProtectedMemento(this.mainView.getProtectedAreaWords());
 		this.unprotectedMemento = new UnprotectedMemento(this.mainView.getUnprotectedAreaWords());
 		//this.protectedWordViews = protectedMemento.getProtectedView();
 		//this.unprotectedWordViews = unprotectedMemento.getUnprotectedView();
-		//this.panel = new JPanel();
 	}
 	
 	@Override
@@ -119,7 +117,6 @@ public class UndoWithMemento extends UndoMove{
 					}
 				}
 			}
-
 		}
 		return true;
 	}
@@ -193,8 +190,7 @@ public class UndoWithMemento extends UndoMove{
 				}
 			}
 
-		}
-		
+		}		
 		return true;
 	}
 

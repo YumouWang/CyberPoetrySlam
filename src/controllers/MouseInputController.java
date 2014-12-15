@@ -234,6 +234,8 @@ public class MouseInputController extends MouseAdapter {
 
 		if(isMove || isDisconnect || isConnect || isShift){
 			mainView.recordUndoMove(undo);
+			mainView.getRedoMoves().clear();
+			mainView.getRedoButton().setEnabled(false);
 			mainView.refresh();
 		}
 		if (selectedWord == null) {

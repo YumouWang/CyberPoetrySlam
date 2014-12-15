@@ -169,6 +169,12 @@ public class MoveWordController {
 	 *            The wordView to unprotect
 	 */
 	public void unprotectWord(AbstractWordView wordView) {
+		if(wordView instanceof RowView || wordView instanceof PoemView){
+			this.mainView.getRedoMoves().clear();
+			this.mainView.getUndoMoves().clear();
+			this.mainView.getRedoButton().setEnabled(false);
+			this.mainView.getUndoButton().setEnabled(false);
+		}
 		// Add word to unprotected word list
 		gameState.unprotect(wordView.getWord());
 		// Add word view to unprotected word view list and remove word view from
@@ -182,6 +188,10 @@ public class MoveWordController {
 	 * release a row that was just moved
 	 */
 	public void relaseRow(RowView rowView) {
+		this.mainView.getRedoMoves().clear();
+		this.mainView.getUndoMoves().clear();
+		this.mainView.getRedoButton().setEnabled(false);
+		this.mainView.getUndoButton().setEnabled(false);
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -202,6 +212,10 @@ public class MoveWordController {
 	 * release a poem that was just moved
 	 */
 	public void relasePoem(PoemView poemView) {
+		this.mainView.getRedoMoves().clear();
+		this.mainView.getUndoMoves().clear();
+		this.mainView.getRedoButton().setEnabled(false);
+		this.mainView.getUndoButton().setEnabled(false);
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(poemView.getWord());

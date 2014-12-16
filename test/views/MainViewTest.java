@@ -36,8 +36,8 @@ public class MainViewTest {
 		UndoWithMemento memento = new UndoWithMemento(mainView);
 		GameState gamestate = new GameState(memento);
 		MainView mainview = new MainView(gamestate, memento);
-		ProtectedMemento ppp = mainview.getProtectedState();
-		UnprotectedMemento ununun = mainview.getUnprotectedState();
+		ProtectedMemento ppp = new ProtectedMemento(mainView.getProtectedAreaWords());
+		UnprotectedMemento ununun = new UnprotectedMemento(mainView.getUnprotectedAreaWords());
 		Collection<AbstractWordView> absProtect = mainview.getProtectedWordView();
 		Collection<AbstractWordView> absUnprotect = mainview.getUnprotectedWordView();
 		assertNotNull(ppp);

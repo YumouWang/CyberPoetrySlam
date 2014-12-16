@@ -134,6 +134,7 @@ public class RowView extends AbstractWordView implements Serializable,Cloneable 
 		if (0 < wordViews.size()) {
 			position = wordViews.get(0).getPosition();
 		}
+		furthestRight = totalWidth;
 		setSize(totalWidth, tallestHeight);
 	}
 

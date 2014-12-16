@@ -93,14 +93,6 @@ public class MoveWordController {
 			if (selectedWord instanceof WordView) {
 				unprotectWord(selectedWord);
 			}
-			if (selectedWord instanceof RowView) {
-				//relaseRow((RowView) selectedWord);
-				//isProtectedOrUnprotect = true;
-			}
-			if (selectedWord instanceof PoemView) {
-				//relasePoem((PoemView) selectedWord);
-				//isProtectedOrUnprotect = true;
-			}		
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special

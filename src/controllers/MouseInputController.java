@@ -200,7 +200,7 @@ public class MouseInputController extends MouseAdapter {
 	 */
 	void mouseReleasedHandler(Position mousePosition) {
 		isShift = false;
-		isShifting = false;
+		//isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
 			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
@@ -246,6 +246,15 @@ public class MouseInputController extends MouseAdapter {
 			}			
 		}
 
+		if (isShifting && selectedWord != null) {
+			UndoShiftRow undoShiftRow = new UndoShiftRow(mainView, gameState, (PoemView) selectedWord,
+					selectedRowToShift, new Position(originalx,originaly), 
+					mousePosition);
+			mainView.getRedoMoves().clear();
+			mainView.getRedoButton().setEnabled(false);
+			mainView.recordUndoMove(undoShiftRow);
+		}
+		
 		if (isDisconnect && selectedWord !=null) {
 			Position oldp = new Position(this.originalx
 					+ selectedWordPositionRelativeToMouse.getX(),
@@ -263,7 +272,7 @@ public class MouseInputController extends MouseAdapter {
 			mainView.recordUndoMove(undoDisconnect);
 		}
 
-		if (!isDisconnect && !isConnect && selectedWord != null) {
+		if (!isDisconnect && !isConnect && selectedWord != null && !isShifting) {
 			// take a look at if connect and disconnect happens
 			UndoMoveAbstractWord move = new UndoMoveAbstractWord(selectedWord,
 					originalx + selectedWordPositionRelativeToMouse.getX(),
@@ -297,6 +306,7 @@ public class MouseInputController extends MouseAdapter {
 	
 		this.isDisconnect = false;
 		this.isConnect = false;
+		this.isShifting = false;
 	}
 
 	/**

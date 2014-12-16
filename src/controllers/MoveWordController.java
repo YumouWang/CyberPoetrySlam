@@ -93,14 +93,14 @@ public class MoveWordController {
 			if (selectedWord instanceof WordView) {
 				unprotectWord(selectedWord);
 			}
-			if (selectedWord instanceof RowView) {
-				relaseRow((RowView) selectedWord);
+			else if (selectedWord instanceof RowView) {
+				releaseRow((RowView) selectedWord);
 				isProtectedOrUnprotect = true;
 			}
-			if (selectedWord instanceof PoemView) {
-				relasePoem((PoemView) selectedWord);
+			else if (selectedWord instanceof PoemView) {
+				releasePoem((PoemView) selectedWord);
 				isProtectedOrUnprotect = true;
-			}		
+			}
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special
@@ -188,7 +188,7 @@ public class MoveWordController {
 	/**
 	 * release a row that was just moved
 	 */
-	public void relaseRow(RowView rowView) {
+	public void releaseRow(RowView rowView) {
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -208,7 +208,7 @@ public class MoveWordController {
 	/**
 	 * release a poem that was just moved
 	 */
-	public void relasePoem(PoemView poemView) {
+	public void releasePoem(PoemView poemView) {
 		
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState

@@ -399,9 +399,9 @@ public class MainView extends JFrame implements Serializable {
 			if (wordView instanceof WordView){
 				moveWordController.unprotectWord(wordView);
 			}else if(wordView instanceof RowView){
-				moveWordController.relaseRow((RowView) wordView);
+				moveWordController.releaseRow((RowView) wordView);
 			}else{
-				moveWordController.relasePoem((PoemView) wordView);
+				moveWordController.releasePoem((PoemView) wordView);
 			}
 		}
 		collection = new HashSet<AbstractWordView>();

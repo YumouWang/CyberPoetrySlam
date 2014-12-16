@@ -33,7 +33,7 @@ public class MainViewTest {
 
 	@Test
 	public void reStore() {
-		UndoWithMemento memento = new UndoWithMemento(mainView, gameState);
+		UndoWithMemento memento = new UndoWithMemento(mainView);
 		GameState gamestate = new GameState(memento);
 		MainView mainview = new MainView(gamestate, memento);
 		ProtectedMemento ppp = mainview.getProtectedState();

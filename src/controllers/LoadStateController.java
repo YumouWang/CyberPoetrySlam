@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import common.Constants;
 import models.GameState;
 import views.MainView;
@@ -51,7 +50,7 @@ public class LoadStateController {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(Constants.MEMENTO_STORAGE));
-            oos.writeObject(new UndoWithMemento(mainView, gameState));
+            oos.writeObject(new UndoWithMemento(mainView));
         } catch (Exception e) {
             e.printStackTrace();
         }

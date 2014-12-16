@@ -33,10 +33,9 @@ public class UndoWithMemento implements Serializable {
 	
 	/**
 	 * Constructor
-	 * @param mainView
-	 * @param gameState
+	 * @param mainView The mainView to create the memento from
 	 */
-	public UndoWithMemento(MainView mainView, GameState gameState) {
+	public UndoWithMemento(MainView mainView) {
 		this.protectedMemento = new ProtectedMemento(mainView.getProtectedAreaWords());
 		this.unprotectedMemento = new UnprotectedMemento(mainView.getUnprotectedAreaWords());
 	}

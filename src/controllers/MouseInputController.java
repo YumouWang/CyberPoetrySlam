@@ -241,6 +241,7 @@ public class MouseInputController extends MouseAdapter {
 						targetPosition, oldp, newp, selectedWord,
 						connectTarget, mainView, gameState);
 				mainView.getRedoMoves().clear();
+				mainView.getRedoButton().setEnabled(false);
 				mainView.recordUndoMove(undoConnect);
 			}			
 		}
@@ -258,6 +259,7 @@ public class MouseInputController extends MouseAdapter {
 					disconnectTargetPosition, oldp, newp, selectedWord,
 					selectedWordCopy, mainView, gameState);
 			mainView.getRedoMoves().clear();
+			mainView.getRedoButton().setEnabled(false);
 			mainView.recordUndoMove(undoDisconnect);
 		}
 
@@ -272,6 +274,7 @@ public class MouseInputController extends MouseAdapter {
 							+ selectedWordPositionRelativeToMouse.getY(),
 					mainView, gameState);
 			mainView.getRedoMoves().clear();
+			mainView.getRedoButton().setEnabled(false);
 			mainView.recordUndoMove(move);
 			mainView.refresh();
 		}

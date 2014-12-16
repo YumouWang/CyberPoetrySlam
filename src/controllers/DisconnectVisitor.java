@@ -95,10 +95,14 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             WordView lastWordViewInPoem = wordViewList.get(wordViewList.size()-1);
             // Keep track of the first one in the new row so we know its position
             WordView firstWordViewInSplitResult = null;
+            // Keep track of all the rowViews in the splitPoemView so we can remove them from mainView after we make the view
+            List<WordView> resultWordViewList = new ArrayList<WordView>();
             while(!wordView.equals(lastWordViewInPoem)) {
                 // Remove the wordView from the rowView and add it to the pool of words in the mainView
                 rowViewToDisconnectFrom.removeWordView(lastWordViewInPoem);
                 mainView.addProtectedAbstractWordView(lastWordViewInPoem);
+                resultWordViewList.add(lastWordViewInPoem);
+
                 // Get the last one in the list
                 firstWordViewInSplitResult = lastWordViewInPoem;
                 lastWordViewInPoem = wordViewList.get(wordViewList.size()-1);
@@ -111,6 +115,11 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // All rows should be available in the mainView so it should be able to construct using those rowViews
             RowView splitRowView = new RowView(splitResult, firstWordViewInSplitResult.getPosition(), mainView);
             mainView.addProtectedAbstractWordView(splitRowView);
+            
+            // Remove the wordViews used in making the splitRowView
+            for(WordView view : resultWordViewList) {
+                mainView.removeProtectedAbstractWordView(view);
+            }
             // if the splitPoemView is just one rowView, reduce it
             reduceRowViewToWordViewIfPossible(splitRowView);
 

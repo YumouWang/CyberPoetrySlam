@@ -29,6 +29,7 @@ public class UndoController {
 		if (m != null) {
     		UndoWithMemento undo = new UndoWithMemento(this.mainView, this.gameState);
 			m.loadState(mainView, gameState);
+			mainView.getExploreArea().updateTable();
 			mainView.recordRedoMove(undo);
 			this.mainView.refresh();
 		}

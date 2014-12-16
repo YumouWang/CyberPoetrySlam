@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -42,7 +43,7 @@ public class MainView extends JFrame implements Serializable {
 	 */
 	private static final long serialVersionUID = -4809871727043385666L;
 	Hashtable<Long, AbstractWordView> protectedAreaWords;
-	Hashtable<Long, AbstractWordView> unprotectedAreaWords;
+	ArrayList<AbstractWordView> unprotectedAreaWords;
 	Container contentPane;
 	private JPanel panel;
 	private ExploreArea exploreArea;
@@ -69,8 +70,8 @@ public class MainView extends JFrame implements Serializable {
 	public MainView(GameState gameState, UndoWithMemento memento) {
 		this.gameState = gameState;
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 700);
-		setSize(1027, 735);
+		setBounds(100, 100, 1000, 685);
+		//setSize(1027, 735);
 		contentPane = getContentPane();
 		contentPane.setLayout(null);
 
@@ -82,7 +83,7 @@ public class MainView extends JFrame implements Serializable {
 		panel.setLayout(null);
 
 		protectedAreaWords = new Hashtable<Long, AbstractWordView>();
-		unprotectedAreaWords = new Hashtable<Long, AbstractWordView>();
+		unprotectedAreaWords = new ArrayList<AbstractWordView>();
 
 		if (memento == null) {
 			Random random = new Random();
@@ -166,7 +167,7 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	public void addUnprotectedAbstractWordView(AbstractWordView newWord) {
-		unprotectedAreaWords.put(newWord.getWord().getId(), newWord);
+		unprotectedAreaWords.add(newWord);
 	}
 
 	/**
@@ -183,9 +184,7 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
-		AbstractWordView removed = unprotectedAreaWords.remove(oldWord
-				.getWord().getId());
-		return oldWord.equals(removed);
+		return unprotectedAreaWords.remove(oldWord);
 	}
 
 	/**
@@ -213,7 +212,12 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	public AbstractWordView getUnprotectedAbstractWordById(long id) {
-		return unprotectedAreaWords.get(id);
+		for(AbstractWordView abstractWordView: unprotectedAreaWords){
+			if (abstractWordView.getWord().getId() == id){
+				return abstractWordView;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -231,7 +235,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @return A collection of word views
 	 */
 	public Collection<AbstractWordView> getUnprotectedAreaWords() {
-		return unprotectedAreaWords.values();
+		return unprotectedAreaWords;
 	}
 
 	public SelectionBox getSelectionBox() {
@@ -274,7 +278,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @return UnprotectedMemento 
 	 */
 	public UnprotectedMemento getUnprotectedState() {
-		return new UnprotectedMemento(this.unprotectedAreaWords.values());
+		return new UnprotectedMemento(this.unprotectedAreaWords);
 	}
 
 	/**
@@ -290,7 +294,7 @@ public class MainView extends JFrame implements Serializable {
 	 * @return Collection<AbstractAreaWords>
 	 */
 	public Collection<AbstractWordView> getUnprotectedWordView() {
-		return this.unprotectedAreaWords.values();
+		return this.unprotectedAreaWords;
 	}
 
 	/**
@@ -401,7 +405,7 @@ public class MainView extends JFrame implements Serializable {
 			}
 		}
 		collection = new HashSet<AbstractWordView>();
-		collection.addAll(unprotectedAreaWords.values());
+		collection.addAll(unprotectedAreaWords);
 		for (AbstractWordView wordView : collection) {
 			removeLabelOf((WordView)wordView);
 			removeUnprotectedAbstractWordView(wordView);

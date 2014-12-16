@@ -246,6 +246,13 @@ public class MouseInputController extends MouseAdapter {
 			this.mainView.getUndoMoves().clear();
 			this.mainView.getRedoButton().setEnabled(false);
 			this.mainView.getUndoButton().setEnabled(false);
+			MoveWordController moveController = new MoveWordController(
+					mainView, gameState);
+			if(selectedWord instanceof RowView){
+				moveController.releaseRow((RowView) selectedWord);
+			} else if(selectedWord instanceof PoemView){
+				moveController.releasePoem((PoemView) selectedWord);
+			}
 		}
 		
 		if (selectedWord == null) {

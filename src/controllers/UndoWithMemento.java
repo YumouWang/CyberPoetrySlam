@@ -1,21 +1,14 @@
 package controllers;
 
-import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
-import common.Constants;
 import models.AbstractWord;
-import models.Area;
 import models.GameState;
 import models.Poem;
-import models.Position;
 import models.ProtectedMemento;
 import models.Row;
 import models.UnprotectedMemento;
@@ -28,6 +21,10 @@ import views.WordView;
 
 public class UndoWithMemento implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2043773621354133363L;
 	ProtectedMemento protectedMemento;
 	UnprotectedMemento unprotectedMemento;
 	
@@ -47,7 +44,7 @@ public class UndoWithMemento implements Serializable {
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
 
 		Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-		Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
+		List<AbstractWord> unprotectedWords = new ArrayList<AbstractWord>();
 		for (AbstractWordView abs : unprotectedMemento.getUnprotectedView()) {
 			WordView wordView = (WordView) abs;
 			Word w = wordView.getWord();
@@ -59,8 +56,8 @@ public class UndoWithMemento implements Serializable {
 				Word w = wordView.getWord();
 				protectedWords.add(w);
 			} else if (abs instanceof RowView) {
-				Row r = (Row) abs.getWord();
-				protectedWords.add(r);
+				Row row = (Row) abs.getWord();
+				protectedWords.add(row);
 			} else {
 				// This is for poems
 				Poem poem = (Poem) abs.getWord();

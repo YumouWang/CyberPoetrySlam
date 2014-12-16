@@ -1,13 +1,9 @@
 package controllers;
 
 import models.Word;
-import models.WordType;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 /**

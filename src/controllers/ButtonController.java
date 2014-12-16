@@ -59,17 +59,12 @@ public class ButtonController implements ActionListener {
 			mainView.getRedoMoves().clear();
 			mainView.getUndoButton().setEnabled(false);
 			mainView.getRedoButton().setEnabled(false);
-			System.out.println("Publish...");
 			publishPoem = mainView.getMouseInputController()
 					.getLastSelectedWord();
 			if (publishPoem instanceof PoemView
 					&& mainView.getProtectedAreaWords().contains(publishPoem)) {
-				System.out.println("select poem --> "
-						+ publishPoem.getWord().getValue());
 				publishPoem((PoemView) publishPoem, Constants.WALL_FILENAME);
 			} else if(publishPoem instanceof RowView && mainView.getProtectedAreaWords().contains(publishPoem)) {
-				System.out.println("select poem --> "
-						+ publishPoem.getWord().getValue());
 				publishPoem((RowView) publishPoem, Constants.WALL_FILENAME);
 			} else {
 				
@@ -82,13 +77,11 @@ public class ButtonController implements ActionListener {
 		if (clickedButton.equals(mainView.getRedoButton())) {
 			// Handle redo
 			new RedoController(this.mainView,this.gameState).process();
-			System.out.println("Redo...");
 		}
 		// click on Undo button
 		if (clickedButton.equals(mainView.getUndoButton())) {
 			// Handle Undo
 			new UndoController(this.mainView,this.gameState).process();
-			System.out.println("Undo...");
 		}
 	}
 	

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.List;
 
 import models.GameState;
 import models.Position;
@@ -92,7 +91,7 @@ public class MouseInputController extends MouseAdapter {
      * @param isShift
      */
     void mousePressedHandler(Position position, boolean isShift) {
-    		undo = new UndoWithMemento(this.mainView, this.gameState);
+    		undo = new UndoWithMemento(this.mainView);
 		mouseDownPosition = position;
 
 		Collection<AbstractWordView> words;

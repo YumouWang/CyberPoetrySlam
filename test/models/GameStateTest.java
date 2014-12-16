@@ -1,15 +1,11 @@
 package models;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 import controllers.UndoWithMemento;
 import org.junit.Before;
 import org.junit.Test;
 
-import views.AbstractWordView;
 import views.MainView;
-import views.WordView;
+
 import static org.junit.Assert.*;
 
 public class GameStateTest {
@@ -28,7 +24,7 @@ public class GameStateTest {
 		gameState.getProtectedArea().addAbstractWord(new Word("Dog", WordType.NOUN));
 		gameState.getUnprotectedArea().addAbstractWord(new Word("Dog", WordType.NOUN));
 
-		UndoWithMemento memento = new UndoWithMemento(new MainView(gameState, null), gameState);
+		UndoWithMemento memento = new UndoWithMemento(new MainView(gameState, null));
 		gameState = new GameState(memento);
 		new MainView(gameState, memento);
 		assertNotNull(gameState);

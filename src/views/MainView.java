@@ -274,22 +274,6 @@ public class MainView extends JFrame implements Serializable {
 	}
 
 	/**
-	 * get current unprotected state for storage
-	 * @return UnprotectedMemento 
-	 */
-	public UnprotectedMemento getUnprotectedState() {
-		return new UnprotectedMemento(this.unprotectedAreaWords);
-	}
-
-	/**
-	 * get current protected state for storage
-	 * @return ProtectedMemento 
-	 */
-	public ProtectedMemento getProtectedState() {
-		return new ProtectedMemento(this.protectedAreaWords.values());
-	}
-
-	/**
 	 * 
 	 * @return Collection<AbstractAreaWords>
 	 */

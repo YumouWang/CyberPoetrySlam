@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import models.ProtectedMemento;
@@ -38,7 +37,7 @@ public class UndoControllerTest {
 		undoController = new UndoController(mainView,gameState);
 		MoveWordController moveWordController = new MoveWordController(mainView, gameState);
 		moveWordController.moveWord(wordViewOne, new Position(50, 50), new Position(70, 70));
-		undoMove = new UndoWithMemento(mainView, gameState);
+		undoMove = new UndoWithMemento(mainView);
 		mainView.recordUndoMove(undoMove);
 	}
 	

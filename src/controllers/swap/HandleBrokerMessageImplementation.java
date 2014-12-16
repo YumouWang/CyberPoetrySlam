@@ -77,6 +77,10 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                         s.updateTheirWordsForConfirmSwap(msg);
                         swapController.executeSwap(s);
                         gameState.getPendingSwaps().remove(s);
+                        mainView.getRedoMoves().clear();
+                        mainView.getUndoMoves().clear();
+                        mainView.getRedoButton().setEnabled(false);
+                        mainView.getUndoButton().setEnabled(false);
                     } catch (InvalidSwapException e) {
                         e.printStackTrace();
                     }

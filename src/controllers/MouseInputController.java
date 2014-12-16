@@ -32,6 +32,7 @@ public class MouseInputController extends MouseAdapter {
 	AbstractWordView selectedRowToShift;
 	static boolean isShift = false;
 	boolean isShifting = false;
+
     
     Position mouseDownPosition;
     Position selectedWordPositionRelativeToMouse;
@@ -49,7 +50,7 @@ public class MouseInputController extends MouseAdapter {
     boolean isDisconnect;
     boolean isConnect;
     boolean isMove;
-
+	
     /**
      * Constructor
      * @param mainView The view to update when handling mouse events
@@ -231,13 +232,22 @@ public class MouseInputController extends MouseAdapter {
 				mainView.getPublishButton().setEnabled(false);
 			}
 		}
-
+		
 		if(isMove || isDisconnect || isConnect || isShift){
 			mainView.recordUndoMove(undo);
 			mainView.getRedoMoves().clear();
 			mainView.getRedoButton().setEnabled(false);
 			mainView.refresh();
 		}
+		
+		if((selectedWord instanceof RowView || selectedWord instanceof PoemView) &&
+				!mainView.isInProtectedArea(mousePosition)){
+			this.mainView.getRedoMoves().clear();
+			this.mainView.getUndoMoves().clear();
+			this.mainView.getRedoButton().setEnabled(false);
+			this.mainView.getUndoButton().setEnabled(false);
+		}
+		
 		if (selectedWord == null) {
 			selectedWordToDisconnect = mainView.getSelectionBox()
 					.getSelectedItem(mainView.getProtectedAreaWords());

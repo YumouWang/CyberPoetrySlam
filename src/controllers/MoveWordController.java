@@ -35,6 +35,7 @@ public class MoveWordController {
 	}
 
 	public boolean moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
+		boolean isProtectedOrUnprotect = false;
 		Position originPosition = selectedWord.getPosition();
 		Position positionDiff = new Position(positionTo.getX()
 				- positionFrom.getX(), positionTo.getY() - positionFrom.getY());
@@ -94,15 +95,16 @@ public class MoveWordController {
 			}
 			if (selectedWord instanceof RowView) {
 				relaseRow((RowView) selectedWord);
+				isProtectedOrUnprotect = true;
 			}
 			if (selectedWord instanceof PoemView) {
 				relasePoem((PoemView) selectedWord);
-			}
-
+				isProtectedOrUnprotect = true;
+			}		
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special
-		return isOverlappingOtherWord;
+		return isProtectedOrUnprotect;
 	}
 
 	/**
@@ -187,11 +189,6 @@ public class MoveWordController {
 	 * release a row that was just moved
 	 */
 	public void relaseRow(RowView rowView) {
-		this.mainView.getRedoMoves().clear();
-		this.mainView.getUndoMoves().clear();
-		this.mainView.getRedoButton().setEnabled(false);
-		this.mainView.getUndoButton().setEnabled(false);
-
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -212,10 +209,7 @@ public class MoveWordController {
 	 * release a poem that was just moved
 	 */
 	public void relasePoem(PoemView poemView) {
-		this.mainView.getRedoMoves().clear();
-		this.mainView.getUndoMoves().clear();
-		this.mainView.getRedoButton().setEnabled(false);
-		this.mainView.getUndoButton().setEnabled(false);
+		
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(poemView.getWord());

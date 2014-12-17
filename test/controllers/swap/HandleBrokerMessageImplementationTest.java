@@ -26,7 +26,8 @@ public class HandleBrokerMessageImplementationTest {
         gameState = new GameState(null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
         word = new Word("Moonlight", WordType.NOUN);
-        gameState.getUnprotectedArea().addAbstractWord(word);List<String> inputOfferTypes = new ArrayList<String>();
+        gameState.getUnprotectedArea().addAbstractWord(word);
+        List<String> inputOfferTypes = new ArrayList<String>();
         inputOfferTypes.add("ANY");
         List<String> inputRequestTypes = new ArrayList<String>();
         inputRequestTypes.add("ANY");
@@ -34,7 +35,7 @@ public class HandleBrokerMessageImplementationTest {
         inputOfferWords.add("Moonlight");
         List<String> inputRequestWords = new ArrayList<String>();
         inputRequestWords.add("");
-        WordView wordView = new WordView(word, new Position(0,0));
+        WordView wordView = new WordView(word, new Position(0, 0));
         swap = new Swap(gameState, inputOfferTypes, inputOfferWords, inputRequestTypes, inputRequestWords, true, "1");
         gameState.getPendingSwaps().add(swap);
 

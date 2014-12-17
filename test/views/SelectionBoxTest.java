@@ -103,7 +103,7 @@ public class SelectionBoxTest {
         SelectionBox box = new SelectionBox();
 
         // Use bufferedImage to get a valid graphics object
-        BufferedImage bi = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
         box.paintComponent(g);
         g.dispose();
@@ -118,7 +118,7 @@ public class SelectionBoxTest {
         box.endLocation = new Position(10, 10);
 
         // Use bufferedImage to get a valid graphics object
-        BufferedImage bi = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
         box.paintComponent(g);
         g.dispose();

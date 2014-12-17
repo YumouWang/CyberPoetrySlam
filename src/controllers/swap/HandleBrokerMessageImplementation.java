@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 
 /**
  * Class for handling receiving messages from the broker
+ *
  * @author Nathan
  * @version 11/30/2014
  */
@@ -19,11 +20,13 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
 
     private MainView mainView;
     private GameState gameState;
-/**
- * Constructor
- * @param mainView
- * @param gameState
- */
+
+    /**
+     * Constructor
+     *
+     * @param mainView
+     * @param gameState
+     */
     public HandleBrokerMessageImplementation(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.gameState = gameState;
@@ -38,19 +41,19 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
         String msgType = st.nextToken();
         String requestorID = st.nextToken();
         String acceptorID = "";
-        if(st.hasMoreTokens()) {
+        if (st.hasMoreTokens()) {
             acceptorID = st.nextToken();
         }
-        if(msgType.equals(IProtocol.denySwapMsg)) {
+        if (msgType.equals(IProtocol.denySwapMsg)) {
             mainView.getSwapAreaView().swapFailed();
             SwapController swapController = new SwapController(mainView, gameState);
             Collection<Swap> swaps = gameState.getPendingSwaps();
-            for(Swap s : swaps) {
-                if(requestorID.equals(s.getRequestorID())) {
+            for (Swap s : swaps) {
+                if (requestorID.equals(s.getRequestorID())) {
                     swapController.cancelSwap(s);
                 }
             }
-        } else if(msgType.equals(IProtocol.matchSwapMsg)) {
+        } else if (msgType.equals(IProtocol.matchSwapMsg)) {
             try {
                 // Try to create the swap, if it's successful then it means we can fulfill the swap
                 Swap swap = Swap.getSwap(gameState, msg, false, requestorID);
@@ -72,11 +75,11 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
                 System.out.println("Sending: " + responseString);
                 brokerClient.getBrokerOutput().println(responseString);
             }
-        } else if(msgType.equals(IProtocol.confirmSwapMsg)) {
+        } else if (msgType.equals(IProtocol.confirmSwapMsg)) {
             SwapController swapController = new SwapController(mainView, gameState);
             Collection<Swap> swaps = gameState.getPendingSwaps();
-            for(Swap s : swaps) {
-                if(requestorID.equals(s.getRequestorID())) {
+            for (Swap s : swaps) {
+                if (requestorID.equals(s.getRequestorID())) {
                     try {
                         s.updateTheirWordsForConfirmSwap(msg);
                         swapController.executeSwap(s);

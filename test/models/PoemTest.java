@@ -393,7 +393,7 @@ public class PoemTest {
     }
 
     @Test
-     public void testDisconnectEdgeWordInRowTwo() throws Exception {
+    public void testDisconnectEdgeWordInRowTwo() throws Exception {
         Word wordOne = new Word("Dog", WordType.NOUN);
         Word wordTwo = new Word("Cat", WordType.ADVERB);
         List<Word> wordsOne = new ArrayList<Word>();

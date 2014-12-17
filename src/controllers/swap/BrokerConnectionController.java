@@ -7,6 +7,7 @@ import views.MainView;
 
 /**
  * A class that handles setting up the connection with the broker
+ *
  * @author Nathan
  * @version 11/30/2014
  */
@@ -19,14 +20,15 @@ public class BrokerConnectionController {
 
     /**
      * Implementation of the singleton pattern for maintaining a single connection with the broker
-     * @param mainView the mainView associated with this connection
+     *
+     * @param mainView  the mainView associated with this connection
      * @param gameState the gameState associated with this connection
      * @return Returns the current broker connection
      * @throws ConnectionException Throws an exception if there is an error connecting to the broker
      */
     public static BrokerConnection getConnection(MainView mainView, GameState gameState) throws ConnectionException {
         // If we already have a connection object, return it
-        if(connection != null) {
+        if (connection != null) {
             return connection;
         }
         // We don't have a valid connection object, so try to connect to the broker

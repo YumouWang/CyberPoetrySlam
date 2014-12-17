@@ -1,7 +1,6 @@
 package controllers;
 
 import models.*;
-import views.AbstractWordView;
 import views.MainView;
 import views.PoemView;
 import views.RowView;
@@ -23,7 +22,8 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     /**
      * Constructor
-     * @param mainView The MainView to update once a connection has been made
+     *
+     * @param mainView  The MainView to update once a connection has been made
      * @param gameState The GameState to perform connections on
      */
     public DisconnectVisitor(MainView mainView, GameState gameState) {
@@ -57,7 +57,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         Row splitResult = null;
 
         // Disconnect the two entities
-        if(rowToDisconnectFrom.disconnect(word)) {
+        if (rowToDisconnectFrom.disconnect(word)) {
             // Update the area to reflect the updated words
             protectedArea.addAbstractWord(word);
             // If the row is now just one word, convert it to a word
@@ -83,7 +83,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         }
 
         // Disconnect the wordView so the view reflects the entity change
-        if(rowViewToDisconnectFrom.removeWordView(wordView)) {
+        if (rowViewToDisconnectFrom.removeWordView(wordView)) {
             // Update the main view object to reflect the change
             mainView.addProtectedAbstractWordView(wordView);
             // If the row is now just one word, convert it to a word
@@ -92,12 +92,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // Remove the old wordViews from the rowView
             List<WordView> wordViewList = rowViewToDisconnectFrom.getWordViews();
             // Remove wordViews from the end of the list until we get to the wordView we just split on
-            WordView lastWordViewInPoem = wordViewList.get(wordViewList.size()-1);
+            WordView lastWordViewInPoem = wordViewList.get(wordViewList.size() - 1);
             // Keep track of the first one in the new row so we know its position
             WordView firstWordViewInSplitResult = null;
             // Keep track of all the rowViews in the splitPoemView so we can remove them from mainView after we make the view
             List<WordView> resultWordViewList = new ArrayList<WordView>();
-            while(!wordView.equals(lastWordViewInPoem)) {
+            while (!wordView.equals(lastWordViewInPoem)) {
                 // Remove the wordView from the rowView and add it to the pool of words in the mainView
                 rowViewToDisconnectFrom.removeWordView(lastWordViewInPoem);
                 mainView.addProtectedAbstractWordView(lastWordViewInPoem);
@@ -105,7 +105,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
                 // Get the last one in the list
                 firstWordViewInSplitResult = lastWordViewInPoem;
-                lastWordViewInPoem = wordViewList.get(wordViewList.size()-1);
+                lastWordViewInPoem = wordViewList.get(wordViewList.size() - 1);
             }
             // The rowView now only has the WordViews it should
             // And firstWordViewInSplitResult is the first WordView in the split row view
@@ -115,9 +115,9 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // All rows should be available in the mainView so it should be able to construct using those rowViews
             RowView splitRowView = new RowView(splitResult, firstWordViewInSplitResult.getPosition(), mainView);
             mainView.addProtectedAbstractWordView(splitRowView);
-            
+
             // Remove the wordViews used in making the splitRowView
-            for(WordView view : resultWordViewList) {
+            for (WordView view : resultWordViewList) {
                 mainView.removeProtectedAbstractWordView(view);
             }
             // if the splitPoemView is just one rowView, reduce it
@@ -154,7 +154,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         Poem splitResult = null;
 
         // Disconnect the two entities
-        if(poemToDisconnectFrom.disconnectEdgeWord(word)) {
+        if (poemToDisconnectFrom.disconnectEdgeWord(word)) {
             // Update the area to reflect the updated words
             protectedArea.addAbstractWord(word);
             // Revalidate checks for empty rows and removes an empty row at the start
@@ -166,7 +166,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             reducePoemToWordIfPossible(poemToDisconnectFrom);
 
             // If we split the poem, add the result to the protectedArea
-            if(splitResult != null) {
+            if (splitResult != null) {
                 // Reduce the splitResult to the smallest type it can be
                 reducePoemToWordIfPossible(splitResult);
                 // Add the result to the protected area
@@ -181,7 +181,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         }
 
         // Synchronize the view with the entities
-        if(poemViewToDisconnectFrom.removeEdgeWordView(wordView)) {
+        if (poemViewToDisconnectFrom.removeEdgeWordView(wordView)) {
             // Update the main view object to reflect the change
             mainView.addProtectedAbstractWordView(wordView);
 
@@ -189,10 +189,10 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             RowView emptyRow = poemViewToDisconnectFrom.getEmptyRowView();
             // If we removed the last word from a row the we have to do special stuff
             // Otherwise, we're already done
-            if(emptyRow != null) {
+            if (emptyRow != null) {
                 // If we split the poem, create two new poems based on the poemToDisconnectFrom and the splitResult
                 // If we did not split the poem, then the emptyRow was either the first or last row of the poem
-                if(splitResult == null) {
+                if (splitResult == null) {
                     // Now the rowView is at the end of poemViewToDisconnectFrom so we can
                     // disconnect the rowView so the view reflects the entity change
                     poemViewToDisconnectFrom.removeRowView(emptyRow);
@@ -214,7 +214,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
                     List<RowView> resultRowViewList = new ArrayList<RowView>();
                     List<Integer> resultRowViewOffset = new ArrayList<Integer>();
                     // Remove rowViews from the end of the list until we get to the emptyRow we just split on
-                    while(!emptyRow.equals(lastRowViewInPoem)) {
+                    while (!emptyRow.equals(lastRowViewInPoem)) {
                         // Remove the row from the poem and add it to the pool of words in the mainView
                         int rowOffset = lastRowViewInPoem.getPosition().getX() - poemViewToDisconnectFrom.getPosition().getX();
                         resultRowViewOffset.add(0, rowOffset);
@@ -237,13 +237,13 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
                     // All rows should be available in the mainView so it should be able to construct using those rowViews
                     Position newPoemPosition = firstRowViewInSplitResult.getPosition();
                     PoemView splitPoemView = new PoemView(splitResult, newPoemPosition, mainView);
-                    for(int i = 0; i < splitPoemView.getRowViews().size(); i++) {
+                    for (int i = 0; i < splitPoemView.getRowViews().size(); i++) {
                         splitPoemView.shiftRow(splitPoemView.getRowViews().get(i), resultRowViewOffset.get(i));
                     }
                     splitPoemView.moveTo(newPoemPosition);
                     mainView.addProtectedAbstractWordView(splitPoemView);
                     // Remove the wordViews used in making the splitPoemView
-                    for(RowView view : resultRowViewList) {
+                    for (RowView view : resultRowViewList) {
                         mainView.removeProtectedAbstractWordView(view);
                     }
                     // if the splitPoemView is just one rowView, reduce it
@@ -270,7 +270,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         Poem splitResult = null;
 
         // Disconnect the two entities
-        if(poemToDisconnectFrom.disconnect(row)) {
+        if (poemToDisconnectFrom.disconnect(row)) {
             // Handles the case where we can disconnect a row from either
             // the top or bottom of a poem, but not middle
 
@@ -300,7 +300,7 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
         }
 
         // Disconnect the wordView so the view reflects the entity change
-        if(poemViewToDisconnectFrom.removeRowView(rowView)) {
+        if (poemViewToDisconnectFrom.removeRowView(rowView)) {
             // Update the main view object to reflect the change
             mainView.addProtectedAbstractWordView(rowView);
             // If the rowView is just one wordView, convert it to a wordView
@@ -311,13 +311,13 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // Remove the old rowViews from the poemView
             List<RowView> rowViewList = poemViewToDisconnectFrom.getRowViews();
             // Remove rowViews from the end of the list until we get to the rowView we just split on
-            RowView lastRowViewInPoem = rowViewList.get(rowViewList.size()-1);
+            RowView lastRowViewInPoem = rowViewList.get(rowViewList.size() - 1);
             // Keep track of the first one in the new poem so we know its position
             RowView firstRowViewInSplitResult = null;
             // Keep track of all the rowViews in the splitPoemView so we can remove them from mainView after we make the view
             List<RowView> resultRowViewList = new ArrayList<RowView>();
             List<Integer> resultRowViewOffset = new ArrayList<Integer>();
-            while(!rowView.equals(lastRowViewInPoem)) {
+            while (!rowView.equals(lastRowViewInPoem)) {
                 int rowOffset = lastRowViewInPoem.getPosition().getX() - poemViewToDisconnectFrom.getPosition().getX();
                 resultRowViewOffset.add(0, rowOffset);
                 // Remove the row from the poem and add it to the pool of words in the mainView
@@ -336,13 +336,13 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // All rows should be available in the mainView so it should be able to construct using those rowViews
             Position newPoemPosition = firstRowViewInSplitResult.getPosition();
             PoemView splitPoemView = new PoemView(splitResult, newPoemPosition, mainView);
-            for(int i = 0; i < splitPoemView.getRowViews().size(); i++) {
+            for (int i = 0; i < splitPoemView.getRowViews().size(); i++) {
                 splitPoemView.shiftRow(splitPoemView.getRowViews().get(i), resultRowViewOffset.get(i));
             }
             splitPoemView.moveTo(newPoemPosition);
             mainView.addProtectedAbstractWordView(splitPoemView);
             // Remove the wordViews used in making the splitPoemView
-            for(RowView view : resultRowViewList) {
+            for (RowView view : resultRowViewList) {
                 mainView.removeProtectedAbstractWordView(view);
             }
             // if the splitPoemView is just one rowView, reduce it
@@ -369,11 +369,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     /**
      * Helper method for reducing poems that only have one row to just a row
+     *
      * @param poem The poem to try to reduce
      */
     void reducePoemToWordIfPossible(Poem poem) {
         // If the poem is now just one row, convert it to a row
-        if(poem.getRows().size() == 1) {
+        if (poem.getRows().size() == 1) {
             Row rowFromPoem = poem.getRows().get(0);
             // And then make the appropriate change in the protected area
             protectedArea.removeAbstractWord(poem);
@@ -386,11 +387,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     /**
      * Helper method for reducing rows that only have one word to just a word
+     *
      * @param row The row to try to reduce
      */
     void reduceRowToWordIfPossible(Row row) {
         // If the row is just one word, convert it to a word
-        if(row.getWords().size() == 1) {
+        if (row.getWords().size() == 1) {
             Word wordFromRowOne = row.getWords().get(0);
             // And then make the appropriate change in the protected area
             protectedArea.removeAbstractWord(row);
@@ -400,11 +402,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     /**
      * Helper method for reducing PoemViews that only have one RowView to just a RowView
+     *
      * @param poemView The PoemView to try to reduce
      */
     void reducePoemViewToWordViewIfPossible(PoemView poemView) {
         // If the poemView is now just one rowView, convert it to a rowView
-        if(poemView.getRowViews().size() == 1) {
+        if (poemView.getRowViews().size() == 1) {
             RowView rowViewFromPoem = poemView.getRowViews().get(0);
             // And then make the appropriate change in the mainView
             mainView.removeProtectedAbstractWordView(poemView);
@@ -417,11 +420,12 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
 
     /**
      * Helper method for reducing RowViews that only have one WordView to just a WordView
+     *
      * @param rowView The RowView to try to reduce
      */
     void reduceRowViewToWordViewIfPossible(RowView rowView) {
         // If the rowView is just one wordView, convert it to a wordView
-        if(rowView.getWordViews().size() == 1) {
+        if (rowView.getWordViews().size() == 1) {
             WordView wordViewFromRowOne = rowView.getWordViews().get(0);
             // And then make the appropriate change in the mainView
             mainView.removeProtectedAbstractWordView(rowView);

@@ -3,9 +3,9 @@ package controllers;
 import models.*;
 import views.*;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
-import java.awt.*;
 
 
 /**
@@ -22,7 +22,8 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     /**
      * Constructor
-     * @param mainView The MainView to update once a connection has been made
+     *
+     * @param mainView  The MainView to update once a connection has been made
      * @param gameState The GameState to perform connections on
      */
     public HorizontalConnectionVisitor(MainView mainView, GameState gameState) {
@@ -33,7 +34,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, WordView wordViewTwo) {
-        if(connectionCausesOverlap(wordViewOne, wordViewTwo)) {
+        if (connectionCausesOverlap(wordViewOne, wordViewTwo)) {
             return false;
         }
         Word wordOne = wordViewOne.getWord();
@@ -59,7 +60,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(WordView wordViewOne, RowView rowViewTwo) {
-        if(connectionCausesOverlap(wordViewOne, rowViewTwo)) {
+        if (connectionCausesOverlap(wordViewOne, rowViewTwo)) {
             return false;
         }
 
@@ -88,9 +89,9 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     public boolean visit(WordView wordViewOne, PoemView poemViewTwo) {
         List<RowView> rowViews = poemViewTwo.getRowViews();
         boolean successful = false;
-        for(RowView rowView : rowViews) {
+        for (RowView rowView : rowViews) {
             AdjacencyType adjacencyType = rowView.isAdjacentTo(wordViewOne);
-            if(adjacencyType == AdjacencyType.RIGHT) {
+            if (adjacencyType == AdjacencyType.RIGHT) {
                 successful = visit(wordViewOne, rowView);
                 poemViewTwo.shiftRow(rowView, -wordViewOne.getWidth());
                 break;
@@ -102,7 +103,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, WordView wordViewTwo) {
-        if(connectionCausesOverlap(rowViewOne, wordViewTwo)) {
+        if (connectionCausesOverlap(rowViewOne, wordViewTwo)) {
             return false;
         }
 
@@ -129,7 +130,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
 
     @Override
     public boolean visit(RowView rowViewOne, RowView rowViewTwo) {
-        if(connectionCausesOverlap(rowViewOne, rowViewTwo)) {
+        if (connectionCausesOverlap(rowViewOne, rowViewTwo)) {
             return false;
         }
 
@@ -163,12 +164,12 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     public boolean visit(PoemView poemViewOne, WordView wordViewTwo) {
         List<RowView> rowViews = poemViewOne.getRowViews();
         boolean successful = false;
-        for(RowView rowView : rowViews) {
+        for (RowView rowView : rowViews) {
             AdjacencyType adjacencyType = rowView.isAdjacentTo(wordViewTwo);
-            if(adjacencyType == AdjacencyType.RIGHT) {
+            if (adjacencyType == AdjacencyType.RIGHT) {
                 successful = visit(wordViewTwo, rowView);
                 break;
-            } else if(adjacencyType == AdjacencyType.LEFT) {
+            } else if (adjacencyType == AdjacencyType.LEFT) {
                 successful = visit(rowView, wordViewTwo);
                 break;
             }
@@ -181,12 +182,12 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     public boolean visit(PoemView poemViewOne, RowView rowViewTwo) {
         List<RowView> rowViews = poemViewOne.getRowViews();
         boolean successful = false;
-        for(RowView rowView : rowViews) {
+        for (RowView rowView : rowViews) {
             AdjacencyType adjacencyType = rowView.isAdjacentTo(rowViewTwo);
-            if(adjacencyType == AdjacencyType.RIGHT) {
+            if (adjacencyType == AdjacencyType.RIGHT) {
                 successful = visit(rowViewTwo, rowView);
                 break;
-            } else if(adjacencyType == AdjacencyType.LEFT) {
+            } else if (adjacencyType == AdjacencyType.LEFT) {
                 successful = visit(rowView, rowViewTwo);
                 break;
             }
@@ -204,6 +205,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
     /**
      * Attempts to move the second word to right after the first word (where it will be after connection)
      * and returns whether the connection would cause an overlap
+     *
      * @param one The word on top of the connection
      * @param two The word below the connection
      * @return Returns whether the connection would cause an overlap
@@ -224,7 +226,7 @@ public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
                 }
             }
         }
-        if(isOverlapping) {
+        if (isOverlapping) {
             two.moveTo(originalPosition);
             return true;
         }

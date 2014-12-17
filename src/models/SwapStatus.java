@@ -7,5 +7,5 @@ package models;
  * @version 10/3/2014
  */
 public enum SwapStatus {
-	PENDING,COMPLETED,REVOKED
+    PENDING, COMPLETED, REVOKED
 }

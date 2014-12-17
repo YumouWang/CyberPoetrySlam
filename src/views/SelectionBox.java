@@ -40,7 +40,7 @@ public class SelectionBox extends JComponent {
 
     public Collection<AbstractWordView> getSelectedItems(Collection<AbstractWordView> words) {
         Collection<AbstractWordView> selectedItems = new HashSet<AbstractWordView>();
-        if(startLocation != null && endLocation != null) {
+        if (startLocation != null && endLocation != null) {
             int x = (startLocation.getX() < endLocation.getX()) ? startLocation.getX() : endLocation.getX();
             int y = (startLocation.getY() < endLocation.getY()) ? startLocation.getY() : endLocation.getY();
             int width = Math.abs(startLocation.getX() - endLocation.getX());
@@ -59,7 +59,7 @@ public class SelectionBox extends JComponent {
     public AbstractWordView getSelectedItem(Collection<AbstractWordView> words) {
         // Returns one of the selected words. Not guaranteed to select the same one each time
         AbstractWordView selectedItem = null;
-        if(startLocation != null && endLocation != null) {
+        if (startLocation != null && endLocation != null) {
             int x = (startLocation.getX() < endLocation.getX()) ? startLocation.getX() : endLocation.getX();
             int y = (startLocation.getY() < endLocation.getY()) ? startLocation.getY() : endLocation.getY();
             int width = Math.abs(startLocation.getX() - endLocation.getX());
@@ -78,7 +78,7 @@ public class SelectionBox extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(startLocation != null && endLocation != null) {
+        if (startLocation != null && endLocation != null) {
             int x = (startLocation.getX() < endLocation.getX()) ? startLocation.getX() : endLocation.getX();
             int y = (startLocation.getY() < endLocation.getY()) ? startLocation.getY() : endLocation.getY();
             int width = Math.abs(startLocation.getX() - endLocation.getX());

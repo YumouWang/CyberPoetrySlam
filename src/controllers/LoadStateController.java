@@ -8,6 +8,7 @@ import java.io.*;
 
 /**
  * Controller in charge of loading and writing state to a file
+ *
  * @author Jian
  * @author Nathan
  * @version 12/14/2014
@@ -17,7 +18,7 @@ public class LoadStateController {
     public UndoWithMemento loadMemento() {
         ObjectInputStream ois = null;
         UndoWithMemento m = null;
-        if(new File(Constants.MEMENTO_STORAGE).exists()) {
+        if (new File(Constants.MEMENTO_STORAGE).exists()) {
             try {
                 ois = new ObjectInputStream(new FileInputStream(Constants.MEMENTO_STORAGE));
                 m = (UndoWithMemento) ois.readObject();

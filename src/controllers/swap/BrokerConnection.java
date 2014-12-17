@@ -11,6 +11,7 @@ import views.MainView;
  * A wrapper around BrokerClient to make communicating with the broker simpler
  * This class only handles outgoing communication
  * When this class is initialized, it sets up a handler to handle incoming communication
+ *
  * @author Nathan
  * @version 11/30/2014
  */
@@ -19,12 +20,12 @@ public class BrokerConnection {
     BrokerClient broker;
     ReaderThread brokerCommunicationThread;
     HandleBrokerMessageImplementation handler;
-/**
- * 
- * @param broker 
- * @param mainView
- * @param gameState
- */
+
+    /**
+     * @param broker
+     * @param mainView
+     * @param gameState
+     */
     public BrokerConnection(BrokerClient broker, MainView mainView, GameState gameState) {
         this.broker = broker;
         // Set up the thread to handle incoming communication

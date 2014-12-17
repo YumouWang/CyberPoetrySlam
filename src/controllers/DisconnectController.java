@@ -17,7 +17,8 @@ public class DisconnectController {
 
     /**
      * Constructor
-     * @param mainView The MainView to update once a connection has been made
+     *
+     * @param mainView  The MainView to update once a connection has been made
      * @param gameState The GameState to perform connections on
      */
     public DisconnectController(MainView mainView, GameState gameState) {
@@ -27,6 +28,7 @@ public class DisconnectController {
 
     /**
      * Disconnects two words. Returns whether the disconnect was successful
+     *
      * @param wordView The word to disconnect
      * @param fromView The AbstractWordView to disconnect from
      * @return Returns whether the disconnect was successful or not

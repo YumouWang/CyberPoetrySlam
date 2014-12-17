@@ -2,7 +2,6 @@ package views;
 
 import controllers.DisconnectVisitor;
 import models.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,12 +18,12 @@ public class PoemViewTest {
     GameState gameState;
     MainView mainView;
     UnprotectedMemento un = null;
-	ProtectedMemento p = null;
+    ProtectedMemento p = null;
 
     @Before
     public void setUp() throws Exception {
         gameState = new GameState(null);
-		mainView = new MainView(gameState, null);
+        mainView = new MainView(gameState, null);
 
         Word wordOne = new Word("WordOne", WordType.VERB);
         Word wordTwo = new Word("WordTwo", WordType.ADVERB);
@@ -34,11 +33,11 @@ public class PoemViewTest {
         poem.connect(rowTwo);
         gameState.getProtectedArea().addAbstractWord(poem);
 
-        Position positionOne = new Position(0,0);
+        Position positionOne = new Position(0, 0);
         wordViewOne = new WordView(wordOne, positionOne);
         mainView.addProtectedAbstractWordView(wordViewOne);
 
-        Position positionTwo = new Position(10,5);
+        Position positionTwo = new Position(10, 5);
         wordViewTwo = new WordView(wordTwo, positionTwo);
         mainView.addProtectedAbstractWordView(wordViewTwo);
 
@@ -334,7 +333,7 @@ public class PoemViewTest {
     @Test
     public void testVisitorPatternAbstractPoem() throws Exception {
         DisconnectVisitor disconnector = new DisconnectVisitor(mainView, gameState);
-        AbstractWordView abstractWordViewOne = new PoemView(poem, new Position(0,0), mainView);
+        AbstractWordView abstractWordViewOne = new PoemView(poem, new Position(0, 0), mainView);
         assertFalse(poemView.acceptVisitor(disconnector, abstractWordViewOne));
     }
 

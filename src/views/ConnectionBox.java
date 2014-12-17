@@ -14,9 +14,10 @@ public class ConnectionBox extends AbstractView {
 
     /**
      * Constructor
+     *
      * @param position The position of the ConnectionBox
-     * @param width The width of the ConnectionBox
-     * @param height The height of the ConnectionBox
+     * @param width    The width of the ConnectionBox
+     * @param height   The height of the ConnectionBox
      */
     public ConnectionBox(Position position, int width, int height) {
         super(position, width, height);

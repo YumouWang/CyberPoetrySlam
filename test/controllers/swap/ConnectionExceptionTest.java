@@ -1,9 +1,6 @@
 package controllers.swap;
 
 import org.junit.Test;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
-import static org.junit.Assert.*;
 
 public class ConnectionExceptionTest {
 

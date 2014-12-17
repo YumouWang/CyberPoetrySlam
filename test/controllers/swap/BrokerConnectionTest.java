@@ -1,6 +1,5 @@
 package controllers.swap;
 
-import broker.ipc.Broker;
 import models.GameState;
 import models.Swap;
 import models.Word;
@@ -23,7 +22,7 @@ public class BrokerConnectionTest {
     MockReaderThread reader;
 
     @Before
-     public void setUp() throws Exception {
+    public void setUp() throws Exception {
         gameState = new GameState(null);
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
         gameState.getUnprotectedArea().addAbstractWord(new Word("Moonlight", WordType.NOUN));
@@ -41,7 +40,7 @@ public class BrokerConnectionTest {
 
     @Test
     public void testSendSwapRequest() throws Exception, InvalidSwapException {
-        if(brokerConnection != null) {
+        if (brokerConnection != null) {
             List<String> inputOfferTypes = new ArrayList<String>();
             inputOfferTypes.add("ANY");
             List<String> inputRequestTypes = new ArrayList<String>();
@@ -59,7 +58,7 @@ public class BrokerConnectionTest {
 
     @Test
     public void testGetSessionID() throws Exception {
-        if(brokerConnection != null) {
+        if (brokerConnection != null) {
             assertEquals(id, brokerConnection.getSessionID());
         }
     }

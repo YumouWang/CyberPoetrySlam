@@ -12,6 +12,7 @@ import java.util.Random;
 
 /**
  * Interface for the rest of the program to communicate with the broker
+ *
  * @author Nathan
  * @version 11/30/2014
  */
@@ -23,7 +24,8 @@ public class SwapController {
 
     /**
      * Constructs a new swap controller
-     * @param mainView The current MainView
+     *
+     * @param mainView  The current MainView
      * @param gameState The current GameState
      */
     public SwapController(MainView mainView, GameState gameState) {
@@ -42,7 +44,9 @@ public class SwapController {
      * to the BrokerConnection to send it
      */
     public void requestSwap() {
-        if(connection == null) { return; }
+        if (connection == null) {
+            return;
+        }
         mainView.getSwapAreaView().swapPending();
         ArrayList<String> giveTypes = new ArrayList<String>();
         ArrayList<String> giveWords = new ArrayList<String>();
@@ -51,9 +55,9 @@ public class SwapController {
 
         ArrayList<ArrayList<JComponent>> inputElements = mainView.getSwapAreaView().getInputElements();
 
-        for(ArrayList<JComponent> swapGroup : inputElements) {
+        for (ArrayList<JComponent> swapGroup : inputElements) {
             JCheckBox checkBox = (JCheckBox) swapGroup.get(0);
-            if(checkBox.isSelected()) {
+            if (checkBox.isSelected()) {
                 JTextField giveWordInput = (JTextField) swapGroup.get(1);
                 JComboBox<WordType> giveTypeInput = (JComboBox<WordType>) swapGroup.get(2);
                 JTextField getWordInput = (JTextField) swapGroup.get(3);
@@ -82,13 +86,14 @@ public class SwapController {
 
     /**
      * Executes the Swap
+     *
      * @param swap The swap to execute
      */
     public void executeSwap(Swap swap) {
         List<String> newWords = swap.getTheirWords();
         List<WordType> newTypes = swap.getTheirTypes();
 
-        for(int i = 0; i < newWords.size(); i++) {
+        for (int i = 0; i < newWords.size(); i++) {
             Word word = new Word(newWords.get(i), newTypes.get(i));
             gameState.getUnprotectedArea().addAbstractWord(word);
             Random random = new Random();
@@ -110,9 +115,9 @@ public class SwapController {
      */
     void removeSwapWords(Swap swap) {
         List<Word> oldWords = swap.getMyWords();
-        for(Word myWord : oldWords) {
+        for (Word myWord : oldWords) {
             gameState.getUnprotectedArea().removeAbstractWord(myWord);
-            WordView wordView = (WordView)mainView.getUnprotectedAbstractWordById(myWord.getId());
+            WordView wordView = (WordView) mainView.getUnprotectedAbstractWordById(myWord.getId());
             mainView.removeLabelOf(wordView);
             mainView.removeUnprotectedAbstractWordView(wordView);
         }
@@ -120,12 +125,13 @@ public class SwapController {
 
     /**
      * Cancels the current swap and puts the words back in the mainView and gameState. Opposite of hideWords
+     *
      * @param the current swap
      */
     public void cancelSwap(Swap swap) {
-        if(swap != null && !swap.getIsCancelled()) {
+        if (swap != null && !swap.getIsCancelled()) {
             List<Word> myWords = swap.getMyWords();
-            for(Word myWord : myWords) {
+            for (Word myWord : myWords) {
                 gameState.getUnprotectedArea().addAbstractWord(myWord);
                 Random random = new Random();
                 // Randomly determine the position of the word in the unprotected area
@@ -148,7 +154,7 @@ public class SwapController {
      * Cancels all the pending swaps
      */
     public void cancelPendingSwaps() {
-        for(Swap swap: gameState.getPendingSwaps()) {
+        for (Swap swap : gameState.getPendingSwaps()) {
             cancelSwap(swap);
         }
     }

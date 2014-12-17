@@ -19,23 +19,20 @@ import java.util.ArrayList;
 
 /**
  * A view for the swap area
+ *
  * @author Nathan
  * @version 11/30/2014
  */
 public class SwapAreaView extends AbstractView {
 
-    private JPanel swapPanel;
-
-    private JButton btnSwap;
-    private JButton btnReconnect;
-
-    private JPanel statusIndicator;
-    private JTextPane status;
-
-    private ArrayList<ArrayList<JComponent>> inputElements;
-
     private final MainView mainView;
     private final GameState gameState;
+    private JPanel swapPanel;
+    private JButton btnSwap;
+    private JButton btnReconnect;
+    private JPanel statusIndicator;
+    private JTextPane status;
+    private ArrayList<ArrayList<JComponent>> inputElements;
 
     public SwapAreaView(Position position, int width, int height, final MainView mainView, final GameState gameState) {
         super(position, width, height);
@@ -61,21 +58,24 @@ public class SwapAreaView extends AbstractView {
     private void createControlPanel(JPanel controlPanel) {
         controlPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(0,5,0,5);
+        c.insets = new Insets(0, 5, 0, 5);
         c.fill = GridBagConstraints.HORIZONTAL;
 
         statusIndicator = new JPanel();
-        c.gridx = 0; c.gridy = 0;
+        c.gridx = 0;
+        c.gridy = 0;
         statusIndicator.setPreferredSize(new Dimension(25, 25));
         statusIndicator.setBackground(Color.YELLOW);
-        controlPanel.add(statusIndicator,c);
+        controlPanel.add(statusIndicator, c);
 
         btnSwap = new JButton("Swap");
-        c.gridx = 1; c.gridy = 0;
+        c.gridx = 1;
+        c.gridy = 0;
         controlPanel.add(btnSwap, c);
 
         btnReconnect = new JButton("Reconnect");
-        c.gridx = 2; c.gridy = 0;
+        c.gridx = 2;
+        c.gridy = 0;
         controlPanel.add(btnReconnect, c);
         btnReconnect.setEnabled(false);
 
@@ -86,7 +86,8 @@ public class SwapAreaView extends AbstractView {
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         // Put it below the other elements
-        c.gridx = 0; c.gridy = 1;
+        c.gridx = 0;
+        c.gridy = 1;
         c.gridwidth = 3;
         status.setText("Connecting to broker...");
         status.setOpaque(false);
@@ -96,10 +97,10 @@ public class SwapAreaView extends AbstractView {
         btnSwap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            		mainView.getUndoMoves().clear();
-            		mainView.getRedoMoves().clear();
-            		mainView.getUndoButton().setEnabled(false);
-            		mainView.getRedoButton().setEnabled(false);
+                mainView.getUndoMoves().clear();
+                mainView.getRedoMoves().clear();
+                mainView.getUndoButton().setEnabled(false);
+                mainView.getRedoButton().setEnabled(false);
                 SwapController swapController = new SwapController(mainView, gameState);
                 swapController.requestSwap();
             }
@@ -120,11 +121,11 @@ public class SwapAreaView extends AbstractView {
     private void createInputPanel(JPanel inputPanel) {
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(0,5,0,5);
+        c.insets = new Insets(0, 5, 0, 5);
         c.fill = GridBagConstraints.HORIZONTAL;
 
         inputElements = new ArrayList<ArrayList<JComponent>>();
-        for(int i = 0; i < 10; i+=2) {
+        for (int i = 0; i < 10; i += 2) {
             ArrayList<JComponent> elements = new ArrayList<JComponent>();
             inputElements.add(elements);
             c.gridy = i;
@@ -237,11 +238,14 @@ public class SwapAreaView extends AbstractView {
 
     /**
      * Gets the panel that this view is displaying
+     *
      * @return The panel
      */
     public JPanel getPanel() {
         return swapPanel;
     }
 
-    public ArrayList<ArrayList<JComponent>> getInputElements() { return inputElements; }
+    public ArrayList<ArrayList<JComponent>> getInputElements() {
+        return inputElements;
+    }
 }

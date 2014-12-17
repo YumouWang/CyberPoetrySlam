@@ -1,11 +1,11 @@
 package controllers.swap;
 
 import models.GameState;
-import org.junit.Before;
 import org.junit.Test;
 import views.MainView;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class BrokerConnectionControllerTest {
 

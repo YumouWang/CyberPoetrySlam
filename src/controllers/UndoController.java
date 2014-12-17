@@ -5,8 +5,9 @@ import views.MainView;
 
 /**
  * This is Controller for undo
- *
- * @author xujian Created 11/05/2014
+ * @author Nathan
+ * @author xujian 
+ * @version 11/05/2014
  */
 public class UndoController {
 	/**

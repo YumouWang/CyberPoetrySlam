@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
+/**
+ * This is undo controller.
+ * @author xujian
+ * @version 11/05/14
+ */
 public class UndoWithMemento implements Serializable {
 
     /**

@@ -17,10 +17,8 @@ import java.util.Random;
 
 /**
  * ButtonController handles all the actions for MainView panel buttons
- * <p/>
- * Created by Yumou & Jian on 10/28/2014.
- *
  * @author Yumou
+ * @author xujian
  * @author Nathan
  * @version 10/28/2014
  */

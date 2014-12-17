@@ -19,7 +19,11 @@ public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
 
     private MainView mainView;
     private GameState gameState;
-
+/**
+ * Constructor
+ * @param mainView
+ * @param gameState
+ */
     public HandleBrokerMessageImplementation(MainView mainView, GameState gameState) {
         this.mainView = mainView;
         this.gameState = gameState;

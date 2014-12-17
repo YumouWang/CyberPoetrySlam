@@ -148,11 +148,17 @@ public abstract class AbstractWordView extends AbstractView implements
 		}
 		return abstractWordView;
 	}
-
+/**
+ * Get the right boundary of the AbstractWordView
+ * @return int 
+ */
 	public int getFurthestRight() {
 		return furthestRight;
 	}
-
+/**
+ * Get the left boundary of the AbstractWordView
+ * @return int 
+ */
 	public int getFurthestLeft() {
 		return furthestLeft;
 	}

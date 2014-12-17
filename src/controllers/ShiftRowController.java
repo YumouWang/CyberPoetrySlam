@@ -14,15 +14,43 @@ import controllers.MoveWordController;
 import models.GameState;
 import models.Position;
 
+/**
+ * This class handles shifting rows in a poem
+ * 
+ * @author Yang
+ * @version 12/2/2014
+ */
+
 public class ShiftRowController {
 	MainView mainView;
 	GameState gameState;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param mainView
+	 *            The Mainview to update once some row is shifted
+	 * @param gameState
+	 *            The Gamestate to perform shifting rows on
+	 */
+	
 	public ShiftRowController(MainView mainView, GameState gameState) {
 		this.mainView = mainView;
 		this.gameState = gameState;
 	}
 
+	/**
+	 * Implementation of shifting a row under various conditions
+	 * 
+	 * @param selectedPoem
+	 *            The poem which includes the shifted row
+	 * @param selectedRow
+	 *            The row to shift
+	 * @param positionFrom
+	 *            The original position of shifted row
+	 * @param positionTo
+	 *            The final position of shifted row
+	 */
 	public void shiftRow(PoemView selectedPoem, AbstractWordView selectedRow,
 			Position positionFrom, Position positionTo) {
 		if (selectedRow == null || selectedRow instanceof PoemView) {
@@ -90,8 +118,18 @@ public class ShiftRowController {
 		}
 	}
 
-	public void shiftRowTemp(PoemView selectedPoem,
-			AbstractWordView selectedRow, int shiftAmount) {
+	/**
+	 * Private helper for ShiftRowController. Shifts the row by some amount
+	 * 
+	 * @param selectedPoem
+	 *            The poem which includes the shifted row
+	 * @param selectedRow
+	 *            The row to shift
+	 * @param shiftAmount
+	 *            The shifting amount of target row
+	 */
+	void shiftRowTemp(PoemView selectedPoem, AbstractWordView selectedRow,
+			int shiftAmount) {
 		if (selectedRow == null || selectedRow instanceof PoemView) {
 			return;
 		}

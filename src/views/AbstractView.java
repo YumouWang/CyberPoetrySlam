@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Nathan
  * @version 10/3/2014
  */
-public abstract class AbstractView implements Serializable{
+public abstract class AbstractView implements Serializable {
 	/**
 	 * 
 	 */
@@ -22,7 +22,8 @@ public abstract class AbstractView implements Serializable{
 	/**
 	 * Constructor
 	 * 
-	 * @param position The position of the view object
+	 * @param position
+	 *            The position of the view object
 	 */
 	public AbstractView(Position position) {
 		this.position = position;
@@ -33,9 +34,12 @@ public abstract class AbstractView implements Serializable{
 	/**
 	 * Constructor
 	 * 
-	 * @param position The position of the view object
-	 * @param width The width of the view object
-	 * @param height The height of the view object
+	 * @param position
+	 *            The position of the view object
+	 * @param width
+	 *            The width of the view object
+	 * @param height
+	 *            The height of the view object
 	 */
 	public AbstractView(Position position, int width, int height) {
 		this.position = position;
@@ -46,7 +50,8 @@ public abstract class AbstractView implements Serializable{
 	/**
 	 * Determines whether a position is inside of this view object
 	 * 
-	 * @param click The position of the click
+	 * @param click
+	 *            The position of the click
 	 * @return Returns whether this view object was clicked
 	 */
 	public boolean isClicked(Position click) {
@@ -63,11 +68,12 @@ public abstract class AbstractView implements Serializable{
 	/**
 	 * Determines whether this view object is overlapping a given view
 	 * 
-	 * @param otherView The other view
+	 * @param otherView
+	 *            The other view
 	 * @return Returns whether this view overlaps with the other view
 	 */
 	public boolean isOverlapping(AbstractView otherView) {
-		if(otherView instanceof PoemView) {
+		if (otherView instanceof PoemView) {
 			return otherView.isOverlapping(this);
 		}
 		boolean isOverlapping = false;
@@ -100,8 +106,22 @@ public abstract class AbstractView implements Serializable{
 		return position;
 	}
 
-    public int getWidth() { return width; }
+	/**
+	 * Get the width
+	 * 
+	 * @return Width of an AbstractView
+	 */
+	public int getWidth() {
+		return width;
+	}
 
-    public int getHeight() { return height; }
+	/**
+	 * Get the height
+	 * 
+	 * @return Height of an AbstractView
+	 */
+	public int getHeight() {
+		return height;
+	}
 
 }

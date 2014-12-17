@@ -35,13 +35,17 @@ public class GameState implements Serializable {
 
 	/**
 	 * Constructor
+	 * 
+	 * @param un
+	 *            UnprotectedMemento to store state of unprotected area
+	 * @param p
+	 *            ProtectedMemento to store state of protected area
 	 */
 
 	public GameState(UnprotectedMemento un, ProtectedMemento p) {
 		pendingSwaps = new HashSet<Swap>();
 		if (un == null && p == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-			
 
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
@@ -50,7 +54,6 @@ public class GameState implements Serializable {
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}
-			
 
 			protectedArea = new Area(protectedWords);
 			unprotectedArea = new Area(unprotectedWords);
@@ -137,5 +140,12 @@ public class GameState implements Serializable {
 		return unprotectedArea;
 	}
 
-	public Collection<Swap> getPendingSwaps() { return pendingSwaps; }
+	/**
+	 * Returns a collection of pending swaps
+	 * 
+	 * @return The pending swaps
+	 */
+	public Collection<Swap> getPendingSwaps() {
+		return pendingSwaps;
+	}
 }

@@ -19,7 +19,12 @@ public class BrokerConnection {
     BrokerClient broker;
     ReaderThread brokerCommunicationThread;
     HandleBrokerMessageImplementation handler;
-
+/**
+ * 
+ * @param broker 
+ * @param mainView
+ * @param gameState
+ */
     public BrokerConnection(BrokerClient broker, MainView mainView, GameState gameState) {
         this.broker = broker;
         // Set up the thread to handle incoming communication

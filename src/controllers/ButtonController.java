@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-
 /**
  * ButtonController handles all the actions for MainView panel buttons
  * 
@@ -39,11 +38,14 @@ public class ButtonController implements ActionListener {
 	private MainView mainView;
 	private GameState gameState;
 	AbstractWordView publishPoem;
-	
+
 	/**
 	 * Constructor
-	 * @param mainView The mainView
-	 * @param gameState The gameState
+	 * 
+	 * @param mainView
+	 *            The mainView
+	 * @param gameState
+	 *            The gameState
 	 */
 	public ButtonController(MainView mainView, GameState gameState) {
 		this.mainView = mainView;
@@ -67,14 +69,15 @@ public class ButtonController implements ActionListener {
 				System.out.println("select poem --> "
 						+ publishPoem.getWord().getValue());
 				publishPoem((PoemView) publishPoem);
-			} else if(publishPoem instanceof RowView && mainView.getProtectedAreaWords().contains(publishPoem)) {
+			} else if (publishPoem instanceof RowView
+					&& mainView.getProtectedAreaWords().contains(publishPoem)) {
 				System.out.println("select poem --> "
 						+ publishPoem.getWord().getValue());
 				publishPoem((RowView) publishPoem);
 			} else {
-				
+
 			}
-			
+
 			mainView.getPublishButton().setEnabled(false);
 			publishPoem = null;
 		}
@@ -91,10 +94,12 @@ public class ButtonController implements ActionListener {
 			System.out.println("Undo...");
 		}
 	}
-	
+
 	/**
 	 * publish a selected poem into wall.txt
-	 * @param poemView The poem to publish
+	 * 
+	 * @param poemView
+	 *            The poem to publish
 	 */
 	public void publishPoem(PoemView poemView) {
 		try {
@@ -125,10 +130,12 @@ public class ButtonController implements ActionListener {
 		// After publish poem to wall, release this poem
 		releasePoem(poemView);
 	}
-	
+
 	/**
 	 * publish a selected poem which is a single row into wall.txt
-	 * @param rowView The poem to publish
+	 * 
+	 * @param rowView
+	 *            The poem to publish
 	 */
 	public void publishPoem(RowView rowView) {
 		try {
@@ -159,7 +166,9 @@ public class ButtonController implements ActionListener {
 
 	/**
 	 * release the selected poem when it has been published
-	 * @param poemView The poem to release
+	 * 
+	 * @param poemView
+	 *            The poem to release
 	 */
 	public void releasePoem(PoemView poemView) {
 		// remove poem from protected abstractWord in GameState
@@ -186,10 +195,12 @@ public class ButtonController implements ActionListener {
 		}
 		mainView.getExploreArea().updateTable();
 	}
-	
+
 	/**
 	 * release the selected poem when it has been published
-	 * @param rowView The poem to release
+	 * 
+	 * @param rowView
+	 *            The poem to release
 	 */
 	public void releaseRow(RowView rowView) {
 		// remove poem from protected abstractWord in GameState
@@ -197,7 +208,7 @@ public class ButtonController implements ActionListener {
 		// remove poem view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
 		List<WordView> words = rowView.getWordViews();
-		
+
 		for (WordView word : words) {
 			// for every word in this poem add it to the unprotected
 			// abstractWord in GameState
@@ -213,6 +224,6 @@ public class ButtonController implements ActionListener {
 			word.moveTo(new Position(x, y));
 		}
 		mainView.getExploreArea().updateTable();
-		
+
 	}
 }

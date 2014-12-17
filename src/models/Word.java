@@ -43,6 +43,11 @@ public class Word extends AbstractWord implements Serializable {
 		return this.equals(otherWord);
 	}
 
+	/**
+	 * Get the wordtype
+	 * 
+	 * @return The wordtype of a Word
+	 */
 	public WordType getType() {
 		return type;
 	}

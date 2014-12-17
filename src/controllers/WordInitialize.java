@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * WordInitialize uses dictionary parser to get a word list from a CSV file
  * 
- * @author Yumou
+ * @author Yumou, Yang
  * @version 10/28/2014
  */
 

@@ -16,7 +16,7 @@ import models.WordType;
 /**
  * Dictionary parser to get a word list from a CSV file
  * 
- * @author Yumou
+ * @author Yumou, Yang
  * @version 10/3/2014
  */
 public class DictionaryParser {
@@ -26,13 +26,30 @@ public class DictionaryParser {
 	String cvsSplitBy = ",";
 	List<Word> wordList = new ArrayList<Word>();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param FileName
+	 *            The file name of the word list CSV file
+	 */
 	public DictionaryParser(String FileName) {
 		csvFile = FileName;
 	}
 
+	/**
+	 * Returns the CSV file name
+	 * 
+	 * @return String returns the file name of the CSV file
+	 */
 	public String getFileName() {
 		return this.csvFile;
 	}
+
+	/**
+	 * Parses the CSV file and returns a word list
+	 * 
+	 * @return List<Word> returns the word list parsed from the CSV file
+	 */
 
 	public List<Word> parse() {
 		try {
@@ -66,7 +83,7 @@ public class DictionaryParser {
 	 * transfer a string to an enum word type
 	 * 
 	 * @param wordType
-	 * @return
+	 * @return WordType returns the corresponding WordType of the string
 	 */
 	public WordType stringToWordType(String wordType) {
 		for (WordType w : WordType.values()) {

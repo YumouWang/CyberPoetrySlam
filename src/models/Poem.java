@@ -93,6 +93,11 @@ public class Poem extends AbstractWord implements Serializable {
 		return successful;
 	}
 
+	/**
+	 * Splits a poem at specific row if the row is in the poem
+	 * @param row The row to split at 
+	 * @return The new poem after split
+	 */
 	public Poem splitPoemAt(Row row) {
 		int index = rows.indexOf(row);
 		Poem result;

@@ -35,7 +35,18 @@ public class MoveWordController {
 		this.gameState = gameState;
 	}
 
-	public boolean moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
+	/**
+	 * 
+	 * @param selectedWord
+	 *            The word being moved
+	 * @param positionFrom
+	 *            The original position of word before moving
+	 * @param positionTo
+	 *            The final position of word after moving
+	 * @return boolean Returns whether the word is successfully moved
+	 */
+	public boolean moveWord(AbstractWordView selectedWord,
+			Position positionFrom, Position positionTo) {
 		Position originPosition = selectedWord.getPosition();
 		Position positionDiff = new Position(positionTo.getX()
 				- positionFrom.getX(), positionTo.getY() - positionFrom.getY());
@@ -43,16 +54,18 @@ public class MoveWordController {
 				+ positionDiff.getX(), selectedWord.getPosition().getY()
 				+ positionDiff.getY());
 
-        selectedWord.moveTo(newPosition);
+		selectedWord.moveTo(newPosition);
 
-        boolean isOverlappingOtherWord = false;
-        for(AbstractWordView otherView : mainView.getProtectedAreaWords()) {
-            if(!selectedWord.equals(otherView) && selectedWord.isOverlapping(otherView)) {
-                isOverlappingOtherWord = true;
-            }
-        }
+		boolean isOverlappingOtherWord = false;
+		for (AbstractWordView otherView : mainView.getProtectedAreaWords()) {
+			if (!selectedWord.equals(otherView)
+					&& selectedWord.isOverlapping(otherView)) {
+				isOverlappingOtherWord = true;
+			}
+		}
 
-		if (mainView.isMoveOutOfBounds(selectedWord, newPosition) || isOverlappingOtherWord) {
+		if (mainView.isMoveOutOfBounds(selectedWord, newPosition)
+				|| isOverlappingOtherWord) {
 			selectedWord.moveTo(originPosition);
 		} else {
 			selectedWord.moveTo(newPosition);
@@ -110,7 +123,8 @@ public class MoveWordController {
 	 * Checks for collisions or adjacency and changes colors after moving a word
 	 * in the protected area
 	 * 
-	 * @param selectedWord The word being moved
+	 * @param selectedWord
+	 *            The word being moved
 	 */
 	void protectAreaWordMove(AbstractWordView selectedWord) {
 		boolean isOverlapping = false;
@@ -122,11 +136,14 @@ public class MoveWordController {
 					isOverlapping = true;
 				}
 				AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
-				AdjacencyType adjacencyTypeTwo = word.isAdjacentTo(selectedWord);
-				if (adjacencyType != AdjacencyType.NOT_ADJACENT && adjacencyTypeTwo != AdjacencyType.NOT_ADJACENT) {
+				AdjacencyType adjacencyTypeTwo = word
+						.isAdjacentTo(selectedWord);
+				if (adjacencyType != AdjacencyType.NOT_ADJACENT
+						&& adjacencyTypeTwo != AdjacencyType.NOT_ADJACENT) {
 					isAdjacent = true;
 					word.setBackground(Color.GREEN);
-					if(selectedWord instanceof PoemView && word instanceof PoemView) {
+					if (selectedWord instanceof PoemView
+							&& word instanceof PoemView) {
 						isAdjacent = false;
 						word.setBackground(Color.LIGHT_GRAY);
 					}
@@ -151,13 +168,13 @@ public class MoveWordController {
 	 *            The wordView to protect
 	 */
 	void protectWord(AbstractWordView wordView) {
-		
+
 		// Add word to protected word list
 		gameState.protect(wordView.getWord());
 		// Add word view to protected word view list and remove word view from
 		// unprotected word view
 		mainView.addProtectedAbstractWordView(wordView);
-		mainView.removeUnprotectedAbstractWordView(wordView);		
+		mainView.removeUnprotectedAbstractWordView(wordView);
 		mainView.getExploreArea().updateTable();
 	}
 
@@ -179,6 +196,9 @@ public class MoveWordController {
 
 	/**
 	 * release a row that was just moved
+	 * 
+	 * @param rowView
+	 *            The row to be released
 	 */
 	void relaseRow(RowView rowView) {
 		List<WordView> words = rowView.getWordViews();
@@ -199,6 +219,9 @@ public class MoveWordController {
 
 	/**
 	 * release a poem that was just moved
+	 * 
+	 * @param poemView
+	 *            The poem to be released
 	 */
 	void relasePoem(PoemView poemView) {
 		List<RowView> rows = poemView.getRowViews();

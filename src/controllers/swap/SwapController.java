@@ -118,6 +118,7 @@ public class SwapController {
 
     /**
      * Cancels the current swap and puts the words back in the mainView and gameState. Opposite of hideWords
+     * @param the current swap
      */
     public void cancelSwap(Swap swap) {
         if(swap != null && !swap.getIsCancelled()) {

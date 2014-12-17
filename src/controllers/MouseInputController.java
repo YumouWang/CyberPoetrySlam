@@ -10,61 +10,65 @@ import models.GameState;
 import models.Position;
 import views.*;
 
-
 /**
  * A controller for handling mouse input. Delegates to other controllers. Unlike
  * other controllers, this controller exists for the duration of the program to
  * handle mouse events and maintain state between mouse events.
  * 
  * @author Nathan
- * @author YangWang
+ * @author Yang
  * @author Jian
  * @version 10/4/2014
  */
 public class MouseInputController extends MouseAdapter {
 
-    AbstractWordView selectedWord;
-    AbstractWordView selectedWordToDisconnect;
-    AbstractWordView selectedWordCopy;	
+	AbstractWordView selectedWord;
+	AbstractWordView selectedWordToDisconnect;
+	AbstractWordView selectedWordCopy;
 	AbstractWordView lastSelectedWord;
 	AbstractWordView selectedRowToShift;
 	static boolean isShift = false;
 	boolean isShifting = false;
-    
-    Position mouseDownPosition;
-    Position selectedWordPositionRelativeToMouse;
-    Position disconnectTargetPosition;
-    
-    
-    /** Original x,y where AbstractWordView was before moving and connecting. */
-    int originalx;
-    int originaly;
-    long Id;
-    
-    MainView mainView;
-    GameState gameState;
-    
-    /** isDisconnect and isConnect is used to represent whether disconnect/connect happens */
-    boolean isDisconnect;
-    boolean isConnect;
-    boolean isReleaseOrProtect;
 
-    /**
-     * Constructor
-     * @param mainView The view to update when handling mouse events
-     * @param gameState The gameState to enact changes on
-     */
-    public MouseInputController(MainView mainView, GameState gameState) {
-        this.mainView = mainView;
-        this.gameState = gameState;      
-    }
+	Position mouseDownPosition;
+	Position selectedWordPositionRelativeToMouse;
+	Position disconnectTargetPosition;
+
+	/** Original x,y where AbstractWordView was before moving and connecting. */
+	int originalx;
+	int originaly;
+	long Id;
+
+	MainView mainView;
+	GameState gameState;
+
+	/**
+	 * isDisconnect and isConnect is used to represent whether
+	 * disconnect/connect happens
+	 */
+	boolean isDisconnect;
+	boolean isConnect;
+	boolean isReleaseOrProtect;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param mainView
+	 *            The view to update when handling mouse events
+	 * @param gameState
+	 *            The gameState to enact changes on
+	 */
+	public MouseInputController(MainView mainView, GameState gameState) {
+		this.mainView = mainView;
+		this.gameState = gameState;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Position mousePosition = new Position(e.getX(), e.getY());
 		isShift = e.isShiftDown();
-        this.originalx = e.getX();
-        this.originaly = e.getY();
+		this.originalx = e.getX();
+		this.originaly = e.getY();
 		mousePressedHandler(mousePosition, isShift);
 		mainView.refresh();
 	}
@@ -77,19 +81,22 @@ public class MouseInputController extends MouseAdapter {
 		mainView.refresh();
 	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        Position mousePosition = new Position(e.getX(), e.getY());
-        mouseReleasedHandler(mousePosition);
-        mainView.refresh();
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		Position mousePosition = new Position(e.getX(), e.getY());
+		mouseReleasedHandler(mousePosition);
+		mainView.refresh();
+	}
 
-    /**
-     * determine what words to select
-     * @param position
-     * @param isShift
-     */
-    void mousePressedHandler(Position position, boolean isShift) {
+	/**
+	 * determine what words to select
+	 * 
+	 * @param position
+	 *            The position of the mouse when this event fired
+	 * @param isShift
+	 *            Whether shift is pressed
+	 */
+	void mousePressedHandler(Position position, boolean isShift) {
 		mouseDownPosition = position;
 
 		Collection<AbstractWordView> words;
@@ -122,12 +129,12 @@ public class MouseInputController extends MouseAdapter {
 				DisconnectController controller = new DisconnectController(
 						mainView, gameState);
 				if (controller.disconnect(selectedWordToDisconnect,
-						selectedWord)) {					
+						selectedWord)) {
 					selectedWord.setBackground(Color.LIGHT_GRAY);
-	                selectedWordCopy = (AbstractWordView) selectedWord.clone();                
-	                selectedWord = selectedWordToDisconnect;
-	                selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
-	                this.isDisconnect = true;
+					selectedWordCopy = (AbstractWordView) selectedWord.clone();
+					selectedWord = selectedWordToDisconnect;
+					selectedWord.setBackground(Color.LIGHT_GRAY.brighter());
+					this.isDisconnect = true;
 				}
 			}
 		}
@@ -148,8 +155,11 @@ public class MouseInputController extends MouseAdapter {
 
 	/**
 	 * Handles mouse dragged events and delegates to the appropriate controller
-	 * @param mousePosition The position of the mouse when this event fires
-	 * @param isShift Whether shift is pressed
+	 * 
+	 * @param mousePosition
+	 *            The position of the mouse when this event fires
+	 * @param isShift
+	 *            Whether shift is pressed
 	 */
 	void mouseDraggedHandler(Position mousePosition, boolean isShift) {
 
@@ -196,14 +206,17 @@ public class MouseInputController extends MouseAdapter {
 
 	/**
 	 * Handles mouse released events and delegates to the appropriate controller
-	 * @param mousePosition The position of the mouse when this event fired
+	 * 
+	 * @param mousePosition
+	 *            The position of the mouse when this event fired
 	 */
 	void mouseReleasedHandler(Position mousePosition) {
 		isShift = false;
 		isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
+			if (lastSelectedWord instanceof PoemView
+					|| lastSelectedWord instanceof RowView) {
 				mainView.getPublishButton().setEnabled(true);
 			} else {
 				mainView.getPublishButton().setEnabled(false);
@@ -226,9 +239,9 @@ public class MouseInputController extends MouseAdapter {
 				ConnectController controller = new ConnectController(mainView,
 						gameState);
 				Position targetPosition = connectTarget.getPosition();
-				//System.out.println("44444 "+connectTarget.getWord().getValue());
+				// System.out.println("44444 "+connectTarget.getWord().getValue());
 				controller.connect(selectedWord, connectTarget);// connectTarget
-				//System.out.println("55555 "+connectTarget.getWord().getValue());
+				// System.out.println("55555 "+connectTarget.getWord().getValue());
 				// Here is to create connect move
 				this.isConnect = true;
 				Position oldp = new Position(this.originalx
@@ -236,16 +249,16 @@ public class MouseInputController extends MouseAdapter {
 						this.originaly
 								+ selectedWordPositionRelativeToMouse.getY());
 				Position newp = mousePosition;
-				
+
 				UndoConnectAbstractWord undoConnect = new UndoConnectAbstractWord(
 						targetPosition, oldp, newp, selectedWord,
 						connectTarget, mainView, gameState);
 				mainView.getRedoMoves().clear();
 				mainView.recordUndoMove(undoConnect);
-			}			
+			}
 		}
 
-		if (isDisconnect && selectedWord !=null) {
+		if (isDisconnect && selectedWord != null) {
 			Position oldp = new Position(this.originalx
 					+ selectedWordPositionRelativeToMouse.getX(),
 					this.originaly + selectedWordPositionRelativeToMouse.getY());
@@ -291,13 +304,14 @@ public class MouseInputController extends MouseAdapter {
 				view.setBackground(Color.LIGHT_GRAY);
 			}
 		}
-	
+
 		this.isDisconnect = false;
 		this.isConnect = false;
 	}
 
 	/**
 	 * returns last selected word
+	 * 
 	 * @return AbstractWordView
 	 */
 	public AbstractWordView getLastSelectedWord() {

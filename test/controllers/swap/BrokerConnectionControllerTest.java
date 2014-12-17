@@ -11,8 +11,8 @@ public class BrokerConnectionControllerTest {
 
     @Test
     public void testGetConnection() throws Exception {
-        GameState gameState = new GameState(null, null);
-        MainView mainView = new MainView(gameState, null, null);
+        GameState gameState = new GameState(null);
+        MainView mainView = new MainView(gameState, null);
         try {
             BrokerConnection brokerConnection = BrokerConnectionController.getConnection(mainView, gameState);
             assertNotNull(BrokerConnectionController.connection);
@@ -30,8 +30,8 @@ public class BrokerConnectionControllerTest {
 
     @Test
     public void testResetConnection() throws Exception {
-        GameState gameState = new GameState(null, null);
-        MainView mainView = new MainView(gameState, null, null);
+        GameState gameState = new GameState(null);
+        MainView mainView = new MainView(gameState, null);
         try {
             BrokerConnection brokerConnection = BrokerConnectionController.getConnection(mainView, gameState);
             assertNotNull(BrokerConnectionController.connection);

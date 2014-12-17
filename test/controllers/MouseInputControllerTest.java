@@ -21,15 +21,13 @@ public class MouseInputControllerTest {
 	MouseInputController controller;
 	WordView wordViewOne;
 	WordView wordViewTwo;
-	UnprotectedMemento un = null;
-	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
         gameState.getProtectedArea().getAbstractWordCollection().clear();
         gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 		wordViewOne = new WordView(new Word("Elephant", WordType.ADVERB), new Position(10, 10));
 		wordViewTwo = new WordView(new Word("Buffalo", WordType.POSTFIX), new Position(50, 50));
 		mainView.addProtectedAbstractWordView(wordViewOne);

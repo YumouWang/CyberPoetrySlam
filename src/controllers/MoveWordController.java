@@ -1,7 +1,6 @@
 package controllers;
 
 import common.Constants;
-import models.AbstractWord;
 import models.GameState;
 import models.Position;
 import views.*;
@@ -35,18 +34,20 @@ public class MoveWordController {
 		this.gameState = gameState;
 	}
 
-	/**
-	 * 
-	 * @param selectedWord
-	 *            The word being moved
-	 * @param positionFrom
-	 *            The original position of word before moving
-	 * @param positionTo
-	 *            The final position of word after moving
-	 * @return boolean Returns whether the word is successfully moved
-	 */
-	public boolean moveWord(AbstractWordView selectedWord,
-			Position positionFrom, Position positionTo) {
+
+/**
+ * 
+ * @param selectedWord
+ *            The word being moved
+ * @param positionFrom
+ *            The original position of word before moving
+ * @param positionTo
+ *            The final position of word after moving
+ * @return boolean Returns whether the word is successfully moved
+ */
+	public boolean moveWord(AbstractWordView selectedWord, Position positionFrom, Position positionTo) {
+		boolean isProtectedOrUnprotect = false;
+
 		Position originPosition = selectedWord.getPosition();
 		Position positionDiff = new Position(positionTo.getX()
 				- positionFrom.getX(), positionTo.getY() - positionFrom.getY());
@@ -106,17 +107,10 @@ public class MoveWordController {
 			if (selectedWord instanceof WordView) {
 				unprotectWord(selectedWord);
 			}
-			if (selectedWord instanceof RowView) {
-				relaseRow((RowView) selectedWord);
-			}
-			if (selectedWord instanceof PoemView) {
-				relasePoem((PoemView) selectedWord);
-			}
-
 		}
 		// Otherwise, the word started and ended in the unprotected area,
 		// So we don't need to do anything special
-		return isOverlappingOtherWord;
+		return isProtectedOrUnprotect;
 	}
 
 	/**
@@ -142,8 +136,10 @@ public class MoveWordController {
 						&& adjacencyTypeTwo != AdjacencyType.NOT_ADJACENT) {
 					isAdjacent = true;
 					word.setBackground(Color.GREEN);
-					if (selectedWord instanceof PoemView
-							&& word instanceof PoemView) {
+
+					if(selectedWord instanceof PoemView && word instanceof PoemView &&
+							(adjacencyType == AdjacencyType.RIGHT || adjacencyType == AdjacencyType.LEFT)) {
+
 						isAdjacent = false;
 						word.setBackground(Color.LIGHT_GRAY);
 					}
@@ -167,7 +163,9 @@ public class MoveWordController {
 	 * @param wordView
 	 *            The wordView to protect
 	 */
-	void protectWord(AbstractWordView wordView) {
+
+	public void protectWord(AbstractWordView wordView) {
+		
 
 		// Add word to protected word list
 		gameState.protect(wordView.getWord());
@@ -184,7 +182,13 @@ public class MoveWordController {
 	 * @param wordView
 	 *            The wordView to unprotect
 	 */
-	void unprotectWord(AbstractWordView wordView) {
+	public void unprotectWord(AbstractWordView wordView) {
+		if(wordView instanceof RowView || wordView instanceof PoemView){
+			this.mainView.getRedoMoves().clear();
+			this.mainView.getUndoMoves().clear();
+			this.mainView.getRedoButton().setEnabled(false);
+			this.mainView.getUndoButton().setEnabled(false);
+		}
 		// Add word to unprotected word list
 		gameState.unprotect(wordView.getWord());
 		// Add word view to unprotected word view list and remove word view from
@@ -200,7 +204,7 @@ public class MoveWordController {
 	 * @param rowView
 	 *            The row to be released
 	 */
-	void relaseRow(RowView rowView) {
+	public void releaseRow(RowView rowView) {
 		List<WordView> words = rowView.getWordViews();
 		// remove row view from protected abstractWord view in MainView
 		mainView.removeProtectedAbstractWordView(rowView);
@@ -223,7 +227,8 @@ public class MoveWordController {
 	 * @param poemView
 	 *            The poem to be released
 	 */
-	void relasePoem(PoemView poemView) {
+	public void releasePoem(PoemView poemView) {
+		
 		List<RowView> rows = poemView.getRowViews();
 		// remove poem from protected abstractWord in GameState
 		gameState.getProtectedArea().removeAbstractWord(poemView.getWord());

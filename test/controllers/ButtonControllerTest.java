@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Event;
+import java.io.File;
 
 import models.GameState;
 import models.Poem;
@@ -36,19 +37,14 @@ public class ButtonControllerTest {
 	RowView rowViewTwo;
 	Poem poemOne;
 	PoemView poemViewOne;
-	UnprotectedMemento unprotectedMemeneto;
-	ProtectedMemento protectedMemento;
 	ButtonController buttonController;
 
 	@Before
 	public void initialize() {
-		unprotectedMemeneto = null;
-		protectedMemento = null;
-		gameState = new GameState(unprotectedMemeneto, protectedMemento);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, unprotectedMemeneto,
-				protectedMemento);
+		mainView = new MainView(gameState, null);
 		// create two words
 		wordOne = new Word("wordOne", WordType.NOUN);
 		wordViewOne = new WordView(wordOne, new Position(50, 50));
@@ -121,7 +117,7 @@ public class ButtonControllerTest {
 		assertFalse(mainView.getUnprotectedAreaWords().contains(poemViewOne));
 		
 		//test publish a single row
-		buttonController.publishPoem(rowViewOne);
+		buttonController.publishPoem(rowViewOne, "testWall.txt");
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(rowOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(rowViewOne));
@@ -130,7 +126,7 @@ public class ButtonControllerTest {
 		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewOne));
 		
 		//test publish a poem
-		buttonController.publishPoem(poemViewOne);
+		buttonController.publishPoem(poemViewOne , "testWall.txt");
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(poemOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(poemViewOne));
@@ -141,5 +137,8 @@ public class ButtonControllerTest {
 				.contains(wordTwo));
 		assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewTwo));
 		assertTrue(mainView.getPublishButton().isEnabled() == false);
+
+		File wall = new File("testWall.txt");
+		wall.delete();
 	}
 }

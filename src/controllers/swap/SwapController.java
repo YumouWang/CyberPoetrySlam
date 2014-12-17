@@ -101,6 +101,8 @@ public class SwapController {
             mainView.addLabelOf(wordView);
             mainView.addUnprotectedAbstractWordView(wordView);
         }
+        mainView.refresh();
+        mainView.getExploreArea().updateTable();
     }
 
     /**
@@ -137,6 +139,8 @@ public class SwapController {
             }
             swap.setIsCancelled(true);
             gameState.getPendingSwaps().remove(swap);
+            mainView.refresh();
+            mainView.getExploreArea().updateTable();
         }
     }
 

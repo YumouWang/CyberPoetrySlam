@@ -3,8 +3,10 @@ package models;
 import views.AbstractWordView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 
 /**
@@ -20,21 +22,23 @@ public class UnprotectedMemento implements Serializable {
 	 */
 	private static final long serialVersionUID = -8852796032126561897L;
 
-	private Collection<AbstractWordView> unprotectedViews = new HashSet<AbstractWordView>();
+	private List<AbstractWordView> unprotectedViews = new ArrayList<AbstractWordView>();
 
 	/**
 	 * Constructor for UnprotectedMemento
 	 * @param view
 	 */
 	public UnprotectedMemento(Collection<AbstractWordView> view) {
-		unprotectedViews.addAll(view);
+		for(AbstractWordView abstractWordView : view){
+			unprotectedViews.add((AbstractWordView)abstractWordView.clone());
+		}
 	}
 
 	/**
 	 * get UnprotectedViews this collection
 	 * @return unprotectedViews
 	 */
-	public Collection<AbstractWordView> getUnprotectedView() {
+	public List<AbstractWordView> getUnprotectedView() {
 		return unprotectedViews;
 	}
 

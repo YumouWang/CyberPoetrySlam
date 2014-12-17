@@ -61,22 +61,16 @@ public class ButtonController implements ActionListener {
 			mainView.getRedoMoves().clear();
 			mainView.getUndoButton().setEnabled(false);
 			mainView.getRedoButton().setEnabled(false);
-			System.out.println("Publish...");
 			publishPoem = mainView.getMouseInputController()
 					.getLastSelectedWord();
 			if (publishPoem instanceof PoemView
 					&& mainView.getProtectedAreaWords().contains(publishPoem)) {
-				System.out.println("select poem --> "
-						+ publishPoem.getWord().getValue());
-				publishPoem((PoemView) publishPoem);
-			} else if (publishPoem instanceof RowView
-					&& mainView.getProtectedAreaWords().contains(publishPoem)) {
-				System.out.println("select poem --> "
-						+ publishPoem.getWord().getValue());
-				publishPoem((RowView) publishPoem);
-			} else {
 
-			}
+			 publishPoem((PoemView) publishPoem, Constants.WALL_FILENAME);
+			} else if(publishPoem instanceof RowView && mainView.getProtectedAreaWords().contains(publishPoem)) {
+				publishPoem((RowView) publishPoem, Constants.WALL_FILENAME);
+
+			} 
 
 			mainView.getPublishButton().setEnabled(false);
 			publishPoem = null;
@@ -84,14 +78,12 @@ public class ButtonController implements ActionListener {
 		// click on Redo button
 		if (clickedButton.equals(mainView.getRedoButton())) {
 			// Handle redo
-			new RedoController(this.mainView).process();
-			System.out.println("Redo...");
+			new RedoController(this.mainView,this.gameState).process();
 		}
 		// click on Undo button
 		if (clickedButton.equals(mainView.getUndoButton())) {
 			// Handle Undo
-			new UndoController(this.mainView).process();
-			System.out.println("Undo...");
+			new UndoController(this.mainView,this.gameState).process();
 		}
 	}
 
@@ -101,10 +93,9 @@ public class ButtonController implements ActionListener {
 	 * @param poemView
 	 *            The poem to publish
 	 */
-	public void publishPoem(PoemView poemView) {
+	public void publishPoem(PoemView poemView, String filename) {
 		try {
-			new File("file").mkdir();
-			File file = new File("file/wall.txt");
+			File file = new File(filename);
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
@@ -137,10 +128,9 @@ public class ButtonController implements ActionListener {
 	 * @param rowView
 	 *            The poem to publish
 	 */
-	public void publishPoem(RowView rowView) {
+	public void publishPoem(RowView rowView, String filename) {
 		try {
-			new File("file").mkdir();
-			File file = new File("file/wall.txt");
+			File file = new File(filename);
 			if (!file.exists()) {
 				try {
 					file.createNewFile();

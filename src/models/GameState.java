@@ -1,6 +1,7 @@
 package models;
 
 import common.Constants;
+import controllers.UndoWithMemento;
 import controllers.WordInitialize;
 import views.AbstractWordView;
 import views.RowView;
@@ -42,15 +43,15 @@ public class GameState implements Serializable {
 	 *            ProtectedMemento to store state of protected area
 	 */
 
-	public GameState(UnprotectedMemento un, ProtectedMemento p) {
+	public GameState(UndoWithMemento memento) {
 		pendingSwaps = new HashSet<Swap>();
-		if (un == null && p == null) {
+		if (memento == null) {
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
+
 
 			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			WordInitialize wordInitialize = new WordInitialize();
-			Collection<Word> wordList = wordInitialize
-					.getInitialWordFromFile(Constants.WORDS_AND_TYPES_FILENAME);
+			Collection<Word> wordList = wordInitialize.getInitialWordFromFile(Constants.WORDS_AND_TYPES_FILENAME);
 			for (Word word : wordList) {
 				unprotectedWords.add(word);
 			}
@@ -58,33 +59,9 @@ public class GameState implements Serializable {
 			protectedArea = new Area(protectedWords);
 			unprotectedArea = new Area(unprotectedWords);
 		} else {
-			unprotectedWordViews = un.getUnprotectedView();
-			protectedWordViews = p.getProtectedView();
-			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
+			// Otherwise loading the memento state will be handled in the mainView
 			Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-			for (AbstractWordView abs : unprotectedWordViews) {
-				WordView wordView = (WordView) abs;
-				Word w = wordView.getWord();
-				unprotectedWords.add(w);
-			}
-			for (AbstractWordView abs : protectedWordViews) {
-				if (abs instanceof WordView) {
-					WordView wordView = (WordView) abs;
-					Word w = wordView.getWord();
-					protectedWords.add(w);
-				} else if (abs instanceof RowView) {
-					Row r = (Row) abs.getWord();
-					protectedWords.add(r);
-					// List<Word> word = r.getWords();
-					// for(Word w: word){
-					// protectedWords.add(w);
-					// }
-				} else {
-					// This is for poems
-					Poem poem = (Poem) abs.getWord();
-					protectedWords.add(poem);
-				}
-			}
+			Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
 			protectedArea = new Area(protectedWords);
 			unprotectedArea = new Area(unprotectedWords);
 		}
@@ -140,12 +117,22 @@ public class GameState implements Serializable {
 		return unprotectedArea;
 	}
 
-	/**
-	 * Returns a collection of pending swaps
-	 * 
-	 * @return The pending swaps
-	 */
-	public Collection<Swap> getPendingSwaps() {
-		return pendingSwaps;
+
+/**
+ * Returns a collection of pending swaps
+ * 
+ * @return The pending swaps
+ */
+	public Collection<Swap> getPendingSwaps() { return pendingSwaps; }
+	
+	public void resetUnprotectedArea(Collection<AbstractWord> collection) {
+		this.unprotectedArea = new Area(collection);
+		return;
+	}
+	
+	public void resetProtectedArea(Collection<AbstractWord> collection) {
+		this.protectedArea = new Area(collection);
+		return;
+
 	}
 }

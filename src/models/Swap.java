@@ -36,28 +36,34 @@ public class Swap {
      * swap string is poorly formed or the swap cannot be fulfilled
      */
     public static Swap getSwap(GameState gameState, String swapString, boolean isRequestor, String requestorID) throws InvalidSwapException {
-        List<String> inputOfferTypes = new ArrayList<String>();
-        List<String> inputOfferWords = new ArrayList<String>();
-        List<String> inputRequestTypes = new ArrayList<String>();
-        List<String> inputRequestWords = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(swapString, ":");
-        // Ignore swap type, requestor, and acceptor
-        st.nextToken();st.nextToken();st.nextToken();
-        int num = Integer.decode(st.nextToken());
-        for (int i = 0; i < num; i++) {
-            inputOfferTypes.add(st.nextToken());
-        }
-        for (int i = 0; i < num; i++) {
-            inputOfferWords.add(st.nextToken());
-        }
-        for (int i = 0; i < num; i++) {
-            inputRequestTypes.add(st.nextToken());
-        }
-        for (int i = 0; i < num; i++) {
-            inputRequestWords.add(st.nextToken());
-        }
+        try {
+            List<String> inputOfferTypes = new ArrayList<String>();
+            List<String> inputOfferWords = new ArrayList<String>();
+            List<String> inputRequestTypes = new ArrayList<String>();
+            List<String> inputRequestWords = new ArrayList<String>();
+            StringTokenizer st = new StringTokenizer(swapString, ":");
+            // Ignore swap type, requestor, and acceptor
+            st.nextToken();
+            st.nextToken();
+            st.nextToken();
+            int num = Integer.decode(st.nextToken());
+            for (int i = 0; i < num; i++) {
+                inputOfferTypes.add(st.nextToken());
+            }
+            for (int i = 0; i < num; i++) {
+                inputOfferWords.add(st.nextToken());
+            }
+            for (int i = 0; i < num; i++) {
+                inputRequestTypes.add(st.nextToken());
+            }
+            for (int i = 0; i < num; i++) {
+                inputRequestWords.add(st.nextToken());
+            }
 
-        return new Swap(gameState, inputOfferTypes, inputOfferWords, inputRequestTypes, inputRequestWords, isRequestor, requestorID);
+            return new Swap(gameState, inputOfferTypes, inputOfferWords, inputRequestTypes, inputRequestWords, isRequestor, requestorID);
+        } catch (Exception e) {
+            throw new InvalidSwapException("Poorly formed swap");
+        }
     }
 
     /**

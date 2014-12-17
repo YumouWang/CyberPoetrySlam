@@ -1,42 +1,37 @@
 package models;
 
-import java.util.Collection;
-import java.util.HashSet;
-
+import controllers.UndoWithMemento;
 import org.junit.Before;
 import org.junit.Test;
 
-import views.AbstractWordView;
-import views.WordView;
+import views.MainView;
+
 import static org.junit.Assert.*;
 
 public class GameStateTest {
 
 	GameState gameState;
-	UnprotectedMemento un = null;
-	ProtectedMemento p = null;
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
+		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
+		gameState.getProtectedArea().getAbstractWordCollection().clear();
 	}
 
-	@Before
+	@Test
 	public void restore() {
-		Collection<AbstractWordView> absProtect = new HashSet<AbstractWordView>();
-		absProtect.add(new WordView(new Word("Dog", WordType.NOUN),
-				new Position(0, 0)));
-		p = new ProtectedMemento(absProtect);
-		Collection<AbstractWordView> absUnprotect = new HashSet<AbstractWordView>();
-		absUnprotect.add(new WordView(new Word("Dog", WordType.NOUN),
-				new Position(0, 0)));
-		un = new UnprotectedMemento(absUnprotect);
-		gameState = new GameState(un, p);
+		gameState.getProtectedArea().addAbstractWord(new Word("Dog", WordType.NOUN));
+		gameState.getUnprotectedArea().addAbstractWord(new Word("Dog", WordType.NOUN));
+
+		UndoWithMemento memento = new UndoWithMemento(new MainView(gameState, null));
+		gameState = new GameState(memento);
+		new MainView(gameState, memento);
+		assertNotNull(gameState);
 		assertEquals(1, gameState.getProtectedArea()
 				.getAbstractWordCollection().size());
 		assertEquals(1, gameState.getUnprotectedArea()
 				.getAbstractWordCollection().size());
-		assertNotNull(gameState);
 	}
 
 	@Test

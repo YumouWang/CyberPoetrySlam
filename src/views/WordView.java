@@ -3,8 +3,12 @@ package views;
 import controllers.AbstractWordViewVisitor;
 import models.Position;
 import models.Word;
+import models.WordType;
 
 import javax.swing.*;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -25,13 +29,12 @@ public class WordView extends AbstractWordView implements Serializable,Cloneable
 	/**
 	 * Constructor
 	 *
-	 * @param word
-	 *            The word that this view represents
-	 * @param position
-	 *            The position of this word
+	 * @param word The word that this view represents
+	 * @param position The position of this word
 	 */
 	public WordView(Word word, Position position) {
 		super(word, position);
+		furthestRight = word.getValue().length() * 10;
 		setSize(word.getValue().length() * 10, 20);
 		label = new JLabel(word.getValue(), SwingConstants.CENTER);
 		updateView();
@@ -43,8 +46,7 @@ public class WordView extends AbstractWordView implements Serializable,Cloneable
 	/**
 	 * Sets the background color of this word view
 	 * 
-	 * @param color
-	 *            The color to set the background to
+	 * @param color The color to set the background to
 	 */
 	public void setBackground(Color color) {
 		label.setBackground(color);
@@ -60,8 +62,7 @@ public class WordView extends AbstractWordView implements Serializable,Cloneable
 	/**
 	 * Moves the word to the specified position
 	 * 
-	 * @param toPosition
-	 *            The position to move to
+	 * @param toPosition The position to move to
 	 * @return Returns whether the move was successful
 	 */
 	public boolean moveTo(Position toPosition) {
@@ -108,8 +109,7 @@ public class WordView extends AbstractWordView implements Serializable,Cloneable
 	
 	@Override
 	public Object clone() {
-		WordView wordView = null;
-		wordView = (WordView) super.clone();
+		WordView wordView = new WordView((Word) word.clone(), position);
 		return wordView;
 	}
 }

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.List;
 
 import models.GameState;
 import models.Position;
@@ -22,46 +21,44 @@ import views.*;
  */
 public class MouseInputController extends MouseAdapter {
 
-	AbstractWordView selectedWord;
-	AbstractWordView selectedWordToDisconnect;
-	AbstractWordView selectedWordCopy;
+	UndoWithMemento undo;
+	
+    AbstractWordView selectedWord;
+    AbstractWordView selectedWordToDisconnect;
+    AbstractWordView selectedWordCopy;	
+
 	AbstractWordView lastSelectedWord;
 	AbstractWordView selectedRowToShift;
 	static boolean isShift = false;
 	boolean isShifting = false;
 
-	Position mouseDownPosition;
-	Position selectedWordPositionRelativeToMouse;
-	Position disconnectTargetPosition;
-
-	/** Original x,y where AbstractWordView was before moving and connecting. */
-	int originalx;
-	int originaly;
-	long Id;
-
-	MainView mainView;
-	GameState gameState;
-
-	/**
-	 * isDisconnect and isConnect is used to represent whether
-	 * disconnect/connect happens
-	 */
-	boolean isDisconnect;
-	boolean isConnect;
-	boolean isReleaseOrProtect;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param mainView
-	 *            The view to update when handling mouse events
-	 * @param gameState
-	 *            The gameState to enact changes on
-	 */
-	public MouseInputController(MainView mainView, GameState gameState) {
-		this.mainView = mainView;
-		this.gameState = gameState;
-	}
+    
+    Position mouseDownPosition;
+    Position selectedWordPositionRelativeToMouse;
+    Position disconnectTargetPosition;
+    
+    
+    /** Original x,y where AbstractWordView was before moving and connecting. */
+    int originalx;
+    int originaly;
+    
+    MainView mainView;
+    GameState gameState;
+    
+    /** isDisconnect and isConnect is used to represent whether disconnect/connect happens */
+    boolean isDisconnect;
+    boolean isConnect;
+    boolean isMove;
+	
+    /**
+     * Constructor
+     * @param mainView The view to update when handling mouse events
+     * @param gameState The gameState to enact changes on
+     */
+    public MouseInputController(MainView mainView, GameState gameState) {
+        this.mainView = mainView;
+        this.gameState = gameState;      
+    }
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -88,15 +85,15 @@ public class MouseInputController extends MouseAdapter {
 		mainView.refresh();
 	}
 
-	/**
-	 * determine what words to select
-	 * 
-	 * @param position
-	 *            The position of the mouse when this event fired
-	 * @param isShift
-	 *            Whether shift is pressed
-	 */
-	void mousePressedHandler(Position position, boolean isShift) {
+
+    /**
+     * determine what words to select
+     * @param position
+     * @param isShift
+     */
+    void mousePressedHandler(Position position, boolean isShift) {
+    		undo = new UndoWithMemento(this.mainView);
+
 		mouseDownPosition = position;
 
 		Collection<AbstractWordView> words;
@@ -126,8 +123,7 @@ public class MouseInputController extends MouseAdapter {
 			if (!isShift) {
 				// Disconnect the word
 				disconnectTargetPosition = selectedWord.getPosition();
-				DisconnectController controller = new DisconnectController(
-						mainView, gameState);
+				DisconnectController controller = new DisconnectController(mainView, gameState);
 				if (controller.disconnect(selectedWordToDisconnect,
 						selectedWord)) {
 					selectedWord.setBackground(Color.LIGHT_GRAY);
@@ -168,12 +164,9 @@ public class MouseInputController extends MouseAdapter {
 					mainView, gameState);
 
 			if (isShift && isShifting) {
-				ShiftRowController shiftController = new ShiftRowController(
-						mainView, gameState);
+				ShiftRowController shiftController = new ShiftRowController(mainView, gameState);
 				shiftController.shiftRow((PoemView) selectedWord,
 						selectedRowToShift, mousePosition, mouseDownPosition);
-				// ((PoemView) selectedWord).shiftRow(selectedRowToShift,
-				// mousePosition.getX() - mouseDownPosition.getX());
 			}
 
 			else {
@@ -182,6 +175,7 @@ public class MouseInputController extends MouseAdapter {
 						+ selectedWordPositionRelativeToMouse.getX(),
 						mousePosition.getY()
 								+ selectedWordPositionRelativeToMouse.getY()));
+				this.isMove = true;
 			}
 		}
 		mouseDownPosition = mousePosition;
@@ -198,8 +192,7 @@ public class MouseInputController extends MouseAdapter {
 					.getSelectedItem(mainView.getProtectedAreaWords());
 
 			if (selectedWordToDisconnect != null) {
-				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY
-						.brighter());
+				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
 			}
 		}
 	}
@@ -211,24 +204,18 @@ public class MouseInputController extends MouseAdapter {
 	 *            The position of the mouse when this event fired
 	 */
 	void mouseReleasedHandler(Position mousePosition) {
-		isShift = false;
 		isShifting = false;
 		if (selectedWord != null && mainView.isInProtectedArea(mousePosition)) {
 			lastSelectedWord = selectedWord;
-			if (lastSelectedWord instanceof PoemView
-					|| lastSelectedWord instanceof RowView) {
-				mainView.getPublishButton().setEnabled(true);
-			} else {
-				mainView.getPublishButton().setEnabled(false);
-			}
+
+
 
 			Collection<AbstractWordView> words = mainView
 					.getProtectedAreaWords();
 			AbstractWordView connectTarget = null;
 			for (AbstractWordView word : words) {
 				if (!word.equals(selectedWord)) {
-					AdjacencyType adjacencyType = selectedWord
-							.isAdjacentTo(word);
+					AdjacencyType adjacencyType = selectedWord.isAdjacentTo(word);
 					if (adjacencyType != AdjacencyType.NOT_ADJACENT) {
 						connectTarget = word;
 						break;
@@ -236,65 +223,53 @@ public class MouseInputController extends MouseAdapter {
 				}
 			}
 			if (connectTarget != null) {
-				ConnectController controller = new ConnectController(mainView,
-						gameState);
-				Position targetPosition = connectTarget.getPosition();
-				// System.out.println("44444 "+connectTarget.getWord().getValue());
-				controller.connect(selectedWord, connectTarget);// connectTarget
-				// System.out.println("55555 "+connectTarget.getWord().getValue());
-				// Here is to create connect move
-				this.isConnect = true;
-				Position oldp = new Position(this.originalx
-						+ selectedWordPositionRelativeToMouse.getX(),
-						this.originaly
-								+ selectedWordPositionRelativeToMouse.getY());
-				Position newp = mousePosition;
 
-				UndoConnectAbstractWord undoConnect = new UndoConnectAbstractWord(
-						targetPosition, oldp, newp, selectedWord,
-						connectTarget, mainView, gameState);
-				mainView.getRedoMoves().clear();
-				mainView.recordUndoMove(undoConnect);
+				ConnectController controller = new ConnectController(mainView, gameState);
+				this.isConnect = true;
+				controller.connect(selectedWord, connectTarget);// connectTarget
+
+				for(AbstractWordView wordView :mainView.getProtectedAreaWords()) {
+					if(wordView.contains(selectedWord)) {
+						lastSelectedWord = wordView;
+					}
+				}
+			}
+
+
+			if (lastSelectedWord instanceof PoemView || lastSelectedWord instanceof RowView) {
+				mainView.getPublishButton().setEnabled(true);
+			} else {
+				mainView.getPublishButton().setEnabled(false);
 			}
 		}
-
-		if (isDisconnect && selectedWord != null) {
-			Position oldp = new Position(this.originalx
-					+ selectedWordPositionRelativeToMouse.getX(),
-					this.originaly + selectedWordPositionRelativeToMouse.getY());
-			Position newp = new Position(mousePosition.getX()
-					+ selectedWordPositionRelativeToMouse.getX(),
-					mousePosition.getY()
-							+ selectedWordPositionRelativeToMouse.getY());
-			selectedWordCopy = mainView.getProtectedAbstractWordById(Id);
-			UndoDisconnectAbstractWord undoDisconnect = new UndoDisconnectAbstractWord(
-					disconnectTargetPosition, oldp, newp, selectedWord,
-					selectedWordCopy, mainView, gameState);
+		
+		if(isMove || isDisconnect || isConnect || isShift){
+			mainView.recordUndoMove(undo);
 			mainView.getRedoMoves().clear();
-			mainView.recordUndoMove(undoDisconnect);
-		}
-
-		if (!isDisconnect && !isConnect && selectedWord != null) {
-			// take a look at if connect and disconnect happens
-			UndoMoveAbstractWord move = new UndoMoveAbstractWord(selectedWord,
-					originalx + selectedWordPositionRelativeToMouse.getX(),
-					originaly + selectedWordPositionRelativeToMouse.getY(),
-					mousePosition.getX()
-							+ selectedWordPositionRelativeToMouse.getX(),
-					mousePosition.getY()
-							+ selectedWordPositionRelativeToMouse.getY(),
-					mainView, gameState);
-			mainView.getRedoMoves().clear();
-			mainView.recordUndoMove(move);
+			mainView.getRedoButton().setEnabled(false);
 			mainView.refresh();
 		}
-
+		
+		if((selectedWord instanceof RowView || selectedWord instanceof PoemView) &&
+				!mainView.isInProtectedArea(mousePosition)){
+			this.mainView.getRedoMoves().clear();
+			this.mainView.getUndoMoves().clear();
+			this.mainView.getRedoButton().setEnabled(false);
+			this.mainView.getUndoButton().setEnabled(false);
+			MoveWordController moveController = new MoveWordController(
+					mainView, gameState);
+			if(selectedWord instanceof RowView){
+				moveController.releaseRow((RowView) selectedWord);
+			} else if(selectedWord instanceof PoemView){
+				moveController.releasePoem((PoemView) selectedWord);
+			}
+		}
+		
 		if (selectedWord == null) {
 			selectedWordToDisconnect = mainView.getSelectionBox()
 					.getSelectedItem(mainView.getProtectedAreaWords());
 			if (selectedWordToDisconnect != null) {
-				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY
-						.brighter());
+				selectedWordToDisconnect.setBackground(Color.LIGHT_GRAY.brighter());
 			}
 			mainView.getSelectionBox().clearBox();
 		} else {
@@ -305,8 +280,10 @@ public class MouseInputController extends MouseAdapter {
 			}
 		}
 
+		this.isShift = false;
 		this.isDisconnect = false;
 		this.isConnect = false;
+		this.isMove = false;
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class UnprotectedMementoTest {
 		Collection<AbstractWordView> abs = new HashSet<AbstractWordView>();
 		abs.add(new WordView(new Word("Dog", WordType.NOUN), new Position(0, 0)));
 		UnprotectedMemento un = new UnprotectedMemento(abs);
-		assertEquals(abs, un.getUnprotectedView());
+		assertEquals(abs.size(), un.getUnprotectedView().size());
 	}
 
 }

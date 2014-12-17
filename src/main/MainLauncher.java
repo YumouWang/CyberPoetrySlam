@@ -1,5 +1,7 @@
 package main;
 
+import controllers.LoadStateController;
+import controllers.UndoWithMemento;
 import controllers.swap.BrokerConnectionController;
 import controllers.swap.ConnectionException;
 import controllers.swap.SwapController;
@@ -19,122 +21,21 @@ import java.io.*;
  * @author Nathan
  * @version 10/3/2014
  */
-public class MainLauncher implements Serializable {
-
-	/**
-	 * protectedWordStorage/unprotectedWordStorage is place for Memento
-	 */
-	private static final long serialVersionUID = 623363781824512600L;
-	static final String protectedWordStorage = "protectedWords.storage";
-	static final String unprotectedWordStorage = "unprotectedWords.storage";
-
-	/**
-	 * Stores the state of game when we trying to close the program
-	 * @param mainView
-	 * @param location1 UnprotectedWordStorage
-	 * @param location2 ProtectedWordStorage
-	 */
-	static void storeState(MainView mainView, String location1, String location2) {
-		File unprotectedWord = new File(location1);
-		File protectedWord = new File(location2);
-		if (!unprotectedWord.exists()) {
-			try {
-				unprotectedWord.createNewFile();
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-		}
-		if (!protectedWord.exists()) {
-			try {
-				unprotectedWord.createNewFile();
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-		}
-		ObjectOutputStream oos1 = null;
-		ObjectOutputStream oos2 = null;
-		try {
-			oos1 = new ObjectOutputStream(new FileOutputStream(location1));
-			oos2 = new ObjectOutputStream(new FileOutputStream(location2));
-			oos1.writeObject(mainView.getUnprotectedState());
-			oos2.writeObject(mainView.getProtectedState());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		if (oos1 != null || oos2 != null) {
-			try {
-				oos1.close();
-				oos2.close();
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
-		}
-	}
-
-	/**
-	 * Load the unprotected state
-	 * @param location
-	 * @return UnprotectedMemento
-	 */
-	static UnprotectedMemento loadUnprotectedMemento(String location) {
-		ObjectInputStream ois = null;
-		UnprotectedMemento un = null;
-		try {
-			ois = new ObjectInputStream(new FileInputStream(location));
-			un = (UnprotectedMemento) ois.readObject();
-			ois.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		if (ois != null) {
-			try {
-				ois.close();
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
-		}
-
-		return un;
-	}
-
-	/**
-	 * Load protected state
-	 * @param location
-	 * @return ProtectedMemento
-	 */
-	static ProtectedMemento loadProtectedMemento(String location) {
-		ObjectInputStream ois = null;
-		ProtectedMemento p = null;
-		try {
-			ois = new ObjectInputStream(new FileInputStream(location));
-			p = (ProtectedMemento) ois.readObject();
-			ois.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		// close down safely
-		if (ois != null) {
-			try {
-				ois.close();
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
-		}
-
-		return p;
-	}
+public class MainLauncher {
 
 	/**
 	 * 
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		UnprotectedMemento un = loadUnprotectedMemento(unprotectedWordStorage);
-		ProtectedMemento p = loadProtectedMemento(protectedWordStorage);
+		LoadStateController loadStateController = new LoadStateController();
+
+		UndoWithMemento memento = loadStateController.loadMemento();
+
 		// Initialize the GameState object
-		final GameState gameState = new GameState(un, p);
+		final GameState gameState = new GameState(memento);
 		// Initialize the MainView pointing at the GameState
-		final MainView mainView = new MainView(gameState, un, p);
+		final MainView mainView = new MainView(gameState, memento);
 		// Add a controller to handle user input
 		// mainView.addMouseInputController(new MouseInputController(mainView,
 		// gameState));
@@ -142,8 +43,8 @@ public class MainLauncher implements Serializable {
 			public void windowClosing(WindowEvent e) {
 				SwapController swapController = new SwapController(mainView, gameState);
 				swapController.cancelPendingSwaps();
-				storeState(mainView, unprotectedWordStorage,
-						protectedWordStorage);
+				LoadStateController loadStateController = new LoadStateController();
+				loadStateController.storeState(mainView, gameState);
 				System.exit(0);
 			}
 		});

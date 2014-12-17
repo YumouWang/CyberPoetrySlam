@@ -50,6 +50,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         protectedArea.removeAbstractWord(wordTwo);
         protectedArea.addAbstractWord(poemOne);
 
+        int positionDiff = wordViewTwo.getPosition().getX() - wordViewOne.getPosition().getX();
+
         // Create an appropriate view object
         PoemView resultPoemView = new PoemView(poemOne, wordViewOne.getPosition(), mainView);
 
@@ -59,6 +61,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.addProtectedAbstractWordView(resultPoemView);
         // Select the resulting poem
         resultPoemView.setBackground(Color.LIGHT_GRAY);
+
+        resultPoemView.shiftRow(resultPoemView.getRowViews().get(resultPoemView.getRowViews().size() - 1),
+                positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         resultPoemView.moveTo(wordViewOne.getPosition());
@@ -85,6 +90,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         protectedArea.removeAbstractWord(rowTwo);
         protectedArea.addAbstractWord(poemOne);
 
+        int positionDiff = rowViewTwo.getPosition().getX() - wordViewOne.getPosition().getX();
+
         // Create an appropriate view object
         PoemView resultPoemView = new PoemView(poemOne, wordViewOne.getPosition(), mainView);
 
@@ -94,6 +101,9 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.addProtectedAbstractWordView(resultPoemView);
         // Select the resulting poem
         resultPoemView.setBackground(Color.LIGHT_GRAY);
+
+        resultPoemView.shiftRow(resultPoemView.getRowViews().get(resultPoemView.getRowViews().size() - 1),
+                positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         resultPoemView.moveTo(wordViewOne.getPosition());
@@ -117,6 +127,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the area to reflect the updated words
         protectedArea.removeAbstractWord(wordOne);
 
+        int positionDiff = wordViewOne.getPosition().getX() - poemViewTwo.getPosition().getX();
+
         // Create a row view object so it can be used as a component in the poem view
         RowView rowViewOne = new RowView(rowOne, wordViewOne.getPosition(), mainView);
         // Update the poem view object to reflect the entities
@@ -126,9 +138,11 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.removeProtectedAbstractWordView(wordViewOne);
         // Select the resulting poem
         poemViewTwo.setBackground(Color.LIGHT_GRAY);
+
+        poemViewTwo.shiftRow(rowViewOne, positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewTwo.moveTo(wordViewOne.getPosition());
+        poemViewTwo.moveTo(new Position(wordViewOne.getPosition().getX() - positionDiff, wordViewOne.getPosition().getY()));
         return true;
     }
 
@@ -152,6 +166,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         protectedArea.removeAbstractWord(wordTwo);
         protectedArea.addAbstractWord(poemOne);
 
+        int positionDiff = wordViewTwo.getPosition().getX() - rowViewOne.getPosition().getX();
+
         // Create an appropriate view object
         PoemView resultPoemView = new PoemView(poemOne, rowViewOne.getPosition(), mainView);
 
@@ -161,6 +177,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.addProtectedAbstractWordView(resultPoemView);
         // Select the resulting poem
         resultPoemView.setBackground(Color.LIGHT_GRAY);
+        resultPoemView.shiftRow(resultPoemView.getRowViews().get(resultPoemView.getRowViews().size() - 1),
+                positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         resultPoemView.moveTo(rowViewOne.getPosition());
@@ -185,6 +203,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         protectedArea.removeAbstractWord(rowTwo);
         protectedArea.addAbstractWord(poemOne);
 
+        int positionDiff = rowViewTwo.getPosition().getX() - rowViewOne.getPosition().getX();
+
         // Create an appropriate view object
         PoemView resultPoemView = new PoemView(poemOne, rowViewOne.getPosition(), mainView);
 
@@ -194,6 +214,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.addProtectedAbstractWordView(resultPoemView);
         // Select the resulting poem
         resultPoemView.setBackground(Color.LIGHT_GRAY);
+        resultPoemView.shiftRow(resultPoemView.getRowViews().get(resultPoemView.getRowViews().size() - 1),
+                positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         resultPoemView.moveTo(rowViewOne.getPosition());
@@ -213,6 +235,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the area to reflect the updated words
         protectedArea.removeAbstractWord(rowOne);
 
+        int positionDiff = rowViewOne.getPosition().getX() - poemViewTwo.getPosition().getX();
+
         // Update the view object to reflect the entities
         poemViewTwo.addRowToTop(rowViewOne);
 
@@ -220,9 +244,11 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.removeProtectedAbstractWordView(rowViewOne);
         // Select the resulting poem
         poemViewTwo.setBackground(Color.LIGHT_GRAY);
+
+        poemViewTwo.shiftRow(rowViewOne, positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
-        poemViewTwo.moveTo(rowViewOne.getPosition());
+        poemViewTwo.moveTo(new Position(rowViewOne.getPosition().getX() - positionDiff, rowViewOne.getPosition().getY()));
         return true;
     }
 
@@ -243,6 +269,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the area to reflect the updated words
         protectedArea.removeAbstractWord(wordTwo);
 
+        int positionDiff = wordViewTwo.getPosition().getX() - poemViewOne.getPosition().getX();
+
         // Create a row view object so it can be used as a component in the poem view
         RowView rowViewTwo = new RowView(rowTwo, wordViewTwo.getPosition(), mainView);
         // Update the view object to reflect the entities
@@ -252,6 +280,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.removeProtectedAbstractWordView(wordViewTwo);
         // Select the resulting poem
         poemViewOne.setBackground(Color.LIGHT_GRAY);
+
+        poemViewOne.shiftRow(rowViewTwo, positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         poemViewOne.moveTo(poemViewOne.getPosition());
@@ -271,6 +301,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the area to reflect the updated words
         protectedArea.removeAbstractWord(rowTwo);
 
+        int positionDiff = rowViewTwo.getPosition().getX() - poemViewOne.getPosition().getX();
         // Update the view object to reflect the entities
         poemViewOne.addRow(rowViewTwo);
 
@@ -278,6 +309,8 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.removeProtectedAbstractWordView(rowViewTwo);
         // Select the resulting poem
         poemViewOne.setBackground(Color.LIGHT_GRAY);
+
+        poemViewOne.shiftRow(rowViewTwo, positionDiff);
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         poemViewOne.moveTo(poemViewOne.getPosition());
@@ -297,6 +330,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         // Update the area to reflect the updated words
         protectedArea.removeAbstractWord(poemTwo);
 
+        int positionDiff = poemViewTwo.getPosition().getX() - poemViewOne.getPosition().getX();
         // Update the view object to reflect the entities
         poemViewOne.addPoem(poemViewTwo);
 
@@ -304,6 +338,10 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
         mainView.removeProtectedAbstractWordView(poemViewTwo);
         // Select the resulting poem
         poemViewOne.setBackground(Color.LIGHT_GRAY);
+
+        for(RowView rowView : poemViewTwo.getRowViews()) {
+            poemViewOne.shiftRow(rowView, positionDiff);
+        }
         // Move the poem to the appropriate position
         // This also updates the positions of all the words in the poem
         poemViewOne.moveTo(poemViewOne.getPosition());
@@ -319,7 +357,7 @@ public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
      */
     protected boolean connectionCausesOverlap(AbstractWordView one, AbstractWordView two) {
         // Check if the connection will cause an overlap
-        Position targetPosition = new Position(one.getPosition().getX(), one.getPosition().getY() + one.getHeight() + 1);
+        Position targetPosition = new Position(two.getPosition().getX(), one.getPosition().getY() + one.getHeight() + 1);
         MoveWordController moveWordController = new MoveWordController(mainView, gameState);
         moveWordController.moveWord(two, two.getPosition(), targetPosition);
         return !two.getPosition().equals(targetPosition);

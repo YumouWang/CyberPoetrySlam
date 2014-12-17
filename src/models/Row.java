@@ -139,4 +139,12 @@ public class Row extends AbstractWord implements Serializable {
 	public List<Word> getWords() {
 		return words;
 	}
+	
+	public Object clone() {
+		List<Word> cloneWords = new ArrayList<Word>();
+		for(Word word: words) {
+			cloneWords.add((Word) word.clone());
+		}
+		return new Row(cloneWords);
+	}
 }

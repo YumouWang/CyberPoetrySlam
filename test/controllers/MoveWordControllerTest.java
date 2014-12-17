@@ -44,10 +44,10 @@ public class MoveWordControllerTest {
 
 	@Before
 	public void initialize() {
-		gameState = new GameState(un, p);
+		gameState = new GameState(null);
 		gameState.getProtectedArea().getAbstractWordCollection().clear();
 		gameState.getUnprotectedArea().getAbstractWordCollection().clear();
-		mainView = new MainView(gameState, un, p);
+		mainView = new MainView(gameState, null);
 		// Create all the word
 		wordOne = new Word("Word1", WordType.NOUN);
 		wordTwo = new Word("Word2", WordType.NOUN);
@@ -268,7 +268,7 @@ public class MoveWordControllerTest {
 		assertFalse(gameState.getUnprotectedArea().getAbstractWordCollection()
 				.contains(rowOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(rowViewOne));
-		moveWordController.relaseRow(rowViewOne);
+		moveWordController.releaseRow(rowViewOne);
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(rowOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(rowViewOne));
@@ -285,7 +285,7 @@ public class MoveWordControllerTest {
 		assertFalse(gameState.getUnprotectedArea().getAbstractWordCollection()
 				.contains(poemOne));
 		assertFalse(mainView.getUnprotectedAreaWords().contains(poemViewOne));
-		moveWordController.relasePoem(poemViewOne);
+		moveWordController.releasePoem(poemViewOne);
 		assertFalse(gameState.getProtectedArea().getAbstractWordCollection()
 				.contains(poemOne));
 		assertFalse(mainView.getProtectedAreaWords().contains(poemViewOne));

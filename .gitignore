@@ -3,4 +3,5 @@
 bin
 classes
 *.storage
-file/wall.txt
+wall.txt
+*.MF

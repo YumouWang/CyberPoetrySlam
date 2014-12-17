@@ -55,7 +55,6 @@ public class MainView extends JFrame implements Serializable {
         this.gameState = gameState;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 1000, 685);
-        //setSize(1027, 735);
         contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -126,7 +125,6 @@ public class MainView extends JFrame implements Serializable {
         btnUndo.addActionListener(buttonController);
 
         exploreArea = new ExploreArea(gameState, this);
-        // JPanel explorePanel = new JPanel();
         JPanel explorePanel = exploreArea.contentPane;
         explorePanel.setBorder(new LineBorder(Color.BLACK));
         explorePanel.setBounds(716, 310, 284, 353);

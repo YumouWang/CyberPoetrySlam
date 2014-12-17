@@ -67,14 +67,6 @@ public class ShiftRowControllerTestTest {
         boolean WordOverlapping = poemView.getRowViews().get(1)
                 .isOverlapping(viewFive);
         assertTrue(!WordOverlapping);
-
-		/*shiftRowController.shiftRow(poemView, poemView.getRowViews().get(1),
-                new Position(10, 34), new Position(210, 23));
-		boolean isAdjacent = false;
-		if (poemView.getRowViews().get(1).isAdjacentTo(viewFour) != AdjacencyType.NOT_ADJACENT) {
-			isAdjacent = true;
-		}
-		assertTrue(isAdjacent);*/
     }
 
     @Test

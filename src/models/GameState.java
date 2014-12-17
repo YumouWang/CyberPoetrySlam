@@ -43,8 +43,6 @@ public class GameState implements Serializable {
         pendingSwaps = new HashSet<Swap>();
         if (memento == null) {
             Collection<AbstractWord> protectedWords = new HashSet<AbstractWord>();
-
-
             Collection<AbstractWord> unprotectedWords = new HashSet<AbstractWord>();
             WordInitialize wordInitialize = new WordInitialize();
             Collection<Word> wordList = wordInitialize.getInitialWordFromFile(Constants.WORDS_AND_TYPES_FILENAME);

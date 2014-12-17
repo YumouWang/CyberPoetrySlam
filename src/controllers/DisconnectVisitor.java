@@ -176,7 +176,6 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // To add functionality where we can remove a word from the middle of a poem, put it here
             // Use the poem.splitPoemAt() and the row.splitRowAt() functions
             // This would be complicated and the desired behavior is undefined, so this is intentionally not implemented
-            System.out.println("Error disconnecting " + word.getValue() + " from " + poemToDisconnectFrom.getValue());
             successful = false;
         }
 
@@ -254,8 +253,6 @@ public class DisconnectVisitor implements AbstractWordViewVisitor {
             // To add functionality where we can remove a wordView from the middle of a poem, put it here
             // Use the poem.splitPoemAt() and the row.splitRowAt() functions
             // This would be complicated and the desired behavior is undefined, so this is intentionally not implemented
-            System.out.println("Error disconnecting view for " + word.getValue() + " from view for "
-                    + poemToDisconnectFrom.getValue());
             successful = false;
         }
 

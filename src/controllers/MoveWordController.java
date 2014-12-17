@@ -71,8 +71,7 @@ public class MoveWordController {
             // word move from protect area to protect area
             // if cross the line
             if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - 20))
-                    && (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
-                // System.out.println("cross...");
+                    && (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {               
                 moveWord(selectedWord, newPosition,
                         new Position(newPosition.getX(),
                                 Constants.PROTECTED_AREA_HEIGHT));
@@ -82,7 +81,6 @@ public class MoveWordController {
                 && mainView.isInProtectedArea(newPosition)) {
             // word move from unprotect area to protect area
             // if cross the line
-            // System.out.println("cross...");
             if ((newPosition.getY() > (Constants.PROTECTED_AREA_HEIGHT - 20))
                     && (newPosition.getY() < Constants.PROTECTED_AREA_HEIGHT)) {
                 selectedWord.moveTo(new Position(newPosition.getX(),

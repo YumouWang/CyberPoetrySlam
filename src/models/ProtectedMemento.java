@@ -30,7 +30,6 @@ public class ProtectedMemento implements Serializable {
         for (AbstractWordView abstractWordView : view) {
             protectedViews.add((AbstractWordView) abstractWordView.clone());
         }
-        //protectedViews.addAll(view);
     }
 
     /**

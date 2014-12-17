@@ -229,7 +229,7 @@ public class MouseInputController extends MouseAdapter {
 
                 ConnectController controller = new ConnectController(mainView, gameState);
                 this.isConnect = true;
-                controller.connect(selectedWord, connectTarget);// connectTarget
+                controller.connect(selectedWord, connectTarget);
 
                 for (AbstractWordView wordView : mainView.getProtectedAreaWords()) {
                     if (wordView.contains(selectedWord)) {

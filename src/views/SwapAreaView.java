@@ -128,6 +128,7 @@ public class SwapAreaView extends AbstractView {
                     enable();
                 } catch (ConnectionException e1) {
                     // Reconnect failed. Not bad, but should have some user feedback
+                		e1.printStackTrace();
                 }
             }
         });

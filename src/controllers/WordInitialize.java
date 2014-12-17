@@ -30,15 +30,6 @@ public class WordInitialize {
         List<Word> wordList = parse.parse();
         Collections.shuffle(wordList);
         List<Word> copy = wordList.subList(0, 100);
-//		wordList = new HashSet<Word>();
-//		for (Iterator itr = hashSet.iterator(); itr.hasNext();) {
-//			String wordValue = (String) itr.next();
-//			String wordType = (String) hashSet.get(wordValue);
-//			if (stringToWordType(wordType) != null) {
-//				Word word = new Word(wordValue, stringToWordType(wordType));
-//				wordList.add(word);
-//			}
-//		}
         return copy;
     }
 

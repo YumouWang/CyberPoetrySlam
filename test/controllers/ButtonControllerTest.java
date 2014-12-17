@@ -69,7 +69,7 @@ public class ButtonControllerTest {
 
     @Test
     public void testPublishPoem() {
-        assertTrue(mainView.getPublishButton().isEnabled() == false);
+        assertFalse(mainView.getPublishButton().isEnabled());
         assertTrue(gameState.getProtectedArea().getAbstractWordCollection()
                 .contains(wordOne));
         assertTrue(mainView.getProtectedAreaWords().contains(wordViewOne));
@@ -125,7 +125,7 @@ public class ButtonControllerTest {
         assertTrue(gameState.getUnprotectedArea().getAbstractWordCollection()
                 .contains(wordTwo));
         assertTrue(mainView.getUnprotectedAreaWords().contains(wordViewTwo));
-        assertTrue(mainView.getPublishButton().isEnabled() == false);
+        assertFalse(mainView.getPublishButton().isEnabled());
 
         File wall = new File("testWall.txt");
         wall.delete();

@@ -34,8 +34,6 @@ public class MainLauncher {
         // Initialize the MainView pointing at the GameState
         final MainView mainView = new MainView(gameState, memento);
         // Add a controller to handle user input
-        // mainView.addMouseInputController(new MouseInputController(mainView,
-        // gameState));
         mainView.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 SwapController swapController = new SwapController(mainView, gameState);

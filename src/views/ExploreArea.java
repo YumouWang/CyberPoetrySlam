@@ -82,14 +82,6 @@ public class ExploreArea extends JFrame implements Serializable {
         contentPane.add(textField);
         textField.setColumns(10);
 
-        // textArea = new JTextArea();
-        // textArea.setBounds(44, 81, 346, 67);
-        // contentPane.add(textArea);
-
-        // Search s = Search.getInstance();
-        // s.initTable();
-        // textArea.setText(s.wordtable.toString());
-
         comboBox = new JComboBox<String>();
         comboBox.setBounds(20, 44, 232, 21);
         contentPane.add(comboBox);
@@ -103,15 +95,11 @@ public class ExploreArea extends JFrame implements Serializable {
                         WordType.SUFFIX.name(), WordType.PRONOUNS.name(),
                         WordType.NUMBER.name()}));
 
-        // Search.getInstance().initTable();
-        // System.out.println(Search.wordtable);
-
         table = getTable();
 
         table.setBorder(new LineBorder(Color.BLACK));
         table.setBackground(Color.LIGHT_GRAY);
         table.setBounds(44, 172, 346, 67);
-        // table.setEnabled(false);
         table.setCellSelectionEnabled(true);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
@@ -132,16 +120,9 @@ public class ExploreArea extends JFrame implements Serializable {
                     updateTable();
                     table = (JTable) e.getSource();
                     int row = table.getSelectedRow();
-//					String selectedWord;
-//					// int column = table.getSelectedColumn();
-//					if(table.getValueAt(row, 0) == null) {
-//					} else {
-//						selectedWord = table.getValueAt(row, 0).toString();
-//					}
                     if (row > -1) {
                         Collection<AbstractWordView> words = mainView
                                 .getUnprotectedAreaWords();
-//						int i = 0;
                         for (AbstractWordView word : words) {
 
                             if (word.getWord().getId() == rowId[row]) {
@@ -152,7 +133,7 @@ public class ExploreArea extends JFrame implements Serializable {
 
                         }
                     } else {
-                        System.out.println("fail");
+                        
                     }
                 }
             }
@@ -191,13 +172,9 @@ public class ExploreArea extends JFrame implements Serializable {
             table.setValueAt(null, rowNum, 0);
             table.setValueAt(null, rowNum, 1);
             table.setValueAt(null, rowNum, 2);
-            // cellData[rowNum][0] = null;
-            // cellData[rowNum][1] = null;
         }
         int i = 0;
         for (AbstractWord word : result) {
-            // cellData[i][0] = word.getValue();
-            // cellData[i][1] = ((Word) word).getType().toString();
             table.setValueAt(i + 1, i, 0);
             table.setValueAt(word.getValue(), i, 1);
             table.setValueAt(((Word) word).getType().toString(), i, 2);
@@ -229,10 +206,8 @@ public class ExploreArea extends JFrame implements Serializable {
                 + 10][3];
         int i = 0;
         for (AbstractWord word : unprotectedWords) {
-            // cellData[i] = new String[2];
             cellData[i][0] = String.valueOf(i + 1);
             cellData[i][1] = word.getValue();
-            // System.out.println(word.getValue() + "," + word.getType());
             cellData[i][2] = ((Word) word).getType().toString();
             rowId[i] = word.getId();
             i++;

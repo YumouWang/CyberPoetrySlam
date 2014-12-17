@@ -96,7 +96,7 @@ public class ButtonController implements ActionListener {
                 try {
                     file.createNewFile();
                 } catch (Exception e) {
-                    System.out.println(e);
+                		e.printStackTrace();
                 }
             }
             BufferedWriter bufferedWriter = new BufferedWriter(
@@ -130,7 +130,7 @@ public class ButtonController implements ActionListener {
                 try {
                     file.createNewFile();
                 } catch (Exception e) {
-                    System.out.println(e);
+                		e.printStackTrace();
                 }
             }
             BufferedWriter bufferedWriter = new BufferedWriter(

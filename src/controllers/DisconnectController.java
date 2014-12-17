@@ -11,8 +11,13 @@ import views.MainView;
  * @version 10/12/2014
  */
 public class DisconnectController {
-
+	/**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
 
     /**

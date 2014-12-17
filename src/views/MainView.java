@@ -27,16 +27,28 @@ import java.util.*;
 public class MainView extends JFrame implements Serializable {
 
     /**
-     *
+     *Serialized ID for MainView
      */
     private static final long serialVersionUID = -4809871727043385666L;
+    /**
+     * Collections of protectedAreaWords and unprotectedAreaWords in MainView
+     */
     Hashtable<Long, AbstractWordView> protectedAreaWords;
     ArrayList<AbstractWordView> unprotectedAreaWords;
+    /**
+     * Container and SelectionBox in MainView
+     */
     Container contentPane;
     SelectionBox selectionBox;
+    /**
+     * Stacks to store undo mementos
+     */
     Stack<UndoWithMemento> moves = new Stack<UndoWithMemento>();
     Stack<UndoWithMemento> redoMoves = new Stack<UndoWithMemento>();
     GameState gameState;
+    /**
+     * Components of panel in MainView
+     */
     private JPanel panel;
     private ExploreArea exploreArea;
     private SwapAreaView swapAreaView;
@@ -145,11 +157,17 @@ public class MainView extends JFrame implements Serializable {
         mouseInputController = new MouseInputController(this, gameState);
         this.addMouseInputController(mouseInputController);
     }
-
+/**
+ * Add AbstractWordView to the protected area
+ * @param newWord
+ */
     public void addProtectedAbstractWordView(AbstractWordView newWord) {
         protectedAreaWords.put(newWord.getWord().getId(), newWord);
     }
-
+/**
+ * Add AbstractWordView to the unprotected area
+ * @param newWord
+ */
     public void addUnprotectedAbstractWordView(AbstractWordView newWord) {
         unprotectedAreaWords.add(newWord);
     }
@@ -165,7 +183,11 @@ public class MainView extends JFrame implements Serializable {
                 .getId());
         return oldWord.equals(removed);
     }
-
+/**
+ * Remove an AbstractWordView from unprotected area and check whether it succeeds
+ * @param oldWord
+ * @return boolean
+ */
     public boolean removeUnprotectedAbstractWordView(AbstractWordView oldWord) {
         return unprotectedAreaWords.remove(oldWord);
     }
@@ -188,11 +210,19 @@ public class MainView extends JFrame implements Serializable {
         panel.addMouseListener(controller);
         panel.addMouseMotionListener(controller);
     }
-
+/**
+ * Get some AbstractWordView from protected area by its unique ID 
+ * @param id
+ * @return AbstractWordView
+ */
     public AbstractWordView getProtectedAbstractWordById(long id) {
         return protectedAreaWords.get(id);
     }
-
+/**
+ * Get some AbstractWordView from unprotected area by its unique ID
+ * @param id
+ * @return AbstractWordView
+ */
     public AbstractWordView getUnprotectedAbstractWordById(long id) {
         for (AbstractWordView abstractWordView : unprotectedAreaWords) {
             if (abstractWordView.getWord().getId() == id) {
@@ -219,7 +249,10 @@ public class MainView extends JFrame implements Serializable {
     public Collection<AbstractWordView> getUnprotectedAreaWords() {
         return unprotectedAreaWords;
     }
-
+/**
+ * Get the selection box created by mouse in MainView
+ * @return SelectionBox
+ */
     public SelectionBox getSelectionBox() {
         return selectionBox;
     }
@@ -334,39 +367,65 @@ public class MainView extends JFrame implements Serializable {
     public Stack<UndoWithMemento> getRedoMoves() {
         return this.redoMoves;
     }
-
+/**
+ * Get the ExploreArea from the MainView 
+ * @return ExploreArea
+ */
     public ExploreArea getExploreArea() {
         return exploreArea;
     }
-
+/**
+ * Get the SwapAreaView from the MainView
+ * @return SwapAreaView
+ */
     public SwapAreaView getSwapAreaView() {
         return swapAreaView;
     }
-
+/**
+ * Get the Publish JButton from the MainView
+ * @return JButton
+ */
     public JButton getPublishButton() {
         return btnPublish;
     }
-
+/**
+ * Get the Redo JButton from the MainView
+ * @return JButton
+ */
     public JButton getRedoButton() {
         return btnRedo;
     }
-
+/**
+ * Get the Undo JButton from the MainView
+ * @return JButton
+ */
     public JButton getUndoButton() {
         return btnUndo;
     }
-
+/**
+ * Get the MouseInputController from MainView
+ * @return MouseInputController
+ */
     public MouseInputController getMouseInputController() {
         return mouseInputController;
     }
-
+/**
+ * Add the lable of a WordView into the MainView
+ * @param wordView
+ */
     public void addLabelOf(WordView wordView) {
         panel.add(wordView.label);
     }
-
+/**
+ * Remove the lable of a WordVIew from the MainVIew
+ * @param wordView
+ */
     public void removeLabelOf(WordView wordView) {
         panel.remove(wordView.label);
     }
-
+/**
+ * Clear the whole panel of the MainView
+ */
     public void clearPanel() {
         Collection<AbstractWordView> collection = new HashSet<AbstractWordView>();
         collection.addAll(protectedAreaWords.values());

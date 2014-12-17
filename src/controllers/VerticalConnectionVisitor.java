@@ -12,7 +12,10 @@ import java.awt.*;
  * @version 10/15/2014
  */
 public class VerticalConnectionVisitor implements AbstractWordViewVisitor {
-
+/**
+ * The MainView and GameState of the game
+ * The protected Area for vertical connect
+ */
     MainView mainView;
     Area protectedArea;
     GameState gameState;

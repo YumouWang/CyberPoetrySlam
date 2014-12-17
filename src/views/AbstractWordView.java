@@ -18,10 +18,15 @@ public abstract class AbstractWordView extends AbstractView implements
         Serializable, Cloneable {
 
     /**
-     *
+     *Serialized ID for an AbstractWordView
      */
 
     private static final long serialVersionUID = -8621254877402775008L;
+    /**
+     * Attributes of an AbstractWordView
+     * furthestRight records the right boundary of a AbstractWordView
+     * furthestLeft  records the left boundary of a AbstractWordView
+     */
     AbstractWord word;
     int furthestRight;
     int furthestLeft;
@@ -107,9 +112,17 @@ public abstract class AbstractWordView extends AbstractView implements
      * @return Returns whether the move was successful
      */
     public abstract boolean moveTo(Position toPosition);
-
+/**
+ * Get the elements from connection box created by mouse
+ * @param box
+ * @return AbstractWordView
+ */
     public abstract AbstractWordView getSelectedElement(ConnectionBox box);
-
+/**
+ * Check whether one AbstractWordView contains another AbstractWordView
+ * @param otherWord
+ * @return boolean
+ */
     public abstract boolean contains(AbstractWordView otherWord);
 
     /**
@@ -118,16 +131,36 @@ public abstract class AbstractWordView extends AbstractView implements
      * @param color The color to set the background to
      */
     public abstract void setBackground(Color color);
-
+/**
+ * Connect or disconnect an AbstractWordView to another AbstractWordView
+ * @param visitor
+ * @param otherView
+ * @return boolean
+ */
     public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                           AbstractWordView otherView);
-
+/**
+ * Connect or disconnect an WordView to another AbstractWordView
+ * @param visitor
+ * @param wordView
+ * @return boolean
+ */
     public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                           WordView wordView);
-
+/**
+ * Connect or disconnect an RowView to another AbstractWordView
+ * @param visitor
+ * @param rowView
+ * @return boolean
+ */
     public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                           RowView rowView);
-
+/**
+ * Connect or disconnect an PoemView to another AbstractWordView
+ * @param visitor
+ * @param poemView
+ * @return boolean
+ */
     public abstract boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                           PoemView poemView);
 

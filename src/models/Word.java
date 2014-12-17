@@ -13,9 +13,12 @@ import java.util.List;
 public class Word extends AbstractWord implements Serializable, Cloneable {
 
     /**
-     *
+     *Serialized ID for a Word
      */
     private static final long serialVersionUID = 1040298162920646098L;
+    /**
+     * Attributes of a Word
+     */
     String value;
     WordType type;
 

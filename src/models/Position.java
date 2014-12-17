@@ -10,9 +10,12 @@ import java.io.Serializable;
  */
 public class Position implements Serializable {
     /**
-     *
+     *Serialized ID for a Position
      */
     private static final long serialVersionUID = 9049790175731613229L;
+    /**
+     * Coordinate x and y of the Position
+     */
     int x;
     int y;
 

@@ -12,7 +12,8 @@ import java.util.List;
 public class UndoWithMemento implements Serializable {
 
     /**
-     *
+     *VersionId of the UndoMemento
+     *ProtectedMemento and UnprotectedMemento used for undo function
      */
     private static final long serialVersionUID = 2043773621354133363L;
     ProtectedMemento protectedMemento;
@@ -27,7 +28,11 @@ public class UndoWithMemento implements Serializable {
         this.protectedMemento = new ProtectedMemento(mainView.getProtectedAreaWords());
         this.unprotectedMemento = new UnprotectedMemento(mainView.getUnprotectedAreaWords());
     }
-
+/**
+ * Clear the MainView and GameState and load the state of this memento 
+ * @param mainView
+ * @param gameState
+ */
     public void loadState(MainView mainView, GameState gameState) {
         mainView.clearPanel();
         gameState.getProtectedArea().getAbstractWordCollection().clear();

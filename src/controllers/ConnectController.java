@@ -12,8 +12,13 @@ import views.MainView;
  * @version 10/4/2014
  */
 public class ConnectController {
-
+/**
+ * The MainView of the game
+ */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
 
     /**

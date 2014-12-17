@@ -14,7 +14,10 @@ import java.io.*;
  * @version 12/14/2014
  */
 public class LoadStateController {
-
+/**
+ * Reads the state from a file and converts it to a memento object
+ * @return UndoWithMemento Memento associated with undo
+ */
     public UndoWithMemento loadMemento() {
         ObjectInputStream ois = null;
         UndoWithMemento m = null;
@@ -38,7 +41,11 @@ public class LoadStateController {
 
         return m;
     }
-
+/**
+ * Reads a memento object and store the state of it to a file
+ * @param mainView MainView associated with storeState
+ * @param gameState GameState associated with storeState
+ */
     public void storeState(MainView mainView, GameState gameState) {
         File mementoFile = new File(Constants.MEMENTO_STORAGE);
         if (!mementoFile.exists()) {

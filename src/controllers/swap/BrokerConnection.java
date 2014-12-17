@@ -16,12 +16,15 @@ import views.MainView;
  * @version 11/30/2014
  */
 public class BrokerConnection {
-
+/**
+ * Objects associated with brokerConnection
+ */
     BrokerClient broker;
     ReaderThread brokerCommunicationThread;
     HandleBrokerMessageImplementation handler;
 
     /**
+     * Constructor
      * @param broker
      * @param mainView
      * @param gameState
@@ -33,7 +36,10 @@ public class BrokerConnection {
         brokerCommunicationThread = new ReaderThread(broker, handler);
         brokerCommunicationThread.start();
     }
-
+/**
+ * Send a swap request to broker
+ * @param swap
+ */
     public void sendSwapRequest(Swap swap) {
         String requestToSend = IProtocol.requestSwapMsg + IProtocol.separator +
                 broker.getID() + IProtocol.separator + "*" + IProtocol.separator +
@@ -42,7 +48,10 @@ public class BrokerConnection {
         System.out.println("Sending: " + requestToSend);
         brokerCommunicationThread.sendMessage(requestToSend);
     }
-
+/**
+ * Get the unique ID from broker to identify the players
+ * @return
+ */
     public String getSessionID() {
         return broker.getID();
     }

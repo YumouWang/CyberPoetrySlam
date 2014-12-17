@@ -14,6 +14,9 @@ import java.util.List;
  */
 
 public class WordInitialize {
+	/**
+	 * WordList readed from the parser
+	 */
     Collection<Word> wordList;
 
     /**

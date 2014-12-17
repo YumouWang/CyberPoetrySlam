@@ -13,9 +13,12 @@ import java.util.List;
 public class Poem extends AbstractWord implements Serializable {
 
     /**
-     *
+     *Serialized ID for one Poem
      */
     private static final long serialVersionUID = 6796779767893699320L;
+    /**
+     * A collection of Rows of the Poem
+     */
     List<Row> rows;
 
     /**
@@ -180,7 +183,7 @@ public class Poem extends AbstractWord implements Serializable {
     public List<Row> getRows() {
         return rows;
     }
-
+@Override
     public Object clone() {
         List<Row> cloneRows = new ArrayList<Row>();
         for (Row row : rows) {

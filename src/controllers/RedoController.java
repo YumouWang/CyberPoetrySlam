@@ -9,7 +9,13 @@ import views.MainView;
  * @author xujian
  */
 public class RedoController {
+	/**
+	 * The MainView of the game
+	 */
     private MainView mainView;
+    /**
+     * The GameState of the game
+     */
     private GameState gameState;
 
     /**

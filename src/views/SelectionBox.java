@@ -15,29 +15,46 @@ import java.util.HashSet;
  * @version 10/10/2014
  */
 public class SelectionBox extends JComponent {
+	/**
+	 * StartPosition and EndPosition of a selectionBox
+	 */
     Position endLocation;
     Position startLocation;
-
+/**
+ * Constructor
+ */
     public SelectionBox() {
         endLocation = null;
         startLocation = null;
     }
-
+/**
+ * Clear the selectionBox and set it as invisible
+ */
     public void clearBox() {
         endLocation = null;
         startLocation = null;
         setVisible(false);
     }
-
+/**
+ * Start new selectionBox from one Position
+ * @param start
+ */
     public void startNewSelection(Position start) {
         setVisible(true);
         startLocation = start;
     }
-
+/**
+ * Move the selectionBox to another Position
+ * @param move
+ */
     public void moveSelection(Position move) {
         endLocation = move;
     }
-
+/**
+ * Get all the AbstractWordView elements from a selectionBox created by mouse
+ * @param words
+ * @return Collection<AbstractWordView>
+ */
     public Collection<AbstractWordView> getSelectedItems(Collection<AbstractWordView> words) {
         Collection<AbstractWordView> selectedItems = new HashSet<AbstractWordView>();
         if (startLocation != null && endLocation != null) {
@@ -55,7 +72,11 @@ public class SelectionBox extends JComponent {
         }
         return selectedItems;
     }
-
+/**
+ * Get one AbstractWordView from a selectionBox created by mouse
+ * @param words
+ * @return AbstractWordView
+ */
     public AbstractWordView getSelectedItem(Collection<AbstractWordView> words) {
         // Returns one of the selected words. Not guaranteed to select the same one each time
         AbstractWordView selectedItem = null;

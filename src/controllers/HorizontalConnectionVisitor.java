@@ -15,9 +15,17 @@ import java.util.List;
  * @version 10/15/2014
  */
 public class HorizontalConnectionVisitor implements AbstractWordViewVisitor {
-
+	/**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
+    /**
+     * ProtectedArea of the game
+     */
     Area protectedArea;
 
     /**

@@ -14,7 +14,7 @@ import java.util.UUID;
 public abstract class AbstractWord implements Serializable, Cloneable {
 
     /**
-     *
+     *Unique ID for one AbstractWord
      */
     private static final long serialVersionUID = 3483957752005294209L;
     long id;
@@ -48,6 +48,6 @@ public abstract class AbstractWord implements Serializable, Cloneable {
     public long getId() {
         return id;
     }
-
+    @Override
     public abstract Object clone();
 }

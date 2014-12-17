@@ -17,10 +17,22 @@ import java.util.List;
  * @version 10/3/2014
  */
 public class DictionaryParser {
+	/**
+	 * The file name of the loaded file to the parser
+	 */
     String csvFile;
+    /**
+     * Helper bufferedReader object
+     */
     BufferedReader br;
+    /**
+     * Each line of String in the loaded file
+     */
     String line;
     String cvsSplitBy = ",";
+    /**
+     * The wordList parsed from the txt file
+     */
     List<Word> wordList = new ArrayList<Word>();
 
     /**

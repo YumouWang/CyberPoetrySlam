@@ -20,10 +20,16 @@ import java.util.List;
 public class PoemView extends AbstractWordView implements Serializable {
 
     /**
-     *
+     *Serialized ID for a PoemVIew
      */
     private static final long serialVersionUID = -4290728328082346968L;
+    /**
+     * RowViews in a PoemView
+     */
     List<RowView> rowViews;
+    /**
+     * Row offset of each row in a poem
+     */
     List<Integer> rowoffset;
 
     /**
@@ -111,28 +117,41 @@ public class PoemView extends AbstractWordView implements Serializable {
             view.setBackground(color);
         }
     }
-
+/**
+ * Add a RowView to a PoemView
+ * @param rowView
+ */
     public void addRow(RowView rowView) {
         rowViews.add(rowView);
         rowoffset.add(0);
         moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
-
+/**
+ * Add a RowView to the top of a PoemView
+ * @param rowView
+ */
     public void addRowToTop(RowView rowView) {
         rowViews.add(0, rowView);
         rowoffset.add(0, 0);
         moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
-
+/**
+ * Add a PoemView to another PoemView
+ * @param poemView
+ */
     public void addPoem(PoemView poemView) {
         rowViews.addAll(poemView.getRowViews());
         rowoffset.addAll(poemView.getRowOffset());
         moveTo(rowViews.get(0).getPosition());
         calculateDimensions();
     }
-
+/**
+ * Remove a RowView from a PoemView and check whether it succeeds
+ * @param otherRow
+ * @return boolean
+ */
     public boolean removeRowView(RowView otherRow) {
         int index = rowViews.indexOf(otherRow);
         boolean successful = false;
@@ -150,7 +169,10 @@ public class PoemView extends AbstractWordView implements Serializable {
         calculateDimensions();
         return successful;
     }
-
+/**
+ * Return a row with no WordView inside
+ * @return RowView
+ */
     public RowView getEmptyRowView() {
         RowView result = null;
         for (RowView rowView : rowViews) {
@@ -189,15 +211,25 @@ public class PoemView extends AbstractWordView implements Serializable {
         calculateDimensions();
         return successful;
     }
-
+/**
+ * Get a collection of all RowViews from a PoemVIew
+ * @return List<RowView>
+ */
     public List<RowView> getRowViews() {
         return rowViews;
     }
-
+/**
+ * Get a collection of all RowOffset of each RowView in a PoemView
+ * @return List<Integer>
+ */
     public List<Integer> getRowOffset() {
         return rowoffset;
     }
-
+/**
+ * Shift a RowView inside a PoemView by its offset
+ * @param row
+ * @param shiftoffset
+ */
     public void shiftRow(AbstractWordView row, int shiftoffset) {
         int index = rowViews.indexOf(row);
 
@@ -214,7 +246,9 @@ public class PoemView extends AbstractWordView implements Serializable {
 
         calculateDimensions();
     }
-
+/**
+ * Calculate the dimensions of a PoemView
+ */
     private void calculateDimensions() {
         // Find all wordViews, and calculate total Width and height
         if (rowViews.size() < 1) {
@@ -256,7 +290,11 @@ public class PoemView extends AbstractWordView implements Serializable {
         furthestRight = right;
         furthestLeft = left;
     }
-
+/**
+ * Get the element from a ConnectionBox created by mouse
+ * @param box
+ * @return AbstractWordView
+ */
     public AbstractWordView getSelectedElement(ConnectionBox box) {
         AbstractWordView selected = null;
         for (RowView row : rowViews) {
@@ -277,7 +315,11 @@ public class PoemView extends AbstractWordView implements Serializable {
         }
         return selected;
     }
-
+/**
+ * Check whether one PoemView contains another AbstractWordView and return its value
+ * @param otherWord
+ * @return boolean
+ */
     public boolean contains(AbstractWordView otherWord) {
         boolean containsWord = this.equals(otherWord);
         if (!containsWord) {
@@ -290,27 +332,46 @@ public class PoemView extends AbstractWordView implements Serializable {
         }
         return containsWord;
     }
-
+/**
+ * Handles connecting and disconnecting one AbstractWordView to a PoemView
+ * @param visitor,otherView
+ * @return boolean
+ */
     public boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                  AbstractWordView otherView) {
         return otherView.acceptVisitor(visitor, this);
     }
-
+    /**
+     * Handles connecting and disconnecting one WordView to a PoemView
+     * @param visitor,wordView
+     * @return boolean
+     */
     public boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                  WordView wordView) {
         return visitor.visit(wordView, this);
     }
-
+    /**
+     * Handles connecting and disconnecting one RowView to a PoemView
+     * @param visitor,rowView
+     * @return boolean
+     */
     public boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                  RowView rowView) {
         return visitor.visit(rowView, this);
     }
-
+    /**
+     * Handles connecting and disconnecting one PoemView to a PoemView
+     * @param visitor,poemView
+     * @return boolean
+     */
     public boolean acceptVisitor(AbstractWordViewVisitor visitor,
                                  PoemView poemView) {
         return visitor.visit(poemView, this);
     }
-
+/**
+ * Get the Poem from the PoemView
+ * @return Poem
+ */
     public Poem getWord() {
         return (Poem) word;
     }

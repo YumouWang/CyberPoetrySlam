@@ -24,16 +24,28 @@ import java.util.ArrayList;
  * @version 11/30/2014
  */
 public class SwapAreaView extends AbstractView {
-
+/**
+ * MainView and GameState of the game
+ */
     private final MainView mainView;
     private final GameState gameState;
+    /**
+     * Componenets of the SwapAreaView
+     */
     private JPanel swapPanel;
     private JButton btnSwap;
     private JButton btnReconnect;
     private JPanel statusIndicator;
     private JTextPane status;
     private ArrayList<ArrayList<JComponent>> inputElements;
-
+/**
+ * Constructor
+ * @param position
+ * @param width
+ * @param height
+ * @param mainView
+ * @param gameState
+ */
     public SwapAreaView(Position position, int width, int height, final MainView mainView, final GameState gameState) {
         super(position, width, height);
         this.mainView = mainView;
@@ -54,7 +66,10 @@ public class SwapAreaView extends AbstractView {
         createInputPanel(inputPanel);
         createControlPanel(controlPanel);
     }
-
+/**
+ * Helper method to creates the ControlPanel of SwapAreaView
+ * @param controlPanel
+ */
     private void createControlPanel(JPanel controlPanel) {
         controlPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -117,7 +132,10 @@ public class SwapAreaView extends AbstractView {
             }
         });
     }
-
+/**
+ * Helper method to creates the InputPanel of SwapAreaView
+ * @param inputPanel
+ */
     private void createInputPanel(JPanel inputPanel) {
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -244,7 +262,10 @@ public class SwapAreaView extends AbstractView {
     public JPanel getPanel() {
         return swapPanel;
     }
-
+/**
+ * Get the input elements from SwapAreaView
+ * @return ArrayList<ArrayList<JComponent>>
+ */
     public ArrayList<ArrayList<JComponent>> getInputElements() {
         return inputElements;
     }

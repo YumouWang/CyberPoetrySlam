@@ -19,8 +19,14 @@ public class UnprotectedMemento implements Serializable {
     /**
      * unprotectedView is a collection for AbstractWordView
      */
+	
+	/**
+	 * Serialized ID for an UnprotectedMemento 
+	 */
     private static final long serialVersionUID = -8852796032126561897L;
-
+/**
+ * A collection of AbstractWordView for the UnprotectedMemento
+ */
     private List<AbstractWordView> unprotectedViews = new ArrayList<AbstractWordView>();
 
     /**

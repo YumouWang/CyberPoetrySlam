@@ -17,7 +17,9 @@ import java.util.StringTokenizer;
  * @version 11/30/2014
  */
 public class HandleBrokerMessageImplementation implements IHandleBrokerMessage {
-
+	/**
+	 * The MainView and GameState of the game
+	 */
     private MainView mainView;
     private GameState gameState;
 

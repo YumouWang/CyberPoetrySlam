@@ -9,8 +9,13 @@ import views.MainView;
  * @author xujian Created 11/05/2014
  */
 public class UndoController {
-
+	/**
+	 * The MainView of the game
+	 */
     private MainView mainView;
+    /**
+     * The GameState of the game
+     */
     private GameState gameState;
 
     /**

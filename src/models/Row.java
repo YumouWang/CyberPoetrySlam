@@ -13,9 +13,12 @@ import java.util.List;
 public class Row extends AbstractWord implements Serializable {
 
     /**
-     *
+     *Serialized ID for a Row
      */
     private static final long serialVersionUID = -5101545467090613847L;
+    /**
+     * A collection of Words in a Row
+     */
     List<Word> words;
 
     /**
@@ -132,7 +135,7 @@ public class Row extends AbstractWord implements Serializable {
     public List<Word> getWords() {
         return words;
     }
-
+@Override
     public Object clone() {
         List<Word> cloneWords = new ArrayList<Word>();
         for (Word word : words) {

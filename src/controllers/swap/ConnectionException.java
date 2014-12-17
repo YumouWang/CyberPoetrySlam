@@ -7,7 +7,10 @@ package controllers.swap;
  * @version 11/30/2014
  */
 public class ConnectionException extends Throwable {
-
+/**
+ * Constructor
+ * @param msg
+ */
     public ConnectionException(String msg) {
         super(msg);
     }

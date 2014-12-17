@@ -17,7 +17,10 @@ import java.util.Random;
  * @version 11/30/2014
  */
 public class SwapController {
-
+	/**
+	 * The MainView and GameState of the game
+	 * The BrokerConnection of the swap
+	 */
     MainView mainView;
     GameState gameState;
     BrokerConnection connection;

@@ -15,7 +15,13 @@ import views.RowView;
  */
 
 public class ShiftRowController {
+	/**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
 
     /**

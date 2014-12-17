@@ -19,7 +19,7 @@ import java.util.HashSet;
 public class GameState implements Serializable {
 
     /**
-     *
+     *A Serialized ID for the JAVA IO
      */
     private static final long serialVersionUID = -8711483643686783088L;
 
@@ -120,12 +120,18 @@ public class GameState implements Serializable {
     public Collection<Swap> getPendingSwaps() {
         return pendingSwaps;
     }
-
+/**
+ * Reset the unprotected area
+ * @param collection
+ */
     public void resetUnprotectedArea(Collection<AbstractWord> collection) {
         this.unprotectedArea = new Area(collection);
         return;
     }
-
+/**
+ * Reset the protected area
+ * @param collection
+ */
     public void resetProtectedArea(Collection<AbstractWord> collection) {
         this.protectedArea = new Area(collection);
         return;

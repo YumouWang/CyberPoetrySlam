@@ -20,7 +20,10 @@ import java.util.Collection;
  * @version 10/4/2014
  */
 public class MouseInputController extends MouseAdapter {
-
+/**
+ * IsShift handles the state of shift button
+ * The AbstractWordView objects keep track of information of models in the MouseInputController
+ */
     static boolean isShift = false;
     UndoWithMemento undo;
     AbstractWordView selectedWord;
@@ -30,7 +33,9 @@ public class MouseInputController extends MouseAdapter {
     AbstractWordView selectedRowToShift;
     boolean isShifting = false;
 
-
+/**
+ * The position associated with the mouse event
+ */
     Position mouseDownPosition;
     Position selectedWordPositionRelativeToMouse;
     Position disconnectTargetPosition;
@@ -92,8 +97,8 @@ public class MouseInputController extends MouseAdapter {
     /**
      * determine what words to select
      *
-     * @param position
-     * @param isShift
+     * @param position The position of the mouse when this event fires
+     * @param isShift  Whether shift is pressed
      */
     void mousePressedHandler(Position position, boolean isShift) {
         undo = new UndoWithMemento(this.mainView);

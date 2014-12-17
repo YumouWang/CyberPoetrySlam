@@ -24,14 +24,26 @@ import java.util.Collection;
 public class ExploreArea extends JFrame implements Serializable {
 
     /**
-     *
+     *Serialized ID for an exploreArea
      */
     private static final long serialVersionUID = -3913212348104753802L;
+    /**
+     * JPanel for the ExploreArea
+     */
     public JPanel contentPane;
+    /**
+     * GameState and MainView of the game
+     */
     GameState gameState;
     MainView mainView;
     SearchController search;
+    /**
+     * An array to store IDs of each row
+     */
     long[] rowId;
+    /**
+     * Fields for ExploreArea
+     */
     private JTextField textField;
     private JComboBox<String> comboBox;
     private String input;
@@ -40,9 +52,11 @@ public class ExploreArea extends JFrame implements Serializable {
     private JButton btnNewButton;
     private Object[][] cellData;
 
-    /**
-     * Create the frame.
-     */
+/**
+ * Create the frame.
+ * @param gameState
+ * @param mainView
+ */
     public ExploreArea(GameState gameState, final MainView mainView) {
         this.gameState = gameState;
         this.search = new SearchController(mainView, gameState);
@@ -160,7 +174,9 @@ public class ExploreArea extends JFrame implements Serializable {
             }
         });
     }
-
+/**
+ * Update the word table of explore area
+ */
     public void updateTable() {
         search.updateWordTable();
         if (comboBox.getSelectedIndex() == -1) {
@@ -190,13 +206,18 @@ public class ExploreArea extends JFrame implements Serializable {
         }
         table.updateUI();
     }
-
+/**
+ * Refresh the unprotected area
+ */
     public void refresh() {
         revalidate();
         repaint();
         table.updateUI();
     }
-
+/**
+ * Helper method to get the word table
+ * @return JTable
+ */
     private JTable getTable() {
         rowId = new long[1000];
         String[] columnNames = {"No.", "Word", "WordType"};

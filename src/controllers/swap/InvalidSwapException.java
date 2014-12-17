@@ -7,6 +7,10 @@ package controllers.swap;
  * @version 11/30/2014
  */
 public class InvalidSwapException extends Throwable {
+	/**
+	 * Constructor
+	 * @param msg
+	 */
     public InvalidSwapException(String msg) {
         super(msg);
     }

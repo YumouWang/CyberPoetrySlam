@@ -25,8 +25,17 @@ import java.util.Random;
  * @version 10/28/2014
  */
 public class ButtonController implements ActionListener {
+	/**
+	 * The poem we want to publish
+	 */
     AbstractWordView publishPoem;
+    /**
+     * The MainView of the game
+     */
     private MainView mainView;
+    /**
+     * The GameState of the game
+     */
     private GameState gameState;
 
     /**

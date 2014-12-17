@@ -15,9 +15,19 @@ import java.util.HashSet;
  * @version 10/3/2014
  */
 public class SearchController {
+	/**
+	 * The search object handles seatch functions
+	 * wordtable is a collection of words in exploreArea
+	 */
     private static SearchController search;
     public Collection<AbstractWord> wordtable;
+    /**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
     Collection<AbstractWord> result;
 

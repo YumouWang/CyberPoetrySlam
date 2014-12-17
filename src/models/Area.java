@@ -14,7 +14,8 @@ import java.util.Observable;
 public class Area extends Observable implements Serializable {
 
     /**
-     *
+     *Serialized ID for one Area
+     *A collection of AbstractWord in the area
      */
     private static final long serialVersionUID = -3373791527038475458L;
     Collection<AbstractWord> abstractWordCollection;

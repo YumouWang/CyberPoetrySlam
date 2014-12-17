@@ -16,8 +16,13 @@ import java.util.List;
  * @version 10/15/2014
  */
 public class DisconnectVisitor implements AbstractWordViewVisitor {
-
+	/**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     Area protectedArea;
 
     /**

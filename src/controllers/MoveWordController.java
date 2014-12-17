@@ -17,8 +17,13 @@ import java.util.List;
  * @version 10/16/2014
  */
 public class MoveWordController {
-
+	/**
+	 * The MainView of the game
+	 */
     MainView mainView;
+    /**
+     * The GameState of the game
+     */
     GameState gameState;
 
     /**

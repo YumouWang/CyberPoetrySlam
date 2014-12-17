@@ -17,8 +17,14 @@ public class ProtectedMemento implements Serializable {
     /**
      * protectedView is a collection for AbstractWordView
      */
+	
+	/**
+	 * Serialized ID for a ProtectedMemento
+	 */
     private static final long serialVersionUID = -5795305432374010152L;
-
+/**
+ * A collection of AbstractWordView for ProtectedMemento
+ */
     private Collection<AbstractWordView> protectedViews = new HashSet<AbstractWordView>();
 
     /**

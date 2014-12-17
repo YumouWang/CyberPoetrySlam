@@ -12,9 +12,12 @@ import java.io.Serializable;
  */
 public abstract class AbstractView implements Serializable {
     /**
-     *
+     *Serialized ID for a AbstractView
      */
     private static final long serialVersionUID = -3874209890887625448L;
+    /**
+     * The attributes of a AbstractView
+     */
     Position position;
     int width;
     int height;

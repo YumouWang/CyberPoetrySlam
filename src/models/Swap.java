@@ -16,14 +16,26 @@ import java.util.StringTokenizer;
  * @version 10/3/2014
  */
 public class Swap {
+	/**
+	 * Objects associated with Swap
+	 */
     int num;
     List<WordType> myTypes;
     List<Word> myWords;
     List<WordType> theirTypes;
     List<String> theirWords;
+    /**
+     * To check whether the request if from local position
+     */
     boolean isRequestor;
     GameState gameState;
+    /**
+     * To check whether the swap is cancelled
+     */
     boolean isCancelled;
+    /**
+     * The unique ID of the requestor
+     */
     String requestorID;
 
     /**
@@ -159,7 +171,12 @@ public class Swap {
             throw new InvalidSwapException("Poorly formed swap");
         }
     }
-
+/**
+ * Validate all the wordType of swap words to be correct
+ * @param wordTypes
+ * @return List<WordType>
+ * @throws InvalidSwapException
+ */
     List<WordType> validateWordTypes(List<String> wordTypes) throws InvalidSwapException {
         List<WordType> types = new ArrayList<WordType>();
         for (String type : wordTypes) {
@@ -176,31 +193,52 @@ public class Swap {
         }
         return types;
     }
-
+/**
+ * Get a collection of my words
+ * @return List<Word>
+ */
     public List<Word> getMyWords() {
         return myWords;
     }
-
+/** 
+ * Get the unique ID from swap requestor
+ * @return String
+ */
     public String getRequestorID() {
         return requestorID;
     }
-
+/**
+ * Get a collection of my WordTypes 
+ * @return List<WordType>
+ */
     public List<WordType> getTheirTypes() {
         return theirTypes;
     }
-
+/**
+ * Get the words from another player of swap
+ * @return List<String>
+ */
     public List<String> getTheirWords() {
         return theirWords;
     }
-
+/**
+ * Check whether the request is started by our side
+ * @return boolean
+ */
     public boolean isRequestor() {
         return isRequestor;
     }
-
+/**
+ * Check whether the swap request is cancelled
+ * @return boolean
+ */
     public boolean getIsCancelled() {
         return isCancelled;
     }
-
+/**
+ * Set the state of swap request
+ * @param isCancelled
+ */
     public void setIsCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
     }
@@ -256,7 +294,11 @@ public class Swap {
         }
         return swapString;
     }
-
+/**
+ * Parse the words from another player and accept them to confirm the swap
+ * @param swapString
+ * @throws InvalidSwapException
+ */
     public void updateTheirWordsForConfirmSwap(String swapString) throws InvalidSwapException {
         List<String> inputOfferTypes = new ArrayList<String>();
         List<String> inputOfferWords = new ArrayList<String>();
